@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/label_icon">
+        <item
+            android:id="@+id/label1"
+            android:enabled="true"
+            android:icon="@drawable/ic_emi"
+            android:iconTint="@color/dark_orange1"
+            android:title="EMI Calculator" />
+        <item
+            android:id="@+id/label2"
+            android:enabled="true"
+            android:icon="@drawable/ic_offers"
+            android:iconTint="@color/dark_orange1"
+            android:title="Latest Offers" />
+        <item
+            android:id="@+id/label3"
+            android:enabled="true"
+            android:icon="@drawable/ic_location"
+            android:iconTint="@color/dark_orange1"
+            android:title="Locate Us" />
+        <item
+            android:id="@+id/label4"
+            android:enabled="true"
+            android:icon="@drawable/ic_touch"
+            android:iconTint="@color/dark_orange1"
+            android:title="Get In Touch" />
+    </group>
+</menu>

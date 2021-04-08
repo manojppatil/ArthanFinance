@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/person1" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_rectangle_4" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_rectangle_4">
+
+        <ImageView
+            android:id="@+id/img_arthan_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_arthan_logo" />
+
+        <ImageView
+            android:id="@+id/img_stay"
+            android:layout_width="187dp"
+            android:layout_height="47dp"
+            android:layout_below="@id/img_arthan_logo"
+            android:layout_marginLeft="53dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_stay_up_to_date" />
+
+        <TextView
+            android:id="@+id/tv_payment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/img_stay"
+            android:layout_marginLeft="53dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="53dp"
+            android:text="@string/payment"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_payment"
+            android:layout_marginLeft="@dimen/dimen_50"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="@dimen/dimen_50"
+            android:background="@drawable/bg_language_rect_indigo"
+            android:gravity="center"
+            android:paddingTop="9dp"
+            android:textAllCaps="false"
+            android:paddingBottom="9dp"
+            android:text="@string/login"
+            android:textColor="@color/dark_orange2"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_login"
+            android:textAllCaps="false"
+            android:layout_marginLeft="@dimen/dimen_50"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="@dimen/dimen_50"
+            android:background="@drawable/bg_register_rect_orange"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/register"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</FrameLayout>

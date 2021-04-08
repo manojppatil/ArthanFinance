@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_login_bg">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNav_withlabel">
+
+
+        <ImageView
+            android:id="@+id/img_stay"
+            android:layout_width="69dp"
+            android:layout_height="18dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="140dp"
+            android:src="@drawable/ic_login" />
+
+        <ImageView
+            android:id="@+id/img_fingerprint"
+            android:layout_width="101dp"
+            android:layout_height="101dp"
+            android:layout_below="@id/img_stay"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/face_icon" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_face_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/img_fingerprint"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/bg_register_rect_orange"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/login_face_id"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/img_or"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_face_id"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="14dp"
+            android:src="@drawable/ic_or_logo" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_login_mpin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/img_or"
+            android:layout_marginLeft="@dimen/dimen_50"
+            android:layout_marginTop="14dp"
+            android:layout_marginRight="@dimen/dimen_50"
+            android:background="@drawable/bg_language_rect_indigo"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:text="@string/login_mpin"
+            android:textAllCaps="false"
+            android:textColor="@color/dark_orange2"
+            android:textSize="16sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_not_you"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_login_mpin"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp"
+            android:paddingHorizontal="@dimen/dimen_20"
+            android:background="@drawable/bg_language_rect_indigo"
+            android:gravity="center"
+            android:text="@string/not_you"
+            android:textAllCaps="false"
+            android:textColor="@color/dark_orange2"
+            android:textSize="16sp" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNav_withlabel"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/dark_blue"
+            app:itemIconTint="@color/dark_orange1"
+            app:itemTextColor="@color/white"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/labels" />
+    </RelativeLayout>
+
+</LinearLayout>

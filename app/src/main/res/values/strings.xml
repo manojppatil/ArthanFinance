@@ -1,0 +1,81 @@
+<resources>
+    <string name="app_name">ArthanFinance</string>
+    <string name="choose_lang">Choose Your Language</string>
+    <string name="choose_later">You can change this later from settings</string>
+    <string name="english">English</string>
+    <string name="hindi">Hindi</string>
+    <string name="urdu">Urdu</string>
+    <string name="continuee">Continue</string>
+    <string name="payment">Get payment reminders &amp; notifications, news, latest offers and apply for loan from your mobile phone</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="fingerprint_login">Login with Fingerprint</string>
+    <string name="login_mpin">Login with Mpin</string>
+    <string name="not_you"><font color='#FFFFFF'>Not You?</font> Use another account</string>
+    <string name="reg_mob_no">Registered Mobile Number</string>
+    <string name="enter_pin">Enter Mpin</string>
+    <string name="forgot_mpin">Forgot Mpin?</string>
+    <string name="login_otp">Login with OTP</string>
+    <string name="dont_hav_account"><font color='#FFFFFF'>Don’t have account?</font> Register</string>
+    <string name="your_name">Your Name <font color='#FF0000'>*</font></string>
+    <string name="mob_no">Mobile Number <font color='#FF0000'>*</font></string>
+    <string name="enter_mob_num">Enter mobile number</string>
+    <string name="dob_format">DD/MM/YYYY</string>
+    <string name="enter_email">Enter email ID</string>
+    <string name="dob">Date of Birth <font color='#FF0000'>*</font></string>
+    <string name="email_id">Email ID</string>
+    <string name="accept_tos">I accept the <b>Terms &amp; Conditions</b></string>
+    <string name="submit">Submit</string>
+    <string name="otp">OTP</string>
+    <string name="one_time_pw">One Time Password</string>
+    <string name="enter_6_digit">Enter the 6 digit OTP sent on mobile number <b>XXXXXXXX98</b></string>
+    <string name="enter_otp">Enter One Time Password</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="set_new_mpin">Set New Mpin</string>
+    <string name="used_to_login">This will be used each time login to app</string>
+    <string name="enter_new_mpin">Enter New Mpin</string>
+    <string name="setup_bio">Setup Biometric</string>
+    <string name="finger_login">Fingerprint Login</string>
+    <string name="use_finger">Use Fingerprint to log in for faster, secure &amp; easier access to your account</string>
+    <string name="feature_on_off">You can turn this feature On or Off anytime from settings</string>
+    <string name="enable_finger">Enable Fingerprint</string>
+    <string name="not_now">Not Now</string>
+    <string name="face_id_login">Face ID Login</string>
+    <string name="use_face_id">Use Face ID to log in for faster, secure &amp; easier access to your account</string>
+    <string name="enable_face_id">Enable Face ID</string>
+    <string name="your_kyc_details">Your KYC Details</string>
+    <string name="check_details">Check your details below, change if required and proceed</string>
+    <string name="name">Name</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="mob_num">Mobile Number</string>
+    <string name="upload_pan">Upload PAN</string>
+    <string name="pan_num">PAN : BKOPY8778F</string>
+    <string name="next">Next</string>
+    <string name="login_face_id">Login with Face ID</string>
+    <string name="manage">Now you can manage all your loans, track progress, make payment, download statement, apply for new loan and much more right at your fingertips</string>
+    <string name="check">Now you can manage all your loans, track progress, make payment, download statement, apply for new loan and much more right at your fingertips</string>
+    <string name="swipe_left">Swipe left to continue > ></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="profile">Profile</string>
+    <string name="need_help">Need Help?</string>
+    <string name="personal_details">Personal Details</string>
+    <string name="upload">Upload</string>
+    <string name="camera">Camera</string>
+    <string name="upload_adhar">Upload your Aadhaar Card</string>
+    <string name="front_side">Front Side</string>
+    <string name="back_side">Back Side</string>
+    <string name="retake">Retake</string>
+    <string name="bus_name">Business Name</string>
+    <string name="doc">Date of Incorporation</string>
+    <string name="constitution">Constitution</string>
+    <string name="standard_loan">A standard loan processing  fees (2%) will be applicable to you in order to continue</string>
+    <string name="app_sub">Your Application has been completed and its ready to submit</string>
+    <string name="Rs">\u20B9</string>
+    <string name="city_name">City <font color='#FF0000'>*</font></string>
+    <string name="state_name">State <font color='#FF0000'>*</font></string>
+    <string name="pincode_name">Pincode <font color='#FF0000'>*</font></string>
+    <string name="address1">Address Line 1 <font color='#FF0000'>*</font></string>
+    <string name="address2">Address Line 2 <font color='#FF0000'>*</font></string>
+    <string name="address3">Address Line 3 <font color='#FF0000'>*</font></string>
+</resources>

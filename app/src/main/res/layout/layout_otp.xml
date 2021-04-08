@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/img_back_otp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/ic_back"/>
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="30dp"
+            android:layout_toRightOf="@id/img_back_otp"
+            android:text="@string/otp"
+            android:textColor="@color/indigo"
+            android:textSize="22sp"
+            android:layout_toEndOf="@id/img_back_otp"
+            android:layout_marginStart="8dp" />
+
+        <ImageView
+            android:id="@+id/img_mobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="27dp"
+            android:layout_marginTop="40dp"
+            android:layout_below="@id/tv_register"
+            android:src="@drawable/ic_mobile_icon" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_otp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_mobile"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="7dp"
+            android:text="@string/one_time_pw"
+            android:textColor="@color/indigo"
+            android:textSize="28sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_enter_6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_otp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="25dp"
+            android:text="@string/enter_6_digit"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_enter_otp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_enter_6"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="21dp"
+            android:text="@string/enter_otp"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <in.aabhasjindal.otptextview.OtpTextView
+            android:id="@+id/otp_view"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/dimen_24"
+            android:layout_height="60dp"
+            android:layout_below="@+id/tv_enter_otp"
+            android:textColor="@color/black"
+            app:height="40dp"
+            app:width="40dp"
+            app:box_margin="5dp"
+            app:otp_box_background="@drawable/bg_grey92_rect"
+            app:bar_enabled="false"
+            app:bar_height="2dp"
+            app:length="6"
+            app:otp=""
+            app:otp_text_size="24dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_enter_otp_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_enter_6"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="21dp"
+            android:layout_marginRight="25dp"
+            android:text="02:15"
+            android:textColor="@color/indigo"
+            android:textSize="16sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_resend_otp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/otp_view"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="33dp"
+            android:text="@string/resend_otp"
+            android:textColor="@color/dark_orange2"
+            android:textSize="18sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="13dp"
+            android:background="@drawable/bg_register_rect_orange"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/submit"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+</LinearLayout>

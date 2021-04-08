@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/indigo">
+
+                <ImageButton
+                    android:id="@+id/img_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="38dp"
+                    android:background="@drawable/ic_back_white"/>
+
+                <TextView
+                    android:id="@+id/tv_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_toRightOf="@id/img_back"
+                    android:text="@string/register"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:layout_toEndOf="@id/img_back"
+                    android:layout_marginStart="8dp" />
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginEnd="@dimen/dimen_20"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:src="@drawable/ic_mini_arthan_logo" />
+
+                <ImageView
+                    android:id="@+id/enter_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_register"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="18dp"
+                    android:src="@drawable/ic_enter_details" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="25dp"
+                    android:text="@string/your_name"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/edt_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/bg_grey92_rect"
+                    android:ems="10"
+                    android:hint="Your name"
+                    android:paddingStart="19dp"
+                    android:paddingVertical="11dp"
+                    android:textSize="16sp"
+                    app:hintTextColor="@color/very_light_grey" />
+
+                <TextView
+                    android:id="@+id/tv_mob_num"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginRight="25dp"
+                    android:text="@string/mob_no"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/edt_mob_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/bg_grey92_rect"
+                    android:ems="10"
+                    android:hint="Enter mobile number"
+                    android:inputType="number"
+                    android:paddingStart="19dp"
+                    android:paddingVertical="11dp"
+                    android:textSize="16sp"
+                    app:hintTextColor="@color/very_light_grey" />
+
+                <TextView
+                    android:id="@+id/tv_dob"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginRight="25dp"
+                    android:text="@string/dob"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/edt_dob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/bg_grey92_rect"
+                    android:ems="10"
+                    android:hint="DD/MM/YYYY"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:paddingStart="19dp"
+                    android:paddingVertical="11dp"
+                    android:textSize="16sp"
+                    app:hintTextColor="@color/very_light_grey" />
+
+                <TextView
+                    android:id="@+id/tv_email"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginRight="25dp"
+                    android:text="@string/email_id"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/edt_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/bg_grey92_rect"
+                    android:ems="10"
+                    android:hint="@string/email_id"
+                    android:paddingStart="19dp"
+                    android:paddingVertical="11dp"
+                    android:textSize="16sp"
+                    app:hintTextColor="@color/very_light_grey" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/accept_tc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="29dp"
+                    android:text="@string/accept_tos"
+                    android:textSize="16sp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="25dp"
+                    android:background="@drawable/bg_register_rect_orange"
+                    android:gravity="center"
+                    android:paddingVertical="10dp"
+                    android:text="@string/submit"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

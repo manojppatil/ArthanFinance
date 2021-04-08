@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".applyLoan.BusinessDetailsFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_bus_name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/bus_name"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_bus_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:ems="10"
+                android:hint="Enter Business Name"
+                android:inputType="text"
+                android:paddingStart="20dp"
+                android:paddingVertical="11dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textColorHint="@color/dark_grey" />
+
+            <TextView
+                android:id="@+id/tv_dob"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/doc"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_dateOfIncorporation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_grey92_rect_border"
+                android:ems="10"
+                android:hint="DD/MM/YYYY"
+                android:textColor="@color/black"
+                android:focusable="false"
+                android:editable="false"
+                android:paddingHorizontal="19dp"
+                android:paddingVertical="11dp"
+                android:textSize="16sp"
+                android:textColorHint="@color/dark_grey" />
+
+            <TextView
+                android:id="@+id/tv_const"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/constitution"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                style="@style/Widget.AppCompat.DropDownItem.Spinner"
+                android:id="@+id/constitutionSpiner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:paddingEnd="30dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_spinner"
+                android:ems="10"
+                android:hint="@string/constitution"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_18"
+                app:hintTextColor="@color/whisper" />
+
+            <TextView
+                android:id="@+id/tv_category"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="16dp"
+                android:text="Category"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                style="@style/Widget.AppCompat.DropDownItem.Spinner"
+                android:id="@+id/categorySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="30dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_spinner"
+                android:ems="10"
+                android:hint="Category"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_18"
+                app:hintTextColor="@color/whisper" />
+
+            <TextView
+                android:id="@+id/tv_segment"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="16dp"
+                android:text="Segment"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                style="@style/Widget.AppCompat.DropDownItem.Spinner"
+                android:id="@+id/segmentSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="4dp"
+                android:ems="10"
+                android:paddingEnd="30dp"
+                android:hint="Segment"
+                android:textColor="@color/black"
+                android:background="@drawable/bg_spinner"
+                android:textSize="@dimen/text_18"
+                app:hintTextColor="@color/whisper" />
+
+            <TextView
+                android:id="@+id/tv_type"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="16dp"
+                android:text="Type"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                style="@style/Widget.AppCompat.DropDownItem.Spinner"
+                android:id="@+id/typeSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="4dp"
+                android:paddingEnd="30dp"
+                android:ems="10"
+                android:hint="Type"
+                android:textColor="@color/black"
+                android:background="@drawable/bg_spinner"
+                android:textSize="@dimen/text_18"
+                app:hintTextColor="@color/whisper" />
+
+            <TextView
+                android:id="@+id/tv_bus_pan_num"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="16dp"
+                android:text="Business PAN No"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_bus_pan_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:ems="10"
+                android:hint="Enter Business PAN No"
+                android:inputType="text"
+                android:paddingHorizontal="19dp"
+                android:paddingVertical="11dp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/dark_grey" />
+
+            <TextView
+                android:id="@+id/tv_udhyog"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="16dp"
+                android:text="Udhyog Aadhar No"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_udhyog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:ems="10"
+                android:hint="Enter Udhyog Aadhar No"
+                android:textColor="@color/black"
+                android:inputType="text"
+                android:paddingHorizontal="19dp"
+                android:paddingVertical="11dp"
+                android:textSize="16sp"
+                android:textColorHint="@color/dark_grey" />
+
+            <TextView
+                android:id="@+id/tv_ssi_num"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="16dp"
+                android:text="SSI No"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_ssi_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:ems="10"
+                android:textColor="@color/black"
+                android:hint="Enter SSI No"
+                android:inputType="text"
+                android:paddingHorizontal="19dp"
+                android:paddingVertical="11dp"
+                android:textSize="16sp"
+                android:textColorHint="@color/dark_grey" />
+
+            <TextView
+                android:id="@+id/tv_gst_num"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="16dp"
+                android:text="GST No"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_gst_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:ems="10"
+                android:textColor="@color/black"
+                android:hint="Enter GST No"
+                android:inputType="text"
+                android:paddingHorizontal="19dp"
+                android:paddingVertical="11dp"
+                android:textSize="16sp"
+                android:textColorHint="@color/dark_grey" />
+
+            <TextView
+                android:id="@+id/tv_turnover"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="16dp"
+                android:text="Turnover"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_turnover"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:ems="10"
+                android:hint="Enter Turnover"
+                android:textColor="@color/black"
+                android:inputType="number"
+                android:paddingHorizontal="19dp"
+                android:paddingVertical="11dp"
+                android:textSize="16sp"
+                android:textColorHint="@color/dark_grey" />
+
+            <TextView
+                android:id="@+id/tv_income"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="16dp"
+                android:text="Income"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_income"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/black"
+                android:background="@drawable/bg_grey92_rect"
+                android:ems="10"
+                android:hint="Enter Income"
+                android:inputType="number"
+                android:paddingHorizontal="19dp"
+                android:paddingVertical="11dp"
+                android:textSize="16sp"
+                android:textColorHint="@color/dark_grey" />
+
+            <TextView
+                android:id="@+id/tv_expenses"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="16dp"
+                android:text="Expenses"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_expenses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:ems="10"
+                android:hint="Enter Expenses"
+                android:textColor="@color/black"
+                android:inputType="number"
+                android:paddingHorizontal="19dp"
+                android:paddingVertical="11dp"
+                android:textSize="16sp"
+                android:textColorHint="@color/dark_grey" />
+
+            <TextView
+                android:id="@+id/tv_address"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="16dp"
+                android:text="Address"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:ems="10"
+                android:hint="Enter Address"
+                android:textColor="@color/black"
+                android:inputType="text"
+                android:paddingHorizontal="19dp"
+                android:paddingVertical="11dp"
+                android:textSize="16sp"
+                android:textColorHint="@color/dark_grey" />
+
+            <TextView
+                android:id="@+id/tv_bank_name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="16dp"
+                android:text="Bank Name"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_bank_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:ems="10"
+                android:hint="Enter Bank Name"
+                android:textColor="@color/black"
+                android:inputType="text"
+                android:paddingHorizontal="19dp"
+                android:paddingVertical="11dp"
+                android:textSize="16sp"
+                android:textColorHint="@color/dark_grey"/>
+
+            <TextView
+                android:id="@+id/tv_acc_no"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="16dp"
+                android:text="Account No"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_acc_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:ems="10"
+                android:hint="Enter Account No"
+                android:textColor="@color/black"
+                android:inputType="text"
+                android:paddingHorizontal="19dp"
+                android:paddingVertical="11dp"
+                android:textSize="16sp"
+                android:textColorHint="@color/dark_grey" />
+
+            <TextView
+                android:id="@+id/tv_ifsc"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="16dp"
+                android:text="IFSC Code"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_ifsc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:ems="10"
+                android:hint="Enter IFSC Code"
+                android:textColor="@color/black"
+                android:inputType="text"
+                android:paddingHorizontal="19dp"
+                android:paddingVertical="11dp"
+                android:textSize="16sp"
+                android:textColorHint="@color/dark_grey" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_next_in_businessDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:background="@drawable/bg_register_rect_orange"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                android:text="@string/next"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

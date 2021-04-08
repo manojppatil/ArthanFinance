@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/intro2" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_rectangle_4" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_rectangle_4">
+
+        <ImageView
+            android:id="@+id/img_arthan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_arthan_logo" />
+
+        <ImageView
+            android:id="@+id/img_everything"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/img_arthan"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="48dp"
+            android:src="@drawable/ic_fast_secure" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_descr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_everything"
+            android:layout_marginLeft="46dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="46dp"
+            android:text="@string/check"
+            android:textColor="@color/sky_blue"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/view1"
+            android:layout_width="50dp"
+            android:layout_height="5dp"
+            android:layout_below="@+id/tv_descr"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="53dp"
+            android:background="@color/white" />
+
+        <Button
+            android:id="@+id/view2"
+            android:layout_width="50dp"
+            android:layout_height="5dp"
+            android:layout_below="@+id/tv_descr"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="53dp"
+            android:layout_toRightOf="@id/view1"
+            android:background="@color/dark_orange2" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/swipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view2"
+            android:layout_marginLeft="46dp"
+            android:layout_marginTop="27dp"
+            android:layout_marginRight="46dp"
+            android:text="@string/swipe_left"
+            android:textColor="@color/sky_blue"
+            android:textSize="16sp" />
+
+
+    </RelativeLayout>
+</FrameLayout>

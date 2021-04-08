@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="182dp"
+            android:layout_height="43dp"
+            android:layout_marginTop="@dimen/dimen_78"
+            android:src="@drawable/ic_arthan_blue" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_51"
+            android:text="@string/choose_lang"
+            android:textColor="@color/black"
+            android:textSize="28sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_2"
+            android:text="@string/choose_later"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_english"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_50"
+            android:layout_marginTop="@dimen/dimen_51"
+            android:background="@drawable/bg_language_rect"
+            android:gravity="left"
+            android:textAllCaps="false"
+            android:paddingLeft="@dimen/dimen_50"
+            android:paddingVertical="@dimen/dimen_20"
+            android:text="@string/english"
+            android:textColor="@color/dark_orange1"
+            android:textSize="@dimen/text_26"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_hindi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_50"
+            android:layout_marginTop="@dimen/dimen_9"
+            android:background="@drawable/bg_rect_gains_boro"
+            android:gravity="left"
+            android:paddingLeft="@dimen/dimen_50"
+            android:paddingVertical="@dimen/dimen_20"
+            android:textAllCaps="false"
+            android:text="@string/hindi"
+            android:textColor="@color/gains_boro"
+            android:textSize="@dimen/text_26"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_urdu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_50"
+            android:layout_marginTop="@dimen/dimen_9"
+            android:background="@drawable/bg_rect_gains_boro"
+            android:gravity="left"
+            android:paddingLeft="@dimen/dimen_50"
+            android:paddingVertical="@dimen/dimen_20"
+            android:text="@string/urdu"
+            android:textAllCaps="false"
+            android:textColor="@color/gains_boro"
+            android:textSize="@dimen/text_26"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_continue"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dimen_24"
+        android:layout_marginRight="@dimen/dimen_24"
+        android:layout_marginBottom="@dimen/dimen_34"
+        android:background="@drawable/bg_orange_solid"
+        android:textAllCaps="false"
+        android:text="@string/continuee"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_18"
+        android:textStyle="bold" />
+
+</RelativeLayout>

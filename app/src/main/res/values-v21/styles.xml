@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppThemeTwo" parent="Theme.AppCompat.Light">
+        <item name="android:colorControlActivated">@color/dark_orange1</item>
+        <item name="android:colorControlNormal">@color/indigo</item>
+    </style>
+</resources>

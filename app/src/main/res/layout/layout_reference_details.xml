@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_ref_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="Reference Details"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_neigh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="32dp"
+                android:gravity="center"
+                android:text="Your Neighbour"
+                android:textColor="@color/indigo"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="9dp"
+                android:text="Name"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:ems="10"
+                android:hint="Enter name"
+                android:textColor="@color/black"
+                android:inputType="text"
+                android:paddingStart="15dp"
+                android:paddingVertical="11dp"
+                android:textSize="18sp"
+                android:textColorHint="@color/dark_grey" />
+
+            <TextView
+                android:id="@+id/tv_mob_num"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="18dp"
+                android:text="Mobile Number"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_mob_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:ems="10"
+                android:hint="Enter mobile number"
+                android:textColor="@color/black"
+                android:inputType="number"
+                android:paddingStart="19dp"
+                android:paddingVertical="11dp"
+                android:textSize="18sp"
+                android:textColorHint="@color/dark_grey" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_supplier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edt_mob_num"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="21dp"
+                android:gravity="center"
+                android:text="Your Supplier / Business Neighbour"
+                android:textColor="@color/indigo"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_name_sup"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginRight="25dp"
+                android:text="Name"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_name_sup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:ems="10"
+                android:hint="Enter name"
+                android:textColor="@color/black"
+                android:inputType="text"
+                android:paddingStart="15dp"
+                android:paddingVertical="11dp"
+                android:textSize="18sp"
+                android:textColorHint="@color/dark_grey" />
+
+            <TextView
+                android:id="@+id/tv_mob_num_sup"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="18dp"
+                android:text="Mobile Number"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_mob_num_sup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:ems="10"
+                android:hint="Enter mobile number"
+                android:textColor="@color/black"
+                android:inputType="number"
+                android:paddingStart="19dp"
+                android:paddingVertical="11dp"
+                android:textSize="18sp"
+                android:textColorHint="@color/dark_grey"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:background="@drawable/bg_register_rect_orange"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                android:paddingBottom="10dp"
+                android:text="@string/next"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+</RelativeLayout>

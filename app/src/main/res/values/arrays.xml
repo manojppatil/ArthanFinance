@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="posters">
+        <item>@drawable/loanimage</item>
+        <item>@drawable/loanimage</item>
+        <item>@drawable/loanimage</item>
+        <item>@drawable/loanimage</item>
+    </integer-array>
+</resources>

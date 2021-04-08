@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_upload_docs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="Upload Documents"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
+
+            <RelativeLayout
+                android:id="@+id/rl_statement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="21dp"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/bg_silver_rect"
+                android:paddingBottom="@dimen/dimen_10">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_bank_st"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="21dp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="14dp"
+                    android:text="Bank Statment"
+                    android:textColor="@color/indigo"
+                    android:textSize="20sp" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_months"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_bank_st"
+                    android:layout_marginStart="21dp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:text="For last 12 Months"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/tv_months"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@color/grey_87" />
+
+
+                <LinearLayout
+                    android:id="@+id/buttonsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view"
+                    android:layout_marginLeft="33dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="33dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_upload"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:drawableStart="@drawable/ic_folder"
+                        android:drawablePadding="-8dp"
+                        android:gravity="center"
+                        android:paddingStart="30dp"
+                        android:paddingVertical="9dp"
+                        android:text="@string/upload"
+                        android:textAllCaps="false"
+                        android:textColor="@color/dark_orange2"
+                        android:textSize="@dimen/text_18" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/grey_87" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_camera"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:drawableStart="@drawable/ic_camera_small_icon"
+                        android:drawablePadding="-8dp"
+                        android:gravity="center"
+                        android:paddingStart="30dp"
+                        android:paddingVertical="9dp"
+                        android:text="@string/camera"
+                        android:textAllCaps="false"
+                        android:textColor="@color/dark_orange2"
+                        android:textSize="@dimen/text_18" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_below="@+id/buttonsLayout"
+                    android:id="@+id/bankStatementsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="15dp">
+                </androidx.recyclerview.widget.RecyclerView>
+
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_more"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_24"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="@dimen/dimen_24"
+                android:background="@drawable/bg_dash_rect"
+                android:gravity="center"
+                android:text="+ More Bank Statement"
+                android:textAllCaps="false"
+                android:textColor="@color/dark_orange2"
+                android:textSize="@dimen/text_18" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:background="@drawable/bg_register_rect_orange"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                android:text="@string/next"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

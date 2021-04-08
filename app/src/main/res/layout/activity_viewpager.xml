@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- In order to use tabs, coordinator layout is useful-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--This appbarlayout covers the toolbar and tablayout-->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/indigo">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="38dp"
+                android:src="@drawable/ic_back_orange" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="30dp"
+                android:layout_toRightOf="@id/img_back"
+                android:text="@string/profile"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:layout_marginStart="8dp" />
+
+            <TextView
+                android:id="@+id/tv_need_help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="@dimen/dimen_24"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:background="@drawable/bg_orange_border_25_radius"
+                android:text="@string/need_help"
+                android:textColor="@color/dark_orange2"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:id="@+id/progress_layout"
+                android:layout_height="@dimen/dimen_50"
+                android:layout_below="@id/tv_need_help"
+                android:orientation="vertical">
+
+                <ProgressBar
+                    android:id="@+id/progress_registration"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:layout_marginHorizontal="22dp"
+                    android:progressDrawable="@drawable/layer_layout"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_height="8dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="22dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Completed"
+                        android:textSize="14sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/tv_progresspercent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="23%"
+                        android:textSize="14sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="#15DA4C"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_per_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/progress_layout"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginRight="13dp"
+                android:text="@string/personal_details"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:textSize="22sp" />
+
+        </RelativeLayout>
+        <!-- tablayout which contains which is
+             important to show tabs -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicatorColor="#FFF"
+            app:tabTextColor="@color/sky_blue"
+            app:tabSelectedTextColor="@color/white"
+            app:tabIndicatorHeight="3dp"
+            app:tabMode="scrollable"
+
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- view pager is used to open other fragment by using
+         left or right swip-->
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/tab_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </HorizontalScrollView>
+
+</LinearLayout>
