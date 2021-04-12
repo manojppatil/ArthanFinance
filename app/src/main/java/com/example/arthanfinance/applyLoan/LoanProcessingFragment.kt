@@ -86,23 +86,23 @@ class LoanProcessingFragment : Fragment() {
         emiText.text = emi
 
         btnProceed.setOnClickListener{
-            proceedWithPayment()
+           // proceedWithPayment()
 
-//            val fragment = CongratulationsFragment()
-//            val fragmentManger = activity?.supportFragmentManager
-//            val transaction = fragmentManger?.beginTransaction()
-//            val args = Bundle()
-//            args.putString("loanId", loanResponse?.loanId)
-//            fragment.arguments = args
-//            transaction?.setCustomAnimations(
-//                R.anim.enter_from_right,
-//                R.anim.exit_to_left,
-//                R.anim.enter_from_left,
-//                R.anim.exit_to_right
-//            );
-//            transaction?.replace(R.id.container, fragment)
-//            transaction?.addToBackStack(null)
-//            transaction?.commit()
+            val fragment = CongratulationsFragment()
+            val fragmentManger = activity?.supportFragmentManager
+            val transaction = fragmentManger?.beginTransaction()
+            val args = Bundle()
+            args.putString("loanId", loanResponse?.loanId)
+            fragment.arguments = args
+            transaction?.setCustomAnimations(
+                R.anim.enter_from_right,
+                R.anim.exit_to_left,
+                R.anim.enter_from_left,
+                R.anim.exit_to_right
+            );
+            transaction?.replace(R.id.container, fragment)
+            transaction?.addToBackStack(null)
+            transaction?.commit()
         }
         return view
     }

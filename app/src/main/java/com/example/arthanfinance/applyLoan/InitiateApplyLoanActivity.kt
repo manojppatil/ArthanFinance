@@ -154,7 +154,7 @@ class InitiateApplyLoanActivity : AppCompatActivity() {
         val jsonObject = JsonObject()
 
         val tenure = tenureDropDown.text.split(" ").first()
-        val loanAmount = loanAmountEditText.text.toString().replace(",","")
+        val loanAmount = loanAmountEditText.text.toString().replace(",","").replace(".00","")
         jsonObject.addProperty("customerId", customerData.customerId)
         jsonObject.addProperty("loanAmt", loanAmount)
         jsonObject.addProperty("tenure", tenure)

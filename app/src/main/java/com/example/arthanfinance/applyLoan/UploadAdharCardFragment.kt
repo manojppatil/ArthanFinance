@@ -2,20 +2,24 @@ package com.example.arthanfinance.applyLoan
 
 import android.Manifest
 import android.app.Activity
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.LinearGradient
 import android.graphics.Shader
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.OpenableColumns
 import android.text.TextPaint
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -27,8 +31,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 
 class UploadAdharCardFragment : Fragment() {
+    private val AAADHAR_BACK = 103
+    private val AAADHAR_FRONT = 104
     private lateinit var tvUploadAdhar: TextView
     private lateinit var btnCameraAadharFrontPhoto: Button
     private lateinit var btnCameraAadharBackPhoto: Button
@@ -122,11 +131,17 @@ class UploadAdharCardFragment : Fragment() {
         }
 
         btnUploadFileAadharFrontPhoto.setOnClickListener {
-
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            intent.type = "*/*"
+            startActivityForResult(Intent.createChooser(intent, "ChooseFile"), AAADHAR_FRONT)
         }
 
         btnUploadFileAadharBackPhoto.setOnClickListener {
-
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            intent.type = "*/*"
+            startActivityForResult(Intent.createChooser(intent, "ChooseFile"), AAADHAR_BACK)
         }
 
         btnAadharFrontRetake.setOnClickListener {
@@ -231,25 +246,81 @@ class UploadAdharCardFragment : Fragment() {
         if(requestCode == REQ_CODE_AADHAR_FP && resultCode == Activity.RESULT_OK) {
             val bitmap = data?.extras?.get("data") as Bitmap
             aadharFrontImgView.setImageBitmap(bitmap)
-            val encodedImageStr = encodeImageString(bitmap)
-            print("base64 Stirng $encodedImageStr")
+//            val encodedImageStr = encodeImageString(bitmap)
+//            print("base64 Stirng $encodedImageStr")
             aadharFrontLayout.visibility = View.GONE
             btnAadharFrontRetake.visibility = View.VISIBLE
             btnRemoveAadharFrontPhoto.visibility = View.VISIBLE
             aadharFrontImgView.tag = 3
-            uploadAadharImage(encodedImageStr,"AF")
-        }else if(requestCode == REQ_CODE_AADHAR_BP && resultCode == Activity.RESULT_OK) {
+            val base64 = BitmapUtils.getBase64(bitmap)
+            uploadAadharImage(base64,"AF")
+        } else if(requestCode == REQ_CODE_AADHAR_BP && resultCode == Activity.RESULT_OK) {
             val bitmap = data?.extras?.get("data") as Bitmap
             aadharBackImgView.setImageBitmap(bitmap)
-            val encodedImageStr = encodeImageString(bitmap)
-            print("base64 Stirng $encodedImageStr")
+//            val encodedImageStr = encodeImageString(bitmap)
+//            print("base64 Stirng $encodedImageStr")
             aadharBackLayout.visibility = View.GONE
             btnAadharBackRetake.visibility = View.VISIBLE
             btnRemoveAadharBackPhoto.visibility = View.VISIBLE
             aadharBackImgView.tag = 4
-            uploadAadharImage(encodedImageStr,"AB")
+            val base64 = BitmapUtils.getBase64(bitmap)
+            uploadAadharImage(base64,"AB")
+        } else if (requestCode == AAADHAR_FRONT && resultCode == Activity.RESULT_OK) {
+            try {
+                val fileUri = data!!.data
+                val fileName = getFileName(activity?.contentResolver, fileUri) ?: ""
+                val fileDescriptor = fileUri?.let { activity?.contentResolver?.openFileDescriptor(it,"r") }
+                val actualFile = File(activity?.cacheDir, fileName)
+                val inputStream = FileInputStream(fileDescriptor?.fileDescriptor)
+                val outputStream = FileOutputStream(actualFile)
+                inputStream.copyTo(outputStream)
+
+                val bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, fileUri)
+                aadharFrontImgView.setImageBitmap(bitmap)
+                val base64 = BitmapUtils.getBase64(bitmap)
+                uploadAadharImage(base64,"AF")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }else if (requestCode == AAADHAR_BACK && resultCode == Activity.RESULT_OK) {
+            try {
+                val fileUri = data!!.data
+                val fileName = getFileName(activity?.contentResolver, fileUri) ?: ""
+                val fileDescriptor = fileUri?.let { activity?.contentResolver?.openFileDescriptor(it,"r") }
+                val actualFile = File(activity?.cacheDir, fileName)
+                val inputStream = FileInputStream(fileDescriptor?.fileDescriptor)
+                val outputStream = FileOutputStream(actualFile)
+                inputStream.copyTo(outputStream)
+                val bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, fileUri)
+                aadharBackImgView.setImageBitmap(bitmap)
+                val base64 = BitmapUtils.getBase64(bitmap)
+                uploadAadharImage(base64,"AB")
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    fun getMimeType(url: String?): String? {
+        var type: String? = null
+        val extension = MimeTypeMap.getFileExtensionFromUrl(url)
+        if (extension != null) {
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+        }
+        return type
+    }
+    private fun getFileName(contentResolver: ContentResolver?, uri: Uri?): String? {
+        if (uri == null) return null
+        var fileName: String? = null
+        uri.let { returnUri ->
+            contentResolver?.query(returnUri, null, null, null, null)
+        }?.use { cursor ->
+            cursor.moveToFirst()
+            fileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+        }
+        return fileName
     }
 
     private fun encodeImageString(bm: Bitmap): String? {
