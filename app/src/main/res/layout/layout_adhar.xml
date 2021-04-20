@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -120,6 +121,28 @@
                     android:textSize="@dimen/text_18" />
             </LinearLayout>
 
+<!--            <com.otaliastudios.cameraview.CameraView-->
+<!--                android:id="@+id/camera"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="135dp"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_marginHorizontal="@dimen/dimen_24"-->
+<!--                android:keepScreenOn="true"-->
+<!--                app:cameraWhiteBalance="auto"-->
+<!--                app:cameraAudio="on"-->
+<!--                app:cameraCropOutput="false"-->
+<!--                app:cameraFacing="back"-->
+<!--                app:cameraFlash="off"-->
+<!--                app:cameraGestureLongTap="none"-->
+<!--                app:cameraGesturePinch="zoom"-->
+<!--                app:cameraGestureScrollHorizontal="exposureCorrection"-->
+<!--                app:cameraGestureScrollVertical="none"-->
+<!--                app:cameraGestureTap="focusWithMarker"-->
+<!--                app:cameraGrid="off"-->
+<!--                app:cameraJpegQuality="100"-->
+<!--                app:cameraPlaySounds="true"-->
+<!--                android:visibility="gone"-->
+<!--                app:cameraSessionType="picture"/>-->
             <RelativeLayout
                 android:id="@+id/rl_back"
                 android:layout_width="match_parent"

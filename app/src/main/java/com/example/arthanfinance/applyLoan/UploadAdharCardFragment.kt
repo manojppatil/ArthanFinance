@@ -12,10 +12,12 @@ import android.graphics.Shader
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.text.TextPaint
 import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +29,9 @@ import androidx.fragment.app.Fragment
 import com.example.arthanfinance.R
 import com.example.arthanfinance.networkService.ApiClient
 import com.google.gson.JsonObject
+import com.otaliastudios.cameraview.CameraListener
+import com.otaliastudios.cameraview.CameraUtils
+import kotlinx.android.synthetic.main.layout_adhar.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -119,15 +124,32 @@ class UploadAdharCardFragment : Fragment() {
         btnRemoveAadharBackPhoto.visibility = View.GONE
 
         btnCameraAadharFrontPhoto.setOnClickListener {
-            if(requestPermission()) {
-                launchCamera(REQ_CODE_AADHAR_FP)
-            }
+//            if(requestPermission()) {
+//                launchCamera(REQ_CODE_AADHAR_FP)
+//            }
+
+            startActivityForResult(Intent(activity, CustomerCameraActivity::class.java).apply {
+                putExtra("doc_type",REQ_CODE_AADHAR_FP)
+                val dir = File(activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES),"AB")
+                // if (!dir.exists())
+                dir.mkdirs()
+                putExtra("FilePath", "${dir.absolutePath}/IMG_AADHAR_FRONT.jpg")
+            }, REQ_CODE_AADHAR_FP)
         }
 
         btnCameraAadharBackPhoto.setOnClickListener {
-            if(requestPermission()) {
-                launchCamera(REQ_CODE_AADHAR_BP)
-            }
+//            if(requestPermission()) {
+//                launchCamera(REQ_CODE_AADHAR_BP)
+//            }
+
+            startActivityForResult(Intent(activity, CustomerCameraActivity::class.java).apply {
+                putExtra("doc_type",REQ_CODE_AADHAR_BP)
+                val dir = File(activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES),"AB")
+               // if (!dir.exists())
+                    dir.mkdirs()
+                putExtra("FilePath", "${dir.absolutePath}/IMG_AADHAR_BACK.jpg")
+            }, REQ_CODE_AADHAR_BP)
+
         }
 
         btnUploadFileAadharFrontPhoto.setOnClickListener {
@@ -145,15 +167,30 @@ class UploadAdharCardFragment : Fragment() {
         }
 
         btnAadharFrontRetake.setOnClickListener {
-            if(requestPermission()) {
-                launchCamera(REQ_CODE_AADHAR_FP)
-            }
+//            if(requestPermission()) {
+//                launchCamera(REQ_CODE_AADHAR_FP)
+//            }
+            startActivityForResult(Intent(activity, CustomerCameraActivity::class.java).apply {
+                putExtra("doc_type",REQ_CODE_AADHAR_FP)
+                val dir = File(activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES),"AB")
+                // if (!dir.exists())
+                dir.mkdirs()
+                putExtra("FilePath", "${dir.absolutePath}/IMG_AADHAR_FRONT.jpg")
+            }, REQ_CODE_AADHAR_FP)
         }
 
         btnAadharBackRetake.setOnClickListener {
-            if(requestPermission()) {
-                launchCamera(REQ_CODE_AADHAR_BP)
-            }
+//            if(requestPermission()) {
+//                launchCamera(REQ_CODE_AADHAR_BP)
+//            }
+
+            startActivityForResult(Intent(activity, CustomerCameraActivity::class.java).apply {
+                putExtra("doc_type",REQ_CODE_AADHAR_BP)
+                val dir = File(activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES),"AB")
+                // if (!dir.exists())
+                dir.mkdirs()
+                putExtra("FilePath", "${dir.absolutePath}/IMG_AADHAR_BACK.jpg")
+            }, REQ_CODE_AADHAR_BP)
         }
 
         btnRemoveAadharFrontPhoto.setOnClickListener {
@@ -244,10 +281,12 @@ class UploadAdharCardFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == REQ_CODE_AADHAR_FP && resultCode == Activity.RESULT_OK) {
-            val bitmap = data?.extras?.get("data") as Bitmap
+            val filepath = data?.extras?.get("FilePath")
+            val finalFilePath = "file://${filepath}"
+            val fileUri = Uri.parse(finalFilePath.toString())
+            val bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, fileUri)
+
             aadharFrontImgView.setImageBitmap(bitmap)
-//            val encodedImageStr = encodeImageString(bitmap)
-//            print("base64 Stirng $encodedImageStr")
             aadharFrontLayout.visibility = View.GONE
             btnAadharFrontRetake.visibility = View.VISIBLE
             btnRemoveAadharFrontPhoto.visibility = View.VISIBLE
@@ -255,17 +294,20 @@ class UploadAdharCardFragment : Fragment() {
             val base64 = BitmapUtils.getBase64(bitmap)
             uploadAadharImage(base64,"AF")
         } else if(requestCode == REQ_CODE_AADHAR_BP && resultCode == Activity.RESULT_OK) {
-            val bitmap = data?.extras?.get("data") as Bitmap
+            val filepath = data?.extras?.get("FilePath")
+            val finalFilePath = "file://${filepath}"
+            val fileUri = Uri.parse(finalFilePath.toString())
+            val bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, fileUri)
+
+            // as Bitmap
             aadharBackImgView.setImageBitmap(bitmap)
-//            val encodedImageStr = encodeImageString(bitmap)
-//            print("base64 Stirng $encodedImageStr")
             aadharBackLayout.visibility = View.GONE
             btnAadharBackRetake.visibility = View.VISIBLE
             btnRemoveAadharBackPhoto.visibility = View.VISIBLE
             aadharBackImgView.tag = 4
             val base64 = BitmapUtils.getBase64(bitmap)
             uploadAadharImage(base64,"AB")
-        } else if (requestCode == AAADHAR_FRONT && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == AAADHAR_FRONT && resultCode == Activity.RESULT_OK) { // for upload aadhar front
             try {
                 val fileUri = data!!.data
                 val fileName = getFileName(activity?.contentResolver, fileUri) ?: ""
@@ -282,7 +324,7 @@ class UploadAdharCardFragment : Fragment() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-        }else if (requestCode == AAADHAR_BACK && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == AAADHAR_BACK && resultCode == Activity.RESULT_OK) { //for upload aadhar back
             try {
                 val fileUri = data!!.data
                 val fileName = getFileName(activity?.contentResolver, fileUri) ?: ""

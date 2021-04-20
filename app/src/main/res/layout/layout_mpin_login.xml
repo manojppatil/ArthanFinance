@@ -154,6 +154,7 @@
                 android:text="@string/login_otp"
                 android:textAllCaps="false"
                 android:textColor="@color/dark_orange2"
+                android:visibility="gone"
                 android:textSize="16sp" />
 
             <androidx.appcompat.widget.AppCompatTextView

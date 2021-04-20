@@ -599,7 +599,7 @@ class SetNewMpinActivity : AppCompatActivity() {
 //
 //
 //                        }
-                        val intent = Intent(this@SetNewMpinActivity, SetupFingerBiometricActivity::class.java)
+                        val intent = Intent(this@SetNewMpinActivity, MPINLoginActivity::class.java)
                         intent.putExtra("customerId",customerId)
                         startActivity(intent)
 

@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.arthanfinance.CustomerHomeTabResponse
 import com.example.arthanfinance.FingerPrintLoginActivity
+import com.example.arthanfinance.MPINLoginActivity
 import com.example.arthanfinance.R
 import com.example.arthanfinance.applyLoan.AuthenticationResponse
 import com.example.arthanfinance.applyLoan.LoanDetails
@@ -121,7 +122,7 @@ class HomeDashboardActivity : AppCompatActivity() {
                 ) {
                     val custData = response.body()
                     if (custData != null && custData.message?.trim() == "Success") {
-                        val intent = Intent(this@HomeDashboardActivity, FingerPrintLoginActivity::class.java)
+                        val intent = Intent(this@HomeDashboardActivity, MPINLoginActivity::class.java)
                         startActivity(intent)
                     }
                 }

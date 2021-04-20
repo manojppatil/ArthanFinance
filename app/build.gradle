@@ -59,5 +59,6 @@ dependencies {
     implementation 'com.github.aabhasr1:OtpView:v1.1.2-ktx'
     implementation 'com.otaliastudios:cameraview:1.6.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'androidx.exifinterface:exifinterface:1.1.0'
 
 }

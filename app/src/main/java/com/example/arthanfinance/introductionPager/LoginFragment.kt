@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.example.arthanfinance.FingerPrintLoginActivity
+import com.example.arthanfinance.MPINLoginActivity
 import com.example.arthanfinance.R
 import com.example.arthanfinance.RegistrationActivity
 
@@ -29,7 +30,8 @@ class LoginFragment : Fragment() {
 
         btnLogin = view.findViewById(R.id.btn_login)
         btnLogin.setOnClickListener{
-            val intent = Intent(activity?.applicationContext, FingerPrintLoginActivity::class.java)
+//            val intent = Intent(activity?.applicationContext, FingerPrintLoginActivity::class.java)
+            val intent = Intent(activity?.applicationContext, MPINLoginActivity::class.java)
             startActivity(intent)
         }
 

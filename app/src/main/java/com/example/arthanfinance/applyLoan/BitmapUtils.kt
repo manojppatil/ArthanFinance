@@ -1,11 +1,13 @@
 package com.example.arthanfinance.applyLoan
 
+import android.R.attr
 import android.graphics.Bitmap
 import android.util.Base64
+import io.reactivex.Observable
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
-import io.reactivex.Observable
+
 
 object BitmapUtils {
 
@@ -23,19 +25,13 @@ object BitmapUtils {
     fun saveBitmapToFile(bitmap: Bitmap, fileName: File): Observable<String> {
         return io.reactivex.Observable.create { subscriber ->
 
-            /*val pictureFile = if (fileName == null)
-                FileUtil.createImgFile()
-            else
-                FileUtil.createImgFile(fileName)*/
-
-            /*val matrix = Matrix()
-            //this will prevent mirror effect
-            if (fromFrontCam)
-                matrix.preScale(-1.0f, 1.0f)
-            val b = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)*/
+            val fOut = FileOutputStream(fileName)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut)
+            fOut.flush()
+            fOut.close()
 
             val fos = FileOutputStream(fileName)
-            val isCompresssed = bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
             fos.flush()
             fos.close()
             subscriber.onNext(fileName.absolutePath)

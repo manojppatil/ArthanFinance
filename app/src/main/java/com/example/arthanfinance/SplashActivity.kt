@@ -42,7 +42,8 @@ class SplashActivity : AppCompatActivity() {
                 val intent = Intent(this@SplashActivity, IntroductionPagerActivity::class.java)
                 startActivity(intent)
             } else {
-                val intent = Intent(this@SplashActivity, FingerPrintLoginActivity::class.java)
+//                val intent = Intent(this@SplashActivity, FingerPrintLoginActivity::class.java)//
+                val intent = Intent(this@SplashActivity, MPINLoginActivity::class.java)
                 startActivity(intent)
             }
             // Your Code
