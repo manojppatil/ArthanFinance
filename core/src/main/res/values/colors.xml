@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="black">#000000</color>
+    <color name="whisper">#E5E5E5</color>
+    <color name="dark_orange1">#FF9300</color>
+    <color name="dark_orange2">#ff8c00 </color>
+    <color name="white">#FFFFFF</color>
+    <color name="indigo">#003FB2</color>
+    <color name="light_indigo">#3C6DC7</color>
+    <color name="grey">#F1F1F1</color>
+    <color name="light_grey">#515151</color>
+    <color name="chinese_silver">#CCCCCC</color>
+    <color name="dark_grey">#A9A9A9</color>
+    <color name="white_smoke">#F3F3F3</color>
+    <color name="grey_92">#EBEBEB</color>
+    <color name="sky_blue">#89BDF9</color>
+    <color name="whinter_sky_blue">#0067F5</color>
+    <color name="very_light_grey">#CACACA</color>
+    <color name="gains_boro">#DCDCDC</color>
+    <color name="dark_blue">#00214C</color>
+    <color name="indigoBlue">#0B41AC</color>
+    <color name="grey_87">#DEDEDE</color>
+    <color name="ford_grey">#979797</color>
+    <color name="blue_1">#1955BB</color>
+    <color name="dim_grey">#E3E3E3</color>
+    <color name="light_green">#11BF42</color>
+    <color name="title_label_color">#838383</color>
+    <color name="bg_theme_color">#EDEDED</color>
+</resources>

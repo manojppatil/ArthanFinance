@@ -94,18 +94,6 @@
             app:otp_text_size="24dp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_enter_otp_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_enter_6"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="21dp"
-            android:layout_marginRight="25dp"
-            android:text="02:15"
-            android:textColor="@color/indigo"
-            android:textSize="16sp" />
-
-        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_resend_otp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -113,6 +101,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="33dp"
             android:text="@string/resend_otp"
+            android:visibility="gone"
             android:textColor="@color/dark_orange2"
             android:textSize="18sp" />
 

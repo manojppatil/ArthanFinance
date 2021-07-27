@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,28 +28,28 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginLeft="24dp"
                     android:layout_marginTop="38dp"
-                    android:background="@drawable/ic_back"/>
+                    android:background="@drawable/ic_back" />
 
                 <TextView
                     android:id="@+id/tv_register"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="30dp"
+                    android:layout_toEndOf="@id/img_back_mpin"
                     android:layout_toRightOf="@id/img_back_mpin"
                     android:text="@string/set_new_mpin"
                     android:textColor="@color/indigo"
-                    android:textSize="22sp"
-                    android:layout_toEndOf="@id/img_back_mpin"
-                    android:layout_marginStart="8dp" />
+                    android:textSize="22sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_otp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_register"
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="22dp"
-                    android:layout_below="@id/tv_register"
                     android:text="@string/used_to_login"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
@@ -63,312 +65,59 @@
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
-                <LinearLayout
-                    android:id="@+id/ll_enter_mpin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/mpin"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="9dp"
-                    android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/txt1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_grey_rect"
-                        android:inputType="number"
-                        android:maxEms="1"
-                        android:maxLength="1"
-                        android:focusableInTouchMode="false"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:gravity="center" />
-
-
-                    <EditText
-                        android:id="@+id/txt2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:inputType="number"
-                        android:maxEms="1"
-                        android:editable="false"
-                        android:maxLength="1"
-                        android:focusableInTouchMode="false"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:background="@drawable/bg_grey_rect"
-                        android:gravity="center" />
-
-                    <EditText
-                        android:id="@+id/txt3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:inputType="number"
-                        android:maxEms="1"
-                        android:maxLength="1"
-                        android:focusableInTouchMode="false"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:background="@drawable/bg_grey_rect"
-                        android:gravity="center" />
-
-                    <EditText
-                        android:id="@+id/txt4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:inputType="number"
-                        android:maxEms="1"
-                        android:maxLength="1"
-                        android:focusableInTouchMode="false"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:background="@drawable/bg_grey_rect"
-                        android:gravity="center" />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/mpin"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="23dp"
-                    android:layout_marginRight="72dp"
-                    android:src="@drawable/ic_eye" />
-
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_mpin2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/ll_enter_mpin"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="27dp"
-                    android:text="@string/enter_new_mpin"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <LinearLayout
-                    android:id="@+id/ll_enter_mpin2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_mpin2"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="9dp"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/newTxt1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_grey_rect"
-                        android:inputType="number"
-                        android:maxEms="1"
-                        android:maxLength="1"
-                        android:focusableInTouchMode="false"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:gravity="center" />
-
-                    <EditText
-                        android:id="@+id/newtxt2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:maxEms="1"
-                        android:maxLength="1"
-                        android:inputType="number"
-                        android:focusableInTouchMode="false"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:background="@drawable/bg_grey_rect"
-                        android:gravity="center" />
-
-                    <EditText
-                        android:id="@+id/newTxt3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:maxEms="1"
-                        android:maxLength="1"
-                        android:inputType="number"
-                        android:focusableInTouchMode="false"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:background="@drawable/bg_grey_rect"
-                        android:gravity="center" />
-
-                    <EditText
-                        android:id="@+id/newTxt4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:inputType="number"
-                        android:maxEms="1"
-                        android:maxLength="1"
-                        android:focusableInTouchMode="false"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:background="@drawable/bg_grey_rect"
-                        android:gravity="center" />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_mpin2"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="23dp"
-                    android:layout_marginRight="72dp"
-                    android:src="@drawable/ic_eye" />
             </RelativeLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dimen_24">
-
-                <LinearLayout
-                    android:id="@+id/ll_circle_row1"
-                    android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:gravity="center">
+                <com.chaos.view.PinView
+                    android:id="@+id/pinView"
+                    style="@style/PinWidget.PinView"
+                    android:layout_width="wrap_content"
+                    android:inputType="number"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginTop="35dp"
-                    android:orientation="horizontal">
+                    android:layout_alignBottom="@+id/mpin" />
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn1"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:background="@drawable/bg_circle_orange_rect"
-                        android:text="1"
-                        android:textColor="@color/white"
-                        android:textSize="24sp" />
+            </LinearLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/mpin2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_otp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="27dp"
+                android:text="Confirm New Pin"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn2"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:layout_marginLeft="28dp"
-                        android:background="@drawable/bg_circle_orange_rect"
-                        android:text="2"
-                        android:textColor="@color/white"
-                        android:textSize="24sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:gravity="center">
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn3"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:layout_marginLeft="28dp"
-                        android:background="@drawable/bg_circle_orange_rect"
-                        android:text="3"
-                        android:textColor="@color/white"
-                        android:textSize="24sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_circle_row2"
-                    android:layout_width="match_parent"
+                <com.chaos.view.PinView
+                    android:id="@+id/pinView2"
+                    style="@style/PinWidget.PinView"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/ll_circle_row1"
-                    android:gravity="center"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal">
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn4"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:background="@drawable/bg_circle_orange_rect"
-                        android:text="4"
-                        android:textColor="@color/white"
-                        android:textSize="24sp" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn5"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:layout_marginLeft="28dp"
-                        android:background="@drawable/bg_circle_orange_rect"
-                        android:text="5"
-                        android:textColor="@color/white"
-                        android:textSize="24sp" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn6"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:layout_marginLeft="28dp"
-                        android:background="@drawable/bg_circle_orange_rect"
-                        android:text="6"
-                        android:textColor="@color/white"
-                        android:textSize="24sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_circle_row3"
-                    android:layout_width="match_parent"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:layout_alignBottom="@+id/mpin" />
+                <Button
+                    android:id="@+id/save_m_pin"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/ll_circle_row2"
-                    android:gravity="center"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal">
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn7"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:background="@drawable/bg_circle_orange_rect"
-                        android:text="7"
-                        android:textColor="@color/white"
-                        android:textSize="24sp" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn8"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:layout_marginLeft="28dp"
-                        android:background="@drawable/bg_circle_orange_rect"
-                        android:text="8"
-                        android:textColor="@color/white"
-                        android:textSize="24sp" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn9"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:layout_marginLeft="28dp"
-                        android:background="@drawable/bg_circle_orange_rect"
-                        android:text="9"
-                        android:textColor="@color/white"
-                        android:textSize="24sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_circle_row4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/ll_circle_row3"
-                    android:layout_marginTop="15dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn10"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:background="@drawable/bg_circle_orange_rect"
-                        android:text="0"
-                        android:textColor="@color/white"
-                        android:textSize="24sp" />
-                </LinearLayout>
-
-            </RelativeLayout>
+                    android:layout_marginTop="30dp"
+                    android:layout_gravity="center"
+                    android:text="SAVE MPIN"
+                    android:textColor="@color/white" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

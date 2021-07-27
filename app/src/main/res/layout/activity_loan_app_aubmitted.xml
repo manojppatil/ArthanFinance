@@ -50,7 +50,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
                 android:gravity="center"
-                android:text="Your loan amount is Approved "
+                android:text="Your Loan Application is Submitted for review"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -125,6 +125,7 @@
                     android:text="Go to My Rewards"
                     android:textColor="@color/dark_orange2"
                     android:textSize="24sp"
+                    android:visibility="gone"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatButton

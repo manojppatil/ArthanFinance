@@ -121,7 +121,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginRight="25dp"
                     android:background="@drawable/bg_grey92_rect"
-                    android:ems="10"
+                    android:maxLength="10"
                     android:hint="Enter mobile number"
                     android:inputType="number"
                     android:paddingStart="19dp"
@@ -182,6 +182,10 @@
                     android:hint="@string/email_id"
                     android:paddingStart="19dp"
                     android:paddingVertical="11dp"
+                    android:inputType="textEmailAddress"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textSize="16sp"
                     app:hintTextColor="@color/very_light_grey" />
 

@@ -10,6 +10,7 @@
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="124dp"
+        android:id="@+id/root"
         android:background="@drawable/bg_white_rect"
         android:orientation="vertical">
         <LinearLayout

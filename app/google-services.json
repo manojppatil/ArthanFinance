@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "909339808477",
+    "project_id": "pragati-app-a8ebb",
+    "storage_bucket": "pragati-app-a8ebb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:909339808477:android:6a467ac9a7dd331b464134",
+        "android_client_info": {
+          "package_name": "com.av.arthanfinance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "909339808477-9u9ha1spleqjfm23eu1bu3jee8hk27fu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhwbil5S3eV_UzdCURzIgXSfak_7P0htk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "909339808477-9u9ha1spleqjfm23eu1bu3jee8hk27fu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
