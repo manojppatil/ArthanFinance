@@ -26,8 +26,7 @@ class MPINLoginActivity : BaseActivity() {
     private lateinit var mpintext: EditText
     private lateinit var mobileText: EditText
     private lateinit var apiClient: ApiClient
-    override val layoutId: Int
-        get() = R.layout.layout_mpin_login
+    override val layoutId: Int get() = R.layout.layout_mpin_login
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

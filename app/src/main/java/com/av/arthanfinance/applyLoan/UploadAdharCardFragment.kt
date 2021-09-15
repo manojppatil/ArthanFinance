@@ -337,7 +337,7 @@ class UploadAdharCardFragment : Fragment() {
                     val finalFilePath = "file://${filepath}"
                     val fileUri = Uri.parse(finalFilePath)
                     val intent = CropImage.activity(fileUri)
-                        .getIntent(context!!)
+                        .getIntent(requireContext())
                     if (requestCode == REQ_CODE_AADHAR_FP)
                         startActivityForResult(intent, CROP_REQ_CODE_AADHAR_FP)
                     else
@@ -347,7 +347,7 @@ class UploadAdharCardFragment : Fragment() {
                     try {
                         val fileUri = data!!.data
                         val intent = CropImage.activity(fileUri)
-                            .getIntent(context!!)
+                            .getIntent(requireContext())
                         if (requestCode == AAADHAR_FRONT)
                             startActivityForResult(intent, CROP_AAADHAR_FRONT)
                         else

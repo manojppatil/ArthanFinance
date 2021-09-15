@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
+        android:background="@color/indigo">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+
+            android:layout_marginStart="@dimen/dimen_50"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="@dimen/dimen_20"
+            android:src="@drawable/ic_arthan_logo" />
+        <ImageView
+            android:id="@+id/edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/scrollview"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/dimen_50"
+            android:src="@drawable/ic_edit_icon" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logo"
+            android:id="@+id/scrollview"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="25dp"
+                    android:text="@string/your_name"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/edt_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/bg_grey92_rect"
+                    android:ems="10"
+                    android:hint="Your name"
+                    android:paddingStart="19dp"
+                    android:paddingVertical="11dp"
+                    android:textSize="16sp"
+                    app:hintTextColor="@color/very_light_grey" />
+
+                <TextView
+                    android:id="@+id/tv_mob_num"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginRight="25dp"
+                    android:text="@string/mob_no"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/edt_mob_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/bg_grey92_rect"
+                    android:maxLength="10"
+                    android:hint="Enter mobile number"
+                    android:inputType="number"
+                    android:paddingStart="19dp"
+                    android:paddingVertical="11dp"
+                    android:textSize="16sp"
+                    app:hintTextColor="@color/very_light_grey" />
+
+                <TextView
+                    android:id="@+id/tv_dob"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginRight="25dp"
+                    android:text="@string/dob"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/edt_dob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/bg_grey92_rect"
+                    android:ems="10"
+                    android:hint="DD/MM/YYYY"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:paddingStart="19dp"
+                    android:paddingVertical="11dp"
+                    android:textSize="16sp"
+                    app:hintTextColor="@color/very_light_grey" />
+
+                <TextView
+                    android:id="@+id/tv_email"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginRight="25dp"
+                    android:text="@string/email_id"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/edt_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/bg_grey92_rect"
+                    android:ems="10"
+                    android:hint="@string/email_id"
+                    android:paddingStart="19dp"
+                    android:paddingVertical="11dp"
+                    android:inputType="textEmailAddress"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="16sp"
+                    app:hintTextColor="@color/very_light_grey" />
+                <TextView
+                    android:id="@+id/tv_pan"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginRight="25dp"
+                    android:text="PAN Card Number"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/edt_pan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/bg_grey92_rect"
+                    android:ems="10"
+                    android:hint="Pan number"
+                    android:paddingStart="19dp"
+                    android:paddingVertical="11dp"
+                    android:inputType="textEmailAddress"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="16sp"
+                    app:hintTextColor="@color/very_light_grey" />
+
+                <TextView
+                    android:id="@+id/tv_residency"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginRight="25dp"
+                    android:text="Residence Address"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/edt_residency"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/bg_grey92_rect"
+                    android:ems="10"
+                    android:hint="Residence address"
+                    android:paddingStart="19dp"
+                    android:paddingVertical="11dp"
+                    android:inputType="textEmailAddress"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="16sp"
+                    app:hintTextColor="@color/very_light_grey" />
+
+                <TextView
+                    android:id="@+id/tv_office"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginRight="25dp"
+                    android:text="Office Address"
+                    android:inputType="textPostalAddress"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/edt_office"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/bg_grey92_rect"
+                    android:ems="10"
+                    android:hint="office address"
+                    android:paddingStart="19dp"
+                    android:paddingVertical="11dp"
+                    android:inputType="textEmailAddress"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="16sp"
+                    app:hintTextColor="@color/very_light_grey" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_update"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_50"
+                    android:layout_margin="25dp"
+                    android:background="@drawable/bg_register_rect_orange"
+                    android:paddingTop="@dimen/dimen_10"
+                    android:text="Update"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="@dimen/dimen_50"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

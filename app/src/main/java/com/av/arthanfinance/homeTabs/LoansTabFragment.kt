@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.av.arthanfinance.CustomerHomeTabResponse
 import com.av.arthanfinance.R
 import com.av.arthanfinance.applyLoan.*
@@ -45,7 +46,7 @@ class LoansTabFragment : Fragment() {
         totalAvailedAmount.text = "5,00,000.00"
         limitText.text = "Limit(${getString(R.string.Rs)})"
         totalLimitValue.text = "10,00,000.00"
-        loansRecyclerview.layoutManager = LinearLayoutManager(activity?.applicationContext, LinearLayout.VERTICAL, false)
+        loansRecyclerview.layoutManager = LinearLayoutManager(activity?.applicationContext, RecyclerView.VERTICAL, false)
         applyforNewLoan.setOnClickListener{
             val intent = Intent(activity?.applicationContext,
                 InitiateApplyLoanActivity::class.java)

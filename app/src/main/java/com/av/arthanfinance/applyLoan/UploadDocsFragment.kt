@@ -101,7 +101,7 @@ class UploadDocsFragment : Fragment() {
         bankStatementsRecyclerView = view.findViewById<RecyclerView>(R.id.bankStatementsRecyclerView)
         bankStatementsRecyclerView.layoutManager = LinearLayoutManager(
             activity?.applicationContext,
-            LinearLayout.VERTICAL,
+            RecyclerView.VERTICAL,
             false
         )
 

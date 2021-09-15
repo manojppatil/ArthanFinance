@@ -133,7 +133,7 @@ class ReferenceDetailsFragment : Fragment() {
     }
 
     fun isValidPhoneNumber(phoneNumber: CharSequence?): Boolean {
-        return if (phoneNumber == null || phoneNumber.length < 6 || phoneNumber.length > 13) {
+        return if (phoneNumber == null || phoneNumber.length < 10) {
             false
         } else {
             Patterns.PHONE.matcher(phoneNumber).matches()

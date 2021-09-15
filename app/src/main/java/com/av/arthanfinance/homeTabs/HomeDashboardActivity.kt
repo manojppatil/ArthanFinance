@@ -13,6 +13,7 @@ import com.av.arthanfinance.MPINLoginActivity
 import com.av.arthanfinance.R
 import com.av.arthanfinance.applyLoan.AuthenticationResponse
 import com.av.arthanfinance.networkService.ApiClient
+import com.av.arthanfinance.profile.ProfileFragment
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_no_loan_dashboard.*
@@ -26,7 +27,7 @@ class HomeDashboardActivity : BaseActivity() {
     private val withLoanHomeFragment = WithLoanHomeFragment()
     private val loansTabFragment = LoansTabFragment()
     private val businessTabFragment = BusinessTabFragment()
-    private val profileTabFragment = ProfileTabFragment()
+    private val profileTabFragment = ProfileFragment()
     private val fragmentManager = supportFragmentManager
     private var activeFragment: Fragment = noLoanHomeFragment
     private var isLoansAvailable: Boolean = false
@@ -41,15 +42,14 @@ class HomeDashboardActivity : BaseActivity() {
         val gson = Gson()
         val json: String? = mPrefs?.getString("customerData", null)
         if(json != null) {
-            val obj: CustomerHomeTabResponse = gson.fromJson(
-                json,
-                CustomerHomeTabResponse::class.java
-            )
+            val obj: CustomerHomeTabResponse = gson.fromJson(json, CustomerHomeTabResponse::class.java)
             customerData = obj
 
             noLoanHomeFragment.customerData = customerData
             withLoanHomeFragment.customerData = customerData
             loansTabFragment.customerData = customerData
+            profileTabFragment.customerData =customerData
+
             if (isLoansAvailable) { //redirect to loans dashboard
                 fragmentManager.beginTransaction().apply {
                     add(R.id.container, profileTabFragment, "profile").hide(profileTabFragment)
@@ -126,7 +126,7 @@ class HomeDashboardActivity : BaseActivity() {
                 ) {
                     hideProgressDialog()
                     val custData = response.body()
-                    if (custData != null && custData.message?.trim() == "Success") {
+                    if (custData != null && custData.message.trim() == "Success") {
                         val intent = Intent(
                             this@HomeDashboardActivity,
                             MPINLoginActivity::class.java

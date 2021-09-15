@@ -37,14 +37,16 @@ class OTPActivity : BaseActivity() {
         btnSubmit = findViewById(R.id.btn_submit)
         btnSubmit.setOnClickListener{
             val otp = otpView.otp
-            if(otp != null && otp != "") {
+            if(otp != null && otp != "" && otp.length == 4) {
                 verifyOTP(otp)
+            }else{
+                Toast.makeText(this@OTPActivity,"Please enter the valid OTP", Toast.LENGTH_SHORT).show()
             }
         }
 
         val mobileNo = intent.extras?.get("mobNo") as String
         val maskedMobileNo = mobileNo.substring(mobileNo.length - 2, mobileNo.length)
-        mobileTextView.setText("Enter the 6 digit OTP sent on mobile number XXXXXXXX${maskedMobileNo}")
+        mobileTextView.text = "Enter the 6 digit OTP sent on mobile number XXXXXXXX${maskedMobileNo}"
 
         btnBack = findViewById(R.id.img_back_otp)
         btnBack.setOnClickListener {
@@ -88,3 +90,4 @@ class OTPActivity : BaseActivity() {
         })
     }
 }
+///////Test Commit

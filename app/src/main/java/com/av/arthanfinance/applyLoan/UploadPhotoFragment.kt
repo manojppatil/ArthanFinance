@@ -176,15 +176,14 @@ class UploadPhotoFragment : Fragment() {
                     val filepath = data?.extras?.get("FilePath")
                     val finalFilePath = "file://${filepath}"
                     val fileUri = Uri.parse(finalFilePath)
-                    val intent = CropImage.activity(fileUri)
-                        .getIntent(context!!)
+                    val intent = CropImage.activity(fileUri).getIntent(requireContext())
                     startActivityForResult(intent,CROP_REQUEST_CODE_CAMERA)
                 }
                 REQUEST_CODE_GALLERY->{
                     try {
                         val fileUri = data!!.data
                         val intent = CropImage.activity(fileUri)
-                            .getIntent(context!!)
+                            .getIntent(requireContext())
                         startActivityForResult(intent, CROP_REQUEST_CODE_GALLERY)
                     }catch (e : Exception){
                         Log.e("Exception",e.toString())

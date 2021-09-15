@@ -13,7 +13,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -58,7 +58,7 @@
                         android:layout_marginTop="@dimen/dimen_20"
                         android:layout_marginHorizontal="22dp"
                         android:progressDrawable="@drawable/layer_layout"
-                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        style="?android:attr/progressBarStyleHorizontal"
                         android:layout_height="8dp"/>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -189,6 +189,7 @@
                 app:boxStrokeColor="@color/grey"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 android:layout_height="wrap_content">
+
                 <AutoCompleteTextView
                     android:id="@+id/tenureDropDown"
                     android:layout_width="match_parent"

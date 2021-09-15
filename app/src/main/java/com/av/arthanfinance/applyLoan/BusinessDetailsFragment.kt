@@ -103,7 +103,7 @@ class BusinessDetailsFragment : Fragment() {
         radioGroup = view.findViewById(R.id.radio_group)
         apiClient = ApiClient()
 
-        val mPrefs: SharedPreferences? = activity!!.getSharedPreferences("categoriesList", Context.MODE_PRIVATE)
+        val mPrefs: SharedPreferences? = requireActivity()!!.getSharedPreferences("categoriesList", Context.MODE_PRIVATE)
         val gson = Gson()
         val json: String? = mPrefs?.getString("categoriesList", null)
         if(json != null) {//ArrayList<Category>
@@ -170,11 +170,10 @@ class BusinessDetailsFragment : Fragment() {
 
         dateOfIncorporation.setOnClickListener {
             view.clearFocus()
-            hideSoftKeyboard(activity!!,it)
+            hideSoftKeyboard(requireActivity(),it)
             val picker: DialogFragment = DatePickerFragment()
-            picker.show(fragmentManager!!, "datePicker")
+            picker.show(requireFragmentManager(), "datePicker")
         }
-
 
         loanResponse = arguments?.getSerializable("loanResponse") as LoanProcessResponse
 
@@ -555,7 +554,7 @@ open class DatePickerFragment : DialogFragment(),
         val day = c[Calendar.DAY_OF_MONTH]
 
 // Create a new instance of DatePickerDialog and return it
-        return DatePickerDialog(activity!!, this, year, month, day)
+        return DatePickerDialog(requireActivity(), this, year, month, day)
     }
 
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
@@ -563,7 +562,6 @@ open class DatePickerFragment : DialogFragment(),
         c[year, month] = day
         val sdf = SimpleDateFormat("dd/MM/yyyy")
         val formattedDate: String = sdf.format(c.time)
-        (activity!!.findViewById(R.id.edt_dateOfIncorporation) as EditText).setText(formattedDate)
-
+        (requireActivity().findViewById(R.id.edt_dateOfIncorporation) as EditText).setText(formattedDate)
     }
 }

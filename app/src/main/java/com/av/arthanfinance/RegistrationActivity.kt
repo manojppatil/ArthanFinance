@@ -1,5 +1,6 @@
 package com.av.arthanfinance
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -47,6 +48,7 @@ class RegistrationActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
         emailText = findViewById(R.id.edt_email)
         btnTC = findViewById(R.id.accept_tc)
 
+
         dobText.setOnClickListener {
             val calendar: Calendar = Calendar.getInstance()
             val datePickerDialog =
@@ -60,14 +62,13 @@ class RegistrationActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
             if(nameText.text.isNotEmpty() && mobileNoText.text.isNotEmpty() && dobText.text.isNotEmpty()) {
 
                 if(!isValidPhoneNumber(mobileNoText.text)) {
-                    Toast.makeText(this@RegistrationActivity,"Please enter VALID Mobile Number.",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@RegistrationActivity,
+                        "Please enter VALID Mobile Number.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     return@setOnClickListener
                 }
-
-//                if(!isValidMail(emailText.text.trim().toString())) {
-//                    Toast.makeText(this@RegistrationActivity,"Please enter VALID EMAIL.",Toast.LENGTH_SHORT).show()
-//                    return@setOnClickListener
-//                }
 
                 if(!btnTC.isChecked) {
                     Toast.makeText(this@RegistrationActivity,"Please accept terms and Conditions.",Toast.LENGTH_SHORT).show()

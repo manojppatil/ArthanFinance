@@ -100,7 +100,6 @@ class InitiateApplyLoanActivity : BaseActivity() {
         ObjectAnimator.ofInt(progress_loan, "progress", percentCompleted).setDuration(1000).start()
         tv_progresspercent.text = "${percentCompleted}%"
 
-
         val paint: TextPaint = tvLoanApplication.getPaint()
         val width = paint.measureText("Loan Application")
         val shader = LinearGradient(0f, 0f, width, tvLoanApplication.textSize, resources.getColor(
@@ -110,13 +109,13 @@ class InitiateApplyLoanActivity : BaseActivity() {
         tvLoanApplication.setTextColor(resources.getColor(R.color.dark_orange2, theme))
 
         val amountTextPaint: TextPaint = loan_amount_text.getPaint()
-        val amountTextwidth = amountTextPaint.measureText("Loan Application")
+        val amountTextWidth = amountTextPaint.measureText("Loan Application")
 
-        val amountTextshader = LinearGradient(0f, 0f, amountTextwidth, loan_amount_text.textSize, resources.getColor(
+        val amountTextShader = LinearGradient(0f, 0f, amountTextWidth, loan_amount_text.textSize, resources.getColor(
             R.color.dark_orange2, theme), resources.getColor(
             R.color.indigoBlue, theme), Shader.TileMode.CLAMP)
-        loan_amount_text.paint.shader = amountTextshader
-        emiMonthly.paint.shader = amountTextshader
+        loan_amount_text.paint.shader = amountTextShader
+        emiMonthly.paint.shader = amountTextShader
 
         tenureDropDown = findViewById(R.id.tenureDropDown)
         val bankNamesAdapter = ArrayAdapter(this,
@@ -184,7 +183,6 @@ class InitiateApplyLoanActivity : BaseActivity() {
             getPRLoanDetails(it)
         }
     }
-
 
     override fun onResume() {
         super.onResume()

@@ -8,6 +8,7 @@ import com.av.arthanfinance.applyLoan.model.GenericResponse
 import com.av.arthanfinance.models.BusinessDetails
 import com.av.arthanfinance.models.CustomerBankDetailsResponse
 import com.av.arthanfinance.models.CustomerTotalLoansResponse
+import com.av.arthanfinance.profile.ProfileResponse
 import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -145,7 +146,14 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     fun saveCustomerBankDetails(@Body loanInfo: JsonObject): Call<LoanProcessResponse>
 
+    @GET("getProfile")
+    fun getProfile(@Query("mobileNo") mobileNo: String): Call<ProfileResponse>
+
     @GET("getPRBankDetails")
     fun getPRBankDetails(@Query("loanId") loanId: String): Call<CustomerBankDetailsResponse>
+
+    @POST("updateProfile")
+    @Headers("Content-Type: application/json")
+    fun updateProfile(@Body updateJson: JsonObject): Call<AuthenticationResponse>
 
 }

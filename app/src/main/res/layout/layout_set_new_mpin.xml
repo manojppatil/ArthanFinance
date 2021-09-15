@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/indigo"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
@@ -28,7 +30,8 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginLeft="24dp"
                     android:layout_marginTop="38dp"
-                    android:background="@drawable/ic_back" />
+                    android:background="@drawable/ic_back"
+                    android:backgroundTint="@color/dark_orange2" />
 
                 <TextView
                     android:id="@+id/tv_register"
@@ -40,7 +43,7 @@
                     android:layout_toEndOf="@id/img_back_mpin"
                     android:layout_toRightOf="@id/img_back_mpin"
                     android:text="@string/set_new_mpin"
-                    android:textColor="@color/indigo"
+                    android:textColor="@color/dark_orange2"
                     android:textSize="22sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -51,7 +54,7 @@
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="22dp"
                     android:text="@string/used_to_login"
-                    android:textColor="@color/black"
+                    android:textColor="@color/dark_orange2"
                     android:textSize="18sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -62,7 +65,7 @@
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="27dp"
                     android:text="@string/enter_new_mpin"
-                    android:textColor="@color/black"
+                    android:textColor="@color/dark_orange2"
                     android:textSize="16sp" />
 
 
@@ -73,11 +76,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:gravity="center">
+
                 <com.chaos.view.PinView
                     android:id="@+id/pinView"
                     style="@style/PinWidget.PinView"
                     android:layout_width="wrap_content"
                     android:inputType="number"
+                    android:textColor="@color/dark_orange2"
+                    app:lineColor="@color/dark_orange2"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/mpin" />
 
@@ -90,7 +96,7 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="27dp"
                 android:text="Confirm New Pin"
-                android:textColor="@color/black"
+                android:textColor="@color/dark_orange2"
                 android:textSize="16sp" />
 
             <LinearLayout
@@ -106,17 +112,27 @@
                     style="@style/PinWidget.PinView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/mpin"
                     android:imeOptions="actionDone"
                     android:inputType="number"
-                    android:layout_alignBottom="@+id/mpin" />
+                    android:textColor="@color/dark_orange2"
+                    app:lineColor="@color/dark_orange2"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
                 <Button
                     android:id="@+id/save_m_pin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:minWidth="200dp"
                     android:layout_marginTop="30dp"
                     android:layout_gravity="center"
-                    android:text="SAVE MPIN"
-                    android:textColor="@color/white" />
+                    android:text="Save Mpin"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:backgroundTint="@color/dark_orange2"
+                    android:textColor="#4E342E" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

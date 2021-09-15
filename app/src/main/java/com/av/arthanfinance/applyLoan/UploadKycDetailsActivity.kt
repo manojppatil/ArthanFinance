@@ -33,7 +33,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class UploadKycDetailsActivity : BaseActivity(), UploadAdharCardFragment.UpdateLoanResponseData {
     private lateinit var tvPersonalDetails: TextView
     private lateinit var imgBack: ImageView
@@ -66,7 +65,6 @@ class UploadKycDetailsActivity : BaseActivity(), UploadAdharCardFragment.UpdateL
         imgBack = findViewById(R.id.img_back)
         progressRegistrationBar = findViewById(R.id.progress_registration)
         registrationProgressPercent = findViewById(R.id.tv_progresspercent)
-
 
         val percentCompleted = 23 //to be achieved from BE
         progressRegistrationBar.max = 100
@@ -110,7 +108,7 @@ class UploadKycDetailsActivity : BaseActivity(), UploadAdharCardFragment.UpdateL
                     ArthanFinConstants.MOVE_TO_BUSINESS_DETAILS,
                     false
                 )){
-                selectIndex(4)
+                selectIndex(6)
             }
         }
 
@@ -153,10 +151,7 @@ class UploadKycDetailsActivity : BaseActivity(), UploadAdharCardFragment.UpdateL
     // This function is used to add items in arraylist and assign
     // the adapter to view pager
     private fun setupViewPager(viewpager: ViewPager) {
-        var adapter: ViewPagerAdapter =
-            ViewPagerAdapter(
-                supportFragmentManager
-            )
+        val adapter = ViewPagerAdapter(supportFragmentManager)
 
         val bundle = Bundle()
         bundle.putSerializable("loanResponse", loanResponse)
@@ -175,13 +170,10 @@ class UploadKycDetailsActivity : BaseActivity(), UploadAdharCardFragment.UpdateL
         uploadDocsFragment.arguments = bundle
         referenceDetailsFragment.arguments = bundle
 
-
-
         adapter.addFragment(panCardFragment, "Your KYC Details")
         adapter.addFragment(photoFragment, "Upload Photo")
         adapter.addFragment(aadharPicFragment, "Upload Aadhaar")
         adapter.addFragment(aadharDetailsFragment, "Address")
-
 
         adapter.addFragment(businessDetailsFragment, "Business Details")
         adapter.addFragment(uploadDocsFragment, "Upload Documents")
@@ -193,10 +185,10 @@ class UploadKycDetailsActivity : BaseActivity(), UploadAdharCardFragment.UpdateL
 
     class ViewPagerAdapter : FragmentPagerAdapter {
 
-        private final var fragmentList1: ArrayList<Fragment> = ArrayList()
-        private final var fragmentTitleList1: ArrayList<String> = ArrayList()
+        private var fragmentList1: ArrayList<Fragment> = ArrayList()
+        private var fragmentTitleList1: ArrayList<String> = ArrayList()
 
-        public constructor(supportFragmentManager: FragmentManager)
+        constructor(supportFragmentManager: FragmentManager)
                 : super(supportFragmentManager)
 
         override fun getItem(position: Int): Fragment {

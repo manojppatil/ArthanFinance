@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -33,55 +34,57 @@
                     android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="30dp"
                     android:layout_toRightOf="@id/img_back"
                     android:text="Apply for Loan"
                     android:textColor="@color/white"
-                    android:textSize="22sp"
-                    android:layout_marginStart="8dp" />
+                    android:textSize="22sp" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
                     android:id="@+id/progress_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_50"
                     android:layout_below="@id/tv_name"
                     android:orientation="vertical">
 
                     <ProgressBar
                         android:id="@+id/progress_loanPercent"
-                        android:layout_width="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/dimen_20"
-                        android:layout_marginHorizontal="22dp"
-                        android:progressDrawable="@drawable/layer_layout"
                         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                        android:layout_height="8dp"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="22dp"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:progressDrawable="@drawable/layer_layout" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_marginHorizontal="22dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="22dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Completed"
-                            android:textSize="14sp"
                             android:layout_marginTop="5dp"
-                            android:textColor="@color/white"/>
+                            android:text="Completed"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
+
                         <TextView
                             android:id="@+id/tv_progresspercent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="23%"
-                            android:textSize="14sp"
                             android:layout_marginTop="5dp"
-                            android:textColor="#15DA4C"/>
+                            android:text="23%"
+                            android:textColor="#15DA4C"
+                            android:textSize="14sp" />
                     </LinearLayout>
 
 
@@ -95,8 +98,8 @@
                     android:layout_marginLeft="13dp"
                     android:layout_marginTop="22dp"
                     android:layout_marginRight="@dimen/dimen_24"
-                    android:text="Loan Application"
                     android:layout_marginBottom="@dimen/dimen_10"
+                    android:text="Loan Application"
                     android:textSize="22sp" />
 
             </RelativeLayout>
@@ -104,7 +107,7 @@
             <FrameLayout
                 android:id="@+id/container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

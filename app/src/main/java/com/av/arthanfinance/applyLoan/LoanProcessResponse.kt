@@ -202,7 +202,6 @@ class LoansResponse : Serializable {
 
 }
 
-
 class FileUploadResponse : Serializable {
     @SerializedName("docId")
     @Expose
