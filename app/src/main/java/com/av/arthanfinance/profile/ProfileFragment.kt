@@ -34,7 +34,10 @@ class ProfileFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
-        view.findViewById<Button>(R.id.btn_update)?.setOnClickListener {
+
+       // getProfileData()
+
+        /*view.findViewById<Button>(R.id.btn_update)?.setOnClickListener {
             updateProfileData()
         }
         view.findViewById<EditText>(R.id.edt_dob)?.setOnClickListener {
@@ -44,11 +47,11 @@ class ProfileFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                     Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
             datePickerDialog.datePicker.maxDate = calendar.timeInMillis
             datePickerDialog.show()
-        }
+        }*/
         return view
     }
 
-    private fun updateProfileData() {
+    /*private fun updateProfileData() {
         (activity as HomeDashboardActivity).showProgressDialog()
         val jsonObject = JsonObject()
         jsonObject.addProperty("name", view?.findViewById<EditText>(R.id.edt_name)?.text.toString())
@@ -99,7 +102,6 @@ class ProfileFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         getProfileData()
     }
 
-
     private fun getProfileData() {
         (activity as HomeDashboardActivity).showProgressDialog()
         val context = getContext()
@@ -147,11 +149,11 @@ class ProfileFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         }
 
     }
-
+*/
     override fun onDateSet(datePicker: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        val text =  view?.findViewById<EditText>(R.id.edt_dob)
+        /*val text =  view?.findViewById<EditText>(R.id.edt_dob)
         val date = "${dayOfMonth}/${month + 1}/${year}"
-        text?.setText(date)
+        text?.setText(date)*/
     }
 
 

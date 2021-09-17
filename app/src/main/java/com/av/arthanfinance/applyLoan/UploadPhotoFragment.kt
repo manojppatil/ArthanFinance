@@ -273,6 +273,7 @@ class UploadPhotoFragment : Fragment() {
         })
 
     }
+
     private fun updatePhotoDetails() {
         val applicantType = (activity as UploadKycDetailsActivity?)?.loanResponse!!.applicantType
         var custId = loanResponse?.customerId

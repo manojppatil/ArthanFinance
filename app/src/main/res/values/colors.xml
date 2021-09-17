@@ -10,6 +10,7 @@
     <color name="white">#FFFFFF</color>
     <color name="indigo">#003FB2</color>
     <color name="light_indigo">#3C6DC7</color>
+    <color name="indigo_transparent">#B3003FB2</color>
     <color name="grey">#F1F1F1</color>
     <color name="light_grey">#515151</color>
     <color name="chinese_silver">#CCCCCC</color>

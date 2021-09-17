@@ -46,9 +46,13 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     fun registerCustomer(@Body customerDetails: JsonObject): Call<AuthenticationResponse>
 
-    @POST("verifyRegistrationOTP")
+    @POST("sendOTP")
     @Headers("Content-Type: application/json")
-    fun verifyRegistrationOTP(@Body optDetails: JsonObject): Call<AuthenticationResponse>
+    fun sendOTP(@Body customerDetails: JsonObject): Call<OtpResponse>
+
+    @POST("verifyOTPforCustomer")
+    @Headers("Content-Type: application/json")
+    fun verifyOTPForCustomer(@Body optDetails: JsonObject): Call<AuthenticationResponse>
 
     @POST("setCustomerPin")
     @Headers("Content-Type: application/json")

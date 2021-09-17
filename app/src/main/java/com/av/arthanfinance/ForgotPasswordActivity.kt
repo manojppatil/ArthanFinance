@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.arthanfinance.core.base.BaseActivity
+import com.av.arthanfinance.applyLoan.AuthenticationResponse
 import com.av.arthanfinance.applyLoan.model.GenericResponse
 import com.av.arthanfinance.homeTabs.HomeDashboardActivity
 import com.av.arthanfinance.networkService.ApiClient
@@ -65,9 +66,8 @@ class ForgotPasswordActivity : BaseActivity() {
         jsonObject.addProperty("mobileNo", edtMobile.text.toString())
         jsonObject.addProperty("otp", edtOtp.text.toString())
         showProgressDialog()
-        ApiClient().getAuthApiService(this).verifyOTP(jsonObject).enqueue(object :
-            Callback<GenericResponse> {
-            override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+        ApiClient().getAuthApiService(this).verifyOTPForCustomer(jsonObject).enqueue(object : Callback<AuthenticationResponse> {
+            override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
 
                 hideProgressDialog()
                 t.printStackTrace()
@@ -78,8 +78,8 @@ class ForgotPasswordActivity : BaseActivity() {
             }
 
             override fun onResponse(
-                call: Call<GenericResponse>,
-                response: Response<GenericResponse>
+                call: Call<AuthenticationResponse>,
+                response: Response<AuthenticationResponse>
             ) {
                 hideProgressDialog()
                 val genericResponse = response.body()

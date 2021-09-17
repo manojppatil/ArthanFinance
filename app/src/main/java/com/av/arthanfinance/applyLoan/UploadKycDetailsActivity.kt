@@ -52,7 +52,6 @@ class UploadKycDetailsActivity : BaseActivity(), UploadAdharCardFragment.UpdateL
     override val layoutId: Int
         get() = R.layout.activity_viewpager
 
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

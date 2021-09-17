@@ -26,10 +26,6 @@ class NoLoanHomeFragment : Fragment() {
         R.drawable.image41
     )
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val imagesList = arrayListOf<ImageData>()
         val posters = resources.obtainTypedArray(R.array.posters)
@@ -48,13 +44,23 @@ class NoLoanHomeFragment : Fragment() {
 
         val loginTime = customerData?.lastLoginTime
         customerLastLogin.text = loginTime
-        customerData?.customerImage?.let {
-            Glide
-                .with(this@NoLoanHomeFragment)
-                .load(it).fitCenter()
-                .placeholder(R.drawable.ic_arthan_logo)
-                .into(circleImg);
+        if (customerData?.customerImage.equals("") || customerData?.customerImage == null){
+                Glide
+                    .with(this@NoLoanHomeFragment)
+                    .load(R.drawable.ic_user).fitCenter()
+                    .placeholder(R.drawable.ic_arthan_logo)
+                    .into(circleImg);
+
+        }else{
+            customerData?.customerImage?.let {
+                Glide
+                    .with(this@NoLoanHomeFragment)
+                    .load(it).fitCenter()
+                    .placeholder(R.drawable.ic_arthan_logo)
+                    .into(circleImg);
+            }
         }
+
 
         posters.recycle()
         cardSliderViewPager.adapter = customerData?.let { CarouselImageAdapter(imagesList, it) }
@@ -75,7 +81,7 @@ class NoLoanHomeFragment : Fragment() {
 
         customerName = view.findViewById(R.id.customerName)
         customerLastLogin = view.findViewById(R.id.customerLastLogin)
-        circleImg = view.findViewById<CircleImageView>(R.id.circle_img)
+        circleImg = view.findViewById(R.id.circle_img)
         return view
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_login_bg">
@@ -8,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -21,31 +23,58 @@
                 android:layout_marginTop="141dp"
                 android:src="@drawable/ic_login" />
 
-            <TextView
-                android:id="@+id/tv_reg_mob"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="41dp"
-                android:layout_marginTop="21dp"
-                android:text="@string/reg_mob_no"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:layout_marginTop="21dp">
 
-            <EditText
-                android:id="@+id/edt_mobile"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="41dp"
-                android:paddingStart="@dimen/dimen_20"
-                android:maxLength="10"
-                android:maxEms="10"
-                android:inputType="number"
-                android:hint="Enter Mobile Number"
-                android:textColor="@color/white"
-                android:layout_marginTop="4dp"
-                android:background="@drawable/bg_light_indigo_solid"
-                android:ems="10" />
+                <EditText
+                    android:id="@+id/edt_mobile"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="41dp"
+                    android:background="@drawable/bg_light_indigo_solid"
+                    android:hint="Enter Mobile Number"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:drawableEnd="@drawable/ic_edit_profile"
+                    android:paddingStart="@dimen/dimen_20"
+                    android:paddingLeft="@dimen/dimen_20"
+                    android:paddingEnd="@dimen/dimen_20"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <!--<EditText
+                    android:id="@+id/edt_mobile"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="41dp"
+                    android:background="@drawable/bg_light_indigo_solid"
+                    android:hint="Enter Mobile Number"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:paddingStart="@dimen/dimen_20"
+                    android:paddingLeft="@dimen/dimen_20"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_edit_number"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_edit_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:padding="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_edit_profile" />-->
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/tv_mpin"
@@ -68,6 +97,7 @@
                 android:hint="Enter MPIN"
                 android:textColor="@color/white"
                 android:layout_marginTop="4dp"
+                android:maxLength="4"
                 android:inputType="numberPassword"
                 android:imeOptions="actionDone"
                 android:layout_marginRight="28dp"

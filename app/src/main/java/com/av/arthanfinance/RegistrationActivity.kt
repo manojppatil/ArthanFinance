@@ -131,14 +131,14 @@ class RegistrationActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
                 val custData = response.body()
                 if (custData != null) {
                     if (custData.apiCode == "200") {
-                        custData.customerId?.let {
+                        Toast.makeText(this@RegistrationActivity,"Registration success",Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@RegistrationActivity, OTPActivity::class.java)
+                        intent.putExtra("customerId", custData.customerId)
+                        intent.putExtra("mobNo", mobile)
+                        startActivity(intent)
+                        /*custData.customerId?.let {
                             saveCustomerData(name, email, mobile, dob, it)
-                            Toast.makeText(this@RegistrationActivity,"Registration success",Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this@RegistrationActivity, OTPActivity::class.java)
-                            intent.putExtra("customerId",it)
-                            intent.putExtra("mobNo",mobile)
-                            startActivity(intent)
-                        }
+                        }*/
                     } else {
                         Toast.makeText(this@RegistrationActivity,custData.message ,Toast.LENGTH_SHORT).show()
                     }
@@ -149,7 +149,7 @@ class RegistrationActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
 
     //method for saving records in database
     private fun saveCustomerData(name: String, email: String, mobile: String, dob: String, custId: String) {
-        val databaseHandler: DatabaseHandler = DatabaseHandler(this)
+        val databaseHandler = DatabaseHandler(this)
         if (name.trim() != "" && email.trim() != "" && mobile.trim() != "") {
             val status = databaseHandler.saveCustomer(Customer(name, email, mobile,dob,custId, null))
             if (status > -1) {

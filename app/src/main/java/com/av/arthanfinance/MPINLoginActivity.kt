@@ -45,10 +45,7 @@ class MPINLoginActivity : BaseActivity() {
         val gson = Gson()
         val json: String? = mPrefs?.getString("customerData", null)
         if(json != null) {
-            val customerData: CustomerHomeTabResponse = gson.fromJson(
-                json,
-                CustomerHomeTabResponse::class.java
-            )
+            val customerData: CustomerHomeTabResponse = gson.fromJson(json, CustomerHomeTabResponse::class.java)
             mobileText.setText(customerData.mobNo)
         }
 
@@ -70,7 +67,7 @@ class MPINLoginActivity : BaseActivity() {
             }
             false
         }
-//        btnLogin.performClick()
+
     }
 
     private fun verifyCustomerPin() {
@@ -97,15 +94,9 @@ class MPINLoginActivity : BaseActivity() {
                 hideProgressDialog()
                 val custData = response.body()
                 if (custData != null && custData.errCode == 200.toString()) {
-                    val intent = Intent(
-                        this@MPINLoginActivity,
-                        HomeDashboardActivity::class.java
-                    )
+                    val intent = Intent(this@MPINLoginActivity, HomeDashboardActivity::class.java)
                     intent.putExtra("customerData", custData)
-                    val sharedPref: SharedPreferences? = getSharedPreferences(
-                        "customerData",
-                        Context.MODE_PRIVATE
-                    )
+                    val sharedPref: SharedPreferences? = getSharedPreferences("customerData", Context.MODE_PRIVATE)
                     val prefsEditor = sharedPref?.edit()
                     val gson = Gson()
                     val json: String = gson.toJson(custData)

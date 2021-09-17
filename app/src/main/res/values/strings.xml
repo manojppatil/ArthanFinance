@@ -87,4 +87,9 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="demo_user_name">Jitesh Ramlaal Singh</string>
+    <string name="your_pan_number">Pan Number</string>
+    <string name="demo_date">09/05/1991</string>
+    <string name="residence_address_label">Residence Address</string>
+    <string name="demo_address">Arthan Finance , Near Ravi Talkies, Old Town, Bhubaneswar</string>
 </resources>

@@ -164,6 +164,30 @@ class AuthenticationResponse : Serializable {
 
 }
 
+class OtpResponse : Serializable {
+
+    @SerializedName("destination")
+    @Expose
+    val destination: String? = null
+
+    @SerializedName("id")
+    @Expose
+    val id: String? = null
+
+    @SerializedName("mrid")
+    @Expose
+    val mrid: String? = null
+
+    @SerializedName("segment")
+    @Expose
+    val segment: String? = null
+
+    @SerializedName("status")
+    @Expose
+    val status: String? = null
+
+}
+
 class LoanDetails : Serializable {
     @SerializedName("loanId")
     @Expose

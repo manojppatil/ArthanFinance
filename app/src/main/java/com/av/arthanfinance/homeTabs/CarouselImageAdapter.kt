@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.dashboard_carousel_card.view.*
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarouselImageViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.dashboard_carousel_card, parent, false)
-        view.applyLoan.setOnClickListener {
+        view.parentHome.setOnClickListener {
             val intent = Intent(it.context, InitiateApplyLoanActivity::class.java)
             intent.putExtra(ArthanFinConstants.IS_CREATE_FLOW,true)
             intent.putExtra("customerData", customerData)

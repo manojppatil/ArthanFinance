@@ -54,6 +54,20 @@ class ApiClient {
         return apiService
     }
 
+    fun getOtpApiService(context: Context): ApiService {
+        // Initialize ApiService if not initialized yet
+        if (!::apiService.isInitialized) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://arthanfin.com/JerseyDemos/rest/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okhttpClient(context)) // Add our Okhttp client
+                .build()
+
+            apiService = retrofit.create(ApiService::class.java)
+        }
+        return apiService
+    }
+
     fun getPaytmApiService(context: Context): ApiService {
         // Initialize ApiService if not initialized yet
         if (!::apiService.isInitialized) {
