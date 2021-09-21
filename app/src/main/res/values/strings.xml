@@ -69,7 +69,7 @@
     <string name="bus_name">Business Name</string>
     <string name="doc">Date of Incorporation</string>
     <string name="constitution">Constitution</string>
-    <string name="standard_loan">A standard loan processing  fees (2%) will be applicable to you in order to continue</string>
+    <string name="standard_loan">A standard loan processing  fees (2.5%) + GST will be applicable to you in order to continue</string>
     <string name="app_sub">Your Application has been completed and its ready to submit</string>
     <string name="Rs">\u20B9</string>
     <string name="city_name">City <font color='#FF0000'>*</font></string>

@@ -227,7 +227,6 @@ class InitiateApplyLoanActivity : BaseActivity() {
                 loanProcessResponse = response
             }
         })
-
     }
 
     private fun getEmiRoi() {
@@ -237,7 +236,7 @@ class InitiateApplyLoanActivity : BaseActivity() {
             return
         }
         val loanAmount = loanAmountEditText.text.toString().replace(",","").replace(".00","")
-        jsonObject.addProperty("customerId", customerData?.customerId)
+        jsonObject.addProperty("customerId", customerData.customerId)
         jsonObject.addProperty("loanAmt", loanAmount)
         jsonObject.addProperty("tenure", tenure)
 
@@ -346,8 +345,7 @@ class InitiateApplyLoanActivity : BaseActivity() {
         currentLocation?.longitude?.let {
             jsonObject.addProperty("lng",it)
         }
-
-
+        
         apiClient.getAuthApiService(this).applyForLoan(jsonObject).enqueue(object : Callback<LoanProcessResponse> {
             override fun onResponse(call: Call<LoanProcessResponse>, response: Response<LoanProcessResponse>) {
                 hideProgressDialog()
@@ -376,15 +374,13 @@ class InitiateApplyLoanActivity : BaseActivity() {
         dialogBuilder.setMessage("Do you want to add Co-Applicant")
             // if the dialog is cancelable
             .setCancelable(false)
-            .setPositiveButton("Yes", DialogInterface.OnClickListener {
-                    dialog, id ->
+            .setPositiveButton("Yes") { dialog, id ->
                 dialog.dismiss()
-                navigateToKycDetailsActivity(loanResponse,false)
-            }).setNegativeButton("No", DialogInterface.OnClickListener {
-                    dialog, id ->
+                navigateToKycDetailsActivity(loanResponse, false)
+            }.setNegativeButton("No") { dialog, id ->
                 dialog.dismiss()
-                navigateToKycDetailsActivity(loanResponse,true)
-            })
+                navigateToKycDetailsActivity(loanResponse, true)
+            }
 
         val alert = dialogBuilder.create()
         alert.setTitle("Co-Applicant Data")

@@ -116,7 +116,7 @@ class UploadKycDetailsActivity : BaseActivity(), UploadAdharCardFragment.UpdateL
         }
     }
 
-    public fun selectIndex(newIndex: Int, custId: String? = "") {
+    fun selectIndex(newIndex: Int, custId: String? = "") {
         tab_viewpager.currentItem = newIndex
         if (newIndex ==4){
             tab_viewpager.adapter?.notifyDataSetChanged()
@@ -178,7 +178,6 @@ class UploadKycDetailsActivity : BaseActivity(), UploadAdharCardFragment.UpdateL
         adapter.addFragment(uploadDocsFragment, "Upload Documents")
         adapter.addFragment(referenceDetailsFragment, "Reference Details")
 
-        // setting adapter to view pager.
         viewpager.adapter = adapter
     }
 
@@ -210,7 +209,8 @@ class UploadKycDetailsActivity : BaseActivity(), UploadAdharCardFragment.UpdateL
     }
 
     override fun sendData(loanProcessResponse: LoanProcessResponse) {
-        loanResponse?.let { aadharDetailsFragment.loadAddressData(it) }
+        loanResponse?.let {
+            aadharDetailsFragment.loadAddressData(it) }
     }
 
     private fun getCategoryAndSegmentData() {

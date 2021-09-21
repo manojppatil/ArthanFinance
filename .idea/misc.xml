@@ -7,6 +7,7 @@
         <entry key="..\:/Android Projects/Working Projects/ArthanFinance/ArthanFinance/app/src/main/res/drawable/bg_grey92_rect.xml" value="0.2734375" />
         <entry key="..\:/Android Projects/Working Projects/ArthanFinance/ArthanFinance/app/src/main/res/drawable/bg_light_indigo_solid.xml" value="0.2734375" />
         <entry key="..\:/Android Projects/Working Projects/ArthanFinance/ArthanFinance/app/src/main/res/drawable/bg_register_rect_orange.xml" value="0.2734375" />
+        <entry key="..\:/Android Projects/Working Projects/ArthanFinance/ArthanFinance/app/src/main/res/drawable/bg_spinner.xml" value="0.19907407407407407" />
         <entry key="..\:/Android Projects/Working Projects/ArthanFinance/ArthanFinance/app/src/main/res/drawable/ic_adhar_pic.xml" value="0.2734375" />
         <entry key="..\:/Android Projects/Working Projects/ArthanFinance/ArthanFinance/app/src/main/res/drawable/ic_camera_icon_yellow.xml" value="0.2734375" />
         <entry key="..\:/Android Projects/Working Projects/ArthanFinance/ArthanFinance/app/src/main/res/drawable/ic_camera_small_icon.xml" value="0.2734375" />
@@ -27,6 +28,7 @@
         <entry key="..\:/Android Projects/Working Projects/ArthanFinance/ArthanFinance/app/src/main/res/layout/content_main.xml" value="0.25729166666666664" />
         <entry key="..\:/Android Projects/Working Projects/ArthanFinance/ArthanFinance/app/src/main/res/layout/dashboard_carousel_card.xml" value="0.25729166666666664" />
         <entry key="..\:/Android Projects/Working Projects/ArthanFinance/ArthanFinance/app/src/main/res/layout/fragment_aadhar_details.xml" value="0.27395833333333336" />
+        <entry key="..\:/Android Projects/Working Projects/ArthanFinance/ArthanFinance/app/src/main/res/layout/fragment_business_details.xml" value="0.25729166666666664" />
         <entry key="..\:/Android Projects/Working Projects/ArthanFinance/ArthanFinance/app/src/main/res/layout/fragment_home_tab.xml" value="0.27395833333333336" />
         <entry key="..\:/Android Projects/Working Projects/ArthanFinance/ArthanFinance/app/src/main/res/layout/fragment_loans_tab.xml" value="0.27395833333333336" />
         <entry key="..\:/Android Projects/Working Projects/ArthanFinance/ArthanFinance/app/src/main/res/layout/fragment_login.xml" value="0.25729166666666664" />

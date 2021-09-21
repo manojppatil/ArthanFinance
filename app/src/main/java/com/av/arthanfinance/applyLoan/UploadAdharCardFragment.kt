@@ -232,8 +232,6 @@ class UploadAdharCardFragment : Fragment() {
             aadharBackImgView.tag = 2
         }
 
-
-
          val isCreateFlow = arguments?.getBoolean(ArthanFinConstants.IS_CREATE_FLOW, false)
         isCreateFlow?.let {
             if (!it){
@@ -494,7 +492,9 @@ class UploadAdharCardFragment : Fragment() {
                 docResponse?.customerId?.let {
                     (activity as UploadKycDetailsActivity?)?.coAppCustId = it
                 }
-                loanResponse?.let { loanResponseData?.sendData(it) }
+                loanResponse?.let {
+                    loanResponseData?.sendData(it)
+                }
                 (activity as UploadKycDetailsActivity?)?.selectIndex(3)
             }
 

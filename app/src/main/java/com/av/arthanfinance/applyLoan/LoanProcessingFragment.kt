@@ -63,7 +63,7 @@ class LoanProcessingFragment : Fragment() {
 
         val processingFee = loanResponse?.fee
         val roi = loanResponse?.roi
-        var pf = "2%"
+        var pf = "2.5%"
         val loanTerm = loanResponse?.loanTerm
         val loanAmount = loanResponse?.loanAmt
         val emi = loanResponse?.emi
@@ -71,11 +71,8 @@ class LoanProcessingFragment : Fragment() {
         if(loanResponse?.pf?.isNotEmpty()!!){
             pf = "A standard loan processing  fees (${loanResponse?.pf!!}) will be applicable to you in order to continue"
         }
-       // val df = DecimalFormat("##,##,##0").format(processingFee);
 
-        processeingAmount.text = "${activity?.applicationContext?.resources?.getString(
-            R.string.Rs
-        )} ${processingFee}"
+        processeingAmount.text = "${activity?.applicationContext?.resources?.getString(R.string.Rs)} ${processingFee}"
         roiText.text = roi
         pfText.text = pf
         loanTermText.text = "${loanTerm} Months"
@@ -83,8 +80,6 @@ class LoanProcessingFragment : Fragment() {
         emiText.text = emi
 
         btnProceed.setOnClickListener{
-           // proceedWithPayment()
-
             val fragment = CongratulationsFragment()
             val fragmentManger = activity?.supportFragmentManager
             val transaction = fragmentManger?.beginTransaction()
@@ -118,7 +113,6 @@ class LoanProcessingFragment : Fragment() {
                 print(transactionURLRsponse)
                 val paytmURL = transactionURLRsponse.paytmUrl
                 print(paytmURL)
-
             }
 
             override fun onFailure(call: Call<LoanProcessResponse>, t: Throwable) {

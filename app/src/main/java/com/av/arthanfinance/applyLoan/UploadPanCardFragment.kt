@@ -186,7 +186,6 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                 customerPhoneNo.isEnabled = false
             }
         })
-
     }
 
     private var REQ_CODE_PAN_ID = 322
@@ -369,8 +368,7 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                     ).show()
                 } else {
                     if (panDetailsUpdateResposne.nextScreen == "CUST_IMG") {
-                        (activity as UploadKycDetailsActivity).coAppCustId =
-                            panDetailsUpdateResposne.customerId!!
+                        (activity as UploadKycDetailsActivity).coAppCustId = panDetailsUpdateResposne.customerId!!
                         (activity as UploadKycDetailsActivity).selectIndex(1)
                     }
                 }

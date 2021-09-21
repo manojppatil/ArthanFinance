@@ -48,8 +48,7 @@ class LoansTabFragment : Fragment() {
         totalLimitValue.text = "10,00,000.00"
         loansRecyclerview.layoutManager = LinearLayoutManager(activity?.applicationContext, RecyclerView.VERTICAL, false)
         applyforNewLoan.setOnClickListener{
-            val intent = Intent(activity?.applicationContext,
-                InitiateApplyLoanActivity::class.java)
+            val intent = Intent(activity?.applicationContext, InitiateApplyLoanActivity::class.java)
             intent.putExtra(ArthanFinConstants.IS_CREATE_FLOW,true)
             intent.putExtra("customerData", customerData)
             startActivity(intent)

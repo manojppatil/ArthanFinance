@@ -170,9 +170,9 @@
                     android:layout_alignParentEnd="true"/>
 
                 <ImageView
+                    android:id="@+id/aadharBack"
                     android:layout_width="152dp"
                     android:layout_height="86dp"
-                    android:id="@+id/aadharBack"
                     android:layout_centerInParent="true"
                     android:src="@drawable/ic_adhar_pic" />
 

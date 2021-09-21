@@ -214,7 +214,6 @@ class ReferenceDetailsFragment : Fragment() {
                     intent.putExtra("loanResponse", loanResponse)
                     startActivity(intent)
                     // (activity as UploadKycDetailsActivity?)?.selectIndex(7)
-
                 }
 
                 override fun onFailure(call: Call<LoanProcessResponse>, t: Throwable) {
@@ -239,7 +238,6 @@ class ReferenceDetailsFragment : Fragment() {
                 override fun onFailure(call: Call<CustomerReferenceResponse>, t: Throwable) {
                     t.printStackTrace()
                     (activity as UploadKycDetailsActivity).hideProgressDialog()
-
                 }
 
                 override fun onResponse(
