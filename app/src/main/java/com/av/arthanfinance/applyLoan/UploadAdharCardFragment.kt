@@ -429,6 +429,8 @@ class UploadAdharCardFragment : Fragment() {
         if((activity as UploadKycDetailsActivity?)?.coAppCustId!!.isNotEmpty()) {
             custId = (activity as UploadKycDetailsActivity?)?.coAppCustId
         }
+        (activity as UploadKycDetailsActivity).showProgressDialog()
+
         val jsonObject = JsonObject()
         jsonObject.addProperty("loanId", loanResponse?.loanId)
         jsonObject.addProperty("customerId", custId)
@@ -449,6 +451,7 @@ class UploadAdharCardFragment : Fragment() {
                     "Aadhar photo uploaded successfully",
                     Toast.LENGTH_SHORT
                 ).show()
+                (activity as UploadKycDetailsActivity).hideProgressDialog()
             }
 
             override fun onFailure(call: Call<LoanProcessResponse>, t: Throwable) {
@@ -458,6 +461,7 @@ class UploadAdharCardFragment : Fragment() {
                     "Service Failure, Once Network connection is stable, will try to resend again",
                     Toast.LENGTH_SHORT
                 ).show()
+                (activity as UploadKycDetailsActivity).hideProgressDialog()
             }
         })
     }

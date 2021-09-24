@@ -44,6 +44,10 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import android.widget.RadioButton
+
+
+
 
 
 class BusinessDetailsFragment : Fragment() {
@@ -188,7 +192,9 @@ class BusinessDetailsFragment : Fragment() {
             if (!isCreateFlow!!){
                 (activity as UploadKycDetailsActivity?)?.selectIndex(5)
             }else
-                 saveCustomerBusinessData()
+                if (hasValidAadharDetailsData()){
+                    saveCustomerBusinessData()
+                }
         }
 
         radioGroup.setOnCheckedChangeListener { radioGroup, i ->
@@ -326,13 +332,64 @@ class BusinessDetailsFragment : Fragment() {
         imm.hideSoftInputFromWindow(view.applicationWindowToken, 0)
     }
 
-    private fun saveCustomerBusinessData() {
+    private fun hasValidAadharDetailsData(): Boolean {
+        if (businessName.text.isNullOrEmpty()){
+            Toast.makeText(activity?.applicationContext, "Please Add Your Business Name", LENGTH_SHORT).show()
+            return false
+        }else if (dateOfIncorporation.text.isNullOrEmpty()){
+            Toast.makeText(activity?.applicationContext, "Please Add Your Business Incorporation Date", LENGTH_SHORT).show()
+            return false
+        }else if (constitutionSpiner.selectedItem.toString().equals("")){
+            Toast.makeText(activity?.applicationContext, "Please Add Your Constitution", LENGTH_SHORT).show()
+            return false
+        }else if (categorySpiner.selectedItem.toString().equals("")){
+            Toast.makeText(activity?.applicationContext, "Please Add Your Business Category", LENGTH_SHORT).show()
+            return false
+        }else if (segmentSpinner.selectedItem.toString().equals("")){
+            Toast.makeText(activity?.applicationContext, "Please Add Your Business Segment", LENGTH_SHORT).show()
+            return false
+        }else if (typeSpinner.selectedItem.toString().equals("")){
+            Toast.makeText(activity?.applicationContext, "Please Add Your Business Type", LENGTH_SHORT).show()
+            return false
+        }else if (turnOver.text.toString().equals("")){
+            Toast.makeText(activity?.applicationContext, "Please Specify Your Business Turnover", LENGTH_SHORT).show()
+            return false
+        }else if (percentage.text.toString().equals("")){
+            Toast.makeText(activity?.applicationContext, "Please Specify Your Income Margin", LENGTH_SHORT).show()
+            return false
+        }else if (income.text.toString().equals("")){
+            Toast.makeText(activity?.applicationContext, "Please Specify Your Monthly Income", LENGTH_SHORT).show()
+            return false
+        }else if (expense.text.toString().equals("")){
+            Toast.makeText(activity?.applicationContext, "Please  Specify Your Monthly Expense", LENGTH_SHORT).show()
+            return false
+        }else if (percentage.text.toString().equals("")){
+            Toast.makeText(activity?.applicationContext, "Please Add Your Business category", LENGTH_SHORT).show()
+            return false
+        }else if (radioGroup.checkedRadioButtonId == -1){
+            Toast.makeText(activity?.applicationContext, "Please Select Your Address Preference", LENGTH_SHORT).show()
+            return false
+        }else if (radioGroup.checkedRadioButtonId != -1){
+            val radioButtonID = radioGroup.checkedRadioButtonId
+            val radioButton = radioGroup.findViewById<View>(radioButtonID) as RadioButton
+            val selectedText = radioButton.text as String
+            if (selectedText.equals("No")){
+                if (address.text.toString().equals("")){
+                    Toast.makeText(activity?.applicationContext, "Please Select Your Business Address", LENGTH_SHORT).show()
+                    return false
+                }else{
+                    return true
+                }
+            }
+        }
+        return true
+    }
 
+    private fun saveCustomerBusinessData() {
         if ( (activity as UploadKycDetailsActivity).currentLocation == null){
             FiniculeUtil.showGPSNotEnabledDialog(requireContext())
             return
         }
-
         val jsonObject = JsonObject()
         (activity as UploadKycDetailsActivity).showProgressDialog()
 
@@ -370,24 +427,6 @@ class BusinessDetailsFragment : Fragment() {
                 ) {
                     (activity as UploadKycDetailsActivity).hideProgressDialog()
                     (activity as UploadKycDetailsActivity?)?.selectIndex(5)
-//                        val fragment =
-//                            UploadDocsFragment()
-//                        val fragmentManger = activity?.supportFragmentManager
-//                        val transaction = fragmentManger?.beginTransaction()
-//                        val args = Bundle()
-//                        args.putString("loanId", loanResponse?.loanId)
-//                        args.putString("customerId", loanResponse?.customerId)
-//                        fragment.setArguments(args)
-//
-//                        transaction?.setCustomAnimations(
-//                            R.anim.enter_from_right,
-//                            R.anim.exit_to_left,
-//                            R.anim.enter_from_left,
-//                            R.anim.exit_to_right
-//                        )
-//                        transaction?.replace(R.id.container, fragment)
-//                        transaction?.addToBackStack(null)
-//                        transaction?.commit()
                 }
 
                 override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
@@ -456,9 +495,7 @@ class BusinessDetailsFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
         if (resultCode == Activity.RESULT_OK){
-
             when(requestCode){
                 REQ_CODE_PAN_ID->{
                     val filepath = data?.extras?.get("FilePath")
@@ -544,8 +581,7 @@ class BusinessDetailsFragment : Fragment() {
     }
 }
 
-open class DatePickerFragment : DialogFragment(),
-    OnDateSetListener {
+open class DatePickerFragment : DialogFragment(), OnDateSetListener {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 // Use the current date as the default date in the picker
         val c = Calendar.getInstance()

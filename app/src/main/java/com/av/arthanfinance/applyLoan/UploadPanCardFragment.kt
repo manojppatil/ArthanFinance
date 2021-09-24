@@ -291,6 +291,7 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     }
 
     private fun uploadPanImage(encodedImageStr: String?) {
+        (activity as UploadKycDetailsActivity).showProgressDialog()
         val applicantType = (activity as UploadKycDetailsActivity?)?.loanResponse!!.applicantType
         var custId = loanResponse?.customerId
         if ((activity as UploadKycDetailsActivity?)?.coAppCustId!!.isNotEmpty()) {
@@ -320,6 +321,7 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                     "PAN Details Uploaded successfully",
                     Toast.LENGTH_SHORT
                 ).show()
+                (activity as UploadKycDetailsActivity).hideProgressDialog()
             }
 
             override fun onFailure(call: Call<LoanProcessResponse>, t: Throwable) {
@@ -329,6 +331,7 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                     "Service Failure, Once Network connection is stable, will try to resend again",
                     Toast.LENGTH_SHORT
                 ).show()
+                (activity as UploadKycDetailsActivity).hideProgressDialog()
             }
         })
     }

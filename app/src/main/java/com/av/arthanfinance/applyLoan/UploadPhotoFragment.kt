@@ -219,6 +219,8 @@ class UploadPhotoFragment : Fragment() {
         if((activity as UploadKycDetailsActivity?)?.coAppCustId!!.isNotEmpty()) {
             custId = (activity as UploadKycDetailsActivity?)?.coAppCustId
         }
+        (activity as UploadKycDetailsActivity).showProgressDialog()
+
         val jsonObject = JsonObject()
         jsonObject.addProperty("loanId", loanResponse?.loanId)
         jsonObject.addProperty("customerId", custId)
@@ -232,11 +234,8 @@ class UploadPhotoFragment : Fragment() {
             Callback<LoanProcessResponse> {
             override fun onResponse(call: Call<LoanProcessResponse>, response: Response<LoanProcessResponse>) {
                 val docResponse = response.body()
-                Toast.makeText(
-                    context,
-                    "Photo Uploaded successfully",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(context, "Photo Uploaded successfully", Toast.LENGTH_SHORT).show()
+                (activity as UploadKycDetailsActivity).hideProgressDialog()
             }
 
             override fun onFailure(call: Call<LoanProcessResponse>, t: Throwable) {
@@ -246,6 +245,7 @@ class UploadPhotoFragment : Fragment() {
                     "Service Failure, Once Network connection is stable, will try to resend again",
                     Toast.LENGTH_SHORT
                 ).show()
+                (activity as UploadKycDetailsActivity).hideProgressDialog()
             }
         })
     }
@@ -290,6 +290,7 @@ class UploadPhotoFragment : Fragment() {
             Callback<LoanProcessResponse> {
             override fun onResponse(call: Call<LoanProcessResponse>, response: Response<LoanProcessResponse>) {
                 (activity as UploadKycDetailsActivity).hideProgressDialog()
+
                 val panDetailsUpdateResposne = response.body() as LoanProcessResponse
                 print(panDetailsUpdateResposne)
                 if(panDetailsUpdateResposne.apiStatus != "200"){

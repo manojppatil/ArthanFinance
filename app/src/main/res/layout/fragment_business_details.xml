@@ -332,7 +332,7 @@
                 android:layout_marginTop="4dp"
                 android:background="@drawable/bg_grey92_rect"
                 android:ems="10"
-                android:hint="Enter Income"
+                android:hint="Enter Income Margin"
                 android:inputType="numberDecimal"
                 android:paddingHorizontal="19dp"
                 android:paddingVertical="11dp"
@@ -374,7 +374,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="25dp"
                 android:layout_marginTop="16dp"
-                android:text="Expenses (Monthly)"
+                android:text="Expense (Monthly)"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -440,7 +440,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="25dp"
                 android:layout_marginTop="16dp"
-                android:text="Upload Business Card"
+                android:text="Upload Business Card/Business Photo"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 

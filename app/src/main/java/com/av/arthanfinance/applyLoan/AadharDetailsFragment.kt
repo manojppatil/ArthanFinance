@@ -33,9 +33,9 @@ class AadharDetailsFragment : Fragment() {
     private lateinit var address2: EditText
     private lateinit var address3: EditText
     private lateinit var pincodeText: EditText
-    private var stateList = arrayOf("Telangana", "Andhra Pradesh", "Tamil Nadu","Karnataka", "Maharastra")
+    private var stateList = arrayOf("Select State", "Telangana", "Andhra Pradesh", "Tamil Nadu","Karnataka", "Maharastra")
     private var cityList = arrayOf("Hyderabad", "Vizag", "Chennai","Bangalore", "Mumbai")
-
+    private var addressState = ""
     var loanResponse: LoanProcessResponse? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +50,7 @@ class AadharDetailsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_aadhar_details, container, false)
         btnNext = view.findViewById(R.id.btn_next_in_aadhar_details)
         stateDropDown = view.findViewById(R.id.stateDropDown)
-        cityDropDown = view.findViewById(R.id.cityDropDown)
+        //cityDropDown = view.findViewById(R.id.cityDropDown)
         address1 = view.findViewById(R.id.address_line1_text)
         address2 = view.findViewById(R.id.address_line2_text)
         address3 = view.findViewById(R.id.address_line3_text)
@@ -63,16 +63,15 @@ class AadharDetailsFragment : Fragment() {
 
         stateDropDown.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>,
-                                        view: View?, position: Int, id: Long) {
-
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                addressState = stateDropDown.selectedItem.toString()
             }
             override fun onNothingSelected(parent: AdapterView<*>) {
                 // write code to perform some action
             }
         }
 
-        val cityAdapter = activity?.let { ArrayAdapter(it,
+        /*val cityAdapter = activity?.let { ArrayAdapter(it,
             R.layout.emi_options, cityList) }
         cityDropDown.adapter = cityAdapter
 
@@ -85,7 +84,7 @@ class AadharDetailsFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>) {
                 // write code to perform some action
             }
-        }
+        }*/
         pincodeText.addTextChangedListener(pinCodeTextWatcher)
 
         val isCreateFlow = arguments?.getBoolean(ArthanFinConstants.IS_CREATE_FLOW,false)
@@ -108,7 +107,7 @@ class AadharDetailsFragment : Fragment() {
 
     private fun disableEditFeature(view: View) {
         stateDropDown.isEnabled = false
-        cityDropDown.isEnabled = false
+        //cityDropDown.isEnabled = false
         address1.isEnabled = false
         address2.isEnabled = false
         address3.isEnabled = false
@@ -128,6 +127,9 @@ class AadharDetailsFragment : Fragment() {
         }else if (pincodeText.text.isNullOrEmpty()){
             makeText(activity?.applicationContext,"Pincode is Empty",Toast.LENGTH_SHORT).show()
             return false
+        }else if (addressState.equals("") || addressState.equals("Select State")){
+            makeText(activity?.applicationContext,"Please Select State",Toast.LENGTH_SHORT).show()
+            return false
         }
         return true
     }
@@ -141,10 +143,17 @@ class AadharDetailsFragment : Fragment() {
         if (!isCreateFlow!!){
             return
         }
-        address1.setText(loanResponse.addressLine1)
-        address2.setText(loanResponse.addressLine2)
-        address3.setText(loanResponse.addressLine3)
+        val fullAddress = loanResponse.addressLine1
+        val data = fullAddress?.split(",", 2.toString())?.toTypedArray()
+        val add1 = data!![0] + "," + data[1] + "," + data[2] + "," + data[3]
+        val add2 =  data[4] + "," + data[5]
+        val add3 =  data[6] + "," + data[7]
+
+        address1.setText(add1)
+        address2.setText(add2)
+        address3.setText(add3)
         pincodeText.setText(loanResponse.pincode)
+        addressState = loanResponse.state.toString()
     }
 
     private val pinCodeTextWatcher = object : TextWatcher {
@@ -201,8 +210,8 @@ class AadharDetailsFragment : Fragment() {
         jsonObject.addProperty("addressLine2", address2.text.toString())
         jsonObject.addProperty("applicantType", applicantType)
         jsonObject.addProperty("addressLine3", address3.text.toString())
-        jsonObject.addProperty("city", cityDropDown.selectedItem.toString())
-        jsonObject.addProperty("state", stateDropDown.selectedItem.toString())
+        jsonObject.addProperty("city", "Bhubaneswar")
+        jsonObject.addProperty("state", addressState)
         jsonObject.addProperty("pincode", pincode)
 
         val context = activity?.applicationContext!!
@@ -309,20 +318,30 @@ class AadharDetailsFragment : Fragment() {
                 call: Call<LoanProcessResponse>,
                 response: Response<LoanProcessResponse>
             ) {
-                val response = response.body() as LoanProcessResponse
-                address1.setText(response.addressLine1)
-                address2.setText(response.addressLine2)
-                address3.setText(response.addressLine3)
-                pincodeText.setText(response.pincode)
-                response.city?.let {
+                val adharResponse = response.body() as LoanProcessResponse
+
+                val fullAddress = adharResponse.addressLine1
+                val data = fullAddress?.split(",", 2.toString())?.toTypedArray()
+                val add1 = data!![0] + "," + data[1] + "," + data[2] + "," + data[3]
+                val add2 =  data[4] + "," + data[5]
+                val add3 =  data[6] + "," + data[7]
+
+                address1.setText(add1)
+                address2.setText(add2)
+                address3.setText(add3)
+
+                pincodeText.setText(adharResponse.pincode)
+
+                /*adharResponse.city?.let {
                     for (index in cityList.indices){
                         if (cityList[index].equals(it,true)){
                             cityDropDown.setSelection(index,false)
                             break
                         }
                     }
-                }
-                response.state?.let {
+                }*/
+
+                adharResponse.state?.let {
                     for (index in stateList.indices){
                         if (stateList[index].equals(it,true)){
                             stateDropDown.setSelection(index,false)
@@ -334,4 +353,8 @@ class AadharDetailsFragment : Fragment() {
         })
 
     }
+
+
 }
+
+

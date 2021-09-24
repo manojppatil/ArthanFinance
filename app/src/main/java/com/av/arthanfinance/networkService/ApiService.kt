@@ -22,13 +22,13 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     fun applyForLoan(@Body userData: JsonObject): Call<LoanProcessResponse>
 
-    /*@POST("verifyCustomerKYCDocs")
-    @Headers("Content-Type: application/json")
-    fun verifyKYCDocs(@Body documentsData: JsonObject): Call<LoanProcessResponse>*/
-
-    @POST("verifyKYCDocs")
+    @POST("verifyCustomerKYCDocs")
     @Headers("Content-Type: application/json")
     fun verifyKYCDocs(@Body documentsData: JsonObject): Call<LoanProcessResponse>
+
+    /*@POST("verifyKYCDocs")
+    @Headers("Content-Type: application/json")
+    fun verifyKYCDocs(@Body documentsData: JsonObject): Call<LoanProcessResponse>*/
 
     @POST("updatePan")
     @Headers("Content-Type: application/json")
