@@ -92,6 +92,13 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
 
+        <activity android:name="in.digio.sdk.kyc.cropper.DigioCropImageActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
+
+        <activity android:name="in.digio.sdk.kyc.nativeflow.DigioIDAnalysisActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
+
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

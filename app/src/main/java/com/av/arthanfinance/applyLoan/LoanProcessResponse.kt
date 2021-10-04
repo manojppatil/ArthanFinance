@@ -226,6 +226,17 @@ class LoansResponse : Serializable {
 
 }
 
+class BankDetilsResponse : Serializable {
+    @SerializedName("verified")
+    @Expose
+    var verified: Boolean = false
+
+    @SerializedName("beneficiary_name_with_bank")
+    @Expose
+    var name: String = ""
+
+}
+
 class FileUploadResponse : Serializable {
     @SerializedName("docId")
     @Expose

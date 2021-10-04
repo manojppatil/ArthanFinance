@@ -3,8 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android Projects/Demo Projects/ArthanFinance/ArthanFinance/app/src/main/res/drawable/bg_white_smoke_rect.xml" value="0.2734375" />
+        <entry key="..\:/Android Projects/Demo Projects/ArthanFinance/ArthanFinance/app/src/main/res/layout/activity_demo.xml" value="0.25729166666666664" />
         <entry key="..\:/Android Projects/Demo Projects/ArthanFinance/ArthanFinance/app/src/main/res/layout/fragment_aadhar_details.xml" value="0.25729166666666664" />
         <entry key="..\:/Android Projects/Demo Projects/ArthanFinance/ArthanFinance/app/src/main/res/layout/fragment_business_details.xml" value="0.25729166666666664" />
+        <entry key="..\:/Android Projects/Demo Projects/ArthanFinance/ArthanFinance/app/src/main/res/layout/layout_upload_docs.xml" value="0.25729166666666664" />
+        <entry key="..\:/Android Projects/Demo Projects/ArthanFinance/ArthanFinance/app/src/main/res/layout/layout_upload_kyc_details.xml" value="0.25729166666666664" />
         <entry key="..\:/Android Projects/Working Projects/ArthanFinance/ArthanFinance/app/src/main/res/drawable/bg_dash_rect.xml" value="0.2734375" />
         <entry key="..\:/Android Projects/Working Projects/ArthanFinance/ArthanFinance/app/src/main/res/drawable/bg_grey92_rect.xml" value="0.2734375" />
         <entry key="..\:/Android Projects/Working Projects/ArthanFinance/ArthanFinance/app/src/main/res/drawable/bg_light_indigo_solid.xml" value="0.2734375" />

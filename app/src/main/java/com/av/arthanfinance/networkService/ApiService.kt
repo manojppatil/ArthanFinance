@@ -4,6 +4,7 @@ import com.av.arthanfinance.CustomerHomeTabResponse
 import com.av.arthanfinance.applyLoan.*
 import com.av.arthanfinance.applyLoan.model.BusinessTypesResponse
 import com.av.arthanfinance.applyLoan.model.CustomerReferenceResponse
+import com.av.arthanfinance.applyLoan.model.DigioPanResponse
 import com.av.arthanfinance.applyLoan.model.GenericResponse
 import com.av.arthanfinance.models.BusinessDetails
 import com.av.arthanfinance.models.CustomerBankDetailsResponse
@@ -33,6 +34,14 @@ interface ApiService {
     @POST("updatePan")
     @Headers("Content-Type: application/json")
     fun updatePan(@Body documentsData: JsonObject): Call<LoanProcessResponse>
+
+    @POST("request")
+    @Headers("Content-Type: application/json")
+    fun request( @Header("Authorization") authHeader: String, @Body documentsData: JsonObject): Call<DigioPanResponse>
+
+    @POST("verify/bank_account")
+    @Headers("Content-Type: application/json")
+    fun verifyBank( @Header("Authorization") authHeader: String, @Body documentsData: JsonObject): Call<BankDetilsResponse>
 
     @POST("updatePhoto")
     @Headers("Content-Type: application/json")

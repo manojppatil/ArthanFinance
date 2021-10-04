@@ -12,6 +12,10 @@ import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
+import okhttp3.logging.HttpLoggingInterceptor
+
+
+
 
 
 class ApiClient {
@@ -46,6 +50,36 @@ class ApiClient {
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://arthanfin.com/artlos/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(okhttpClient(context)) // Add our Okhttp client
+                .build()
+
+            apiService = retrofit.create(ApiService::class.java)
+        }
+        return apiService
+    }
+
+    fun getDigioApiService(context: Context): ApiService {
+        // Initialize ApiService if not initialized yet
+        if (!::apiService.isInitialized) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://ext.digio.in:444/client/kyc/v2/")
+                .addConverterFactory(GsonConverterFactory.create())
+
+                .client(okhttpClient(context)) // Add our Okhttp client
+                .build()
+
+            apiService = retrofit.create(ApiService::class.java)
+        }
+        return apiService
+    }
+
+    fun getBankDetailsApiService(context: Context): ApiService {
+        // Initialize ApiService if not initialized yet
+        if (!::apiService.isInitialized) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://ext.digio.in:444/client/")
+                .addConverterFactory(GsonConverterFactory.create())
+
                 .client(okhttpClient(context)) // Add our Okhttp client
                 .build()
 
@@ -101,11 +135,15 @@ class ApiClient {
          */
         private fun okhttpClient(context: Context): OkHttpClient {
             val okHttpClient: OkHttpClient = UnsafeOkHttpClient.unsafeOkHttpClient
+
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.level = HttpLoggingInterceptor.Level.BODY
+
             val builder = okHttpClient.newBuilder()
             builder.readTimeout(30, TimeUnit.SECONDS)
             builder.connectTimeout(30, TimeUnit.SECONDS)
             return builder.build()
-            //return builder.addInterceptor(AuthInterceptor(context)).build()
+
         }
 
     object UnsafeOkHttpClient {
