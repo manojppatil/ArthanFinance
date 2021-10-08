@@ -92,4 +92,6 @@
     <string name="demo_date">09/05/1991</string>
     <string name="residence_address_label">Residence Address</string>
     <string name="demo_address">Arthan Finance , Near Ravi Talkies, Old Town, Bhubaneswar</string>
+    <string name="capture">Capture</string>
+    <string name="offline_kyc">Do Offline Kyc</string>
 </resources>

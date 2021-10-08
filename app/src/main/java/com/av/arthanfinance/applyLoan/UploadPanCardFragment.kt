@@ -27,6 +27,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.av.arthanfinance.R
 import com.av.arthanfinance.networkService.ApiClient
@@ -42,6 +43,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.UnsupportedEncodingException
 import java.util.*
 
 
@@ -53,8 +55,6 @@ import java.util.*
 class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     DigioResponseListener {
 
-    private lateinit var btnSubmit: Button
-    private lateinit var btnPanCamera: Button
     private lateinit var customerName: EditText
     private lateinit var customerDOB: EditText
     private lateinit var customerPhoneNo: EditText
@@ -79,47 +79,21 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         val view = inflater.inflate(R.layout.layout_upload_kyc_details, container, false)
 
         apiClient = ApiClient()
-        btnSubmit = view.findViewById(R.id.btn_submit)
-        //btnPanCamera = view.findViewById(R.id.btn_panCamera)
         customerName = view.findViewById(R.id.tv_name_value)
         customerDOB = view.findViewById(R.id.tv_dob_value)
         customerPhoneNo = view.findViewById(R.id.tv_mob_num_value)
 
         loanResponse = arguments?.getSerializable("loanResponse") as LoanProcessResponse
-
         val isCreateFlow = arguments?.getBoolean(ArthanFinConstants.IS_CREATE_FLOW, false)
 
-        btnPanCamera.setOnClickListener {
-            if (requestPermission()) {
-                //launchCamera()
-                getPanDataFromDigio()
-            }
-        }
 
-        view.findViewById<Button>(R.id.btn_uploadPan).setOnClickListener {
-//            isCameraOpen = true
-//            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-//            intent.addCategory(Intent.CATEGORY_OPENABLE)
-//            intent.type = "*/*"
-//            startActivityForResult(Intent.createChooser(intent, "ChooseFile"), REQUEST_CODE_GALLERY)
 
-            if (requestPermission()) {
-                getPanDataFromDigio()
-            }
-        }
         isCreateFlow?.let {
             if (!it) {
                 getKYCDetailsFromServer()
                 disableEditFeature(view)
             }
         }
-        btnSubmit.setOnClickListener {
-            if (!isCreateFlow!!) {
-                (activity as UploadKycDetailsActivity?)?.selectIndex(1)
-            } else
-                updatePanDetails()
-        }
-
         return view
     }
 
@@ -152,11 +126,8 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
     private fun disableEditFeature(view: View) {
         view.findViewById<ImageView>(R.id.imgEdit).visibility = View.GONE
-        view.findViewById<AppCompatButton>(R.id.btn_uploadPan).visibility = View.GONE
-        //view.findViewById<AppCompatButton>(R.id.btn_panCamera).visibility = View.GONE
         view.findViewById<AppCompatTextView>(R.id.tv_upload_pan).setText("Uploaded PAN")
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -165,14 +136,8 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         if (isCreateFlow!!) {
             Handler(Looper.getMainLooper()).postDelayed({
                 /* Create an Intent that will start the Menu-Activity. */
-                if (loanResponse!!.applicantType == "PA") {
-                    customerName.setText(loanResponse?.customerName)
-                    customerPhoneNo.setText(loanResponse?.mobileNo)
-                    customerDOB.setText(loanResponse?.dob)
-                    customerName.isEnabled = false
-                    customerDOB.isEnabled = false
-                    customerPhoneNo.isEnabled = false
-                } else {
+                if (loanResponse!!.applicantType != "PA") {
+                    rl_rect.visibility = View.VISIBLE
                     customerName.text.clear()
                     customerPhoneNo.text.clear()
                     customerDOB.text.clear()
@@ -187,9 +152,17 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                         datePickerDialog.datePicker.maxDate = calendar.timeInMillis
                         datePickerDialog.show()
                     }
+                } else {
+
                 }
             }, 500)
         }
+        btn_uploadDigioPan.setOnClickListener {
+            if (requestPermission()) {
+                getPanDataFromDigio()
+            }
+        }
+
     }
 
     private fun getKYCDetailsFromServer() {
@@ -216,7 +189,7 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                     .with(this@UploadPanCardFragment)
                     .load(kycResponse!!.panUrl).fitCenter()
                     .placeholder(R.drawable.ic_arthan_logo)
-                    .into(panImage);
+                    .into(digioPanImage);
                 kycResponse.customerName?.let {
                     customerName.setText(it)
                 }
@@ -250,10 +223,7 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
     private fun requestPermission(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (activity?.checkSelfPermission(Manifest.permission.CAMERA) !== PackageManager.PERMISSION_GRANTED && activity?.checkSelfPermission(
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ) !== PackageManager.PERMISSION_GRANTED && activity?.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED
-            ) {
+            if (activity?.checkSelfPermission(Manifest.permission.CAMERA) !== PackageManager.PERMISSION_GRANTED && activity?.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED && activity?.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(
                     arrayOf(
                         Manifest.permission.CAMERA,
@@ -276,8 +246,7 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == MY_CAMERA_PERMISSION_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                launchCamera()
-                //Toast.makeText(activity?.applicationContext, "camera permission granted", Toast.LENGTH_LONG).show();
+                getPanDataFromDigio()
             } else {
                 Toast.makeText(
                     activity?.applicationContext,
@@ -286,51 +255,6 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                 ).show();
             }
         }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        isCameraOpen = false
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-
-                REQ_CODE_PAN_ID -> {
-                    val filepath = data?.extras?.get("FilePath")
-                    val finalFilePath = "file://${filepath}"
-                    val fileUri = Uri.parse(finalFilePath)
-                    val intent = CropImage.activity(fileUri)
-                        .getIntent(requireContext())
-                    startActivityForResult(intent, CROP_REQUEST_CODE_CAMERA)
-                }
-                REQUEST_CODE_GALLERY -> {
-                    try {
-                        val fileUri = data!!.data
-                        val intent = CropImage.activity(fileUri)
-                            .getIntent(requireContext())
-                        startActivityForResult(intent, CROP_REQUEST_CODE_GALLERY)
-                    } catch (e: Exception) {
-                        Log.e("Exception", e.toString())
-                    }
-                }
-                CROP_REQUEST_CODE_CAMERA, CROP_REQUEST_CODE_GALLERY -> {
-                    val result = CropImage.getActivityResult(data)
-                    val resultUri = result.uri
-                    val bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, resultUri)
-                    panImage.setImageBitmap(bitmap)
-                    val encodedImageStr = encodeImageString(bitmap)
-                    print("base64 Stirng $encodedImageStr")
-                    uploadPanImage(encodedImageStr)
-                }
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
-        val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path: String =
-            MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
-        return Uri.parse(path)
     }
 
     private fun uploadPanImage(encodedImageStr: String?) {
@@ -365,6 +289,7 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                     Toast.LENGTH_SHORT
                 ).show()
                 (activity as UploadKycDetailsActivity).hideProgressDialog()
+                updatePanDetails()
             }
 
             override fun onFailure(call: Call<LoanProcessResponse>, t: Throwable) {
@@ -386,13 +311,34 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             custId = (activity as UploadKycDetailsActivity?)?.coAppCustId
         }
         (activity as UploadKycDetailsActivity).showProgressDialog()
+
         val jsonObject = JsonObject()
-        jsonObject.addProperty("loanId", loanResponse?.loanId)
-        jsonObject.addProperty("customerId", custId)
-        jsonObject.addProperty("applicantType", applicantType)
-        jsonObject.addProperty("customerName", customerName.text.toString())
-        jsonObject.addProperty("mobileNo", customerPhoneNo.text.toString())
-        jsonObject.addProperty("dob", customerDOB.text.toString())
+
+        if (loanResponse!!.applicantType != "PA") {
+            jsonObject.addProperty("loanId", loanResponse?.loanId)
+            jsonObject.addProperty("customerId", custId)
+            jsonObject.addProperty("applicantType", applicantType)
+            jsonObject.addProperty("customerName", loanResponse?.customerName)
+            jsonObject.addProperty("mobileNo", loanResponse?.mobileNo)
+            jsonObject.addProperty("dob", loanResponse?.dob)
+        } else {
+            if (customerName.text.toString() == ""){
+                Toast.makeText(context, "Please Provide Co-Applicant's Name", Toast.LENGTH_SHORT).show()
+            } else if (customerPhoneNo.text.toString() == ""){
+                Toast.makeText(context, "Please Provide Co-Applicant's Mobile Number", Toast.LENGTH_SHORT).show()
+            }else if (customerPhoneNo.text.toString().length < 10){
+                Toast.makeText(context, "Please Provide A Valid Mobile Number", Toast.LENGTH_SHORT).show()
+            }else if (customerDOB.text.toString() == ""){
+                Toast.makeText(context, "Please Provide Co-Applicant's DOB", Toast.LENGTH_SHORT).show()
+            }else{
+                jsonObject.addProperty("loanId", loanResponse?.loanId)
+                jsonObject.addProperty("customerId", custId)
+                jsonObject.addProperty("applicantType", applicantType)
+                jsonObject.addProperty("customerName", customerName.text.toString())
+                jsonObject.addProperty("mobileNo", customerPhoneNo.text.toString())
+                jsonObject.addProperty("dob", customerDOB.text.toString())
+            }
+        }
 
         val context = activity?.applicationContext!!
         ApiClient().getAuthApiService(context).updatePan(jsonObject).enqueue(object :
@@ -433,24 +379,15 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         })
     }
 
-    private fun encodeImageString(bm: Bitmap): String? {
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        bm.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
-        val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
-        return Base64.encodeToString(byteArray, Base64.DEFAULT)
-    }
-
-
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         customerDOB.setText("${dayOfMonth}/${month + 1}/${year}")
     }
 
     override fun onDigioEventTracker(eventTracker: JSONObject) {
-        TODO("Not yet implemented")
     }
 
     override fun onDigioResponseFailure(failure: List<DigioTaskResponse>) {
-
+        Toast.makeText(context, "Uploading PAN Failed", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDigioResponseSuccess(taskResponseList: List<DigioTaskResponse>) {
@@ -465,11 +402,25 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                 val analysisResponse = mainResponse.getJSONObject("analysis_response")
                 val name = analysisResponse.getString("name")
                 val panNumber = analysisResponse.getString("id_no")
-                val panImage = analysisResponse.getString("encoded_signature")
+                val panImg = mainResponse.getString("id_front_uri")
 
-                panName.setText(name)
-                panNum.setText(panNumber)
+                Glide.with(this).load(panImg).into(digioPanImage)
+                val encodedImageStr = encodeString(panImg)
+                uploadPanImage(encodedImageStr)
             }
         }
+    }
+
+    private fun encodeString(str: String): String? {
+        val data: ByteArray
+        var base64 = ""
+        try {
+            data = str.toByteArray(charset("UTF-8"))
+            base64 = Base64.encodeToString(data, Base64.NO_WRAP)
+
+        } catch (e: UnsupportedEncodingException) {
+            e.printStackTrace()
+        }
+        return base64
     }
 }

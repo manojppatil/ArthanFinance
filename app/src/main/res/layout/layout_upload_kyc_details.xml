@@ -6,7 +6,8 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:id="@+id/successPanLayout"
@@ -15,133 +16,10 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_check_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="66dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginRight="66dp"
-                android:gravity="center"
-                android:visibility="gone"
-                android:text="@string/check_details"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-
-            <RelativeLayout
-                android:id="@+id/rl_rect"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_check_details"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="21dp"
-                android:layout_marginRight="25dp"
-                android:visibility="gone"
-                android:background="@drawable/bg_silver_rect">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginTop="22dp"
-                    android:text="@string/name"
-                    android:textColor="@color/dark_grey"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:id="@+id/imgEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginRight="22dp"
-                    android:src="@drawable/ic_pencil" />
-
-                <EditText
-                    android:id="@+id/tv_name_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_name"
-                    android:layout_alignStart="@+id/tv_name"
-                    android:layout_alignParentEnd="true"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:gravity="start"
-                    android:hint="Name"
-                    android:inputType="textPersonName"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_dob"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_name_value"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginTop="17dp"
-                    android:maxLines="1"
-                    android:text="@string/date_of_birth"
-                    android:textColor="@color/dark_grey"
-                    android:textSize="14sp" />
-
-                <EditText
-                    android:id="@+id/tv_dob_value"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_dob"
-                    android:layout_alignStart="@+id/tv_dob"
-                    android:layout_marginBottom="20dp"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:gravity="start"
-                    android:hint="DOB"
-                    android:inputType="date"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-
-                <EditText
-                    android:id="@+id/tv_mob_num_value"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_mob_num"
-                    android:layout_alignEnd="@+id/tv_mob_num"
-                    android:layout_alignBottom="@+id/tv_dob_value"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="0dp"
-                    android:layout_marginRight="27dp"
-                    android:layout_marginBottom="0dp"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:gravity="start"
-                    android:hint="Mobile number"
-                    android:inputType="number"
-                    android:lines="1"
-                    android:maxEms="10"
-                    android:maxLength="10"
-                    android:maxLines="1"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_mob_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/tv_dob"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginEnd="30dp"
-                    android:text="@string/mob_num"
-                    android:textColor="@color/dark_grey"
-                    android:textSize="14sp" />
-            </RelativeLayout>
-
-            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_upload_pan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/rl_rect"
-                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
                 android:text="@string/upload_pan"
@@ -149,90 +27,168 @@
                 android:textSize="16sp" />
 
             <LinearLayout
-                android:id="@+id/ll_pan"
+                android:id="@+id/digioPanLayout"
                 android:layout_width="match_parent"
-                android:layout_height="135dp"
-                android:layout_below="@id/tv_upload_pan"
-                android:layout_marginHorizontal="25dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/bg_white_smoke_rect"
-                android:gravity="center">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible">
 
-                <ImageView
-                    android:id="@+id/panImage"
+                <RelativeLayout
+                    android:id="@+id/rl_rect"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@mipmap/ic_launcher" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="21dp"
+                    android:layout_marginRight="25dp"
+                    android:visibility="gone"
+                    android:background="@drawable/bg_silver_rect">
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginTop="22dp"
+                        android:text="@string/name"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/imgEdit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginRight="22dp"
+                        android:src="@drawable/ic_pencil" />
+
+                    <EditText
+                        android:id="@+id/tv_name_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_name"
+                        android:layout_alignStart="@+id/tv_name"
+                        android:layout_alignParentEnd="true"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:gravity="start"
+                        android:hint="Name"
+                        android:inputType="textPersonName"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_dob"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_name_value"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginTop="17dp"
+                        android:maxLines="1"
+                        android:text="@string/date_of_birth"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/tv_dob_value"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_dob"
+                        android:layout_alignStart="@+id/tv_dob"
+                        android:layout_marginBottom="20dp"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:gravity="start"
+                        android:hint="DOB"
+                        android:inputType="date"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/tv_mob_num_value"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_mob_num"
+                        android:layout_alignEnd="@+id/tv_mob_num"
+                        android:layout_alignBottom="@+id/tv_dob_value"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginRight="27dp"
+                        android:layout_marginBottom="0dp"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:gravity="start"
+                        android:hint="Mobile number"
+                        android:inputType="number"
+                        android:lines="1"
+                        android:maxEms="10"
+                        android:maxLength="10"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_mob_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/tv_dob"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginEnd="30dp"
+                        android:text="@string/mob_num"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/digioPan"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_white_smoke_rect"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/digioPanImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/pan_placeholder" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/btn_next"
+                    android:layout_marginHorizontal="@dimen/dimen_24"
+                    android:layout_marginTop="@dimen/dimen_24"
+                    android:layout_marginRight="@dimen/dimen_24"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="4dp">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_uploadDigioPan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="7.5dp"
+                        android:background="@drawable/bg_language_rect"
+                        android:drawableLeft="@drawable/ic_camera_icon_yellow"
+                        android:gravity="center"
+                        android:minWidth="200dp"
+                        android:paddingLeft="25dp"
+                        android:paddingTop="9dp"
+                        android:paddingBottom="9dp"
+                        android:text="@string/capture"
+                        android:textAllCaps="false"
+                        android:textColor="@color/dark_orange2"
+                        android:textSize="@dimen/text_18" />
+                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/btn_next"
-                android:layout_marginHorizontal="@dimen/dimen_24"
-                android:layout_marginVertical="35dp"
-                android:layout_marginRight="@dimen/dimen_24"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_uploadPan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="7.5dp"
-                    android:minWidth="200dp"
-                    android:background="@drawable/bg_language_rect"
-                    android:drawableLeft="@drawable/ic_folder"
-                    android:gravity="center"
-                    android:paddingLeft="25dp"
-                    android:paddingTop="9dp"
-                    android:paddingBottom="9dp"
-                    android:text="@string/upload"
-                    android:textAllCaps="false"
-                    android:textColor="@color/dark_orange2"
-                    android:textSize="@dimen/text_18" />
-
-                <!--<androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_panCamera"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="7.5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_language_rect"
-                    android:drawableLeft="@drawable/ic_camera_small_icon"
-                    android:drawablePadding="-40dp"
-                    android:gravity="center"
-                    android:paddingLeft="25dp"
-                    android:paddingTop="9dp"
-                    android:paddingBottom="9dp"
-                    android:text="@string/camera"
-                    android:textAllCaps="false"
-                    android:textColor="@color/dark_orange2"
-                    android:textSize="@dimen/text_18" />-->
-            </LinearLayout>
-
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_submit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:layout_marginBottom="23dp"
-                android:background="@drawable/bg_register_rect_orange"
-                android:gravity="center"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="@string/next"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
 
         </LinearLayout>
 

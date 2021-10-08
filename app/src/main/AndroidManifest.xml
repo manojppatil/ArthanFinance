@@ -25,9 +25,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustResize">
-        <activity
-            android:name=".SplashActivity"
-            android:exported="true" />
+
         <activity
             android:name=".applyLoan.CustomerCameraActivity"
             android:launchMode="singleTop" />
@@ -50,13 +48,19 @@
             android:name=".homeTabs.HomeDashboardActivity"
             android:launchMode="singleTop" />
 
-        <activity android:name=".DemoActivity">
+        <activity
+            android:name=".DemoActivity"
+            android:exported="true" />
+
+        <activity android:name=".SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ChooseLanguageActivity"
             android:launchMode="singleTop" />

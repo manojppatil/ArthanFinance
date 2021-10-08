@@ -30,7 +30,11 @@ import android.graphics.BitmapFactory
 
 import android.graphics.Bitmap
 import android.graphics.Matrix
+import android.net.Uri
+import android.provider.MediaStore
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.layout_upload_kyc_details.*
+import java.io.File
 
 
 class DemoActivity : AppCompatActivity(), DigioResponseListener {
@@ -50,8 +54,8 @@ class DemoActivity : AppCompatActivity(), DigioResponseListener {
         }
 
         bankDetails.setOnClickListener {
-            val ifsc = ifscCode.text
-            val accountNumber = accountNum.text
+            val ifsc = ifscCode.text.toString()
+            val accountNumber = accountNum.text.toString()
 
             if (ifsc.equals("")) {
                 Toast.makeText(this, "Please Enter Your IFSC Code", Toast.LENGTH_SHORT).show()
@@ -201,14 +205,11 @@ class DemoActivity : AppCompatActivity(), DigioResponseListener {
                 val analysisResponse = mainResponse.getJSONObject("analysis_response")
                 val name = analysisResponse.getString("name")
                 val panNumber = analysisResponse.getString("id_no")
-                val panImage = analysisResponse.getString("encoded_signature")
+                val panImage = mainResponse.getString("id_front_uri")
 
-                val decodedString: ByteArray = Base64.decode(panImage, Base64.DEFAULT)
-                var decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
-                decodedByte = bitmapScaler(decodedByte, 200, 150)
+                Glide.with(this).load(panImage).into(pan_img)
                 panName.setText(name)
                 panNum.setText(panNumber)
-                pan_img.setImageBitmap(decodedByte)
 
             } else if (taskType == DigioTaskType.OFFLINE_KYC) {
                 val mainResponse = digiTaskResponse.getResponse()// offline_kyc or idCard analysis response
