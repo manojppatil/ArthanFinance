@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/indigo"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -64,7 +64,6 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="1dp"
             android:layout_marginRight="25dp"
-            android:text="@string/enter_6_digit"
             android:textColor="@color/dark_orange2"
             android:textSize="16sp" />
 
@@ -79,13 +78,16 @@
             android:textColor="@color/dark_orange2"
             android:textSize="16sp" />
 
+
         <in.aabhasjindal.otptextview.OtpTextView
             android:id="@+id/otp_view"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_below="@+id/tv_enter_otp"
             android:layout_marginHorizontal="@dimen/dimen_24"
-            android:textColor="@color/dark_orange2"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:textColor="@color/blue_1"
+            android:visibility="visible"
             app:bar_enabled="false"
             app:bar_height="2dp"
             app:box_margin="5dp"
@@ -104,9 +106,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="33dp"
             android:text="@string/resend_otp"
-            android:visibility="gone"
             android:textColor="@color/dark_orange2"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:visibility="gone" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_submit"
@@ -120,6 +122,7 @@
             android:background="@drawable/bg_register_rect_orange"
             android:gravity="center"
             android:paddingTop="10dp"
+            android:visibility="gone"
             android:paddingBottom="10dp"
             android:text="@string/submit"
             android:textAllCaps="false"

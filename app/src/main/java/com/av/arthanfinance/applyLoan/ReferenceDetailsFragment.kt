@@ -1,5 +1,6 @@
 package com.av.arthanfinance.applyLoan
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.LinearGradient
 import android.graphics.Shader
@@ -42,9 +43,10 @@ class ReferenceDetailsFragment : Fragment() {
     private lateinit var supplierMobileNo: EditText
 
     private lateinit var apiClient: ApiClient
+    private lateinit var uploadKycDetailsActivity: UploadKycDetailsActivity
 
     private var loanResponse: LoanProcessResponse? = null
-
+    private val isViewShown = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -53,6 +55,8 @@ class ReferenceDetailsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.layout_reference_details, container, false)
+        (activity as UploadKycDetailsActivity).setFormStatus(90)
+
         tvReferenceDetails = view.findViewById(R.id.tv_ref_details)
         btnNext = view.findViewById(R.id.btn_next)
         neighborName = view.findViewById(R.id.edt_name)
@@ -195,7 +199,7 @@ class ReferenceDetailsFragment : Fragment() {
         (activity as UploadKycDetailsActivity).showProgressDialog()
         val context = activity?.applicationContext
         if (context != null) {
-            apiClient.getApiService(context).saveCustReference(jsonObject).enqueue(object :
+            ApiClient().getAuthApiService(context).saveCustReference(jsonObject).enqueue(object :
                 Callback<LoanProcessResponse> {
                 override fun onResponse(
                     call: Call<LoanProcessResponse>,

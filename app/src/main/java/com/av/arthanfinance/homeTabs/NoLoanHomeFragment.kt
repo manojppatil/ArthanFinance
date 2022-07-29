@@ -57,10 +57,9 @@ class NoLoanHomeFragment : Fragment() {
                     .with(this@NoLoanHomeFragment)
                     .load(it).fitCenter()
                     .placeholder(R.drawable.ic_arthan_logo)
-                    .into(circleImg);
+                    .into(circleImg)
             }
         }
-
 
         posters.recycle()
         cardSliderViewPager.adapter = customerData?.let { CarouselImageAdapter(imagesList, it) }

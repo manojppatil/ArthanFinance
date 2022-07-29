@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.text.TextPaint
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,11 +24,13 @@ import com.av.arthanfinance.models.CustomerBankDetailsResponse
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.util.ArthanFinConstants
 import com.google.gson.JsonObject
+import kotlinx.android.synthetic.main.layout_upload_docs.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -65,7 +68,31 @@ class UploadDocsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        uploadBankDetails.setOnClickListener {
+
+            if (accountName.text.toString().isEmpty()){
+                Toast.makeText(context, "Bank Account Name is Empty", Toast.LENGTH_SHORT).show()
+
+            }else if (bankName.text.toString().isEmpty()){
+                Toast.makeText(context,
+                    "Bank Name is Empty",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }else if (accountNumber.text.toString().isEmpty()){
+                Toast.makeText(context, "Account Number is Empty", Toast.LENGTH_SHORT).show()
+            }
+            else if (ifscCode.text.toString().isEmpty()){
+                Toast.makeText(context, "IFSC code is Empty", Toast.LENGTH_SHORT).show()
+            }
+            else if (!checkIFSCCode(ifscCode.text.toString())){
+                Toast.makeText(context, "IFSC code Invalid", Toast.LENGTH_SHORT).show()
+            }else{
+                getBankDetailsFromDigio(ifscCode.text.toString(), accountNumber.text.toString())
+            }
+        }
     }
+
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -74,6 +101,8 @@ class UploadDocsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.layout_upload_docs, container, false)
+        (activity as UploadKycDetailsActivity).setFormStatus(75)
+
         tvUploadAdhar = view.findViewById(R.id.tv_upload_docs)
         btnNext = view.findViewById(R.id.btn_next)
         uploadDocButton = view.findViewById(R.id.btn_upload)
@@ -146,7 +175,50 @@ class UploadDocsFragment : Fragment() {
             }
         }
         lytUpload.visibility = View.GONE
+
         return view
+    }
+
+
+    private fun getBankDetailsFromDigio(ifsc: String, accNum: String) {
+        val jsonObject = JsonObject()
+        /*jsonObject.addProperty("beneficiary_account_no", "33220439293")
+        jsonObject.addProperty("beneficiary_ifsc", "SBIN0007049")*/
+        jsonObject.addProperty("beneficiary_account_no", accNum)
+        jsonObject.addProperty("beneficiary_ifsc", ifsc)
+
+        val clientId = "AIV9X8IU1LYFM9RE7EKINUO98RE6MX6L"
+        val clientSecret = "FJ872EVIBCC11XJE1HR3KAZRK2ZU4O5P"
+
+        val base = clientId + ":" + clientSecret
+
+        val authHeader = "Basic " + Base64.encodeToString(base.toByteArray(), Base64.NO_WRAP)
+
+        val context = activity?.applicationContext!!
+        ApiClient().getBankDetailsApiService(context).verifyBank(authHeader,jsonObject)
+            .enqueue(object :
+                Callback<BankDetilsResponse> {
+                override fun onResponse(
+                    call: Call<BankDetilsResponse>,
+                    response: Response<BankDetilsResponse>
+                ) {
+                    val bankAccountResponse = response.body() as BankDetilsResponse
+                    val verified = bankAccountResponse.verified
+                    if (verified) {
+                        saveBankAccountDetails()
+                    }
+                    Toast.makeText(context, "" + verified, Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onFailure(call: Call<BankDetilsResponse>, t: Throwable) {
+                    t.printStackTrace()
+                    Toast.makeText(
+                        context,
+                        "Service Failure, Once Network connection is stable, will try to resend again",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
     }
 
     private fun uploadBankDocumentsToServer() {
@@ -198,39 +270,14 @@ class UploadDocsFragment : Fragment() {
 
     private fun saveBankAccountDetails() {
 
-        if (editTextBankName.text.toString().isEmpty()){
-            Toast.makeText(editTextAccountNo.context, "Bank Name is Empty", Toast.LENGTH_SHORT).show()
-            return
-        }else if (editTextBankAccountName.text.toString().isEmpty()){
-            Toast.makeText(
-                editTextBankAccountName.context,
-                "Bank Account Name is Empty",
-                Toast.LENGTH_SHORT
-            ).show()
-            return
-        }else if (editTextAccountNo.text.toString().isEmpty()){
-            Toast.makeText(editTextAccountNo.context, "Account Number is Empty", Toast.LENGTH_SHORT).show()
-            return
-        }else if(!editTextAccountNo.text.toString().equals(editTextReEnterAccountNo.text.toString())){
-            Toast.makeText(editTextAccountNo.context, "Account Number not matching", Toast.LENGTH_SHORT).show()
-            return
-        }
-        else if (editTextIFSCCode.text.toString().isEmpty()){
-             Toast.makeText(editTextAccountNo.context, "IFSC code is Empty", Toast.LENGTH_SHORT).show()
-            return
-        }
-        if (!checkIFSCCode(editTextIFSCCode.text.toString())){
-            Toast.makeText(editTextAccountNo.context, "IFSC code Invalid", Toast.LENGTH_SHORT).show()
-            return
-        }
         (activity as UploadKycDetailsActivity).showProgressDialog()
 
         val jsonObject = JsonObject()
         jsonObject.addProperty("loanId", loanResponse?.loanId)
-        jsonObject.addProperty("accountName", editTextBankAccountName.text.toString())
-        jsonObject.addProperty("accountNo", editTextAccountNo.text.toString())
-        jsonObject.addProperty("bankName", editTextBankName.text.toString())
-        jsonObject.addProperty("ifscCode", editTextIFSCCode.text.toString())
+        jsonObject.addProperty("accountName", accountName.text.toString())
+        jsonObject.addProperty("accountNo", accountNumber.text.toString())
+        jsonObject.addProperty("bankName", bankName.text.toString())
+        jsonObject.addProperty("ifscCode", ifscCode.text.toString())
 
         val context = activity?.applicationContext
         if (context != null) {
@@ -256,7 +303,7 @@ class UploadDocsFragment : Fragment() {
                     }
                 })
         }
-//        }
+
     }
 
     private fun disableEditFeature() {
@@ -313,7 +360,6 @@ class UploadDocsFragment : Fragment() {
         }
         return fileName
     }
-
 
     private fun uploadFile(file: File, loanid: String, customerId: String) {
         val requestFile: RequestBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())

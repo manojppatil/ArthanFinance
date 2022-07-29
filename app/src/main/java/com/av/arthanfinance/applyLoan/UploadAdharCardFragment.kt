@@ -8,7 +8,7 @@ import `in`.digio.sdk.kyc.callback.DigioResponseListener
 import `in`.digio.sdk.kyc.nativeflow.DigioTaskRequest
 import `in`.digio.sdk.kyc.nativeflow.DigioTaskType
 import android.Manifest
-import android.R.attr
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.Context
@@ -33,18 +33,15 @@ import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.AppCompatButton
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.av.arthanfinance.R
-import com.av.arthanfinance.homeTabs.HomeDashboardActivity
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.util.ArthanFinConstants
 import com.bumptech.glide.Glide
 import com.google.gson.JsonObject
 import com.theartofdev.edmodo.cropper.CropImage
-import kotlinx.android.synthetic.main.activity_demo.*
+
 import kotlinx.android.synthetic.main.layout_adhar.*
 import kotlinx.android.synthetic.main.layout_upload_kyc_details.*
 import org.json.JSONObject
@@ -53,10 +50,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import android.graphics.BitmapFactory
-
 
 class UploadAdharCardFragment : Fragment(), DigioResponseListener {
     private val AAADHAR_BACK = 103
@@ -95,12 +89,8 @@ class UploadAdharCardFragment : Fragment(), DigioResponseListener {
     private val CROP_AAADHAR_BACK = 1030
     private val CROP_AAADHAR_FRONT = 1040
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     interface UpdateLoanResponseData {
-        fun sendData(loanProcessResponse: LoanProcessResponse)
+        fun sendData(loanProcessResponse: LoanProcessResponse, statusFrom: Int)
     }
 
     override fun onAttach(context: Context) {
@@ -115,6 +105,8 @@ class UploadAdharCardFragment : Fragment(), DigioResponseListener {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.layout_adhar, container, false)
+        (activity as UploadKycDetailsActivity).setFormStatus(36)
+
         tvUploadAdhar = view.findViewById(R.id.tv_upload_aadhar_text)
 
         btnCameraAadharBackPhoto = view.findViewById(R.id.btn_aadhar_back_photo_camera)
@@ -174,10 +166,6 @@ class UploadAdharCardFragment : Fragment(), DigioResponseListener {
                 putExtra("FilePath", "${dir.absolutePath}/IMG_AADHAR_BACK.jpg")
             }, REQ_CODE_AADHAR_BP)
 
-        }
-
-        btnOfflineKyc.setOnClickListener {
-            getAadharDataFromDigio()
         }
 
         btnUploadFileAadharFrontPhoto.setOnClickListener {
@@ -256,6 +244,7 @@ class UploadAdharCardFragment : Fragment(), DigioResponseListener {
                 disableEditFeature(view)
             }
         }
+
         btnNext.setOnClickListener {
 //            if(aadharFrontImgView.tag == 1 || aadharBackImgView.tag == 2) {
 //                Toast.makeText(activity?.applicationContext, "Please Upload aadhar front and back Images", Toast.LENGTH_LONG).show();
@@ -264,7 +253,7 @@ class UploadAdharCardFragment : Fragment(), DigioResponseListener {
             if (!isCreateFlow!!) {
                 (activity as UploadKycDetailsActivity?)?.selectIndex(3)
             } else
-                uploadAadharData()
+                uploadAadharData(1)
         }
 
         val paint: TextPaint = tvUploadAdhar.getPaint()
@@ -281,6 +270,13 @@ class UploadAdharCardFragment : Fragment(), DigioResponseListener {
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        btnOfflineKyc.setOnClickListener {
+            getAadharDataFromDigio()
+        }
+    }
 
     private fun disableEditFeature(view: View) {
         btnCameraAadharBackPhoto.visibility = View.GONE
@@ -384,7 +380,7 @@ class UploadAdharCardFragment : Fragment(), DigioResponseListener {
                         btnRemoveAadharFrontPhoto.visibility = View.VISIBLE
                         aadharFrontImgView.tag = 3
                         val base64 = BitmapUtils.getBase64(bitmap)
-                        uploadAadharImage(base64, "AF")
+                        uploadAadharImage(base64, "AF", 1)
                     } else {
                         aadharBackImgView.setImageBitmap(bitmap)
                         aadharBackLayout.visibility = View.GONE
@@ -392,7 +388,7 @@ class UploadAdharCardFragment : Fragment(), DigioResponseListener {
                         btnRemoveAadharBackPhoto.visibility = View.VISIBLE
                         aadharBackImgView.tag = 4
                         val base64 = BitmapUtils.getBase64(bitmap)
-                        uploadAadharImage(base64, "AB")
+                        uploadAadharImage(base64, "AB", 1)
                     }
                 }
                 CROP_AAADHAR_FRONT, CROP_AAADHAR_BACK -> {
@@ -404,10 +400,10 @@ class UploadAdharCardFragment : Fragment(), DigioResponseListener {
 
                     if (requestCode == CROP_AAADHAR_FRONT) {
                         aadharFrontImgView.setImageBitmap(bitmap)
-                        uploadAadharImage(base64, "AF")
+                        uploadAadharImage(base64, "AF", 1)
                     } else {
                         aadharBackImgView.setImageBitmap(bitmap)
-                        uploadAadharImage(base64, "AB")
+                        uploadAadharImage(base64, "AB", 1)
                     }
                 }
             }
@@ -424,6 +420,7 @@ class UploadAdharCardFragment : Fragment(), DigioResponseListener {
         return type
     }
 
+    @SuppressLint("Range")
     private fun getFileName(contentResolver: ContentResolver?, uri: Uri?): String? {
         if (uri == null) return null
         var fileName: String? = null
@@ -443,7 +440,7 @@ class UploadAdharCardFragment : Fragment(), DigioResponseListener {
         return Base64.encodeToString(byteArray, Base64.DEFAULT)
     }
 
-    private fun uploadAadharImage(encodedImageStr: String?, idType: String) {
+    private fun uploadAadharImage(encodedImageStr: String?, idType: String, statusFrom: Int) {
         val applicantType = (activity as UploadKycDetailsActivity?)?.loanResponse!!.applicantType
         var custId = loanResponse?.customerId
         if ((activity as UploadKycDetailsActivity?)?.coAppCustId!!.isNotEmpty()) {
@@ -466,13 +463,24 @@ class UploadAdharCardFragment : Fragment(), DigioResponseListener {
                 call: Call<LoanProcessResponse>,
                 response: Response<LoanProcessResponse>
             ) {
-                Toast.makeText(
-                    context,
-                    "Aadhar photo uploaded successfully",
-                    Toast.LENGTH_SHORT
-                ).show()
+                val docResponse = response.body()
                 (activity as UploadKycDetailsActivity).hideProgressDialog()
-                uploadAadharData()
+                if (statusFrom == 1 && idType.equals("AF")){
+                    Toast.makeText(
+                        context,
+                        "Aadhar front photo uploaded successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }else if (statusFrom == 1 && idType.equals("AB")){
+                    Toast.makeText(
+                        context,
+                        "Aadhar back photo uploaded successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }else{
+                    uploadAadharData(statusFrom)
+                }
+
             }
 
             override fun onFailure(call: Call<LoanProcessResponse>, t: Throwable) {
@@ -487,12 +495,13 @@ class UploadAdharCardFragment : Fragment(), DigioResponseListener {
         })
     }
 
-    private fun uploadAadharData() {
+    private fun uploadAadharData(statusFrom: Int) {
         val applicantType = (activity as UploadKycDetailsActivity?)?.loanResponse!!.applicantType
         var custId = loanResponse?.customerId
         if ((activity as UploadKycDetailsActivity?)?.coAppCustId!!.isNotEmpty()) {
             custId = (activity as UploadKycDetailsActivity?)?.coAppCustId
         }
+
         (activity as UploadKycDetailsActivity).showProgressDialog()
         val jsonObject = JsonObject()
         jsonObject.addProperty("loanId", loanResponse?.loanId)
@@ -508,18 +517,23 @@ class UploadAdharCardFragment : Fragment(), DigioResponseListener {
             ) {
                 (activity as UploadKycDetailsActivity).hideProgressDialog()
                 val docResponse = response.body()
-                loanResponse?.addressLine1 = docResponse?.addressLine1
-                loanResponse?.addressLine2 = docResponse?.addressLine2
-                loanResponse?.addressLine3 = docResponse?.addressLine3
-                loanResponse?.city = docResponse?.city
-                loanResponse?.state = docResponse?.state
-                loanResponse?.pincode = docResponse?.pincode
+                if (statusFrom == 1){
+                    loanResponse?.addressLine1 = docResponse?.addressLine1
+                    loanResponse?.addressLine2 = docResponse?.addressLine2
+                    loanResponse?.addressLine3 = docResponse?.addressLine3
+                    loanResponse?.city = docResponse?.city
+                    loanResponse?.state = docResponse?.state
+                    loanResponse?.pincode = docResponse?.pincode
+
+                    loanResponse?.let {
+                        loanResponseData?.sendData(it, 1)
+                    }
+                }
+
                 docResponse?.customerId?.let {
                     (activity as UploadKycDetailsActivity?)?.coAppCustId = it
                 }
-                loanResponse?.let {
-                    loanResponseData?.sendData(it)
-                }
+
                 (activity as UploadKycDetailsActivity?)?.selectIndex(3)
             }
 
@@ -572,8 +586,7 @@ class UploadAdharCardFragment : Fragment(), DigioResponseListener {
 
         val kycRequest = DigioTaskRequest()
         kycRequest.taskType = DigioTaskType.OFFLINE_KYC// For Aadhaar card
-        kycRequest.isFaceMatch =
-            false // Optional,  In case business required selfie and face match with Aadhaar
+        kycRequest.isFaceMatch = false // Optional,  In case business required selfie and face match with Aadhaar
         digioTaskList.add(kycRequest)
 
         val config = DigioKycConfig()
@@ -600,7 +613,17 @@ class UploadAdharCardFragment : Fragment(), DigioResponseListener {
     }
 
     override fun onDigioResponseFailure(failure: List<DigioTaskResponse>) {
-
+        for (digiTaskResponse in failure) {
+            val errorCode = digiTaskResponse.getResponse().get("responseCode")
+            val msg = digiTaskResponse.getResponse().get("message")
+            if (errorCode == 10012){
+                digioLayout.visibility = View.GONE
+                arthanLayout.visibility = View.VISIBLE
+                Toast.makeText(context, ""+msg, Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(context, ""+msg, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onDigioResponseSuccess(taskResponseList: List<DigioTaskResponse>) {
@@ -610,21 +633,39 @@ class UploadAdharCardFragment : Fragment(), DigioResponseListener {
 
             val taskType = digioTaskRequest.taskType
             if (taskType == DigioTaskType.OFFLINE_KYC) {
-                val mainResponse =
-                    digiTaskResponse.getResponse()// offline_kyc or idCard analysis response
+                val mainResponse = digiTaskResponse.getResponse()// offline_kyc or idCard analysis response
                 val analysisResponse = mainResponse.getJSONObject("offline_kyc_response")
-                val aadharImage = mainResponse.getString("photo")
+                val aadharImage = analysisResponse.getString("photo")
                 val personalInformation = analysisResponse.getJSONObject("personal_information")
                 val addressInformation = analysisResponse.getJSONObject("address_information")
                 val decodedString: ByteArray = Base64.decode(aadharImage, Base64.DEFAULT)
                 val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
 
-                val name = personalInformation.getString("name")
-                val address = addressInformation.getString("text")
+                val careOf = addressInformation.getString("care_of")
+                val house = addressInformation.getString("house")
+                val landmark = addressInformation.getString("landmark")
+                val address1 = "$careOf, $house, $landmark"
+                val street = addressInformation.getString("street")
+                val postOffice = addressInformation.getString("post_office")
+                val address2 = "$street, $postOffice"
+                val district = addressInformation.getString("district")
+                val state = addressInformation.getString("state")
+                val pincode = addressInformation.getString("postal_code")
+
+                loanResponse?.addressLine1 = address1
+                loanResponse?.addressLine2 = address2
+                loanResponse?.addressLine3 = district
+                loanResponse?.city = district
+                loanResponse?.state = state
+                loanResponse?.pincode = pincode
+
+                loanResponse?.let {
+                    loanResponseData?.sendData(it, 2)
+                }
 
                 adharImg.setImageBitmap(decodedByte)
 
-                uploadAadharImage(aadharImage, "AF")
+                uploadAadharImage(aadharImage, "AF", 2)
             }
         }
     }

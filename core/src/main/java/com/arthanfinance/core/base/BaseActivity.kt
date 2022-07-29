@@ -22,7 +22,6 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 abstract class BaseActivity : AppCompatActivity() {
 
-
     var currentLocation: Location? = null
 
     @get:LayoutRes
@@ -109,7 +108,8 @@ abstract class BaseActivity : AppCompatActivity() {
         }
 
         fusedLocationProviderClient.requestLocationUpdates(
-            locationRequest,locationCallback, Looper.myLooper())
+            locationRequest,locationCallback, Looper.myLooper()!!
+        )
 
     }
 

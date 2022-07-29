@@ -30,20 +30,19 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
-
 class InitiateApplyLoanActivity : BaseActivity() {
 
     private lateinit var tenureDropDown: AutoCompleteTextView
     private lateinit var loanPurposeDropDown: AutoCompleteTextView
 
-    private var loanProcessResponse:LoanProcessResponse? = null
+    private var loanProcessResponse: LoanProcessResponse? = null
     private lateinit var loanAmountSeekBar: SeekBar
     private lateinit var loanAmountEditText: EditText
     private lateinit var inLakhs: TextView
     private lateinit var monthlyEMI: TextView
     private lateinit var apiClient: ApiClient
     private lateinit var customerData: CustomerHomeTabResponse
-    private var tenureList = arrayOf("6 Months","12 Months", "18 Months","24 Months")
+    private var tenureList = arrayOf("6 Months", "12 Months", "18 Months", "24 Months")
 
     var MIN = 30000
     var MAX = 100000
@@ -57,6 +56,7 @@ class InitiateApplyLoanActivity : BaseActivity() {
 
         if (supportActionBar != null)
             supportActionBar?.hide()
+
         if (intent.hasExtra("customerData")) {
             customerData = intent.extras?.get("customerData") as CustomerHomeTabResponse
         }
@@ -73,7 +73,7 @@ class InitiateApplyLoanActivity : BaseActivity() {
 
         inLakhs = findViewById(R.id.inLakhs)
 
-        loanAmountEditText.addTextChangedListener(object: TextWatcher {
+        loanAmountEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(amount: Editable) {
                 if (amount.isNotEmpty()) {
                     val totalLoanAmount = amount.toString().toInt()
@@ -89,11 +89,12 @@ class InitiateApplyLoanActivity : BaseActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 getEmiRoi()
+                showProgressDialog()
             }
 
-        } )
+        })
 
-        val isCreateFlow = intent.getBooleanExtra(IS_CREATE_FLOW,false)
+        val isCreateFlow = intent.getBooleanExtra(IS_CREATE_FLOW, false)
 
         val percentCompleted = 23 //to be achieved from BE
         progress_loan.max = 100
@@ -102,39 +103,48 @@ class InitiateApplyLoanActivity : BaseActivity() {
 
         val paint: TextPaint = tvLoanApplication.getPaint()
         val width = paint.measureText("Loan Application")
-        val shader = LinearGradient(0f, 0f, width, tvLoanApplication.textSize, resources.getColor(
-            R.color.dark_orange2, theme), resources.getColor(
-            R.color.white, theme), Shader.TileMode.CLAMP)
+        val shader = LinearGradient(
+            0f, 0f, width, tvLoanApplication.textSize, resources.getColor(
+                R.color.dark_orange2, theme
+            ), resources.getColor(
+                R.color.white, theme
+            ), Shader.TileMode.CLAMP
+        )
         tvLoanApplication.paint.shader = shader
         tvLoanApplication.setTextColor(resources.getColor(R.color.dark_orange2, theme))
 
         val amountTextPaint: TextPaint = loan_amount_text.getPaint()
         val amountTextWidth = amountTextPaint.measureText("Loan Application")
 
-        val amountTextShader = LinearGradient(0f, 0f, amountTextWidth, loan_amount_text.textSize, resources.getColor(
-            R.color.dark_orange2, theme), resources.getColor(
-            R.color.indigoBlue, theme), Shader.TileMode.CLAMP)
+        val amountTextShader = LinearGradient(
+            0f, 0f, amountTextWidth, loan_amount_text.textSize, resources.getColor(
+                R.color.dark_orange2, theme
+            ), resources.getColor(
+                R.color.indigoBlue, theme
+            ), Shader.TileMode.CLAMP
+        )
         loan_amount_text.paint.shader = amountTextShader
         emiMonthly.paint.shader = amountTextShader
 
         tenureDropDown = findViewById(R.id.tenureDropDown)
-        val bankNamesAdapter = ArrayAdapter(this,
-            R.layout.emi_options, tenureList)
+        val bankNamesAdapter = ArrayAdapter(this, R.layout.emi_options, tenureList)
         tenureDropDown.setText(bankNamesAdapter.getItem(0).toString(), false)
         tenureDropDown.setAdapter(bankNamesAdapter)
 
         tenureDropDown.setOnClickListener {
             tenureDropDown.showDropDown()
         }
+
         tenureDropDown.setOnItemClickListener { parent, view, position, id ->
             getEmiRoi()
         }
+
         loanAmountSeekBar.max = 14
 
         loanAmountSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-                var progress_custom = MIN + ( i * STEP )
-                if (i == 14){
+                var progress_custom = MIN + (i * STEP)
+                if (i == 14) {
                     progress_custom = 100000
                 }
                 loanAmountEditText.setText(progress_custom.toString())
@@ -150,35 +160,38 @@ class InitiateApplyLoanActivity : BaseActivity() {
         })
 
         btn_next.setOnClickListener {
+            Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
             if (isCreateFlow) {
                 sendLoanRequest()
-            }else{
+                Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
+            } else {
                 loanProcessResponse?.let {
-                    val intent1 = Intent(this@InitiateApplyLoanActivity, UploadKycDetailsActivity::class.java)
-                    intent1.putExtra("loanResponse",it)
-                    intent1.putExtra(ArthanFinConstants.IS_CREATE_FLOW,false)
-                    intent1.putExtra("customerData",intent.getSerializableExtra("customerData"))
+                    val intent1 =
+                        Intent(this@InitiateApplyLoanActivity, UploadKycDetailsActivity::class.java)
+                    intent1.putExtra("loanResponse", it)
+                    intent1.putExtra(ArthanFinConstants.IS_CREATE_FLOW, false)
+                    intent1.putExtra("customerData", intent.getSerializableExtra("customerData"))
                     startActivity(intent1)
                 }
             }
         }
 
-        // setting default to 6 months
+
         tenureDropDown.setSelection(0)
         getEmiRoi()
 
-        img_back.setOnClickListener{
+        img_back.setOnClickListener {
             finish()
         }
 
-        if (!isCreateFlow)
-            showLoanDetails()
+        /*if (!isCreateFlow)
+            showLoanDetails()*/
 
-        getAllBusinessTypes()
+        //getAllBusinessTypes()
     }
 
     private fun showLoanDetails() {
-        val loanDetails:LoanDetails = intent.getSerializableExtra("loanDetails") as LoanDetails
+        val loanDetails: LoanDetails = intent.getSerializableExtra("loanDetails") as LoanDetails
         loanDetails.loanId?.let {
             getPRLoanDetails(it)
         }
@@ -198,65 +211,38 @@ class InitiateApplyLoanActivity : BaseActivity() {
 
     private fun getPRLoanDetails(loanId: String) {
         showProgressDialog()
-        ApiClient().getAuthApiService(this).getPRLoanDetails(loanId,DataManager.applicantType).enqueue(object :
-            Callback<LoanProcessResponse> {
-            override fun onFailure(call: Call<LoanProcessResponse>, t: Throwable) {
-                hideProgressDialog()
-                t.printStackTrace()
-            }
-
-            override fun onResponse(
-                call: Call<LoanProcessResponse>,
-                response: Response<LoanProcessResponse>
-            ) {
-                hideProgressDialog()
-                val response = response.body() as LoanProcessResponse
-                response.loanAmount?.let {
-                    loanAmountEditText.setText(it)
-                }
-                response.purpose?.let {
-                    loanPurposeDropDown.setText(it,false)
-                }
-                response.tenure?.let {
-                    tenureDropDown.setText(it,false)
-                }
-                response.emi?.let {
-                    monthlyEMI.text = it
+        ApiClient().getAuthApiService(this).getPRLoanDetails(loanId, DataManager.applicantType)
+            .enqueue(object :
+                Callback<LoanProcessResponse> {
+                override fun onFailure(call: Call<LoanProcessResponse>, t: Throwable) {
+                    hideProgressDialog()
+                    t.printStackTrace()
                 }
 
-                loanProcessResponse = response
-            }
-        })
+                override fun onResponse(
+                    call: Call<LoanProcessResponse>,
+                    response: Response<LoanProcessResponse>
+                ) {
+                    hideProgressDialog()
+                    val response = response.body() as LoanProcessResponse
+                    response.loanAmount?.let {
+                        loanAmountEditText.setText(it)
+                    }
+                    response.purpose?.let {
+                        loanPurposeDropDown.setText(it, false)
+                    }
+                    response.tenure?.let {
+                        tenureDropDown.setText(it, false)
+                    }
+                    response.emi?.let {
+                        monthlyEMI.text = it
+                    }
+
+                    loanProcessResponse = response
+                }
+            })
     }
 
-    private fun getEmiRoi() {
-        val jsonObject = JsonObject()
-        val tenure = tenureDropDown.text.split(" ").first()
-        if (loanAmountEditText.text.toString().isEmpty()){
-            return
-        }
-        val loanAmount = loanAmountEditText.text.toString().replace(",","").replace(".00","")
-        jsonObject.addProperty("customerId", customerData.customerId)
-        jsonObject.addProperty("loanAmt", loanAmount)
-        jsonObject.addProperty("tenure", tenure)
-
-        ApiClient().getApiService(applicationContext).getEmiRoi(jsonObject).enqueue(object :
-            Callback<LoanProcessResponse> {
-            override fun onResponse(call: Call<LoanProcessResponse>, response: Response<LoanProcessResponse>) {
-                val emiroiResponse = response.body() as LoanProcessResponse
-                monthlyEMI.text = "${getString(R.string.Rs)} ${emiroiResponse.emi}"
-            }
-
-            override fun onFailure(call: Call<LoanProcessResponse>, t: Throwable) {
-                t.printStackTrace()
-                Toast.makeText(
-                    applicationContext,
-                    "Service Failure, Once Network connection is stable, will try to resend again",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
-    }
 
     private fun getAllBusinessTypes() {
         ApiClient().getAuthApiService(this).getBusinnessPurposeTypes().enqueue(object :
@@ -271,22 +257,25 @@ class InitiateApplyLoanActivity : BaseActivity() {
             ) {
                 val businessTypesResponse = response.body()
                 val listOfBusiness = businessTypesResponse?.businessPurpose
-                listOfBusiness?.let { initateDropDownForBusinessPurposeField(it)
+                listOfBusiness?.let {
+                    initateDropDownForBusinessPurposeField(it)
                 }
             }
         })
     }
 
     private fun initateDropDownForBusinessPurposeField(listOfBusiness: Array<String>?) {
-        val bussinessPurposeAdapter = ArrayAdapter(this,
-            R.layout.emi_options, listOfBusiness!!)
-        if (intent.getBooleanExtra(IS_CREATE_FLOW,false)){
+        val bussinessPurposeAdapter = ArrayAdapter(
+            this,
+            R.layout.emi_options, listOfBusiness!!
+        )
+        if (intent.getBooleanExtra(IS_CREATE_FLOW, false)) {
             loanPurposeDropDown.setText(bussinessPurposeAdapter.getItem(0).toString(), false)
         }
         loanPurposeDropDown.setAdapter(bussinessPurposeAdapter)
         loanPurposeDropDown.setOnItemClickListener { parent, view, position, id ->
             val tenure = listOfBusiness[position]
-            if(tenure == "Select Loan Purpose"){
+            if (tenure == "Select Loan Purpose") {
                 Toast.makeText(
                     this@InitiateApplyLoanActivity,
                     "Please enter the purpose of loan",
@@ -294,12 +283,10 @@ class InitiateApplyLoanActivity : BaseActivity() {
                 ).show()
             }
         }
-
     }
 
-
     private fun sendLoanRequest() {
-        if(tenureDropDown.text.toString() == "Select Tenure"){
+        if (tenureDropDown.text.toString() == "Select Tenure") {
             Toast.makeText(
                 this@InitiateApplyLoanActivity,
                 "Please select the tenure of loan",
@@ -307,7 +294,7 @@ class InitiateApplyLoanActivity : BaseActivity() {
             ).show()
             return
         }
-        if (loanPurposeDropDown.text.toString() == "Select Loan Purpose"){
+        if (loanPurposeDropDown.text.toString() == "Select Loan Purpose") {
             Toast.makeText(
                 this@InitiateApplyLoanActivity,
                 "Please enter the purpose of loan",
@@ -316,9 +303,8 @@ class InitiateApplyLoanActivity : BaseActivity() {
             return
         }
 
-        val loanAmount = loanAmountEditText.text.toString().replace(",","")
-        if (loanAmount.toInt() < 30000)
-        {
+        val loanAmount = loanAmountEditText.text.toString().replace(",", "")
+        if (loanAmount.toInt() < 30000) {
             Toast.makeText(
                 this@InitiateApplyLoanActivity,
                 "Loan Amount less than 30000 not allowed",
@@ -327,7 +313,7 @@ class InitiateApplyLoanActivity : BaseActivity() {
             return
         }
 
-        if (currentLocation == null){
+        if (currentLocation == null) {
             FiniculeUtil.showGPSNotEnabledDialog(this)
             return
         }
@@ -335,38 +321,45 @@ class InitiateApplyLoanActivity : BaseActivity() {
         showProgressDialog()
         val tenure = tenureDropDown.text.split(" ").first()
         val jsonObject = JsonObject()
-        jsonObject.addProperty("customerId", customerData?.customerId)
+        jsonObject.addProperty("customerId", customerData.customerId)
         jsonObject.addProperty("loanAmount", loanAmount)
         jsonObject.addProperty("tenure", tenure)
         jsonObject.addProperty("purpose", loanPurposeDropDown.text.toString())
         currentLocation?.latitude?.let {
-            jsonObject.addProperty("lat",it )
+            jsonObject.addProperty("lat", it)
         }
         currentLocation?.longitude?.let {
-            jsonObject.addProperty("lng",it)
+            jsonObject.addProperty("lng", it)
         }
-        
-        apiClient.getAuthApiService(this).applyForLoan(jsonObject).enqueue(object : Callback<LoanProcessResponse> {
-            override fun onResponse(call: Call<LoanProcessResponse>, response: Response<LoanProcessResponse>) {
-                hideProgressDialog()
-                val loanResponse = response.body()
-                if (loanResponse?.loanCount!! > 1){
-                    showCoApplicantDialog(loanResponse)
-                }else{
-                    navigateToKycDetailsActivity(loanResponse,true)
-                }
-            }
 
-            override fun onFailure(call: Call<LoanProcessResponse>, t: Throwable) {
-                t.printStackTrace()
-                hideProgressDialog()
-                Toast.makeText(
-                    this@InitiateApplyLoanActivity,
-                    "Service Failure, Once Network connection is stable, will try to resend again",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
+        apiClient.getAuthApiService(this).applyForLoan(jsonObject)
+            .enqueue(object : Callback<LoanProcessResponse> {
+                override fun onResponse(
+                    call: Call<LoanProcessResponse>,
+                    response: Response<LoanProcessResponse>
+                ) {
+                    hideProgressDialog()
+                    val loanResponse = response.body()
+                    if (loanResponse != null) {
+                        navigateToKycDetailsActivity(loanResponse, true)
+                    }
+                    if (loanResponse?.loanCount!! > 1) {
+                        showCoApplicantDialog(loanResponse)
+                    } else {
+                        navigateToKycDetailsActivity(loanResponse, true)
+                    }
+                }
+
+                override fun onFailure(call: Call<LoanProcessResponse>, t: Throwable) {
+                    t.printStackTrace()
+                    hideProgressDialog()
+                    Toast.makeText(
+                        this@InitiateApplyLoanActivity,
+                        "Service Failure, Once Network connection is stable, will try to resend again",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
     }
 
     private fun showCoApplicantDialog(loanResponse: LoanProcessResponse) {
@@ -387,14 +380,54 @@ class InitiateApplyLoanActivity : BaseActivity() {
         alert.show()
     }
 
-    private fun navigateToKycDetailsActivity(loanResponse: LoanProcessResponse,navigateToBusinessDetails:Boolean) {
+    private fun navigateToKycDetailsActivity(
+        loanResponse: LoanProcessResponse,
+        navigateToBusinessDetails: Boolean
+    ) {
         val intent = Intent(this@InitiateApplyLoanActivity, UploadKycDetailsActivity::class.java)
-        intent.putExtra(IS_CREATE_FLOW,true)
-        intent.putExtra(MOVE_TO_BUSINESS_DETAILS,navigateToBusinessDetails)
-        if (!navigateToBusinessDetails){
+        intent.putExtra(IS_CREATE_FLOW, true)
+        intent.putExtra(MOVE_TO_BUSINESS_DETAILS, navigateToBusinessDetails)
+        if (!navigateToBusinessDetails) {
             loanResponse.applicantType = "CA"
         }
         intent.putExtra("loanResponse", loanResponse)
         startActivity(intent)
+    }
+
+    private fun getEmiRoi() {
+        val jsonObject = JsonObject()
+        val tenure = tenureDropDown.text.split(" ").first()
+        if (loanAmountEditText.text.toString().isEmpty()) {
+            return
+        }
+        val loanAmount = loanAmountEditText.text.toString().replace(",", "").replace(".00", "")
+        jsonObject.addProperty("customerId", customerData.customerId)
+        jsonObject.addProperty("loanAmt", loanAmount)
+        jsonObject.addProperty("tenure", tenure)
+
+        ApiClient().getApiService(applicationContext).getEmiRoi(jsonObject).enqueue(object :
+            Callback<LoanProcessResponse> {
+            override fun onResponse(
+                call: Call<LoanProcessResponse>,
+                response: Response<LoanProcessResponse>
+            ) {
+                hideProgressDialog()
+                val emiroiResponse = response.body() as LoanProcessResponse
+                monthlyEMI.text = "${getString(R.string.Rs)} ${emiroiResponse.emi}"
+            }
+
+            override fun onFailure(call: Call<LoanProcessResponse>, t: Throwable) {
+                t.printStackTrace()
+                Toast.makeText(
+                    applicationContext,
+                    "Service Failure, Once Network connection is stable, will try to resend again",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+    }
+
+    override fun onBackPressed() {
+        finish()
     }
 }

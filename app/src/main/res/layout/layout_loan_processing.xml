@@ -230,7 +230,7 @@
                 android:background="@drawable/bg_register_rect_orange"
                 android:gravity="center"
                 android:paddingVertical="10dp"
-                android:text="Proceed to Pay"
+                android:text="Proceed"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="18sp" />

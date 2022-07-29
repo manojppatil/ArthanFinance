@@ -47,9 +47,6 @@ import kotlin.collections.ArrayList
 import android.widget.RadioButton
 
 
-
-
-
 class BusinessDetailsFragment : Fragment() {
     private lateinit var btnNext: Button
     private lateinit var apiClient: ApiClient
@@ -88,6 +85,8 @@ class BusinessDetailsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_business_details, container, false)
+        (activity as UploadKycDetailsActivity).setFormStatus(62)
+
         btnNext = view.findViewById(R.id.btn_next_in_businessDetails)
         constitutionSpiner = view.findViewById(R.id.constitutionSpiner)
         typeSpinner = view.findViewById(R.id.typeSpinner)
@@ -145,29 +144,45 @@ class BusinessDetailsFragment : Fragment() {
             }
         }
 
-        val categoryAdapter = activity?.let { ArrayAdapter(it,
-            R.layout.emi_options, categoryList) }
+        val categoryAdapter = activity?.let {
+            ArrayAdapter(
+                it,
+                R.layout.emi_options, categoryList
+            )
+        }
+
         categorySpiner.adapter = categoryAdapter
         categorySpiner.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>,
-                                        view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?, position: Int, id: Long
+            ) {
                 val category = categories[position]//categoryList[position]
                 segmentList = category.segments as ArrayList<String>
 
-                val segmentAdapter = activity?.let { ArrayAdapter(it,
-                    R.layout.emi_options, segmentList) }
+                val segmentAdapter = activity?.let {
+                    ArrayAdapter(
+                        it,
+                        R.layout.emi_options, segmentList
+                    )
+                }
+
                 segmentSpinner.adapter = segmentAdapter
                 segmentSpinner.onItemSelectedListener = object :
                     AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(parent: AdapterView<*>,
-                                                view: View?, position: Int, id: Long) {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>,
+                        view: View?, position: Int, id: Long
+                    ) {
 
                     }
+
                     override fun onNothingSelected(parent: AdapterView<*>) {
                     }
                 }
             }
+
             override fun onNothingSelected(parent: AdapterView<*>) {
             }
         }
@@ -219,7 +234,6 @@ class BusinessDetailsFragment : Fragment() {
 
         return view
     }
-
 
     private fun disableEditFeature() {
         constitutionSpiner.isEnabled = false
@@ -325,8 +339,6 @@ class BusinessDetailsFragment : Fragment() {
         })
     }
 
-
-
     fun hideSoftKeyboard(activity: Activity, view: View) {
         val imm: InputMethodManager =activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.applicationWindowToken, 0)
@@ -362,9 +374,6 @@ class BusinessDetailsFragment : Fragment() {
             return false
         }else if (expense.text.toString().equals("")){
             Toast.makeText(activity?.applicationContext, "Please  Specify Your Monthly Expense", LENGTH_SHORT).show()
-            return false
-        }else if (percentage.text.toString().equals("")){
-            Toast.makeText(activity?.applicationContext, "Please Add Your Business category", LENGTH_SHORT).show()
             return false
         }else if (radioGroup.checkedRadioButtonId == -1){
             Toast.makeText(activity?.applicationContext, "Please Select Your Address Preference", LENGTH_SHORT).show()
@@ -440,7 +449,6 @@ class BusinessDetailsFragment : Fragment() {
                 }
             })
         }
-//        }
     }
 
     private fun launchCamera() {
@@ -600,4 +608,5 @@ open class DatePickerFragment : DialogFragment(), OnDateSetListener {
         val formattedDate: String = sdf.format(c.time)
         (requireActivity().findViewById(R.id.edt_dateOfIncorporation) as EditText).setText(formattedDate)
     }
+
 }

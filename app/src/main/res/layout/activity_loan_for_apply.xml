@@ -6,107 +6,64 @@
     android:layout_height="match_parent"
     tools:context=".applyLoan.ApplyForLoanActivity">
 
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/indigo">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="38dp"
+            android:src="@drawable/ic_back_orange" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="30dp"
+            android:layout_toRightOf="@id/img_back"
+            android:text="Apply for Loan"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+
+        <TextView
+            android:id="@+id/tv_loan_application"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_name"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginRight="@dimen/dimen_24"
+            android:layout_marginBottom="@dimen/dimen_10"
+            android:text="Loan Application"
+            android:textSize="22sp" />
+
+    </RelativeLayout>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/header">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/indigo">
-
-                <ImageView
-                    android:id="@+id/img_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginTop="38dp"
-                    android:src="@drawable/ic_back_orange" />
-
-                <TextView
-                    android:id="@+id/tv_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_toRightOf="@id/img_back"
-                    android:text="Apply for Loan"
-                    android:textColor="@color/white"
-                    android:textSize="22sp" />
-
-                <LinearLayout
-                    android:id="@+id/progress_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_50"
-                    android:layout_below="@id/tv_name"
-                    android:orientation="vertical">
-
-                    <ProgressBar
-                        android:id="@+id/progress_loanPercent"
-                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="8dp"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="22dp"
-                        android:layout_marginTop="@dimen/dimen_20"
-                        android:progressDrawable="@drawable/layer_layout" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="22dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="Completed"
-                            android:textColor="@color/white"
-                            android:textSize="14sp" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:id="@+id/tv_progresspercent"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="23%"
-                            android:textColor="#15DA4C"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_loan_application"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/progress_layout"
-                    android:layout_marginLeft="13dp"
-                    android:layout_marginTop="22dp"
-                    android:layout_marginRight="@dimen/dimen_24"
-                    android:layout_marginBottom="@dimen/dimen_10"
-                    android:text="Loan Application"
-                    android:textSize="22sp" />
-
-            </RelativeLayout>
-
             <FrameLayout
                 android:id="@+id/container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

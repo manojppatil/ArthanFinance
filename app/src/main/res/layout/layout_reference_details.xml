@@ -161,6 +161,74 @@
                 android:textSize="18sp"
                 android:textColorHint="@color/dark_grey"/>
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_family_member"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edt_mob_num"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="21dp"
+                android:gravity="center"
+                android:text="Your Family Member"
+                android:textColor="@color/indigo"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_name_family"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginRight="25dp"
+                android:text="Name"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_name_family"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:ems="10"
+                android:hint="Enter name"
+                android:textColor="@color/black"
+                android:inputType="text"
+                android:paddingStart="15dp"
+                android:paddingVertical="11dp"
+                android:textSize="18sp"
+                android:textColorHint="@color/dark_grey" />
+
+            <TextView
+                android:id="@+id/tv_mob_num_family"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="18dp"
+                android:text="Mobile Number"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_mob_num_family"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:ems="10"
+                android:maxLength="10"
+                android:hint="Enter mobile number"
+                android:textColor="@color/black"
+                android:inputType="number"
+                android:paddingStart="19dp"
+                android:paddingVertical="11dp"
+                android:textSize="18sp"
+                android:textColorHint="@color/dark_grey"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

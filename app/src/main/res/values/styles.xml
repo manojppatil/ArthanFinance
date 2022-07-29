@@ -2,19 +2,68 @@
     <!-- Base application theme. -->
 
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-    <!-- Primary brand color. -->
-    <item name="colorPrimary">@color/whinter_sky_blue</item>
-    <item name="colorPrimaryVariant">@color/colorPrimary</item>
-    <item name="colorOnPrimary">@color/colorPrimary</item>
-    <!-- Secondary brand color. -->
-    <item name="colorSecondary">@color/colorAccent</item>
-    <item name="colorSecondaryVariant">@color/colorAccent</item>
-    <item name="colorOnSecondary">@color/colorAccent</item>
-    <!-- Status bar color. -->
-    <!--<item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>-->
-    <!-- Customize your theme here. -->
-</style>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/whinter_sky_blue</item>
+        <item name="colorPrimaryVariant">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/colorPrimary</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/colorAccent</item>
+        <item name="colorSecondaryVariant">@color/colorAccent</item>
+        <item name="colorOnSecondary">@color/colorAccent</item>
+        <item name="android:dialogTheme">@style/AppTheme.Dialog</item>
+        <!-- Status bar color. -->
+        <!--<item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>-->
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Dialog.MinWidth">
+
+        <!-- override the default theme for DialogFragments spawned by this DialogFragment -->
+        <item name="android:dialogTheme">@style/AppTheme.Dialog</item>
+
+        <!--
+            OPTIONAL: override the background for the dialog...i am using a dark theme,
+            and for some reason, there is no themes for dialogs with dark backgrounds,
+            so, i made my own.
+        -->
+        <item name="android:windowBackground">@drawable/bg_white_smoke_rect</item>
+
+        <!--
+            add the title to the dialog's theme. you can remove it later by using
+            DialogFragment.setStyle()
+        -->
+        <item name="android:windowNoTitle">false</item>
+        <item name="windowNoTitle">?android:windowNoTitle</item>
+
+    </style>
+
+
+    <style name="ToolbarStyleTheme" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">@color/dark_orange2</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="android:fontFamily">@font/mukta_vaani</item>
+    </style>
+
+    <style name="ToolbarStyleTheme2" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">@color/dark_orange2</item>
+        <item name="titleTextColor">@color/indigo</item>
+        <item name="android:fontFamily">@font/mukta_vaani</item>
+    </style>
+
+    <style name="AppTheme2" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/whinter_sky_blue</item>
+        <item name="colorPrimaryVariant">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/colorPrimary</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/colorAccent</item>
+        <item name="colorSecondaryVariant">@color/colorAccent</item>
+        <item name="colorOnSecondary">@color/colorAccent</item>
+        <!-- Status bar color. -->
+        <!--<item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>-->
+        <!-- Customize your theme here. -->
+    </style>
 
     <style name="Widget.MaterialComponents.TextInputLayout.OutlinedBox1" parent="Base.Widget.MaterialComponents.TextInputLayout">
         <item name="materialThemeOverlay">
@@ -35,13 +84,16 @@
     </style>
 
     <style name="Widget.Custom.SheetSelection.Title" parent="@style/Widget.SheetSelection.Title">
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline5</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline5
+        </item>
         <item name="android:gravity">center</item>
     </style>
+
     <style name="Widget.Custom.SheetSelection.Item" parent="@style/Widget.SheetSelection.Item">
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption</item>
         <item name="drawableTint">@color/colorPrimary</item>
     </style>
+
     <style name="Widget.Custom.SheetSelection.Indicator" parent="@style/Widget.SheetSelection.Indicator">
         <item name="android:layout_marginTop">48dp</item>
     </style>
@@ -49,7 +101,8 @@
     <style name="Theme.Custom.SheetSelection" parent="@style/Theme.SheetSelection">
         <item name="sheetSelection_titleStyle">@style/Widget.Custom.SheetSelection.Title</item>
         <item name="sheetSelection_itemStyle">@style/Widget.Custom.SheetSelection.Item</item>
-        <item name="sheetSelection_indicatorStyle">@style/Widget.Custom.SheetSelection.Indicator</item>
+        <item name="sheetSelection_indicatorStyle">@style/Widget.Custom.SheetSelection.Indicator
+        </item>
         <item name="sheetSelection_indicatorColor">@color/colorAccent</item>
     </style>
 </resources>

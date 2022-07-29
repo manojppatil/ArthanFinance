@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
+
         <LinearLayout
             android:id="@+id/ll"
             android:layout_width="match_parent"
@@ -20,7 +21,7 @@
                 android:layout_height="110dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
-                android:src="@drawable/tick"/>
+                android:src="@drawable/tick" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -87,24 +88,26 @@
                 android:gravity="center"
                 android:text="You have earned 100 reward points for applying for loan"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="200dp"
                 android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
                 android:background="@drawable/godrayspg"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal">
+                android:gravity="center">
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="145dp"
                     android:layout_height="126dp"
-                    android:src="@drawable/ic_rewardpoints"/>
+                    android:src="@drawable/ic_arthan_logo" />
             </LinearLayout>
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -114,19 +117,19 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_orange_border_25_radius"
-                    android:layout_margin="15dp"
                     android:layout_gravity="center_horizontal"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/bg_orange_border_25_radius"
+                    android:gravity="center"
                     android:paddingLeft="12dp"
                     android:paddingTop="@dimen/dimen_10"
-                    android:paddingBottom="@dimen/dimen_10"
                     android:paddingRight="12dp"
-                    android:gravity="center"
+                    android:paddingBottom="@dimen/dimen_10"
                     android:text="Go to My Rewards"
                     android:textColor="@color/dark_orange2"
                     android:textSize="24sp"
-                    android:visibility="gone"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_done"

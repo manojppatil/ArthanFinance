@@ -1,7 +1,5 @@
 package com.av.arthanfinance.applyLoan
 
-import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
@@ -11,10 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import android.widget.Toast.makeText
-import androidx.core.view.get
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.av.arthanfinance.R
-import com.av.arthanfinance.homeTabs.HomeDashboardActivity
 import com.av.arthanfinance.manager.DataManager
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.util.ArthanFinConstants
@@ -33,7 +30,7 @@ class AadharDetailsFragment : Fragment() {
     private lateinit var address2: EditText
     private lateinit var address3: EditText
     private lateinit var pincodeText: EditText
-    private var stateList = arrayOf("Select State", "Telangana", "Andhra Pradesh", "Tamil Nadu","Karnataka", "Maharastra")
+    private var stateList = arrayOf("Select State", "Odisha", "Telangana", "Andhra Pradesh", "Tamil Nadu","Karnataka", "Maharastra")
     private var cityList = arrayOf("Hyderabad", "Vizag", "Chennai","Bangalore", "Mumbai")
     private var addressState = ""
     var loanResponse: LoanProcessResponse? = null
@@ -48,6 +45,8 @@ class AadharDetailsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_aadhar_details, container, false)
+        (activity as UploadKycDetailsActivity).setFormStatus(50)
+
         btnNext = view.findViewById(R.id.btn_next_in_aadhar_details)
         stateDropDown = view.findViewById(R.id.stateDropDown)
         //cityDropDown = view.findViewById(R.id.cityDropDown)
@@ -127,7 +126,7 @@ class AadharDetailsFragment : Fragment() {
         }else if (pincodeText.text.isNullOrEmpty()){
             makeText(activity?.applicationContext,"Pincode is Empty",Toast.LENGTH_SHORT).show()
             return false
-        }else if (addressState.equals("") || addressState.equals("Select State")){
+        }else if (addressState == "" || addressState == "Select State"){
             makeText(activity?.applicationContext,"Please Select State",Toast.LENGTH_SHORT).show()
             return false
         }
@@ -138,22 +137,37 @@ class AadharDetailsFragment : Fragment() {
 
     }
 
-    fun loadAddressData(loanResponse: LoanProcessResponse) {
+    fun loadAddressData(loanResponse: LoanProcessResponse, statusFrom: Int) {
+
         val isCreateFlow = arguments?.getBoolean(ArthanFinConstants.IS_CREATE_FLOW,false)
         if (!isCreateFlow!!){
             return
         }
-        val fullAddress = loanResponse.addressLine1
-        val data = fullAddress?.split(",", 2.toString())?.toTypedArray()
-        val add1 = data!![0] + "," + data[1] + "," + data[2] + "," + data[3]
-        val add2 =  data[4] + "," + data[5]
-        val add3 =  data[6] + "," + data[7]
+        if (statusFrom == 1){
+            val fullAddress = loanResponse.addressLine1
+            val data = fullAddress?.split(",", 2.toString())?.toTypedArray()
+            val add1 = data!![0] + "," + data[1] + "," + data[2] + "," + data[3]
+            val add2 =  data[4] + "," + data[5]
+            val add3 =  data[6] + "," + data[7]
 
-        address1.setText(add1)
-        address2.setText(add2)
-        address3.setText(add3)
-        pincodeText.setText(loanResponse.pincode)
-        addressState = loanResponse.state.toString()
+            address1.setText(add1)
+            address2.setText(add2)
+            address3.setText(add3)
+            pincodeText.setText(loanResponse.pincode)
+            addressState = loanResponse.state.toString()
+        }else{
+            val add1 = loanResponse.addressLine1
+            val add2 = loanResponse.addressLine2
+            val add3 = loanResponse.addressLine3
+            val pin = loanResponse.pincode
+
+            address1.setText(add1)
+            address2.setText(add2)
+            address3.setText(add3)
+            pincodeText.setText(pin)
+            addressState = loanResponse.state.toString()
+        }
+
     }
 
     private val pinCodeTextWatcher = object : TextWatcher {
@@ -231,27 +245,40 @@ class AadharDetailsFragment : Fragment() {
                 data?.customerId?.let {
                     (activity as UploadKycDetailsActivity?)?.coAppCustId =it
                 }
-//                (activity as UploadKycDetailsActivity).loanResponse = response.body()
-                val dialogBuilder = AlertDialog.Builder(activity!!)
-                dialogBuilder.setMessage("Do you want to add Co-Applicant")
-                    // if the dialog is cancelable
-                    .setCancelable(false)
-                    .setPositiveButton("Guarantor", DialogInterface.OnClickListener {
-                            dialog, id ->
-                        dialog.dismiss()
-                        addGuarantorData()
-                    }).setNegativeButton("Skip",DialogInterface.OnClickListener {
-                            dialog, id ->
-                        dialog.dismiss()
-                        (activity as UploadKycDetailsActivity?)?.selectIndex(4)
-                    }).setNeutralButton("Co-Applicant",DialogInterface.OnClickListener {
+                /*if (!applicantType.equals("PA")){
+                    (activity as UploadKycDetailsActivity?)?.selectIndex(6)
+                }else{
+                    (activity as UploadKycDetailsActivity?)?.selectIndex(4)
+                }*/
+               (activity as UploadKycDetailsActivity).loanResponse = response.body()
+
+                if (applicantType.equals("PA")){
+                    val dialogBuilder = AlertDialog.Builder(activity!!)
+                    dialogBuilder.setMessage("Do you want to add Co-Applicant")
+                        // if the dialog is cancelable
+                        .setCancelable(false)
+                        .setPositiveButton("Co-Applicant", DialogInterface.OnClickListener {
+                                dialog, id ->
+                            dialog.dismiss()
+                            //addGuarantorData()
+                            //addCoApplicantData()
+                            (activity as UploadKycDetailsActivity).loanResponse!!.applicantType = "CA"
+                            (activity as UploadKycDetailsActivity?)?.selectIndex(0, loanResponse?.customerId)
+                        }).setNegativeButton("Skip", DialogInterface.OnClickListener {
+                                dialog, id ->
+                            dialog.dismiss()
+                            (activity as UploadKycDetailsActivity?)?.selectIndex(4)
+                        })/*.setNeutralButton("Co-Applicant",DialogInterface.OnClickListener {
                             dialog, id ->
                         dialog.dismiss()
                         addCoApplicantData()
-                    })
-                val alert = dialogBuilder.create()
-                alert.setTitle("Co-Applicant Data")
-                alert.show()
+                    })*/
+                    val alert = dialogBuilder.create()
+                    alert.setTitle("Co-Applicant Data")
+                    alert.show()
+                }else{
+                    (activity as UploadKycDetailsActivity?)?.selectIndex(4)
+                }
             }
 
             override fun onFailure(call: Call<LoanProcessResponse>, t: Throwable) {
@@ -353,8 +380,6 @@ class AadharDetailsFragment : Fragment() {
         })
 
     }
-
-
 }
 
 

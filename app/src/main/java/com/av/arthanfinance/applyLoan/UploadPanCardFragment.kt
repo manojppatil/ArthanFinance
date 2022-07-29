@@ -8,13 +8,13 @@ import `in`.digio.sdk.kyc.callback.DigioResponseListener
 import `in`.digio.sdk.kyc.nativeflow.DigioTaskRequest
 import `in`.digio.sdk.kyc.nativeflow.DigioTaskType
 import android.Manifest
-import android.app.Activity
 import android.app.DatePickerDialog
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
@@ -24,39 +24,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.view.isVisible
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.av.arthanfinance.R
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.util.ArthanFinConstants
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.google.gson.JsonObject
-import com.theartofdev.edmodo.cropper.CropImage
-import kotlinx.android.synthetic.main.activity_demo.*
+
 import kotlinx.android.synthetic.main.layout_upload_kyc_details.*
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.UnsupportedEncodingException
+import java.io.*
+import java.lang.Exception
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.*
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [UploadPanCardFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     DigioResponseListener {
 
     private lateinit var customerName: EditText
-    private lateinit var customerDOB: EditText
+    private lateinit var customerDOB: TextView
     private lateinit var customerPhoneNo: EditText
     private lateinit var apiClient: ApiClient
     private var loanResponse: LoanProcessResponse? = null
@@ -77,7 +72,7 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     ): View? {
 
         val view = inflater.inflate(R.layout.layout_upload_kyc_details, container, false)
-
+        (activity as UploadKycDetailsActivity).setFormStatus(24)
         apiClient = ApiClient()
         customerName = view.findViewById(R.id.tv_name_value)
         customerDOB = view.findViewById(R.id.tv_dob_value)
@@ -85,8 +80,6 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
         loanResponse = arguments?.getSerializable("loanResponse") as LoanProcessResponse
         val isCreateFlow = arguments?.getBoolean(ArthanFinConstants.IS_CREATE_FLOW, false)
-
-
 
         isCreateFlow?.let {
             if (!it) {
@@ -102,8 +95,7 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
         val kycRequest = DigioTaskRequest()
         kycRequest.taskType = DigioTaskType.ID_ANALYSIS
-        kycRequest.isFaceMatch =
-            false // Optional,  In case business required selfie and face match with Aadhaar
+        kycRequest.isFaceMatch = false // Optional,  In case business required selfie and face match with Aadhaar
         digioTaskList.add(kycRequest)
 
         val config = DigioKycConfig()
@@ -133,30 +125,40 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         super.onViewCreated(view, savedInstanceState)
 
         val isCreateFlow = arguments?.getBoolean(ArthanFinConstants.IS_CREATE_FLOW, false)
-        if (isCreateFlow!!) {
+        /*if (isCreateFlow!!) {
             Handler(Looper.getMainLooper()).postDelayed({
-                /* Create an Intent that will start the Menu-Activity. */
+                *//* Create an Intent that will start the Menu-Activity. *//*
                 if (loanResponse!!.applicantType != "PA") {
                     rl_rect.visibility = View.VISIBLE
                     customerName.text.clear()
                     customerPhoneNo.text.clear()
-                    customerDOB.text.clear()
-                    customerDOB.setOnClickListener {
-                        val calendar: Calendar = Calendar.getInstance()
-                        val datePickerDialog =
-                            DatePickerDialog(
-                                requireContext(), this, calendar.get(
-                                    Calendar.YEAR
-                                ), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)
-                            )
-                        datePickerDialog.datePicker.maxDate = calendar.timeInMillis
-                        datePickerDialog.show()
-                    }
+                    customerDOB.setText("DD/MM/YYYY")
+
                 } else {
 
                 }
             }, 500)
+        }*/
+
+        val applicantType = (activity as UploadKycDetailsActivity?)?.loanResponse!!.applicantType
+        if(applicantType.equals("CA")){
+            rl_rect.visibility = View.VISIBLE
+            customerName.text.clear()
+            customerPhoneNo.text.clear()
+            customerDOB.setText("DD/MM/YYYY")
         }
+        customerDOB.setOnClickListener {
+            val calendar: Calendar = Calendar.getInstance()
+            val datePickerDialog =
+                DatePickerDialog(
+                    requireContext(), this, calendar.get(
+                        Calendar.YEAR
+                    ), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)
+                )
+            datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+            datePickerDialog.show()
+        }
+
         btn_uploadDigioPan.setOnClickListener {
             if (requestPermission()) {
                 getPanDataFromDigio()
@@ -264,12 +266,15 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         if ((activity as UploadKycDetailsActivity?)?.coAppCustId!!.isNotEmpty()) {
             custId = (activity as UploadKycDetailsActivity?)?.coAppCustId
         }
+        if (applicantType.equals("CA")){
+            custId = "NA"
+        }
         val jsonObject = JsonObject()
         jsonObject.addProperty("loanId", loanResponse?.loanId)
         jsonObject.addProperty("customerId", custId)
         jsonObject.addProperty("applicantType", applicantType)
         jsonObject.addProperty("idType", "PAN")
-        jsonObject.addProperty("imageBase64", encodedImageStr!!)
+        jsonObject.addProperty("imageBase64", encodedImageStr)
         jsonObject.addProperty("applicationType", "CUSTOMER")
 
         val context = activity?.applicationContext!!
@@ -314,7 +319,7 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
         val jsonObject = JsonObject()
 
-        if (loanResponse!!.applicantType != "PA") {
+        if (applicantType.equals("PA")) {
             jsonObject.addProperty("loanId", loanResponse?.loanId)
             jsonObject.addProperty("customerId", custId)
             jsonObject.addProperty("applicantType", applicantType)
@@ -360,8 +365,7 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                     ).show()
                 } else {
                     if (panDetailsUpdateResposne.nextScreen == "CUST_IMG") {
-                        (activity as UploadKycDetailsActivity).coAppCustId =
-                            panDetailsUpdateResposne.customerId!!
+                        (activity as UploadKycDetailsActivity).coAppCustId = panDetailsUpdateResposne.customerId!!
                         (activity as UploadKycDetailsActivity).selectIndex(1)
                     }
                 }
@@ -384,10 +388,22 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     }
 
     override fun onDigioEventTracker(eventTracker: JSONObject) {
+
     }
 
     override fun onDigioResponseFailure(failure: List<DigioTaskResponse>) {
-        Toast.makeText(context, "Uploading PAN Failed", Toast.LENGTH_SHORT).show()
+        for (digiTaskResponse in failure) {
+            val digioTaskRequest = digiTaskResponse.getResponse()
+            val msg = digioTaskRequest.getString("message")
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun encodeImageString(bm: Bitmap): String? {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bm.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+        val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
+        return Base64.encodeToString(byteArray, Base64.DEFAULT)
     }
 
     override fun onDigioResponseSuccess(taskResponseList: List<DigioTaskResponse>) {
@@ -397,16 +413,34 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
             val taskType = digioTaskRequest.taskType
             if (taskType == DigioTaskType.ID_ANALYSIS) {
-                val mainResponse =
-                    digiTaskResponse.getResponse()// offline_kyc or idCard analysis response
+                val mainResponse = digiTaskResponse.getResponse()// offline_kyc or idCard analysis response
                 val analysisResponse = mainResponse.getJSONObject("analysis_response")
                 val name = analysisResponse.getString("name")
                 val panNumber = analysisResponse.getString("id_no")
+                val image = analysisResponse.getString("encoded_image")
                 val panImg = mainResponse.getString("id_front_uri")
 
-                Glide.with(this).load(panImg).into(digioPanImage)
-                val encodedImageStr = encodeString(panImg)
-                uploadPanImage(encodedImageStr)
+                //Glide.with(this).load(panImg).into(digioPanImage)
+
+                Glide.with(this)
+                    .asBitmap()
+                    .load(panImg)
+                    .into(object : CustomTarget<Bitmap>(){
+                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                            digioPanImage.setImageBitmap(resource)
+                            val encodedImageStr = encodeImageString(resource)
+                            uploadPanImage(encodedImageStr)
+                        }
+                        override fun onLoadCleared(placeholder: Drawable?) {
+                            // this is called when imageView is cleared on lifecycle call or for
+                            // some other reason.
+                            // if you are referencing the bitmap somewhere else too other than this imageView
+                            // clear it here as you can no longer have the bitmap
+                        }
+                    })
+
+                /*val encodedImageStr = encodeImageString(panImg)
+                uploadPanImage(encodedImageStr)*/
             }
         }
     }
@@ -415,12 +449,18 @@ class UploadPanCardFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         val data: ByteArray
         var base64 = ""
         try {
+            val decodedString: ByteArray = Base64.decode(str, Base64.DEFAULT)
             data = str.toByteArray(charset("UTF-8"))
-            base64 = Base64.encodeToString(data, Base64.NO_WRAP)
+            val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+
+            //val byteArrayOutputStream = ByteArrayOutputStream()
+            base64 = Base64.encodeToString(data, Base64.DEFAULT)
 
         } catch (e: UnsupportedEncodingException) {
             e.printStackTrace()
         }
         return base64
     }
+
+
 }

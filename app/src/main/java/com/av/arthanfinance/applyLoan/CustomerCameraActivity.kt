@@ -1,5 +1,6 @@
 package com.av.arthanfinance.applyLoan
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -23,6 +24,7 @@ class CustomerCameraActivity : AppCompatActivity() {
         camera.setLifecycleOwner(this)
         camera.addCameraListener(object : CameraListener() {
 
+            @SuppressLint("CheckResult")
             override fun onPictureTaken(picture: ByteArray?) {
                 super.onPictureTaken(picture)
                 CameraUtils.decodeBitmap(picture) {
@@ -36,8 +38,7 @@ class CustomerCameraActivity : AppCompatActivity() {
                                 setResult(Activity.RESULT_OK, resultIntent)
                                 finish()
                             }
-                        }, {
-                                error -> error.message?.let { Log.e("ERROR::", it) } })
+                        }, { error -> error.message?.let { Log.e("ERROR::", it) } })
                 }
             }
         })
@@ -50,7 +51,7 @@ class CustomerCameraActivity : AppCompatActivity() {
             camera.toggleFacing()
         }
 
-        if (intent.getBooleanExtra("is_front",false)){
+        if (intent.getBooleanExtra("is_front", false)) {
             camera.toggleFacing()
         }
     }

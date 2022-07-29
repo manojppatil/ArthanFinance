@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,7 +23,6 @@
                 android:text="Upload your photo"
                 android:textColor="@color/black"
                 android:textSize="22sp" />
-
             <ImageView
                 android:id="@+id/photoImgView"
                 android:layout_width="200dp"
@@ -47,8 +47,8 @@
                     android:background="@drawable/bg_language_rect"
                     android:drawableLeft="@drawable/ic_folder"
                     android:drawablePadding="-40dp"
-                    android:paddingStart="25dp"
                     android:paddingVertical="9dp"
+                    android:paddingStart="25dp"
                     android:text="@string/upload"
                     android:textAllCaps="false"
                     android:textColor="@color/dark_orange2"
@@ -63,17 +63,18 @@
                     android:background="@drawable/bg_language_rect"
                     android:drawableLeft="@drawable/ic_camera_small_icon"
                     android:drawablePadding="-40dp"
-                    android:paddingStart="25dp"
                     android:paddingVertical="9dp"
+                    android:paddingStart="25dp"
                     android:text="@string/camera"
                     android:textAllCaps="false"
                     android:textColor="@color/dark_orange2"
                     android:textSize="@dimen/text_18" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_next_in_uploadPhoto"
@@ -86,6 +87,8 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
+
+
 
         </LinearLayout>
 

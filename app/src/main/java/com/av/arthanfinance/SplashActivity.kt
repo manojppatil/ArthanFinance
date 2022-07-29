@@ -10,9 +10,13 @@ import android.os.Handler
 import android.os.Looper
 import android.view.WindowInsets
 import android.view.WindowManager
+import com.av.arthanfinance.homeTabs.HomeDashboardActivity
 import com.av.arthanfinance.introductionPager.IntroductionPagerActivity
+import com.google.gson.Gson
 
 class SplashActivity : AppCompatActivity() {
+    private var customerData: CustomerHomeTabResponse? = null
+    private var customerID:String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_splash)
@@ -35,20 +39,40 @@ class SplashActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
 
             val sharedPref: SharedPreferences = getSharedPreferences("isFirstTime", Context.MODE_PRIVATE)
-            if (sharedPref.getBoolean("isFirstTime", true)) {
-                val editor = sharedPref.edit()
-                editor.putBoolean("isFirstTime", false)
-                editor.apply()
-                val intent = Intent(this@SplashActivity, IntroductionPagerActivity::class.java)
-                startActivity(intent)
-                finish()
-            } else {
-//                val intent = Intent(this@SplashActivity, FingerPrintLoginActivity::class.java)//
-                val intent = Intent(this@SplashActivity, MPINLoginActivity::class.java)
-                startActivity(intent)
-                finish()
+            val mPrefs: SharedPreferences? = getSharedPreferences("customerData", Context.MODE_PRIVATE)
+            val gson = Gson()
+            val json: String? = mPrefs?.getString("customerData", null)
+            if(json != null) {
+                val obj: CustomerHomeTabResponse =
+                    gson.fromJson(json, CustomerHomeTabResponse::class.java)
+                customerData = obj
+                customerID = customerData?.customerId.toString()
+            }
+
+            when {
+                sharedPref.getBoolean("isFirstTime", true) -> {
+                    /*val editor = sharedPref.edit()
+                        editor.putBoolean("isFirstTime", false)
+                        editor.apply()*/
+
+                    val intent = Intent(this@SplashActivity, PermissionsActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                customerID == "" -> {
+        //                val intent = Intent(this@SplashActivity, FingerPrintLoginActivity::class.java)//
+                    val intent = Intent(this@SplashActivity, MPINLoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                else -> {
+                    val intent = Intent(this@SplashActivity, MPINLoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
             // Your Code
         }, 3000) // 3000 is the delayed time in milliseconds.
     }
 }
+//MAPS_API_KEY=AIzaSyCe9epHZuDTREfqN_WL9U1wOPq0w6m4BE0

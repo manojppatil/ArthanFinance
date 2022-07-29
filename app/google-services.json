@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "909339808477",
-    "project_id": "pragati-app-a8ebb",
-    "storage_bucket": "pragati-app-a8ebb.appspot.com"
+    "project_number": "503953818903",
+    "project_id": "arthan-self-on-boarding",
+    "storage_bucket": "arthan-self-on-boarding.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:909339808477:android:6a467ac9a7dd331b464134",
+        "mobilesdk_app_id": "1:503953818903:android:d7a94c5f974e3c8168e352",
         "android_client_info": {
           "package_name": "com.av.arthanfinance"
         }
       },
       "oauth_client": [
         {
-          "client_id": "909339808477-9u9ha1spleqjfm23eu1bu3jee8hk27fu.apps.googleusercontent.com",
+          "client_id": "503953818903-3bsct3cuasogec5p1bqqk7ef8v1h2qvh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDhwbil5S3eV_UzdCURzIgXSfak_7P0htk"
+          "current_key": "AIzaSyD5xcuatsgqyqCMBFPFCJqmOQyNkq6ssPs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "909339808477-9u9ha1spleqjfm23eu1bu3jee8hk27fu.apps.googleusercontent.com",
+              "client_id": "503953818903-3bsct3cuasogec5p1bqqk7ef8v1h2qvh.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

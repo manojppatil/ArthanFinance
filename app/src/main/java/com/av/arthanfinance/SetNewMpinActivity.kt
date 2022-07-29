@@ -1,7 +1,9 @@
 package com.av.arthanfinance
 
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -14,8 +16,10 @@ import com.arthanfinance.core.base.BaseActivity
 import com.av.arthanfinance.applyLoan.AuthenticationResponse
 import com.av.arthanfinance.applyLoan.model.GenericResponse
 import com.av.arthanfinance.networkService.ApiClient
+import com.av.arthanfinance.user_kyc.UploadBankDetailsActivity
+import com.av.arthanfinance.user_kyc.UploadPanActivity
 import com.chaos.view.PinView
-import com.google.firebase.crashlytics.internal.common.CommonUtils.hideKeyboard
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.layout_set_new_mpin.*
 import retrofit2.Call
@@ -31,6 +35,8 @@ class SetNewMpinActivity : BaseActivity() {
     private var pin2 = ""
     override val layoutId: Int
         get() = R.layout.layout_set_new_mpin
+    private var mobileNum = ""
+    private var fbtoken = ""
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +46,9 @@ class SetNewMpinActivity : BaseActivity() {
             supportActionBar?.hide()
         apiClient = ApiClient()
         btnBack = findViewById(R.id.img_back_mpin)
+
+        mobileNum = intent.extras?.get("mob") as String
+        fbtoken = intent.extras?.get("fbtoken") as String
 
         btnBack.setOnClickListener {
             this.finish()
@@ -62,7 +71,7 @@ class SetNewMpinActivity : BaseActivity() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 pin2 = s.toString()
                 if (count == 4) {
-                    hideKeyboard(this@SetNewMpinActivity, mpin2)
+                    //hideKeyboard(this@SetNewMpinActivity, mpin2)
                 }
             }
 
@@ -70,22 +79,22 @@ class SetNewMpinActivity : BaseActivity() {
         })
         mpin2.isPasswordHidden = true
         findViewById<Button>(R.id.save_m_pin).setOnClickListener {
-            if (intent.hasExtra("MOBILE")){
+            if (intent.hasExtra("MOBILE")) {
                 resetPin()
-            }else{
+            } else {
                 setMPIN()
             }
         }
     }
 
     private fun resetPin() {
-        if (!validateMPIN()){
+        if (!validateMPIN()) {
             return
         }
         val mpin = pin1
         showProgressDialog()
         val jsonObject = JsonObject()
-        if (intent.hasExtra("MOBILE")){
+        if (intent.hasExtra("MOBILE")) {
             jsonObject.addProperty("mobileNo", intent.getStringExtra("MOBILE"))
         }
         jsonObject.addProperty("mpin", mpin)
@@ -124,7 +133,7 @@ class SetNewMpinActivity : BaseActivity() {
         })
     }
 
-    private fun validateMPIN() : Boolean{
+    private fun validateMPIN(): Boolean {
 
         if (pin1 == pin2) {
             return true
@@ -141,24 +150,24 @@ class SetNewMpinActivity : BaseActivity() {
     }
 
 
-
     private fun setMPIN() {
-        if (!validateMPIN()){
+        if (!validateMPIN()) {
             return
         }
         val mpin = pin1
         showProgressDialog()
         val customerId = intent.extras?.get("customerId") as String
         val jsonObject = JsonObject()
-        if (intent.hasExtra("MOBILE")){
+        if (intent.hasExtra("MOBILE")) {
             jsonObject.addProperty("customerId", customerId)
-        }else {
+        } else {
             jsonObject.addProperty("customerId", customerId)
         }
         jsonObject.addProperty("pin", mpin)
-        apiClient.getApiService(this).setCustomerMPIN(jsonObject).enqueue(object :
-            Callback<AuthenticationResponse> {
-            override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
+        jsonObject.addProperty("fbToken", fbtoken)
+        ApiClient().getAuthApiService(this).setCustomerMPIN(jsonObject).enqueue(object :
+            Callback<CustomerHomeTabResponse> {
+            override fun onFailure(call: Call<CustomerHomeTabResponse>, t: Throwable) {
                 t.printStackTrace()
                 hideProgressDialog()
                 Toast.makeText(
@@ -168,25 +177,33 @@ class SetNewMpinActivity : BaseActivity() {
             }
 
             override fun onResponse(
-                call: Call<AuthenticationResponse>,
-                response: Response<AuthenticationResponse>
+                call: Call<CustomerHomeTabResponse>,
+                response: Response<CustomerHomeTabResponse>
             ) {
                 hideProgressDialog()
                 val custData = response.body()
-                if (custData != null) {
-                    if (custData.status == "200") {
 
-                        val intent = Intent(this@SetNewMpinActivity, MPINLoginActivity::class.java)
-                        intent.putExtra("customerId", customerId)
-                        startActivity(intent)
+                if (custData != null && custData.errCode == 200.toString()) {
+                    val sharedPref: SharedPreferences? =
+                        getSharedPreferences("customerData", Context.MODE_PRIVATE)
+                    val prefsEditor = sharedPref?.edit()
+                    val gson = Gson()
+                    val json: String = gson.toJson(custData)
+                    prefsEditor?.putString("customerData", json)
+                    prefsEditor?.apply()
 
-                    } else {
+                    val intent = Intent(this@SetNewMpinActivity, UploadPanActivity::class.java)
+                    intent.putExtra("customerData", custData)
+                    startActivity(intent)
+                    finish()
+
+                } else {
+                    custData?.let {
                         Toast.makeText(
-                            this@SetNewMpinActivity, "Please enter the valid MPIN",
+                            this@SetNewMpinActivity, it.errDesc,
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-
                 }
             }
         })

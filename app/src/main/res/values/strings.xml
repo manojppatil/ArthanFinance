@@ -23,7 +23,7 @@
     <string name="dob_format">DD/MM/YYYY</string>
     <string name="enter_email">Enter email ID</string>
     <string name="dob">Date of Birth <font color='#FF0000'>*</font></string>
-    <string name="email_id">Email ID</string>
+    <string name="email_id">Email ID <font color='#FF0000'></font></string>
     <string name="accept_tos">I accept the <b>Terms &amp; Conditions</b></string>
     <string name="submit">Submit</string>
     <string name="otp">OTP</string>
@@ -45,7 +45,7 @@
     <string name="enable_face_id">Enable Face ID</string>
     <string name="your_kyc_details">Your KYC Details</string>
     <string name="check_details">Check your details below, change if required and proceed</string>
-    <string name="name">Name</string>
+    <string name="name">Name <font color='#FF0000'>*</font></string>
     <string name="date_of_birth">Date of Birth</string>
     <string name="mob_num">Mobile Number</string>
     <string name="upload_pan">Upload PAN</string>
@@ -66,15 +66,18 @@
     <string name="front_side">Front Side</string>
     <string name="back_side">Back Side</string>
     <string name="retake">Retake</string>
-    <string name="bus_name">Business Name</string>
-    <string name="doc">Date of Incorporation</string>
-    <string name="constitution">Constitution</string>
+    <string name="bus_name">Business Name<font color='#FF0000'>*</font></string>
+    <string name="doc">Date of Incorporation<font color='#FF0000'>*</font></string>
+    <string name="constitution">Constitution<font color='#FF0000'>*</font></string>
     <string name="standard_loan">A standard loan processing  fees (2.5%) + GST will be applicable to you in order to continue</string>
     <string name="app_sub">Your Application has been completed and its ready to submit</string>
     <string name="Rs">\u20B9</string>
+    <string name="percent">\u0025</string>
     <string name="city_name">City <font color='#FF0000'>*</font></string>
     <string name="state_name">State <font color='#FF0000'>*</font></string>
     <string name="pincode_name">Pincode <font color='#FF0000'>*</font></string>
+    <string name="location">Your Location <font color='#FF0000'>*</font></string>
+    <string name="business_location">Business Current Location <font color='#FF0000'>*</font></string>
     <string name="address1">Address Line 1 <font color='#FF0000'>*</font></string>
     <string name="address2">Address Line 2 <font color='#FF0000'>*</font></string>
     <string name="address3">Address Line 3 <font color='#FF0000'>*</font></string>
@@ -84,7 +87,7 @@
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="previous">Previous</string>
-
+    <string name="notification_channel_id">default</string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="demo_user_name">Jitesh Ramlaal Singh</string>
@@ -94,4 +97,122 @@
     <string name="demo_address">Arthan Finance , Near Ravi Talkies, Old Town, Bhubaneswar</string>
     <string name="capture">Capture</string>
     <string name="offline_kyc">Do Offline Kyc</string>
+    <string name="aadhar_kyc">Aadhar Kyc</string>
+    <string name="service_request">Service Request</string>
+    <string name="view_loan_details">View Loan Details</string>
+    <string name="generate_loan_statement">Generate Loan Statement</string>
+    <string name="payment_of_dues">Payment of Dues</string>
+    <string name="pre_closure_of_loan">Pre Closure Of Loan</string>
+    <string name="apply_for_top_up_loan">Apply For Top Up Loan</string>
+    <string name="insurance_certificate">Insurance Certificate</string>
+    <string name="tranche_disbursement">Tranche Disbursement</string>
+    <string name="interest_certificate">Interest Certificate</string>
+    <string name="please_select_loan_account_to_proceed">Please Select Loan Account To Proceed</string>
+    <string name="loan_account_number">Loan Account Number</string>
+    <string name="dummy_loan_acc_num">xxxxxx4485</string>
+    <string name="application_date">Application Date</string>
+    <string name="dummy_loan_application_date">20 Dec 2021</string>
+    <string name="borrower_name">Borrower Name</string>
+    <string name="co_borrower">Co-borrower</string>
+    <string name="dummy_borrower_name">Jitesh Ranjan Singh</string>
+    <string name="na">NA</string>
+    <string name="loan_amount">Loan Amount</string>
+    <string name="tenure">Tenure</string>
+    <string name="monthly_emi">Monthly EMI</string>
+    <string name="dummy_loan_tenure">36 Months</string>
+    <string name="interest_rate">Interest Rate</string>
+    <string name="total_amount_payable">Total Amount Payable</string>
+    <string name="total_amount_paid">Total Amount Paid</string>
+    <string name="total_amount_due">Total Amount Due</string>
+    <string name="emi_paid">EMI(s) Paid</string>
+    <string name="emi_due">EMI(s) Due</string>
+    <string name="total_interest">Total Interest</string>
+    <string name="make_payment">Make Payment</string>
+    <string name="download_statement">Download Statement</string>
+    <string name="repayment_schedule">Repayment schedule</string>
+    <string name="share_details">Share Details</string>
+    <string name="email_me">Email Me</string>
+    <string name="download_pdf">Download PDF</string>
+    <string name="processing_fee_and_charge">Processing Fee And Charge</string>
+    <string name="proceed_to_pay">Proceed To Pay</string>
+    <string name="loan_account">Loan Account</string>
+    <string name="statment_period">Statement Period</string>
+    <string name="loan_account_no">Loan Account No</string>
+    <string name="statement_type">Statement Type</string>
+    <string name="next_installment">Next Installment</string>
+    <string name="other_charges_fees">Other Charges/Fees</string>
+    <string name="lumpsum_amount">Lumpsum Amount</string>
+    <string name="payment_type">Payment Type</string>
+    <string name="outstanding_dues">Outstanding Dues</string>
+    <string name="multiple_installments">Multiple Installments</string>
+    <string name="due_date">Due Date</string>
+    <string name="connect_to_an_executive">Connect To An Executive</string>
+    <string name="see_nearest_branch">See Nearest Branch</string>
+    <string name="completed">Completed</string>
+    <string name="state">State</string>
+    <string name="business_pan">Business Pan Number</string>
+    <string name="udyog_aadhar">Udyog Aadhar Number</string>
+    <string name="gst_number">Gst Number</string>
+    <string name="margin">Margin (%)<font color='#FF0000'>*</font></string>
+    <string name="monthly_income">Monthly Income <font color='#FF0000'>*</font></string>
+    <string name="monthly_expenses">Monthly Expenses <font color='#FF0000'>*</font></string>
+    <string name="enter_address">Enter Address</string>
+    <string name="category">Category <font color='#FF0000'>*</font></string>
+    <string name="segment">Segment <font color='#FF0000'>*</font></string>
+    <string name="type">Type <font color='#FF0000'>*</font></string>
+    <string name="monthly_turnover">Monthly Turnover <font color='#FF0000'>*</font></string>
+    <string name="address_same_as_residence">Address same as residence <font color='#FF0000'>*</font></string>
+    <string name="ifsc_code">Ifsc Code</string>
+    <string name="account_number">Account Number</string>
+    <string name="bank_name">Bank Name</string>
+    <string name="date_format">DD/MM/YYYY</string>
+    <string name="no_data_found">No Data Found</string>
+    <string name="gender">Gender <font color='#FF0000'>*</font></string>
+    <string name="father_spouse_name">Father/Spouse Name <font color='#FF0000'>*</font></string>
+    <string name="mother_s_name">Mother\'s Name <font color='#FF0000'>*</font></string>
+    <string name="qualification">Qualification <font color='#FF0000'>*</font></string>
+    <string name="title">Title <font color='#FF0000'>*</font></string>
+    <string name="religion">Religion <font color='#FF0000'>*</font></string>
+    <string name="marital_status">Marital Status <font color='#FF0000'>*</font></string>
+    <string name="family_members">No. of Family Members <font color='#FF0000'>*</font></string>
+    <string name="landmark">Landmark</string>
+    <string name="city">City <font color='#FF0000'>*</font></string>
+    <string name="district">District <font color='#FF0000'>*</font></string>
+
+
+    <string name="ACCESS_KEY">AKIAZUHCZC3Y5MJRHYXT</string>
+    <string name="SECRET_KEY">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</string>
+    <string name="sms">SMS</string>
+
+    <string name="device">Device</string>
+    <string name="apps">Apps</string>
+    <string name="contacts">Contacts</string>
+    <string name="accounts">Accounts</string>
+    <string name="finbox">FinBox</string>
+    <string name="powered_by">Powered by</string>
+    <string name="grant_access">Grant Access</string>
+    <string name="privacy_policy">By continuing, you agree to <a href="https://finbox.in/about/privacy-policy/">Privacy Policy</a> of FinBox</string>
+
+    <string name="locationDialogTitle">Location Permission Required</string>
+    <string name="contactDialogTitle">Contact Permission Required</string>
+    <string name="readSmsDialogTitle">Read SMS Permission Required</string>
+    <string name="readPhoneStateDialogTitle">Read Phone State Permission Required</string>
+    <string name="requirePermission">Required Permission</string>
+
+    <string name="locationDialogMessage1">This app requires specific permissions for the processing and user data verification. User need grants to these permissions to proceed further.</string>
+    <string name="locationDialogMessage">This app collects location details to verify your location and address details. You need grant to this permission to proceed further.</string>
+    <string name="contactDialogMessage">This app collects contacts information. You need grant to this permission to proceed further.</string>
+    <string name="readSmsDialogMessage">This app collects and view SMS messages. You need grant to this permission to proceed further.</string>
+    <string name="readPhoneStatesDialogMessage">This app make and manage phone calls. You need grant to this permission to proceed.</string>
+    <string name="go_for_video_kyc">Go For Video KYC</string>
+    <string name="skip"><a>Skip</a></string>
+    <string name="eligibility_msg">You have Successfully submitted all details for arriving at your Eligibility</string>
+    <string name="eligibility_msg2">You will be intimated on your eligibility soon.</string>
+    <string name="received_message">Received Message</string>
+    <string name="not_availble_register_now"><a href="https://udyamregistration.gov.in/UdyamRegistration.aspx">Not available? Register Now</a></string>
+    <string name="upload_bank_statement_pdf_file_downloaded_from_bank"><b>Upload Bank Statement</b> \n(PDF File Downloaded from Bank)</string>
+    <string name="verify_udyam">Verify Udyam Aadhar</string>
+    <string name="business_address_as_per_udyam">Business Address As per Udyam Aadhar</string>
+    <string name="udyam_consent">I agree to the <b>Terms and conditions</b> and authorise Arthan Finance to access my Business details from Udyam Aadhar</string>
+    <string name="congratulations">Congratulations!</string>
 </resources>

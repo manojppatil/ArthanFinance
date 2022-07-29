@@ -73,5 +73,8 @@ class CustomerHomeTabResponse : Serializable {
     @Expose
     val errDesc: String? = null
 
+    @SerializedName("applicantType")
+    @Expose
+    var applicantType: String = "PA"
 
 }

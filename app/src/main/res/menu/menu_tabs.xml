@@ -15,7 +15,7 @@
             android:id="@+id/businessTab"
             android:icon="@drawable/ic_business"
             android:enabled="true"
-            android:title="My Business" />
+            android:title="Service Request " />
         <item
             android:id="@+id/profileTab"
             android:icon="@drawable/ic_profile"

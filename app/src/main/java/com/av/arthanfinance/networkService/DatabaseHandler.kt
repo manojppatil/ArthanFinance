@@ -1,5 +1,6 @@
 package com.av.arthanfinance.networkService
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -61,6 +62,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
         return success
     }
     //method to read data
+    @SuppressLint("Range")
     fun getCustomers():List<Customer>{
         val empList:ArrayList<Customer> = ArrayList<Customer>()
         val selectQuery = "SELECT  * FROM $TABLE_CUSTOMERS"

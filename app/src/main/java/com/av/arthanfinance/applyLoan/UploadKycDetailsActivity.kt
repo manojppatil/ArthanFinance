@@ -62,12 +62,12 @@ class UploadKycDetailsActivity : BaseActivity(), UploadAdharCardFragment.UpdateL
         tab_viewpager = findViewById(R.id.tab_viewpager)
         var tab_tablayout = findViewById<TabLayout>(R.id.tab_tablayout)
         imgBack = findViewById(R.id.img_back)
-        progressRegistrationBar = findViewById(R.id.progress_registration)
+        //progressRegistrationBar = findViewById(R.id.progress_registration)
         registrationProgressPercent = findViewById(R.id.tv_progresspercent)
 
         val percentCompleted = 23 //to be achieved from BE
-        progressRegistrationBar.max = 100
-        ObjectAnimator.ofInt(progressRegistrationBar, "progress", percentCompleted).setDuration(1000).start()
+        /*progressRegistrationBar.max = 100
+        ObjectAnimator.ofInt(progressRegistrationBar, "progress", percentCompleted).setDuration(1000).start()*/
 
         registrationProgressPercent.text = "${percentCompleted}%"
 
@@ -118,12 +118,18 @@ class UploadKycDetailsActivity : BaseActivity(), UploadAdharCardFragment.UpdateL
 
     fun selectIndex(newIndex: Int, custId: String? = "") {
         tab_viewpager.currentItem = newIndex
-        if (newIndex ==4){
+        if (newIndex == 4){
             tab_viewpager.adapter?.notifyDataSetChanged()
         }
         if (custId != null && custId.isNotEmpty()) {
             coAppCustId = custId
         }
+    }
+
+    fun setFormStatus(percentCompleted: Int) {
+        /*progressRegistrationBar.max = 100
+        ObjectAnimator.ofInt(progressRegistrationBar, "progress", percentCompleted).setDuration(1000).start()
+        registrationProgressPercent.text = "${percentCompleted}%"*/
     }
 
     override fun onResume() {
@@ -141,7 +147,8 @@ class UploadKycDetailsActivity : BaseActivity(), UploadAdharCardFragment.UpdateL
     override fun onBackPressed() {
         val currentPosition: Int = tab_viewpager.currentItem
         if (currentPosition != 0) {
-            tab_viewpager.currentItem = 0
+            //tab_viewpager.currentItem = 0
+           super.onBackPressed()
         } else {
             super.onBackPressed()
         }
@@ -160,34 +167,33 @@ class UploadKycDetailsActivity : BaseActivity(), UploadAdharCardFragment.UpdateL
                 false
             )
         )
-        panCardFragment.arguments = bundle
+        /*panCardFragment.arguments = bundle
         photoFragment.arguments = bundle
         aadharPicFragment.arguments = bundle
-        aadharDetailsFragment.arguments = bundle
-
+        aadharDetailsFragment.arguments = bundle*/
         businessDetailsFragment.arguments = bundle
-        uploadDocsFragment.arguments = bundle
+        //uploadDocsFragment.arguments = bundle
         referenceDetailsFragment.arguments = bundle
 
-        adapter.addFragment(panCardFragment, "Your KYC Details")
+        /*adapter.addFragment(panCardFragment, "Your KYC Details")
         adapter.addFragment(photoFragment, "Upload Photo")
         adapter.addFragment(aadharPicFragment, "Upload Aadhaar")
-        adapter.addFragment(aadharDetailsFragment, "Address")
-
+        adapter.addFragment(aadharDetailsFragment, "Address")*/
         adapter.addFragment(businessDetailsFragment, "Business Details")
-        adapter.addFragment(uploadDocsFragment, "Upload Documents")
+        //adapter.addFragment(uploadDocsFragment, "Upload Documents")
         adapter.addFragment(referenceDetailsFragment, "Reference Details")
 
         viewpager.adapter = adapter
     }
 
-    class ViewPagerAdapter : FragmentPagerAdapter {
+    class ViewPagerAdapter(
+        supportFragmentManager: FragmentManager
+    ) : FragmentPagerAdapter(
+        supportFragmentManager,
+        BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         private var fragmentList1: ArrayList<Fragment> = ArrayList()
         private var fragmentTitleList1: ArrayList<String> = ArrayList()
-
-        constructor(supportFragmentManager: FragmentManager)
-                : super(supportFragmentManager)
 
         override fun getItem(position: Int): Fragment {
             return fragmentList1.get(position)
@@ -208,9 +214,10 @@ class UploadKycDetailsActivity : BaseActivity(), UploadAdharCardFragment.UpdateL
         }
     }
 
-    override fun sendData(loanProcessResponse: LoanProcessResponse) {
-        loanResponse?.let {
-            aadharDetailsFragment.loadAddressData(it) }
+    override fun sendData(loanProcessResponse: LoanProcessResponse, statusFrom: Int) {
+        /*loanResponse?.let {
+            aadharDetailsFragment.loadAddressData(it, statusFrom) }*/
+        aadharDetailsFragment.loadAddressData(loanProcessResponse, statusFrom)
     }
 
     private fun getCategoryAndSegmentData() {
@@ -243,6 +250,7 @@ class UploadKycDetailsActivity : BaseActivity(), UploadAdharCardFragment.UpdateL
                 }
             })
     }
+
 
     fun moveToDashboardScreen() {
         val intent = Intent(this, HomeDashboardActivity::class.java)

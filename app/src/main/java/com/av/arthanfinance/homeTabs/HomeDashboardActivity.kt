@@ -14,6 +14,8 @@ import com.av.arthanfinance.R
 import com.av.arthanfinance.applyLoan.AuthenticationResponse
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.profile.ProfileFragment
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_no_loan_dashboard.*
@@ -32,23 +34,46 @@ class HomeDashboardActivity : BaseActivity() {
     private var activeFragment: Fragment = noLoanHomeFragment
     private var isLoansAvailable: Boolean = false
     var customerData: CustomerHomeTabResponse? = null
+
     override val layoutId: Int
-        get() =R.layout.activity_no_loan_dashboard
+        get() = R.layout.activity_no_loan_dashboard
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.supportActionBar?.hide()
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                return@OnCompleteListener
+            }
+            val token = task.result
+            //Toast.makeText(baseContext, ""+token, Toast.LENGTH_SHORT).show()
+        })
+
+//        FinBox.createUser("FLMtON74y17xzANePjLp7aMtP98Za0Iv3ig2AmPr", "PGC12345",
+//            object : FinBox.FinBoxAuthCallback {
+//                override fun onSuccess(accessToken: String) {
+//                    val finBox = FinBox()
+//                    finBox.startPeriodicSync()
+//                }
+//
+//                override fun onError(@FinBoxErrorCode errorCode: Int) {
+//                    Toast.makeText(this@HomeDashboardActivity, "" + errorCode, Toast.LENGTH_SHORT).show()
+//                }
+//            })
+
         val mPrefs: SharedPreferences? = getSharedPreferences("customerData", Context.MODE_PRIVATE)
         val gson = Gson()
         val json: String? = mPrefs?.getString("customerData", null)
-        if(json != null) {
-            val obj: CustomerHomeTabResponse = gson.fromJson(json, CustomerHomeTabResponse::class.java)
+        if (json != null) {
+            val obj: CustomerHomeTabResponse =
+                gson.fromJson(json, CustomerHomeTabResponse::class.java)
             customerData = obj
 
             noLoanHomeFragment.customerData = customerData
             withLoanHomeFragment.customerData = customerData
             loansTabFragment.customerData = customerData
-            profileTabFragment.customerData =customerData
+            profileTabFragment.customerData = customerData
 
             if (isLoansAvailable) { //redirect to loans dashboard
                 fragmentManager.beginTransaction().apply {
@@ -127,10 +152,8 @@ class HomeDashboardActivity : BaseActivity() {
                     hideProgressDialog()
                     val custData = response.body()
                     if (custData != null && custData.message.trim() == "Success") {
-                        val intent = Intent(
-                            this@HomeDashboardActivity,
-                            MPINLoginActivity::class.java
-                        )
+                        val intent =
+                            Intent(this@HomeDashboardActivity, MPINLoginActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
                         finish()
@@ -145,7 +168,9 @@ class HomeDashboardActivity : BaseActivity() {
                 }
             })
         }
-
     }
 
+    override fun onBackPressed() {
+        finish()
+    }
 }

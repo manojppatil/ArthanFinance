@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
 
     <androidx.core.widget.NestedScrollView
@@ -90,21 +91,22 @@
                         android:textColor="@color/dark_grey"
                         android:textSize="14sp" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/tv_dob_value"
-                        android:layout_width="100dp"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_dob"
                         android:layout_alignStart="@+id/tv_dob"
                         android:layout_marginBottom="20dp"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:gravity="start"
-                        android:hint="DOB"
-                        android:inputType="date"
-                        android:lines="1"
-                        android:maxLines="1"
+                        android:background="@drawable/bg_grey92_rect"
+                        android:ems="10"
+                        android:focusable="false"
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:hint="DD/MM/YYYY"
+                        android:paddingVertical="11dp"
+                        android:paddingStart="19dp"
+                        android:textSize="16sp"
+                        app:hintTextColor="@color/very_light_grey" />
 
                     <EditText
                         android:id="@+id/tv_mob_num_value"

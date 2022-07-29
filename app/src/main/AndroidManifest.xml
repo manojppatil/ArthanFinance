@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.av.arthanfinance">
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -9,14 +14,18 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
-
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
@@ -24,88 +33,244 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        android:windowSoftInputMode="adjustResize">
+        android:windowSoftInputMode="adjustResize"
+        tools:ignore="LockedOrientationActivity">
+        <activity
+            android:name=".applyLoan.ApplyCoupon"
+            android:exported="false" />
+
+        <receiver
+            android:name=".util.SmsBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true" />
 
         <activity
+            android:name=".applyLoan.LoanEligibilitySubmittedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MapLocationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MapsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".user_kyc.VideoKycActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UploadReferenceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".serviceRequest.LoanPreClosureActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".serviceRequest.PaymentDuesActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".serviceRequest.GenerateLoanStatementActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".serviceRequest.LoanDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".serviceRequest.ViewLoansActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme2"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".applyLoan.CustomerCameraActivity"
-            android:launchMode="singleTop" />
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".introductionPager.IntroductionPagerActivity"
-            android:launchMode="singleTop" />
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".applyLoan.InitiateApplyLoanActivity"
-            android:launchMode="singleTop" />
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".applyLoan.LoanApplicationSubmittedActivity"
+            android:exported="false"
             android:launchMode="singleTop" />
         <activity
             android:name=".ForgotPasswordActivity"
-            android:launchMode="singleTop" />
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".applyLoan.ApplyForLoanActivity"
-            android:launchMode="singleTop" />
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".homeTabs.HomeDashboardActivity"
-            android:launchMode="singleTop" />
-
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".user_kyc.UploadAadharActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".user_kyc.UploadPanActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".user_kyc.UploadPhotoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".PermissionsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme2"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".InitiateApplyLoanActivity2"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".DemoActivity"
-            android:exported="true" />
-
-        <activity android:name=".SplashActivity"
-            android:exported="true">
+            android:exported="false" />
+        <activity
+            android:name=".GstValidationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".user_kyc.UploadAadharAddressActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme2"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".user_kyc.UploadBusinessDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme2"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".user_kyc.UploadBankDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ChooseLanguageActivity"
+            android:exported="false"
             android:launchMode="singleTop" />
         <activity
             android:name=".FaceLoginActivity"
             android:launchMode="singleTop" />
         <activity
             android:name=".FingerPrintLoginActivity"
+            android:exported="false"
             android:launchMode="singleTop" />
         <activity
             android:name=".MPINLoginActivity"
-            android:launchMode="singleTop" />
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".OTPActivity"
-            android:launchMode="singleTop" />
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".RegistrationActivity"
-            android:launchMode="singleTop" />
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".SetNewMpinActivity"
-            android:launchMode="singleTop" />
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".SetupFaceBiometricActivity"
+            android:exported="false"
             android:launchMode="singleTop" />
         <activity
             android:name=".SetupFingerBiometricActivity"
+            android:exported="false"
             android:launchMode="singleTop" />
         <activity
             android:name=".applyLoan.UploadKycDetailsActivity"
+            android:exported="false"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.Design.NoActionBar" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:exported="true"
             android:theme="@style/Base.Theme.AppCompat" />
-
-        <activity android:name="in.digio.sdk.kyc.cropper.DigioCropImageActivity"
+        <activity
+            android:name="in.digio.sdk.kyc.cropper.DigioCropImageActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:exported="false" />
+        <activity
+            android:name="in.digio.sdk.kyc.nativeflow.DigioIDAnalysisActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:exported="false" />
+        <activity
+            android:name="in.digio.sdk.kyc.DigioMainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
-
-        <activity android:name="in.digio.sdk.kyc.nativeflow.DigioIDAnalysisActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
-
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_launcher" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCTLJFF79u6omkn0G03TLRWZAYUZA4v6oM" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <service
+            android:name=".notification.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

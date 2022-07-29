@@ -30,4 +30,6 @@
     <color name="light_green">#11BF42</color>
     <color name="title_label_color">#838383</color>
     <color name="bg_theme_color">#EDEDED</color>
+    <color name="light_gray">#EDEDED</color>
+    <color name="meteor_red">#FB2525</color>
 </resources>

@@ -66,6 +66,8 @@ class UploadPhotoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.layout_upload_photo, container, false)
+        (activity as UploadKycDetailsActivity).setFormStatus(24)
+
         apiClient = ApiClient()
         tvUploadPhoto = view.findViewById(R.id.tv_upload_photo)
         btnNext = view.findViewById(R.id.btn_next_in_uploadPhoto)
@@ -107,7 +109,6 @@ class UploadPhotoFragment : Fragment() {
                 updatePhotoDetails()
         }
 
-
         return view
     }
     private var REQ_CODE_PHOTO_ID = 321
@@ -117,7 +118,6 @@ class UploadPhotoFragment : Fragment() {
         view.findViewById<AppCompatButton>(R.id.btn_camera_uploadPhoto).visibility = View.GONE
         view.findViewById<AppCompatTextView>(R.id.tv_upload_photo).setText("Your Photo")
     }
-
 
     private fun launchCamera(cameraRequest: Int) {
         startActivityForResult(Intent(activity, CustomerCameraActivity::class.java).apply {
@@ -198,13 +198,10 @@ class UploadPhotoFragment : Fragment() {
                     print("base64 Stirng $encodedImageStr")
                     uploadPhotoImage(encodedImageStr)
                 }
-
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
-
-
 
     private fun encodeImageString(bm: Bitmap): String? {
         val byteArrayOutputStream = ByteArrayOutputStream()
@@ -320,5 +317,6 @@ class UploadPhotoFragment : Fragment() {
             }
         })
     }
+
 
 }

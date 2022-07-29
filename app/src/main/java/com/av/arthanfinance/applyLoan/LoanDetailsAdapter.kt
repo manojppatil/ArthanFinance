@@ -16,13 +16,13 @@ import com.av.arthanfinance.util.ArthanFinConstants
 class LoanDetailsAdapter(private val loansList: ArrayList<LoanDetails>,private val listener:LoanItemClickListener) : RecyclerView.Adapter<LoanDetailsAdapter.LoanDetailsViewHolder>() {
 
     class LoanDetailsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val loanAmountValue: TextView? = itemView.findViewById<TextView>(R.id.loanAmountValue)
-        private val loanAmountText: TextView? = itemView.findViewById<TextView>(R.id.loanAmountText)
-        private val loanAccountNo: TextView? = itemView.findViewById<TextView>(R.id.loanAccountNo)
-        private val loanTypeText: TextView? = itemView.findViewById<TextView>(R.id.loanTypeText)
-        private val loanIconType: ImageView? = itemView.findViewById<ImageView>(R.id.loanIconType)
-        private val loanProgressBar: ProgressBar = itemView.findViewById<ProgressBar>(R.id.loanProgressBar)
-        private val root: LinearLayout? = itemView.findViewById<LinearLayout>(R.id.root)
+        private val loanAmountValue: TextView? = itemView.findViewById(R.id.loanAmountValue)
+        private val loanAmountText: TextView? = itemView.findViewById(R.id.loanAmountText)
+        private val loanAccountNo: TextView? = itemView.findViewById(R.id.loanAccountNo)
+        private val loanTypeText: TextView? = itemView.findViewById(R.id.loanTypeText)
+        private val loanIconType: ImageView? = itemView.findViewById(R.id.loanIconType)
+        private val loanProgressBar: ProgressBar = itemView.findViewById(R.id.loanProgressBar)
+        private val root: LinearLayout? = itemView.findViewById(R.id.root)
 
         fun bind(loanDetails: LoanDetails,listener: LoanItemClickListener) {
             loanAmountValue?.text = loanDetails.loanAmount

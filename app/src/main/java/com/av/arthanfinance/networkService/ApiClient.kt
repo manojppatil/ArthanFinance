@@ -15,40 +15,79 @@ import javax.net.ssl.X509TrustManager
 import okhttp3.logging.HttpLoggingInterceptor
 
 
-
-
-
 class ApiClient {
 
     companion object {
-        private const val SERVER_URL = "https://arthanfin.com/customer-app/customer/"
-        private const val PAYMENT_URL = "https://arthanfin.com/customer-app/paytm/"
+        private const val SERVER_URL = "https://www.arthanfin.com/customer-app/customer/"
+        private const val PAYMENT_URL = "https://www.arthanfin.com/customer-app/paytm/"
     }
 
-        private lateinit var apiService: ApiService
-        fun getApiService(context: Context): ApiService {
+    private lateinit var apiService: ApiService
+    fun getApiService(context: Context): ApiService {
 
-            val gson = GsonBuilder()
-                .setLenient()
-                .create()
-            // Initialize ApiService if not initialized yet
-            if (!::apiService.isInitialized) {
-                val retrofit = Retrofit.Builder()
-                    .baseUrl(SERVER_URL)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .client(okhttpClient(context)) // Add our Okhttp client
-                    .build()
+        val gson = GsonBuilder()
+            .setLenient()
+            .create()
+        // Initialize ApiService if not initialized yet
+        if (!::apiService.isInitialized) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(SERVER_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(okhttpClient(context)) // Add our Okhttp client
+                .build()
 
-                apiService = retrofit.create(ApiService::class.java)
-            }
-           return apiService
+            apiService = retrofit.create(ApiService::class.java)
         }
+        return apiService
+    }
 
     fun getAuthApiService(context: Context): ApiService {
         // Initialize ApiService if not initialized yet
         if (!::apiService.isInitialized) {
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://arthanfin.com/artlos/")
+                .baseUrl("https://www.arthanfin.com/artlos/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okhttpClient(context)) // Add our Okhttp client
+                .build()
+
+            apiService = retrofit.create(ApiService::class.java)
+        }
+        return apiService
+    }
+
+    fun getUdyamApiService(context: Context): ApiService {
+        // Initialize ApiService if not initialized yet
+        if (!::apiService.isInitialized) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://testapi.karza.in/v3/udyam/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okhttpClient(context)) // Add our Okhttp client
+                .build()
+
+            apiService = retrofit.create(ApiService::class.java)
+        }
+        return apiService
+    }
+
+    fun getMasterApiService(context: Context): ApiService {
+        // Initialize ApiService if not initialized yet
+        if (!::apiService.isInitialized) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://www.arthanfin.com/JerseyDemos/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okhttpClient(context)) // Add our Okhttp client
+                .build()
+
+            apiService = retrofit.create(ApiService::class.java)
+        }
+        return apiService
+    }
+
+    fun getKarzaApiService(context: Context): ApiService {
+        // Initialize ApiService if not initialized yet
+        if (!::apiService.isInitialized) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://api.karza.in/gst/uat/v2/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okhttpClient(context)) // Add our Okhttp client
                 .build()
@@ -63,6 +102,36 @@ class ApiClient {
         if (!::apiService.isInitialized) {
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://ext.digio.in:444/client/kyc/v2/")
+                .addConverterFactory(GsonConverterFactory.create())
+
+                .client(okhttpClient(context)) // Add our Okhttp client
+                .build()
+
+            apiService = retrofit.create(ApiService::class.java)
+        }
+        return apiService
+    }
+
+    fun getDigilockerApiService(context: Context, requestId: String): ApiService {
+        // Initialize ApiService if not initialized yet
+        if (!::apiService.isInitialized) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://ext.digio.in:444/client/kyc/v2/$requestId/")
+                .addConverterFactory(GsonConverterFactory.create())
+
+                .client(okhttpClient(context)) // Add our Okhttp client
+                .build()
+
+            apiService = retrofit.create(ApiService::class.java)
+        }
+        return apiService
+    }
+
+    fun getRazorPayApiService(context: Context): ApiService {
+        // Initialize ApiService if not initialized yet
+        if (!::apiService.isInitialized) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://api.razorpay.com/v1/")
                 .addConverterFactory(GsonConverterFactory.create())
 
                 .client(okhttpClient(context)) // Add our Okhttp client
@@ -92,7 +161,7 @@ class ApiClient {
         // Initialize ApiService if not initialized yet
         if (!::apiService.isInitialized) {
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://arthanfin.com/JerseyDemos/rest/")
+                .baseUrl("https://www.arthanfin.com/JerseyDemos/rest/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okhttpClient(context)) // Add our Okhttp client
                 .build()
@@ -120,7 +189,7 @@ class ApiClient {
         // Initialize ApiService if not initialized yet
         if (!::apiService.isInitialized) {
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://arthanfin.com/JerseyDemos/rest/file/")
+                .baseUrl("https://www.arthanfin.com/JerseyDemos/rest/file/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okhttpClient(context)) // Add our Okhttp client
                 .build()
@@ -130,21 +199,21 @@ class ApiClient {
         return apiService
     }
 
-        /**
-         * Initialize OkhttpClient with our interceptor
-         */
-        private fun okhttpClient(context: Context): OkHttpClient {
-            val okHttpClient: OkHttpClient = UnsafeOkHttpClient.unsafeOkHttpClient
+    /**
+     * Initialize OkhttpClient with our interceptor
+     */
+    private fun okhttpClient(context: Context): OkHttpClient {
+        val okHttpClient: OkHttpClient = UnsafeOkHttpClient.unsafeOkHttpClient
 
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.level = HttpLoggingInterceptor.Level.BODY
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
 
-            val builder = okHttpClient.newBuilder()
-            builder.readTimeout(30, TimeUnit.SECONDS)
-            builder.connectTimeout(30, TimeUnit.SECONDS)
-            return builder.build()
+        val builder = okHttpClient.newBuilder()
+        builder.readTimeout(30, TimeUnit.SECONDS)
+        builder.connectTimeout(30, TimeUnit.SECONDS)
+        return builder.build()
 
-        }
+    }
 
     object UnsafeOkHttpClient {
         // Create a trust manager that does not validate certificate chains
@@ -195,4 +264,4 @@ class ApiClient {
             }
     }
 
-    }
+}
