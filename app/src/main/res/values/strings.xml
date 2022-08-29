@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ArthanFinance</string>
+    <string name="app_name">ARTHIK</string>
     <string name="choose_lang">Choose Your Language</string>
     <string name="choose_later">You can change this later from settings</string>
     <string name="english">English</string>
@@ -23,7 +23,7 @@
     <string name="dob_format">DD/MM/YYYY</string>
     <string name="enter_email">Enter email ID</string>
     <string name="dob">Date of Birth <font color='#FF0000'>*</font></string>
-    <string name="email_id">Email ID <font color='#FF0000'></font></string>
+    <string name="email_id">Email ID <font color='#FF0000' /></string>
     <string name="accept_tos">I accept the <b>Terms &amp; Conditions</b></string>
     <string name="submit">Submit</string>
     <string name="otp">OTP</string>
@@ -162,7 +162,7 @@
     <string name="type">Type <font color='#FF0000'>*</font></string>
     <string name="monthly_turnover">Monthly Turnover <font color='#FF0000'>*</font></string>
     <string name="address_same_as_residence">Address same as residence <font color='#FF0000'>*</font></string>
-    <string name="ifsc_code">Ifsc Code</string>
+    <string name="ifsc_code">IFSC Code</string>
     <string name="account_number">Account Number</string>
     <string name="bank_name">Bank Name</string>
     <string name="date_format">DD/MM/YYYY</string>
@@ -215,4 +215,6 @@
     <string name="business_address_as_per_udyam">Business Address As per Udyam Aadhar</string>
     <string name="udyam_consent">I agree to the <b>Terms and conditions</b> and authorise Arthan Finance to access my Business details from Udyam Aadhar</string>
     <string name="congratulations">Congratulations!</string>
+    <string name="start_video_kyc">Start My Video KYC</string>
+    <string name="branch_name">Branch Name</string>
 </resources>

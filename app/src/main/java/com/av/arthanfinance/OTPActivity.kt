@@ -12,6 +12,8 @@ import com.arthanfinance.core.base.BaseActivity
 import com.av.arthanfinance.applyLoan.AuthenticationResponse
 import com.av.arthanfinance.applyLoan.OtpResponse
 import com.av.arthanfinance.networkService.ApiClient
+import com.av.arthanfinance.networkService.Customer
+import com.av.arthanfinance.networkService.DatabaseHandler
 import com.av.arthanfinance.util.SmsBroadcastReceiver
 import com.av.arthanfinance.util.SmsBroadcastReceiver.SmsBroadcastReceiverListener
 import com.google.android.gms.auth.api.phone.SmsRetriever
@@ -30,7 +32,7 @@ class OTPActivity : BaseActivity() {
     private lateinit var otpView: OtpTextView
     private lateinit var mobileTextView: TextView
     private lateinit var apiClient: ApiClient
-    private var customerId: String = " "
+    private var customerId: String = ""
     private lateinit var email: String
     private lateinit var name: String
     private lateinit var mobileNo: String
@@ -79,7 +81,7 @@ class OTPActivity : BaseActivity() {
             this.finish()
         }
 
-        startSmsUserConsent();
+        startSmsUserConsent()
     }
 
     private fun startSmsUserConsent() {
@@ -97,6 +99,7 @@ class OTPActivity : BaseActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_USER_CONSENT) {
@@ -280,9 +283,9 @@ class OTPActivity : BaseActivity() {
                         Toast.makeText(this@OTPActivity, "Registration success", Toast.LENGTH_SHORT)
                             .show()
 
-                        /*custData.customerId?.let {
-                            saveCustomerData(name, email, mobile, dob, it)
-                        }*/
+                        custData.customerId?.let {
+                            saveCustomerData(name, email, mobile, it)
+                        }
                     } else {
                         Toast.makeText(this@OTPActivity, custData.message, Toast.LENGTH_SHORT)
                             .show()
@@ -291,6 +294,41 @@ class OTPActivity : BaseActivity() {
             }
         })
     }
+
+    //method for saving records in database
+    private fun saveCustomerData(
+        name: String,
+        email: String,
+        mobile: String,
+        custId: String
+    ) {
+        val databaseHandler = DatabaseHandler(this)
+        if (mobile.trim() != "") {
+            val status =
+                databaseHandler.saveCustomer(Customer(name, email, mobile, custId, null))
+            if (status > -1) {
+                Toast.makeText(
+                    applicationContext,
+                    "Record saved to DB.",
+                    Toast.LENGTH_LONG
+                ).show()
+
+            } else if (status == (-2).toLong()) {
+                Toast.makeText(
+                    applicationContext,
+                    "Record already exists.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        } else {
+            Toast.makeText(
+                applicationContext,
+                "mobile no cannot be blank",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
 
     private fun registerFinbox(customerId: String) {
         FinBox.createUser("FLMtON74y17xzANePjLp7aMtP98Za0Iv3ig2AmPr", customerId,

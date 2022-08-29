@@ -61,26 +61,44 @@
             app:layout_constraintStart_toStartOf="@+id/lyt_banking"
             app:layout_constraintTop_toBottomOf="@+id/lyt_banking" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilBankName"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
+
+        <AutoCompleteTextView
+            android:id="@+id/tieBankName"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/bg_grey92_rect"
+            android:hint="@string/bank_name"
+            android:imeOptions="actionSearch"
+            android:inputType="textAutoComplete|textAutoCorrect"
+            android:paddingVertical="11dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingStart="19dp"
+            android:textSize="16sp"
+            app:hintTextColor="@color/very_light_grey" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tieBankName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/mukta_vaani"
-                android:hint="@string/bank_name"
-                android:inputType="textCapCharacters" />
-        </com.google.android.material.textfield.TextInputLayout>
+        <AutoCompleteTextView
+            android:id="@+id/tieBankBranch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/bg_grey92_rect"
+            android:hint="@string/branch_name"
+            android:imeOptions="actionSearch"
+            android:inputType="textAutoComplete|textAutoCorrect"
+            android:paddingVertical="11dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tieBankName"
+            android:paddingStart="19dp"
+            android:textSize="16sp"
+            app:hintTextColor="@color/very_light_grey" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilIfscCode"
@@ -88,10 +106,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="@dimen/dimen_24"
             android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tilBankName">
+            app:layout_constraintTop_toBottomOf="@+id/tieBankBranch">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tieIfscCode"
@@ -119,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/mukta_vaani"
                 android:hint="@string/account_number"
-                android:inputType="textPassword" />
+                android:inputType="numberPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

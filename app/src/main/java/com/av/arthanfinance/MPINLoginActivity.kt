@@ -11,6 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import com.arthanfinance.core.base.BaseActivity
 import com.av.arthanfinance.applyLoan.CompletedScreensResponse
+import com.av.arthanfinance.applyLoan.LoanEligibilitySubmittedActivity
+import com.av.arthanfinance.applyLoan.UploadBusinessPhotos
 import com.av.arthanfinance.homeTabs.HomeDashboardActivity
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.user_kyc.*
@@ -30,15 +32,15 @@ class MPINLoginActivity : BaseActivity() {
     private lateinit var apiClient: ApiClient
     override val layoutId: Int get() = R.layout.layout_mpin_login
     private var contextFrom = 1
-    private  lateinit var mobileNum: String
+    private lateinit var mobileNum: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (supportActionBar != null)
             supportActionBar?.hide()
 
-        if (intent.hasExtra("context_from")){
-            contextFrom = intent.getIntExtra("context_from",1)
-        }else{
+        if (intent.hasExtra("context_from")) {
+            contextFrom = intent.getIntExtra("context_from", 1)
+        } else {
             contextFrom = 1
         }
 
@@ -50,29 +52,31 @@ class MPINLoginActivity : BaseActivity() {
 
         tvDontHaveAccount = findViewById(R.id.tv_dnt_hav_account)
 
-        if (intent.hasExtra("mob")){
+        if (intent.hasExtra("mob")) {
             mobileNum = intent.extras?.get("mob") as String
             mobileText.setText(mobileNum)
-        }else{
-            val mPrefs: SharedPreferences? = getSharedPreferences("customerData", Context.MODE_PRIVATE)
+        } else {
+            val mPrefs: SharedPreferences? =
+                getSharedPreferences("customerData", Context.MODE_PRIVATE)
             val gson = Gson()
             val json: String? = mPrefs?.getString("customerData", null)
-            if(json != null) {
-                val customerData: CustomerHomeTabResponse = gson.fromJson(json, CustomerHomeTabResponse::class.java)
+            if (json != null) {
+                val customerData: CustomerHomeTabResponse =
+                    gson.fromJson(json, CustomerHomeTabResponse::class.java)
                 mobileText.setText(customerData.mobNo)
             }
         }
 
-        tvForgotMpin.setOnClickListener{
+        tvForgotMpin.setOnClickListener {
             val intent = Intent(this@MPINLoginActivity, ForgotPasswordActivity::class.java)
             startActivity(intent)
         }
 
-        btnLogin.setOnClickListener{
+        btnLogin.setOnClickListener {
             verifyCustomerPin()
         }
 
-        tvDontHaveAccount.setOnClickListener{
+        tvDontHaveAccount.setOnClickListener {
             val intent = Intent(this@MPINLoginActivity, RegistrationActivity::class.java)
             startActivity(intent)
         }
@@ -109,21 +113,21 @@ class MPINLoginActivity : BaseActivity() {
                 val custData = response.body()
 
                 if (custData != null) {
-                    val sharedPref: SharedPreferences? = getSharedPreferences("customerData", Context.MODE_PRIVATE)
+                    val sharedPref: SharedPreferences? =
+                        getSharedPreferences("customerData", Context.MODE_PRIVATE)
                     val prefsEditor = sharedPref?.edit()
                     val gson = Gson()
                     val json: String = gson.toJson(custData)
                     prefsEditor?.putString("customerData", json)
                     prefsEditor?.apply()
 
-
-
                     getLastCompletedScreen(custData)
 
-                }else{
+                } else {
                     custData?.let {
                         Toast.makeText(
-                            this@MPINLoginActivity, "A technical error occurred. Please try after some time.",
+                            this@MPINLoginActivity,
+                            "A technical error occurred. Please try after some time.",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -155,15 +159,16 @@ class MPINLoginActivity : BaseActivity() {
                 hideProgressDialog()
                 val screenData = response.body()
 
-                if (screenData != null ) {
+                if (screenData != null) {
                     val lastScreenArray = screenData.screens
 
-                    if(lastScreenArray.isNullOrEmpty()){
-                        val intent = Intent(this@MPINLoginActivity, UploadPanActivity::class.java)
+                    if (lastScreenArray.isNullOrEmpty()) {
+                        val intent =
+                            Intent(this@MPINLoginActivity, CheckEligibilityActivity::class.java)
                         intent.putExtra("customerData", custData)
                         startActivity(intent)
                         finish()
-                    }else {
+                    } else {
                         for (i in 0 until lastScreenArray.size) {
                             when (screenData.screens!![i]) {
                                 "PAN_PA" -> {
@@ -205,16 +210,61 @@ class MPINLoginActivity : BaseActivity() {
                                 "BANK_PA" -> {
                                     val intent = Intent(
                                         this@MPINLoginActivity,
-                                        HomeDashboardActivity::class.java
+                                        VideoKyc::class.java
                                     )
                                     intent.putExtra("customerData", custData)
                                     startActivity(intent)
                                     finish()
                                 }
+                                "VKYC_PA" -> {
+                                    val intent = Intent(
+                                        this@MPINLoginActivity,
+                                        UploadBusinessDetailsActivity::class.java
+                                    )
+                                    intent.putExtra("customerData", custData)
+                                    startActivity(intent)
+//                                    finish()
+                                }
+                                "BUSINESS" -> {
+                                    val intent = Intent(
+                                        this@MPINLoginActivity,
+                                        UploadBusinessPhotos::class.java
+                                    )
+                                    intent.putExtra("customerData", custData)
+                                    startActivity(intent)
+//                                    finish()
+                                }
+                                "BUSINESS_PHOTOS" -> {
+                                    val intent = Intent(
+                                        this@MPINLoginActivity,
+                                        UploadReferenceActivity::class.java
+                                    )
+                                    intent.putExtra("customerData", custData)
+                                    startActivity(intent)
+//                                    finish()
+                                }
+                                "TRADE_REF" -> {
+                                    val intent = Intent(
+                                        this@MPINLoginActivity,
+                                        LoanEligibilitySubmittedActivity::class.java
+                                    )
+                                    intent.putExtra("customerData", custData)
+                                    startActivity(intent)
+//                                    finish()
+                                }
+                                "ELIGIBILITY" -> {
+                                    val intent = Intent(
+                                        this@MPINLoginActivity,
+                                        HomeDashboardActivity::class.java
+                                    )
+                                    intent.putExtra("customerData", custData)
+                                    startActivity(intent)
+//                                    finish()
+                                }
                             }
                         }
                     }
-                }else{
+                } else {
                     Toast.makeText(this@MPINLoginActivity, "failed", Toast.LENGTH_SHORT).show()
                 }
             }

@@ -52,7 +52,6 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
         contentValues.put(KEY_NAME, customer.custName) // Customer Name
         contentValues.put(KEY_EMAIL,customer.mailId ) // Customer email
         contentValues.put(KEY_MOBILE,customer.mobNo) // Customer mobile
-        contentValues.put(KEY_DOB,customer.dob ) // Customer DOB
         contentValues.put(KEY_CUSTID,customer.custId) // Customer custId
         contentValues.put(KEY_MPIN,"")
         // Inserting Row
@@ -87,10 +86,10 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
                 userName = cursor.getString(cursor.getColumnIndex("name"))
                 userEmail = cursor.getString(cursor.getColumnIndex("email"))
                 userMobile = cursor.getString(cursor.getColumnIndex("mobile"))
-                dob = cursor.getString(cursor.getColumnIndex("dob"))
+//                dob = cursor.getString(cursor.getColumnIndex("dob"))
                 custId = cursor.getString(cursor.getColumnIndex("customerId"))
                 mpin = cursor.getString(cursor.getColumnIndex("mpin"))
-                val emp= Customer(userName,userEmail, userMobile,dob, custId, mpin)
+                val emp= Customer(userName,userEmail, userMobile, custId, mpin)
                 empList.add(emp)
             } while (cursor.moveToNext())
         }
@@ -108,7 +107,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
                 val dob = cursor.getString(cursor.getColumnIndex("dob"))
                 val custId = cursor.getString(cursor.getColumnIndex("customerId"))
                 val mpin = cursor.getString(cursor.getColumnIndex("mpin"))
-                return Customer(userName,userEmail,userMobile,dob,custId,mpin)
+                return Customer(userName,userEmail,userMobile,dob,custId)
             }
 
         return null
@@ -125,7 +124,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
             val dob = cursor.getString(cursor.getColumnIndex("dob"))
             val custId = cursor.getString(cursor.getColumnIndex("customerId"))
             val mpin = cursor.getString(cursor.getColumnIndex("mpin"))
-            return Customer(userName,userEmail,userMobile,dob,custId,mpin)
+            return Customer(userName,userEmail,userMobile,dob,custId)
         }
 
         return null
@@ -139,7 +138,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
         contentValues.put(KEY_NAME, customer.custName) // customer Name
         contentValues.put(KEY_EMAIL,customer.mailId ) // customer Email
         contentValues.put(KEY_MOBILE,customer.mobNo ) // customer MobileNo
-        contentValues.put(KEY_DOB,customer.dob ) // Customer DOB
+//        contentValues.put(KEY_DOB,customer.dob ) // Customer DOB
         contentValues.put(KEY_CUSTID,customer.custId) // Customer custId
         contentValues.put(KEY_MPIN,customer.mpin) // customer MPIN
 

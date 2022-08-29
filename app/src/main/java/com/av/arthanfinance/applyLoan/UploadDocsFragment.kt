@@ -187,8 +187,13 @@ class UploadDocsFragment : Fragment() {
         jsonObject.addProperty("beneficiary_account_no", accNum)
         jsonObject.addProperty("beneficiary_ifsc", ifsc)
 
-        val clientId = "AIV9X8IU1LYFM9RE7EKINUO98RE6MX6L"
-        val clientSecret = "FJ872EVIBCC11XJE1HR3KAZRK2ZU4O5P"
+        //SANDBOX CREDS
+        val clientId = "AI52KOUVC2PQTONW1ZKB92RU22UL8491"
+        val clientSecret = "B6DXG4SV4YJJC2VDA54WTLY6CTJKEUZH"
+
+        //PRD CREDS
+//        val clientId = "AIZ1SHB77YJBZ6HFAGYR4BTUI84A6DOF"
+//        val clientSecret = "ZLYKT9FT7UUAIZGVVUPIWSFN3N62Y99O"
 
         val base = clientId + ":" + clientSecret
 

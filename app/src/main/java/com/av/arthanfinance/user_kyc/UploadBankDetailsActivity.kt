@@ -1,40 +1,31 @@
 package com.av.arthanfinance.user_kyc
 
-import `in`.digio.sdk.kyc.DigioEnvironment
-import `in`.digio.sdk.kyc.DigioKycConfig
-import `in`.digio.sdk.kyc.DigioKycResponseListener
-import `in`.digio.sdk.kyc.DigioSession
-import android.Manifest
 import android.animation.ObjectAnimator
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.view.Window
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import com.arthanfinance.core.base.BaseActivity
 import com.av.arthanfinance.CustomerHomeTabResponse
 import com.av.arthanfinance.R
-import com.av.arthanfinance.applyLoan.AuthenticationResponse
-import com.av.arthanfinance.applyLoan.BankDetilsResponse
-import com.av.arthanfinance.applyLoan.IFSCCode_Patter
-import com.av.arthanfinance.applyLoan.model.DigilockerTokenResponse
+import com.av.arthanfinance.applyLoan.*
 import com.av.arthanfinance.databinding.ActivityUploadBankDetailsBinding
-import com.av.arthanfinance.homeTabs.HomeDashboardActivity
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.util.copyFile
 import com.google.gson.Gson
-import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import kotlinx.android.synthetic.main.activity_upload_bank_details.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,22 +33,33 @@ import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.internal.cache2.Relay.Companion.edit
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 
-class UploadBankDetailsActivity : BaseActivity(), DigioKycResponseListener {
+class UploadBankDetailsActivity : BaseActivity() {
     private lateinit var activityUploadBankDetailsBinding: ActivityUploadBankDetailsBinding
-    private var MY_CAMERA_PERMISSION_CODE = 100
     private var kycCompleteStatus = "90"
     private var customerData: CustomerHomeTabResponse? = null
-    private lateinit var tokenId: String
-    private lateinit var kId: String
     private var REQ_CODE_BANK_STATEMENT = 444
     private var mLoanId: String? = null
     private var mCustomerId: String? = null
+    private var mBankId: String? = null
+    var banklistArray = arrayOf("")
+    var branchlistArray = arrayOf("")
+    val banks = arrayOf(
+        "Bank of Baroda",
+        "Bank of India",
+        "ICICI Bank",
+        "State bank of India",
+        "Axis bank",
+        "HDFC Bank",
+        "Akola bank"
+    )
+
     override val layoutId: Int
         get() = R.layout.activity_upload_bank_details
 
@@ -121,7 +123,37 @@ class UploadBankDetailsActivity : BaseActivity(), DigioKycResponseListener {
             )
         }
 
+        activityUploadBankDetailsBinding.tieBankName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                fetchAllBanks()
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+
+        })
+
+        activityUploadBankDetailsBinding.tieBankBranch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                fetchAllBranches(mBankId!!)
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+
+        })
+
+//        fetchAllBanks()
     }
 
     @Deprecated("Deprecated in Java")
@@ -182,8 +214,13 @@ class UploadBankDetailsActivity : BaseActivity(), DigioKycResponseListener {
         jsonObject.addProperty("beneficiary_account_no", accNum)
         jsonObject.addProperty("beneficiary_ifsc", ifsc)
 
-        val clientId = "AIV9X8IU1LYFM9RE7EKINUO98RE6MX6L"
-        val clientSecret = "FJ872EVIBCC11XJE1HR3KAZRK2ZU4O5P"
+        //SANDBOX CREDS
+        val clientId = "AI52KOUVC2PQTONW1ZKB92RU22UL8491"
+        val clientSecret = "B6DXG4SV4YJJC2VDA54WTLY6CTJKEUZH"
+
+        //PRD CREDS
+//        val clientId = "AIZ1SHB77YJBZ6HFAGYR4BTUI84A6DOF"
+//        val clientSecret = "ZLYKT9FT7UUAIZGVVUPIWSFN3N62Y99O"
 
         val base = "$clientId:$clientSecret"
 
@@ -198,18 +235,24 @@ class UploadBankDetailsActivity : BaseActivity(), DigioKycResponseListener {
                 ) {
                     try {
                         val bankAccountResponse = response.body() as BankDetilsResponse
+                        Log.e("TAG", bankAccountResponse.name.toString())
                         val verified = bankAccountResponse.verified
                         val name = bankAccountResponse.name
                         if (verified) {
                             saveBankAccountDetails(ifsc, accNum, bankName, name)
                         }
-                        Toast.makeText(
-                            this@UploadBankDetailsActivity,
-                            "" + verified,
-                            Toast.LENGTH_SHORT
-                        ).show()
+//                        Toast.makeText(
+//                            this@UploadBankDetailsActivity,
+//                            "" + verified,
+//                            Toast.LENGTH_SHORT
+//                        ).show()
                     } catch (e: Exception) {
                         e.printStackTrace()
+                        Toast.makeText(
+                            this@UploadBankDetailsActivity,
+                            "Service Failure, Please try again later",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
 
@@ -253,8 +296,7 @@ class UploadBankDetailsActivity : BaseActivity(), DigioKycResponseListener {
 
                     if (response.body() != null) {
                         hideProgressDialog()
-                        activityUploadBankDetailsBinding.btnBankDetails.visibility = View.GONE
-                        activityUploadBankDetailsBinding.btnVideoKyc.visibility = View.VISIBLE
+                        showDialog()
                         /* val sharedPref: SharedPreferences? = getSharedPreferences("customerData", Context.MODE_PRIVATE)
                          val prefsEditor = sharedPref?.edit()
                          val gson = Gson()
@@ -262,26 +304,6 @@ class UploadBankDetailsActivity : BaseActivity(), DigioKycResponseListener {
                          prefsEditor?.putString("customerData", json)
                          prefsEditor?.apply()
                          customerData = gson.fromJson(json, CustomerHomeTabResponse::class.java)*/
-                        activityUploadBankDetailsBinding.btnSkipVideoKyc.setOnClickListener {
-                            val intent = Intent(
-                                this@UploadBankDetailsActivity,
-                                HomeDashboardActivity::class.java
-                            )
-                            intent.putExtra("customerData", customerData)
-                            startActivity(intent)
-                            finish()
-                        }
-                        activityUploadBankDetailsBinding.btnVideoKyc.setOnClickListener {
-//                            getKid()
-                            showDialog()
-                        }
-
-                        Toast.makeText(
-                            this@UploadBankDetailsActivity,
-                            "Bank account verified successfully",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
 
                     } else {
                         hideProgressDialog()
@@ -321,7 +343,7 @@ class UploadBankDetailsActivity : BaseActivity(), DigioKycResponseListener {
                     }
                     Toast.makeText(
                         this@UploadBankDetailsActivity,
-                        "PAN Details Upload Failed. Please Try After Sometime",
+                        "Bank Details Upload Failed. Please Try After Sometime",
                         Toast.LENGTH_SHORT
                     ).show()
                     hideProgressDialog()
@@ -346,18 +368,11 @@ class UploadBankDetailsActivity : BaseActivity(), DigioKycResponseListener {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.videokyc_layout)
-//        val body = dialog.findViewById(R.id.body) as TextView
-//        body.text = title
         val yesBtn = dialog.findViewById(R.id.yesBtn) as Button
-        val noBtn = dialog.findViewById(R.id.noBtn) as TextView
         yesBtn.setOnClickListener {
-            getKid()
-            dialog.dismiss()
-        }
-        noBtn.setOnClickListener {
             val intent = Intent(
                 this@UploadBankDetailsActivity,
-                HomeDashboardActivity::class.java
+                VideoKyc::class.java
             )
             intent.putExtra("customerData", customerData)
             startActivity(intent)
@@ -365,182 +380,6 @@ class UploadBankDetailsActivity : BaseActivity(), DigioKycResponseListener {
             dialog.dismiss()
         }
         dialog.show()
-
-    }
-
-    private fun getKid() {
-        val jsonObject = JsonObject()
-        val jsonObject1 = JsonObject()
-        val jsonObject2 = JsonObject()
-        val actionArray = JsonArray()
-        val subActionArray = JsonArray()
-
-        jsonObject.addProperty("customer_identifier", customerData!!.mobNo)
-        jsonObject.addProperty("notify_customer", false)
-        jsonObject.addProperty("generate_access_token", true)
-
-        jsonObject1.addProperty("type", "VIDEO")
-        jsonObject1.addProperty("method", "OTP_NONE")
-        jsonObject1.addProperty("title", "Self Video KYC")
-        jsonObject1.addProperty("description", "Please follow the instructions and record a video")
-        jsonObject1.addProperty("allow_ocr_data_update", true)
-        jsonObject1.addProperty("face_match_obj_type", "MATCH_REQUIRED")
-
-        jsonObject2.addProperty("type", "USER_INSTRUCTION")
-        jsonObject2.addProperty("title", "Documents preparation")
-        jsonObject2.addProperty(
-            "description",
-            "Please keep your Pan and Aadhar card ready to show in the video"
-        )
-
-        subActionArray.add(jsonObject2)
-        jsonObject1.add("sub_actions", subActionArray)
-
-        actionArray.add(jsonObject1)
-        jsonObject.add("actions", actionArray)
-
-        val clientId = "AIV9X8IU1LYFM9RE7EKINUO98RE6MX6L"
-        val clientSecret = "FJ872EVIBCC11XJE1HR3KAZRK2ZU4O5P"
-
-        val base = clientId + ":" + clientSecret
-
-        val authHeader = "Basic " + Base64.encodeToString(base.toByteArray(), Base64.NO_WRAP)
-
-        ApiClient().getBankDetailsApiService(this).createRequestDigilocker(authHeader, jsonObject)
-            .enqueue(object : Callback<DigilockerTokenResponse> {
-                override fun onResponse(
-                    call: Call<DigilockerTokenResponse>,
-                    response: Response<DigilockerTokenResponse>
-                ) {
-                    hideProgressDialog()
-                    val accessToken = response.body()!!.accessToken1
-                    tokenId = accessToken.token
-                    kId = accessToken.kId
-
-                    val permissionCamera = ContextCompat.checkSelfPermission(
-                        this@UploadBankDetailsActivity,
-                        Manifest.permission.CAMERA
-                    )
-                    val permissionRecordAudio = ContextCompat.checkSelfPermission(
-                        this@UploadBankDetailsActivity,
-                        Manifest.permission.RECORD_AUDIO
-                    )
-                    val permissionLocation = ContextCompat.checkSelfPermission(
-                        this@UploadBankDetailsActivity,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    )
-                    val permissionRead = ContextCompat.checkSelfPermission(
-                        this@UploadBankDetailsActivity,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    )
-
-                    if (permissionCamera == PackageManager.PERMISSION_GRANTED && permissionRecordAudio == PackageManager.PERMISSION_GRANTED && permissionLocation == PackageManager.PERMISSION_GRANTED && permissionRead == PackageManager.PERMISSION_GRANTED) {
-                        customerData!!.mobNo?.let { startVideoKyc(tokenId, kId, it) }
-                    } else {
-                        requestPermissions(
-                            arrayOf(
-                                Manifest.permission.CAMERA,
-                                Manifest.permission.RECORD_AUDIO,
-                                Manifest.permission.ACCESS_FINE_LOCATION,
-                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            ), MY_CAMERA_PERMISSION_CODE
-                        )
-                    }
-
-                    //startVideoKyc(tokenId, kId, "7609963809")
-
-                }
-
-                override fun onFailure(call: Call<DigilockerTokenResponse>, t: Throwable) {
-                    hideProgressDialog()
-                    t.printStackTrace()
-                    Toast.makeText(
-                        this@UploadBankDetailsActivity,
-                        "Service Failure, Once Network connection is stable, will try to resend again",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            })
-    }
-
-    private fun requestPermission(): Boolean {
-
-        if (this.checkSelfPermission(Manifest.permission.CAMERA) !== PackageManager.PERMISSION_GRANTED
-            && this.checkSelfPermission(
-                Manifest.permission.RECORD_AUDIO
-            ) !== PackageManager.PERMISSION_GRANTED && this.checkSelfPermission(
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) !== PackageManager.PERMISSION_GRANTED
-            && this.checkSelfPermission(
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) !== PackageManager.PERMISSION_GRANTED && this.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED
-        ) {
-            requestPermissions(
-                arrayOf(
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.RECORD_AUDIO,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                ), MY_CAMERA_PERMISSION_CODE
-            )
-        } else {
-            return true
-        }
-
-        return false
-    }
-
-    private fun startVideoKyc(tokenId: String, kId: String, mobNo: String) {
-        if (requestPermission()) {
-            try {
-                val config = DigioKycConfig()
-                config.setEnvironment(DigioEnvironment.SANDBOX)
-                val digioSession = DigioSession()
-                digioSession.init(this, config)
-                digioSession.startSession(
-                    kId,
-                    mobNo,
-                    tokenId,
-                    this
-                )
-            } catch (e: Exception) {
-                Toast.makeText(this, "" + e, Toast.LENGTH_SHORT).show()
-            }
-        }
-
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        val permissionCamera = ContextCompat.checkSelfPermission(
-            this,
-            Manifest.permission.CAMERA
-        )
-        val permissionRecordAudio = ContextCompat.checkSelfPermission(
-            this,
-            Manifest.permission.RECORD_AUDIO
-        )
-        val permissionLocation = ContextCompat.checkSelfPermission(
-            this,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        )
-        val permissionRead = ContextCompat.checkSelfPermission(
-            this,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        )
-
-        if (permissionCamera == PackageManager.PERMISSION_GRANTED && permissionRecordAudio == PackageManager.PERMISSION_GRANTED && permissionLocation == PackageManager.PERMISSION_GRANTED && permissionRead == PackageManager.PERMISSION_GRANTED) {
-            startVideoKyc(tokenId, kId, customerData!!.mobNo.toString())
-        } else {
-            requestPermission()
-            // Toast.makeText(this, "Permission denied by user. Could not able to record video.", Toast.LENGTH_SHORT).show()
-        }
 
     }
 
@@ -552,25 +391,94 @@ class UploadBankDetailsActivity : BaseActivity(), DigioKycResponseListener {
         finish()
     }
 
-    override fun onDigioKycFailure(requestId: String?, response: String?) {
-        Toast.makeText(this, "Video KYC failed", Toast.LENGTH_SHORT).show()
-        val intent = Intent(
-            this@UploadBankDetailsActivity,
-            HomeDashboardActivity::class.java
-        )
-        intent.putExtra("customerData", customerData)
-        startActivity(intent)
-        finish()
 
+    private fun fetchAllBanks() {
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("bankName", tieBankName.text.trim().toString())
+        showProgressDialog()
+        ApiClient().getAuthApiService(this).getBank(jsonObject).enqueue(object :
+            Callback<Bank> {
+            override fun onFailure(call: Call<Bank>, t: Throwable) {
+                hideProgressDialog()
+                t.printStackTrace()
+                Toast.makeText(
+                    this@UploadBankDetailsActivity, "API call Failed.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            override fun onResponse(
+                call: Call<Bank>,
+                response: Response<Bank>
+            ) {
+                hideProgressDialog()
+                if (response.body() != null) {
+                    val docResponse = response.body() as Bank
+                    Log.d("TAG", docResponse.banks!![0].bankName.toString())
+                    banklistArray = arrayOf(docResponse.banks.toString())
+                    Log.d("TAGLIST", docResponse.banks.toString())
+                    val banksnames = arrayOf(docResponse.banks[0].bankName)
+                    val adapter = ArrayAdapter(
+                        this@UploadBankDetailsActivity,
+                        android.R.layout.simple_dropdown_item_1line,
+                        banksnames
+                    )
+                    activityUploadBankDetailsBinding.tieBankName.setAdapter(adapter)
+                    activityUploadBankDetailsBinding.tieBankName.setOnItemClickListener { adapterView, view, i, l ->
+                        Toast.makeText(applicationContext, "" + banklistArray[i], Toast.LENGTH_LONG)
+                            .show()
+                        mBankId = docResponse.banks[i].bankId
+                    }
+
+                }
+            }
+        })
     }
 
-    override fun onDigioKycSuccess(requestId: String?, response: String?) {
-        val intent = Intent(
-            this@UploadBankDetailsActivity,
-            HomeDashboardActivity::class.java
-        )
-        intent.putExtra("customerData", customerData)
-        startActivity(intent)
-        finish()
+    private fun fetchAllBranches(bankId: String) {
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("bankId", bankId)
+        jsonObject.addProperty("branchName", tieBankBranch.text.trim().toString())
+        showProgressDialog()
+        ApiClient().getAuthApiService(this).getBranch(jsonObject).enqueue(object :
+            Callback<Bank> {
+            override fun onFailure(call: Call<Bank>, t: Throwable) {
+                hideProgressDialog()
+                t.printStackTrace()
+                Toast.makeText(
+                    this@UploadBankDetailsActivity, "API call Failed.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            override fun onResponse(
+                call: Call<Bank>,
+                response: Response<Bank>
+            ) {
+                hideProgressDialog()
+                if (response.body() != null) {
+                    val docResponse = response.body() as Bank
+                    Log.d("TAG", docResponse.branches!![0].ifsc.toString())
+                    branchlistArray = arrayOf(docResponse.branches.toString())
+                    Log.d("TAGLIST", docResponse.branches.toString())
+                    val branchnames = arrayOf(docResponse.branches[0].branchName)
+                    val adapter = ArrayAdapter(
+                        this@UploadBankDetailsActivity,
+                        android.R.layout.simple_dropdown_item_1line,
+                        branchnames
+                    )
+                    activityUploadBankDetailsBinding.tieBankBranch.setAdapter(adapter)
+                    activityUploadBankDetailsBinding.tieBankBranch.setOnItemClickListener { adapterView, view, i, l ->
+                        Toast.makeText(
+                            applicationContext,
+                            "" + branchlistArray[i],
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                        activityUploadBankDetailsBinding.tieIfscCode.setText(docResponse.branches[i].ifsc.toString())
+                    }
+                }
+            }
+        })
     }
 }

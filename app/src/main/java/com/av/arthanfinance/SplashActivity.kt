@@ -72,7 +72,7 @@ class SplashActivity : AppCompatActivity() {
                 }
             }
             // Your Code
-        }, 3000) // 3000 is the delayed time in milliseconds.
+        }, 2000) // 3000 is the delayed time in milliseconds.
     }
 }
 //MAPS_API_KEY=AIzaSyCe9epHZuDTREfqN_WL9U1wOPq0w6m4BE0

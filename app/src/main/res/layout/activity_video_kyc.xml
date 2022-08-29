@@ -4,14 +4,254 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".user_kyc.VideoKycActivity">
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/imageView22"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_arthan_blue" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout12"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar">
+
+        <ProgressBar
+            android:id="@+id/pbKyc"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="22dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:progressDrawable="@drawable/layer_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvCompleted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/mukta_vaani"
+            android:text="@string/completed"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/pbKyc"
+            app:layout_constraintTop_toBottomOf="@+id/pbKyc" />
+
+        <TextView
+            android:id="@+id/tvPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/mukta_vaani"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/pbKyc"
+            app:layout_constraintTop_toBottomOf="@+id/pbKyc" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/imageView22"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout12">
+
+        <LinearLayout
+            android:id="@+id/successPanLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--<androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_upload_pan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="@string/upload_pan"
+                android:textColor="@color/black"
+                android:textSize="16sp" />-->
+
+            <LinearLayout
+                android:id="@+id/vdoKycLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+
+                <LinearLayout
+                    android:id="@+id/digioPan"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_white_smoke_rect"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/videoKycImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/video_kyc_pit" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:text="Get ready to start your Video Verification"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_20"
+                    android:background="@drawable/bg_register_rect_silver"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dimen_10">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:text="CHECKLIST"
+                        android:textAlignment="center"
+                        android:textColor="@color/indigoBlue"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <View
+
+                        android:layout_width="match_parent"
+                        android:layout_height="1sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:drawableStart="@drawable/ic_baseline_credit_card_24"
+                        android:drawablePadding="@dimen/dimen_10"
+                        android:drawableTint="@color/indigoBlue"
+                        android:gravity="center"
+                        android:paddingLeft="5sp"
+                        android:paddingRight="5sp"
+                        android:text="KEEP YOUR PAN CARD &amp; AADHAR CARD READY"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:drawableStart="@drawable/ic_baseline_lightbulb_24"
+                        android:drawablePadding="@dimen/dimen_10"
+                        android:drawableTint="@color/indigoBlue"
+                        android:gravity="center"
+                        android:paddingLeft="5sp"
+                        android:paddingRight="5sp"
+                        android:text="FIND WELL LIT &amp; QUIET PLACE"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:drawableStart="@drawable/ic_baseline_wifi_24"
+                        android:drawablePadding="@dimen/dimen_10"
+                        android:drawableTint="@color/indigoBlue"
+                        android:gravity="center"
+                        android:paddingLeft="5sp"
+                        android:paddingRight="5sp"
+                        android:text="GOOD INTERNET CONNECTIVITY"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_24"
+                    android:layout_marginTop="@dimen/dimen_24"
+                    android:gravity="bottom"
+                    android:orientation="vertical"
+                    android:padding="4dp">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_captureDigioVkyc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/bg_language_rect"
+                        android:drawableStart="@drawable/ic_camera_icon_yellow"
+                        android:gravity="center"
+                        android:minWidth="200dp"
+                        android:paddingStart="@dimen/dimen_24"
+                        android:paddingTop="9dp"
+                        android:paddingEnd="@dimen/dimen_24"
+                        android:paddingBottom="9dp"
+                        android:text="@string/start_video_kyc"
+                        android:textAllCaps="false"
+                        android:textColor="@color/dark_orange2"
+                        android:textSize="@dimen/text_18"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/skipVideoKyc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dimen_10"
+                        android:text="Skip"
+                        android:textAlignment="center"
+                        android:textColor="@color/blue_1"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -24,7 +264,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/tbVideoKyc"
+            android:id="@+id/tbUploadPan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
@@ -38,4 +278,5 @@
             app:layout_constraintTop_toTopOf="parent"
             app:titleTextColor="@color/dark_orange2" />
     </com.google.android.material.appbar.AppBarLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

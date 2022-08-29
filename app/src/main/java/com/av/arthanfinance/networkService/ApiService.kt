@@ -40,7 +40,7 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     fun getCustomerKYCDetails(@Body documentsData: JsonObject): Call<UserKYCDetailsResponse>
 
-    @POST("getCustomerDetails")
+    @POST("getKYCData")
     @Headers("Content-Type: application/json")
     fun getCustomerDetails(@Body documentsData: JsonObject): Call<UserDetailsResponse>
 
@@ -288,5 +288,17 @@ interface ApiService {
         @Header("x-karza-key") authHeader: String,
         @Body udyamRequestData: JsonObject
     ): Call<UdyamDetailsResponse>
+
+    @POST("updateStage")
+    @Headers("Content-Type: application/json")
+    fun updateStage(@Body updateJson: JsonObject): Call<AuthenticationResponse>
+
+    @POST("getBank")
+    @Headers("Content-Type: application/json")
+    fun getBank(@Body updateJson: JsonObject): Call<Bank>
+
+    @POST("getBranch")
+    @Headers("Content-Type: application/json")
+    fun getBranch(@Body updateJson: JsonObject): Call<Bank>
 
 }

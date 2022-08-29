@@ -42,9 +42,9 @@ class InitiateApplyLoanActivity2 : BaseActivity() {
         super.onCreate(savedInstanceState)
         activity2 = ActivityInitiateApplyLoan2Binding.inflate(layoutInflater)
         setContentView(activity2.root)
-        if (intent.hasExtra("loanResponse")) {
-            loanResponse = intent.getSerializableExtra("loanResponse") as LoanProcessResponse
-        }
+//        if (intent.hasExtra("loanResponse")) {
+//            loanResponse = intent.getSerializableExtra("loanResponse") as LoanProcessResponse
+//        }
 
         val isCreateFlow = intent.getBooleanExtra(IS_CREATE_FLOW, false)
 

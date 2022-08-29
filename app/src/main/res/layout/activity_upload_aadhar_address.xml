@@ -12,15 +12,15 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout11"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout11">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/llPersonalInformation"
@@ -34,9 +34,9 @@
                     android:layout_height="120dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
-                    android:visibility="gone"
                     android:background="@drawable/bg_image_circle"
                     android:src="@drawable/ic_aadhar_placeholder"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -44,36 +44,35 @@
                     app:srcCompat="@drawable/bg_circle_orange_rect" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_marginHorizontal="@dimen/dimen_24"
                     android:id="@+id/tilTitle"
-                    android:layout_width="match_parent"
-                    app:hintTextColor="@color/black"
-                    app:endIconTint="@color/dark_orange1"
-                    app:boxStrokeColor="@color/grey"
-                    android:layout_marginTop="8dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                    android:layout_height="65dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_marginHorizontal="@dimen/dimen_24"
+                    android:layout_marginTop="8dp"
+                    app:boxStrokeColor="@color/grey"
+                    app:endIconTint="@color/dark_orange1"
+                    app:hintTextColor="@color/black">
 
                     <AutoCompleteTextView
                         android:id="@+id/actTitle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:enabled="true"
-                        android:inputType="none"
-                        android:hint="@string/title"
                         android:fontFamily="@font/mukta_vaani"
-                        android:textColor="@color/indigo">
-                    </AutoCompleteTextView>
+                        android:hint="@string/title"
+                        android:inputType="none"
+                        android:textColor="@color/indigo"></AutoCompleteTextView>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilFatherName"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
                     android:layout_marginTop="4dp"
+                    android:layout_marginEnd="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -83,20 +82,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mukta_vaani"
-                        android:inputType="none"
-                        android:hint="@string/father_spouse_name" />
+                        android:hint="@string/father_spouse_name"
+                        android:inputType="textCapCharacters" />
 
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilMotherName"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
                     android:layout_marginTop="4dp"
+                    android:layout_marginEnd="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -106,85 +105,82 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mukta_vaani"
-                        android:inputType="none"
-                        android:hint="@string/mother_s_name" />
+                        android:hint="@string/mother_s_name"
+                        android:inputType="textCapCharacters" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_marginHorizontal="@dimen/dimen_24"
                     android:id="@+id/tilGender"
-                    android:layout_width="match_parent"
-                    app:hintTextColor="@color/black"
-                    app:endIconTint="@color/dark_orange1"
-                    app:boxStrokeColor="@color/grey"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
                     android:layout_height="62dp"
-                    android:layout_marginTop="4dp">
+                    android:layout_marginHorizontal="@dimen/dimen_24"
+                    android:layout_marginTop="4dp"
+                    app:boxStrokeColor="@color/grey"
+                    app:endIconTint="@color/dark_orange1"
+                    app:hintTextColor="@color/black">
 
                     <AutoCompleteTextView
                         android:id="@+id/actGender"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:enabled="true"
-                        android:inputType="none"
                         android:hint="@string/gender"
-                        android:textColor="@color/indigo">
-                    </AutoCompleteTextView>
+                        android:inputType="none"
+                        android:textColor="@color/indigo"></AutoCompleteTextView>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_marginHorizontal="@dimen/dimen_24"
                     android:id="@+id/tilEducation"
-                    android:layout_width="match_parent"
-                    app:hintTextColor="@color/black"
-                    app:endIconTint="@color/dark_orange1"
-                    app:boxStrokeColor="@color/grey"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
                     android:layout_height="62dp"
-                    android:layout_marginTop="4dp">
+                    android:layout_marginHorizontal="@dimen/dimen_24"
+                    android:layout_marginTop="4dp"
+                    app:boxStrokeColor="@color/grey"
+                    app:endIconTint="@color/dark_orange1"
+                    app:hintTextColor="@color/black">
 
                     <AutoCompleteTextView
                         android:id="@+id/actEducation"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:enabled="true"
-                        android:inputType="none"
                         android:hint="@string/qualification"
-                        android:textColor="@color/indigo">
-                    </AutoCompleteTextView>
+                        android:inputType="none"
+                        android:textColor="@color/indigo"></AutoCompleteTextView>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_marginHorizontal="@dimen/dimen_24"
                     android:id="@+id/tilMaritalStatus"
-                    android:layout_width="match_parent"
-                    app:hintTextColor="@color/black"
-                    app:endIconTint="@color/dark_orange1"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
                     android:layout_height="62dp"
-                    android:layout_marginTop="4dp">
+                    android:layout_marginHorizontal="@dimen/dimen_24"
+                    android:layout_marginTop="4dp"
+                    app:endIconTint="@color/dark_orange1"
+                    app:hintTextColor="@color/black">
 
                     <AutoCompleteTextView
                         android:id="@+id/actMaritalStatus"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:enabled="true"
-                        android:inputType="none"
                         android:hint="@string/marital_status"
-                        android:textColor="@color/indigo">
-                    </AutoCompleteTextView>
+                        android:inputType="none"
+                        android:textColor="@color/indigo"></AutoCompleteTextView>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilFamilyMembers"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
                     android:layout_marginTop="4dp"
+                    android:layout_marginEnd="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -194,40 +190,39 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mukta_vaani"
-                        android:inputType="none"
-                        android:hint="@string/family_members" />
+                        android:hint="@string/family_members"
+                        android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_marginHorizontal="@dimen/dimen_24"
                     android:id="@+id/tilReligion"
-                    android:layout_width="match_parent"
-                    app:hintTextColor="@color/black"
-                    app:endIconTint="@color/dark_orange1"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
                     android:layout_height="62dp"
-                    android:layout_marginTop="4dp">
+                    android:layout_marginHorizontal="@dimen/dimen_24"
+                    android:layout_marginTop="4dp"
+                    app:endIconTint="@color/dark_orange1"
+                    app:hintTextColor="@color/black">
 
                     <AutoCompleteTextView
                         android:id="@+id/actReligion"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:enabled="true"
-                        android:inputType="none"
                         android:hint="@string/religion"
-                        android:textColor="@color/indigo">
-                    </AutoCompleteTextView>
+                        android:inputType="none"
+                        android:textColor="@color/indigo"></AutoCompleteTextView>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_marginHorizontal="@dimen/dimen_24"
                     android:id="@+id/tilCategory"
-                    android:layout_width="match_parent"
-                    app:hintTextColor="@color/black"
-                    app:endIconTint="@color/dark_orange1"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
                     android:layout_height="62dp"
-                    android:layout_marginTop="4dp">
+                    android:layout_marginHorizontal="@dimen/dimen_24"
+                    android:layout_marginTop="4dp"
+                    app:endIconTint="@color/dark_orange1"
+                    app:hintTextColor="@color/black">
 
                     <AutoCompleteTextView
                         android:id="@+id/actCategory"
@@ -236,16 +231,16 @@
                         android:enabled="true"
                         android:hint="@string/category"
                         android:inputType="none"
-                        android:textColor="@color/indigo"/>
+                        android:textColor="@color/indigo" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilAddress1"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_marginTop="4dp"
                     android:layout_marginStart="24dp"
+                    android:layout_marginTop="4dp"
                     android:layout_marginEnd="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -256,18 +251,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mukta_vaani"
-                        android:inputType="textMultiLine"
-                        android:hint="@string/address1" />
+                        android:hint="@string/address1"
+                        android:inputType="textMultiLine" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilAddress2"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
                     android:layout_marginTop="4dp"
+                    android:layout_marginEnd="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -277,18 +272,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mukta_vaani"
-                        android:inputType="textMultiLine"
-                        android:hint="@string/address2" />
+                        android:hint="@string/address2"
+                        android:inputType="textMultiLine" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilAddress3"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
                     android:layout_marginTop="4dp"
+                    android:layout_marginEnd="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -298,18 +293,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mukta_vaani"
-                        android:inputType="textMultiLine"
-                        android:hint="@string/address3" />
+                        android:hint="@string/address3"
+                        android:inputType="textMultiLine" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilLandmark"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
                     android:layout_marginTop="4dp"
+                    android:layout_marginEnd="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -319,18 +314,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mukta_vaani"
-                        android:inputType="textPostalAddress"
-                        android:hint="@string/landmark" />
+                        android:hint="@string/landmark"
+                        android:inputType="textCapCharacters" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilCity"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
                     android:layout_marginTop="4dp"
+                    android:layout_marginEnd="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -340,18 +335,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mukta_vaani"
-                        android:inputType="textPostalAddress"
-                        android:hint="@string/city" />
+                        android:hint="@string/city"
+                        android:inputType="textCapCharacters" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilDistrict"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
                     android:layout_marginTop="4dp"
+                    android:layout_marginEnd="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -361,18 +356,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mukta_vaani"
-                        android:inputType="textPostalAddress"
-                        android:hint="@string/district" />
+                        android:hint="@string/district"
+                        android:inputType="textCapCharacters" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilPincode"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
                     android:layout_marginTop="4dp"
+                    android:layout_marginEnd="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -382,21 +377,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mukta_vaani"
+                        android:hint="@string/pincode_name"
                         android:inputType="number"
-                        android:maxLength="6"
-                        android:hint="@string/pincode_name" />
+                        android:maxLength="6" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                   android:id="@+id/cl_location"
+                    android:id="@+id/cl_location"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
                     android:background="@drawable/bg_rect_gains_boro"
-                    android:layout_marginTop="8dp"
                     android:drawablePadding="8dp"
-                    app:drawableEndCompat="@drawable/ic_baseline_my_location" >
+                    app:drawableEndCompat="@drawable/ic_baseline_my_location">
 
                     <TextView
                         android:id="@+id/tv_location_address"
@@ -424,6 +419,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_baseline_my_location" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -431,63 +427,65 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_marginStart="@dimen/dimen_24"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_24"
+                        android:layout_marginEnd="@dimen/dimen_24"
                         android:orientation="vertical">
 
                         <TextView
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen_10"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                            android:fontFamily="@font/mukta_vaani"
                             android:text="@string/state_name"
                             android:textColor="@color/black"
-                            android:fontFamily="@font/mukta_vaani"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
                             android:id="@+id/stateDropDown"
                             style="@style/Widget.AppCompat.DropDownItem.Spinner"
                             android:layout_width="match_parent"
-                            android:layout_marginTop="@dimen/dimen_10"
                             android:layout_height="wrap_content"
-                            android:paddingEnd="30dp"
+                            android:layout_marginTop="@dimen/dimen_10"
+                            android:background="@drawable/bg_spinner"
                             android:ems="10"
 
-                            android:hint="@string/state"
                             android:fontFamily="@font/mukta_vaani"
-                            android:background="@drawable/bg_spinner"
+                            android:hint="@string/state"
+                            android:paddingEnd="30dp"
                             android:textColor="@color/indigo"
                             android:textSize="18sp"
                             app:hintTextColor="@color/whisper" />
 
                     </LinearLayout>
                 </LinearLayout>
+
                 <CheckBox
                     android:id="@+id/checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
                     android:layout_marginTop="4dp"
+                    android:layout_marginEnd="24dp"
                     android:checked="false"
-                    android:text="Is this your Current Address?"/>
+                    android:text="Is this your Current Address?" />
 
                 <LinearLayout
                     android:id="@+id/currentAddressLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilCurrentAddress1"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_marginTop="4dp"
                         android:layout_marginStart="24dp"
+                        android:layout_marginTop="4dp"
                         android:layout_marginEnd="24dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -498,18 +496,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/mukta_vaani"
-                            android:inputType="textMultiLine"
-                            android:hint="@string/address1" />
+                            android:hint="@string/address1"
+                            android:inputType="textMultiLine" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilCurrentAddress2"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_marginStart="24dp"
-                        android:layout_marginEnd="24dp"
                         android:layout_marginTop="4dp"
+                        android:layout_marginEnd="24dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -519,18 +517,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/mukta_vaani"
-                            android:inputType="textMultiLine"
-                            android:hint="@string/address2" />
+                            android:hint="@string/address2"
+                            android:inputType="textMultiLine" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilCurrentAddress3"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_marginStart="24dp"
-                        android:layout_marginEnd="24dp"
                         android:layout_marginTop="4dp"
+                        android:layout_marginEnd="24dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -540,18 +538,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/mukta_vaani"
-                            android:inputType="textMultiLine"
-                            android:hint="@string/address3" />
+                            android:hint="@string/address3"
+                            android:inputType="textMultiLine" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilLandmark2"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_marginStart="24dp"
-                        android:layout_marginEnd="24dp"
                         android:layout_marginTop="4dp"
+                        android:layout_marginEnd="24dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -561,18 +559,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/mukta_vaani"
-                            android:inputType="textPostalAddress"
-                            android:hint="@string/landmark" />
+                            android:hint="@string/landmark"
+                            android:inputType="textPostalAddress" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilCity2"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_marginStart="24dp"
-                        android:layout_marginEnd="24dp"
                         android:layout_marginTop="4dp"
+                        android:layout_marginEnd="24dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -582,18 +580,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/mukta_vaani"
-                            android:inputType="textPostalAddress"
-                            android:hint="@string/city" />
+                            android:hint="@string/city"
+                            android:inputType="textPostalAddress" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilDistrict2"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_marginStart="24dp"
-                        android:layout_marginEnd="24dp"
                         android:layout_marginTop="4dp"
+                        android:layout_marginEnd="24dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -603,18 +601,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/mukta_vaani"
-                            android:inputType="textPostalAddress"
-                            android:hint="@string/district" />
+                            android:hint="@string/district"
+                            android:inputType="textPostalAddress" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilPincode2"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_marginStart="24dp"
-                        android:layout_marginEnd="24dp"
                         android:layout_marginTop="4dp"
+                        android:layout_marginEnd="24dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -624,9 +622,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/mukta_vaani"
+                            android:hint="@string/pincode_name"
                             android:inputType="number"
-                            android:maxLength="6"
-                            android:hint="@string/pincode_name" />
+                            android:maxLength="6" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <LinearLayout
@@ -637,31 +635,31 @@
 
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_marginStart="@dimen/dimen_24"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_24"
                             android:orientation="vertical">
 
                             <TextView
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dimen_10"
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                                android:fontFamily="@font/mukta_vaani"
                                 android:text="@string/state_name"
                                 android:textColor="@color/black"
-                                android:fontFamily="@font/mukta_vaani"
-                                android:textSize="16sp"/>
+                                android:textSize="16sp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
                                 android:id="@+id/stateDropDown2"
                                 style="@style/Widget.AppCompat.DropDownItem.Spinner"
                                 android:layout_width="match_parent"
-                                android:layout_marginTop="@dimen/dimen_10"
                                 android:layout_height="wrap_content"
-                                android:paddingEnd="30dp"
-                                android:ems="10"
-                                android:hint="@string/state"
-                                android:fontFamily="@font/mukta_vaani"
+                                android:layout_marginTop="@dimen/dimen_10"
                                 android:background="@drawable/bg_spinner"
+                                android:ems="10"
+                                android:fontFamily="@font/mukta_vaani"
+                                android:hint="@string/state"
+                                android:paddingEnd="30dp"
                                 android:textColor="@color/indigo"
                                 android:textSize="18sp"
                                 app:hintTextColor="@color/whisper" />
@@ -669,6 +667,7 @@
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnAadharDetails"
                     android:layout_width="match_parent"
@@ -685,8 +684,8 @@
                     android:id="@+id/imageView22"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
                     android:layout_gravity="center"
+                    android:layout_marginBottom="16dp"
                     app:srcCompat="@drawable/ic_arthan_blue" />
             </LinearLayout>
         </LinearLayout>

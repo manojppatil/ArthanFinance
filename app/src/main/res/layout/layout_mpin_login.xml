@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_login_bg">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -34,10 +35,10 @@
                     android:layout_height="50dp"
                     android:layout_marginHorizontal="41dp"
                     android:background="@drawable/bg_light_indigo_solid"
+                    android:drawableEnd="@drawable/ic_edit_profile"
                     android:hint="Enter Mobile Number"
                     android:inputType="number"
                     android:maxLength="10"
-                    android:drawableEnd="@drawable/ic_edit_profile"
                     android:paddingStart="@dimen/dimen_20"
                     android:paddingLeft="@dimen/dimen_20"
                     android:paddingEnd="@dimen/dimen_20"
@@ -93,16 +94,16 @@
                 android:layout_height="50dp"
                 android:layout_below="@id/tv_mpin"
                 android:layout_marginHorizontal="41dp"
-                android:paddingLeft="@dimen/dimen_20"
-                android:hint="Enter MPIN"
-                android:textColor="@color/white"
                 android:layout_marginTop="4dp"
-                android:maxLength="4"
-                android:inputType="numberPassword"
-                android:imeOptions="actionDone"
                 android:layout_marginRight="28dp"
                 android:background="@drawable/bg_light_indigo_solid"
-                android:ems="10" />
+                android:ems="10"
+                android:hint="Enter MPIN"
+                android:imeOptions="actionDone"
+                android:inputType="numberPassword"
+                android:maxLength="4"
+                android:paddingLeft="@dimen/dimen_20"
+                android:textColor="@color/white" />
 
             <!--<com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tv_reg_mob_no"
@@ -154,8 +155,8 @@
                 android:id="@+id/tv_forgot_mpin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
                 android:text="@string/forgot_mpin"
                 android:textAllCaps="false"
                 android:textColor="@color/dark_orange2"
@@ -187,30 +188,32 @@
                 android:text="@string/login_otp"
                 android:textAllCaps="false"
                 android:textColor="@color/dark_orange2"
-                android:visibility="gone"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_dnt_hav_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
                 android:text="@string/dont_hav_account"
                 android:textAllCaps="false"
                 android:textColor="@color/dark_orange2"
                 android:textSize="16sp" />
+
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottomNav_withlabel"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:background="@color/dark_blue"
+                android:padding="@dimen/dimen_10"
                 app:itemIconTint="@color/dark_orange1"
                 app:itemTextColor="@color/white"
                 app:labelVisibilityMode="labeled"

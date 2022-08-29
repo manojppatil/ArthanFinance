@@ -64,9 +64,7 @@ class RegistrationActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
             .addApi(Auth.CREDENTIALS_API)
             .build()
 
-        if (mGoogleApiClient != null) {
-            mGoogleApiClient.connect()
-        }
+        mGoogleApiClient.connect()
 
         val hintRequest = HintRequest.Builder()
             .setPhoneNumberIdentifierSupported(true)
@@ -161,7 +159,7 @@ class RegistrationActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
         val databaseHandler = DatabaseHandler(this)
         if (mobile.trim() != "") {
             val status =
-                databaseHandler.saveCustomer(Customer(name, email, mobile, dob, custId, null))
+                databaseHandler.saveCustomer(Customer(name, email, mobile, dob, custId))
             if (status > -1) {
                 Toast.makeText(
                     applicationContext,

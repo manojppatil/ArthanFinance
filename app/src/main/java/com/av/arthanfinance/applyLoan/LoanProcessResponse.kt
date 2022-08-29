@@ -367,6 +367,14 @@ class UserDetailsResponse : Serializable {
     @Expose
     var fullName: String = ""
 
+    @SerializedName("customerName")
+    @Expose
+    var customerName: String = ""
+
+    @SerializedName("fatherName")
+    @Expose
+    var fatherName: String = ""
+
     @SerializedName("dob")
     @Expose
     var dob: String? = null
@@ -387,7 +395,7 @@ class UserDetailsResponse : Serializable {
     @Expose
     var addressLine3: String? = null
 
-    @SerializedName("pinCode")
+    @SerializedName("pincode")
     @Expose
     var pinCode: String? = null
 
@@ -578,4 +586,23 @@ data class Industry(
     @SerializedName("subSectorCode") var subSectorCode: String? = null,
     @SerializedName("nicCode") var nicCode: String? = null,
     @SerializedName("activity") var activity: String? = null
+)
+
+data class Bank(
+    @SerializedName("bankName") var bankName: String? = null,
+    @SerializedName("bankId") var bankId: String? = null,
+    val banks: List<BankList>?,
+    val branches: List<BranchList>?,
+//    @SerializedName("banks") var banks: BankList? = BankList(),
+//    @SerializedName("branches") var branches: BranchList? = BranchList(),
+)
+
+data class BankList(
+    @SerializedName("bankName") var bankName: String? = null,
+    @SerializedName("bankId") var bankId: String? = null,
+)
+
+data class BranchList(
+    @SerializedName("ifsc") var ifsc: String? = null,
+    @SerializedName("branchName") var branchName: String? = null,
 )

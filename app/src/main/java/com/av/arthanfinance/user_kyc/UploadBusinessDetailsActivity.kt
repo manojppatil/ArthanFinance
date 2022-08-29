@@ -51,8 +51,9 @@ import java.util.*
 
 class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
     private lateinit var activityUploadBusinessDetailsBinding: ActivityUploadBusinessDetailsBinding
-    private var constitutionList = arrayOf("Individual", "Sole Proprietorship", "Partnership")
-    private var typeList = arrayOf("Manufacturing", "wholesaler", "Retailer", "Service")
+    private var constitutionList =
+        arrayOf("Select", "Individual", "Sole Proprietorship", "Partnership")
+    private var typeList = arrayOf("Select", "Manufacturing", "wholesaler", "Retailer", "Service")
 
     /* private var categoryList1 = arrayOf("Automobile", "General Products", "Medicine", "Hotel Restaurant")
      private var segmentList1 = arrayOf("Spare parts", "Kirana Store", "Medicine Shop", "Fast Food ")*/
@@ -242,66 +243,66 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
             }
         }
 
-        activityUploadBusinessDetailsBinding.btnUpload.setOnClickListener {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            intent.type = "*/*"
-            startActivityForResult(Intent.createChooser(intent, "ChooseFile"), REQUEST_CODE_GALLERY)
-        }
-
-        activityUploadBusinessDetailsBinding.btnCamera.setOnClickListener {
-            if (requestPermission(REQ_CODE_CAMERA)) {
-                launchCamera(REQ_CODE_CAMERA)
-            }
-        }
-
-        activityUploadBusinessDetailsBinding.btnUploadOwnerPhoto.setOnClickListener {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            intent.type = "*/*"
-            startActivityForResult(
-                Intent.createChooser(intent, "ChooseFile"),
-                REQUEST_CODE_GALLERY_SHOP_OWNER
-            )
-        }
-
-        activityUploadBusinessDetailsBinding.btnCameraOwnerPhoto.setOnClickListener {
-            if (requestPermission(REQ_CODE_CAMERA_SHOP_OWNER)) {
-                launchCamera(REQ_CODE_CAMERA_SHOP_OWNER)
-            }
-        }
-
-        activityUploadBusinessDetailsBinding.btnUploadStockPhoto.setOnClickListener {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            intent.type = "*/*"
-            startActivityForResult(
-                Intent.createChooser(intent, "ChooseFile"),
-                REQUEST_CODE_GALLERY_STOCK
-            )
-        }
-
-        activityUploadBusinessDetailsBinding.btnCameraStock.setOnClickListener {
-            if (requestPermission(REQ_CODE_CAMERA_STOCK)) {
-                launchCamera(REQ_CODE_CAMERA_STOCK)
-            }
-        }
-
-        activityUploadBusinessDetailsBinding.btnUploadShopLocality.setOnClickListener {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            intent.type = "*/*"
-            startActivityForResult(
-                Intent.createChooser(intent, "ChooseFile"),
-                REQUEST_CODE_GALLERY_SHOP_LOCALITY
-            )
-        }
-
-        activityUploadBusinessDetailsBinding.btnCameraShopLocality.setOnClickListener {
-            if (requestPermission(REQ_CODE_CAMERA_SHOP_LOCALITY)) {
-                launchCamera(REQ_CODE_CAMERA_SHOP_LOCALITY)
-            }
-        }
+//        activityUploadBusinessDetailsBinding.btnUpload.setOnClickListener {
+//            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+//            intent.addCategory(Intent.CATEGORY_OPENABLE)
+//            intent.type = "*/*"
+//            startActivityForResult(Intent.createChooser(intent, "ChooseFile"), REQUEST_CODE_GALLERY)
+//        }
+//
+//        activityUploadBusinessDetailsBinding.btnCamera.setOnClickListener {
+//            if (requestPermission(REQ_CODE_CAMERA)) {
+//                launchCamera(REQ_CODE_CAMERA)
+//            }
+//        }
+//
+//        activityUploadBusinessDetailsBinding.btnUploadOwnerPhoto.setOnClickListener {
+//            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+//            intent.addCategory(Intent.CATEGORY_OPENABLE)
+//            intent.type = "*/*"
+//            startActivityForResult(
+//                Intent.createChooser(intent, "ChooseFile"),
+//                REQUEST_CODE_GALLERY_SHOP_OWNER
+//            )
+//        }
+//
+//        activityUploadBusinessDetailsBinding.btnCameraOwnerPhoto.setOnClickListener {
+//            if (requestPermission(REQ_CODE_CAMERA_SHOP_OWNER)) {
+//                launchCamera(REQ_CODE_CAMERA_SHOP_OWNER)
+//            }
+//        }
+//
+//        activityUploadBusinessDetailsBinding.btnUploadStockPhoto.setOnClickListener {
+//            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+//            intent.addCategory(Intent.CATEGORY_OPENABLE)
+//            intent.type = "*/*"
+//            startActivityForResult(
+//                Intent.createChooser(intent, "ChooseFile"),
+//                REQUEST_CODE_GALLERY_STOCK
+//            )
+//        }
+//
+//        activityUploadBusinessDetailsBinding.btnCameraStock.setOnClickListener {
+//            if (requestPermission(REQ_CODE_CAMERA_STOCK)) {
+//                launchCamera(REQ_CODE_CAMERA_STOCK)
+//            }
+//        }
+//
+//        activityUploadBusinessDetailsBinding.btnUploadShopLocality.setOnClickListener {
+//            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+//            intent.addCategory(Intent.CATEGORY_OPENABLE)
+//            intent.type = "*/*"
+//            startActivityForResult(
+//                Intent.createChooser(intent, "ChooseFile"),
+//                REQUEST_CODE_GALLERY_SHOP_LOCALITY
+//            )
+//        }
+//
+//        activityUploadBusinessDetailsBinding.btnCameraShopLocality.setOnClickListener {
+//            if (requestPermission(REQ_CODE_CAMERA_SHOP_LOCALITY)) {
+//                launchCamera(REQ_CODE_CAMERA_SHOP_LOCALITY)
+//            }
+//        }
 
         val mapActivityResultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -378,45 +379,49 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
                         response: Response<UdyamDetailsResponse>
                     ) {
                         hideProgressDialog()
-                        val udyamReturnResponse = response.body()
-                        val statusCode = udyamReturnResponse!!.statusCode
-                        if (statusCode == 101) {
-                            changeVisibility()
-                            val requestId = udyamReturnResponse.requestId
-                            Log.e("UdyamRID", requestId.toString())
-                            activityUploadBusinessDetailsBinding.tieBusinessName.setText(
-                                udyamReturnResponse.result!!.profile!!.name.toString()
-                            )
-                            activityUploadBusinessDetailsBinding.edtDateOfIncorporation.setText(
-                                udyamReturnResponse.result!!.profile!!.dateOfIncorporation.toString()
-                            )
-                            activityUploadBusinessDetailsBinding.tieConstitution.setText(
-                                udyamReturnResponse.result!!.profile!!.organizationType.toString()
-                            )
-                            activityUploadBusinessDetailsBinding.tieCategory.setText(
-                                udyamReturnResponse.result!!.industry[0].industry.toString()
-                            )
-                            activityUploadBusinessDetailsBinding.tieSegment.setText(
-                                udyamReturnResponse.result!!.industry[0].subSector.toString()
-                            )
-                            activityUploadBusinessDetailsBinding.tieType.setText(
-                                udyamReturnResponse.result!!.industry[0].activity.toString()
-                            )
-                            activityUploadBusinessDetailsBinding.tieBusinessPan.setText(
-                                udyamReturnResponse.result!!.profile!!.pan.toString()
-                            )
-                            val udyamAddress =
-                                udyamReturnResponse.result!!.officialAddress!!.flat + "," + udyamReturnResponse.result!!.officialAddress!!.premises + "," +
-                                        udyamReturnResponse.result!!.officialAddress!!.village + "," + udyamReturnResponse.result!!.officialAddress!!.block + "," +
-                                        udyamReturnResponse.result!!.officialAddress!!.road + "," + udyamReturnResponse.result!!.officialAddress!!.city + "," +
-                                        udyamReturnResponse.result!!.officialAddress!!.state + "," + udyamReturnResponse.result!!.officialAddress!!.pincode + "," +
-                                        udyamReturnResponse.result!!.officialAddress!!.district
-                            activityUploadBusinessDetailsBinding.tieBusinessAddress.setText(
-                                udyamAddress
-                            )
+                        try {
+                            val udyamReturnResponse = response.body()
+                            val statusCode = udyamReturnResponse!!.statusCode
+                            if (statusCode == 101) {
+                                changeVisibility()
+                                val requestId = udyamReturnResponse.requestId
+                                Log.e("UdyamRID", requestId.toString())
+                                activityUploadBusinessDetailsBinding.tieBusinessName.setText(
+                                    udyamReturnResponse.result!!.profile!!.name.toString()
+                                )
+                                activityUploadBusinessDetailsBinding.edtDateOfIncorporation.setText(
+                                    udyamReturnResponse.result!!.profile!!.dateOfIncorporation.toString()
+                                )
+                                activityUploadBusinessDetailsBinding.tieConstitution.setText(
+                                    udyamReturnResponse.result!!.profile!!.organizationType.toString()
+                                )
+                                activityUploadBusinessDetailsBinding.tieCategory.setText(
+                                    udyamReturnResponse.result!!.industry[0].industry.toString()
+                                )
+                                activityUploadBusinessDetailsBinding.tieSegment.setText(
+                                    udyamReturnResponse.result!!.industry[0].subSector.toString()
+                                )
+                                activityUploadBusinessDetailsBinding.tieType.setText(
+                                    udyamReturnResponse.result!!.industry[0].activity.toString()
+                                )
+                                activityUploadBusinessDetailsBinding.tieBusinessPan.setText(
+                                    udyamReturnResponse.result!!.profile!!.pan.toString()
+                                )
+                                val udyamAddress =
+                                    udyamReturnResponse.result!!.officialAddress!!.flat + "," + udyamReturnResponse.result!!.officialAddress!!.premises + "," +
+                                            udyamReturnResponse.result!!.officialAddress!!.village + "," + udyamReturnResponse.result!!.officialAddress!!.block + "," +
+                                            udyamReturnResponse.result!!.officialAddress!!.road + "," + udyamReturnResponse.result!!.officialAddress!!.city + "," +
+                                            udyamReturnResponse.result!!.officialAddress!!.state + "," + udyamReturnResponse.result!!.officialAddress!!.pincode + "," +
+                                            udyamReturnResponse.result!!.officialAddress!!.district
+                                activityUploadBusinessDetailsBinding.tieBusinessAddress.setText(
+                                    udyamAddress
+                                )
 
+                            }
+                        } catch (ex: Exception) {
+                            ex.printStackTrace()
+                            Log.e("TAG", ex.toString())
                         }
-
                     }
 
                     override fun onFailure(call: Call<UdyamDetailsResponse>, t: Throwable) {
@@ -431,7 +436,6 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
                 })
 
         }
-
         getCategoryAndSegmentData()
     }
 
@@ -440,6 +444,10 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
         activityUploadBusinessDetailsBinding.categorySpinner.visibility = View.GONE
         activityUploadBusinessDetailsBinding.segmentSpinner.visibility = View.GONE
         activityUploadBusinessDetailsBinding.typeSpinner.visibility = View.GONE
+        activityUploadBusinessDetailsBinding.tvCategory.visibility = View.GONE
+        activityUploadBusinessDetailsBinding.tvConst.visibility = View.GONE
+        activityUploadBusinessDetailsBinding.tvSegment.visibility = View.GONE
+        activityUploadBusinessDetailsBinding.tvType.visibility = View.GONE
 
         activityUploadBusinessDetailsBinding.tilConstitution.visibility = View.VISIBLE
         activityUploadBusinessDetailsBinding.tilCategory.visibility = View.VISIBLE
@@ -568,6 +576,8 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
             jsonObject.addProperty("lng", it)
         }
 
+        Log.e("TAG", jsonObject.toString())
+
         ApiClient().getAuthApiService(this).saveCustBusiness(jsonObject).enqueue(object :
             Callback<AuthenticationResponse> {
             override fun onResponse(
@@ -575,10 +585,16 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
                 response: Response<AuthenticationResponse>
             ) {
                 hideProgressDialog()
-                val intent =
-                    Intent(this@UploadBusinessDetailsActivity, UploadReferenceActivity::class.java)
-                intent.putExtra("customerData", customerData)
-                startActivity(intent)
+//                if (response.body()?.apiCode == "200") {
+////                                    hideProgressDialog()
+                    updateStage()
+//                } else {
+//                    Toast.makeText(
+//                        this@UploadBusinessDetailsActivity,
+//                        "Something went wrong, Please try again later!!!",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
             }
 
             override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
@@ -881,46 +897,46 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
                 }
 
                 /////////////////////////////////////
-                CROP_REQUEST_CODE_CAMERA, CROP_REQUEST_CODE_GALLERY -> {
-                    val result = CropImage.getActivityResult(data)
-                    val resultUri = result.uri
-                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, resultUri)
-                    activityUploadBusinessDetailsBinding.businessImage.setImageBitmap(bitmap)
-                    val encodedImageStr = encodeImageString(bitmap)
-                    print("base64 Stirng $encodedImageStr")
-
-                    uploadBusinessCard(encodedImageStr)
-                }
-
-                CROP_REQUEST_CODE_CAMERA_SHOP_OWNER, CROP_REQUEST_CODE_GALLERY_SHOP_OWNER -> {
-                    val result = CropImage.getActivityResult(data)
-                    val resultUri = result.uri
-                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, resultUri)
-                    activityUploadBusinessDetailsBinding.businessOwnerImage.setImageBitmap(bitmap)
-                    val encodedImageStr = encodeImageString(bitmap)
-                    print("base64 Stirng $encodedImageStr")
-                    uploadBusinessCard(encodedImageStr)
-                }
-
-                CROP_REQUEST_CODE_CAMERA_STOCK, CROP_REQUEST_CODE_GALLERY_STOCK -> {
-                    val result = CropImage.getActivityResult(data)
-                    val resultUri = result.uri
-                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, resultUri)
-                    activityUploadBusinessDetailsBinding.businessStockImage.setImageBitmap(bitmap)
-                    val encodedImageStr = encodeImageString(bitmap)
-                    print("base64 Stirng $encodedImageStr")
-                    uploadBusinessCard(encodedImageStr)
-                }
-
-                CROP_REQUEST_CODE_CAMERA_SHOP_LOCALITY, CROP_REQUEST_CODE_GALLERY_SHOP_LOCALITY -> {
-                    val result = CropImage.getActivityResult(data)
-                    val resultUri = result.uri
-                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, resultUri)
-                    activityUploadBusinessDetailsBinding.businessLocalityImage.setImageBitmap(bitmap)
-                    val encodedImageStr = encodeImageString(bitmap)
-                    print("base64 Stirng $encodedImageStr")
-                    uploadBusinessCard(encodedImageStr)
-                }
+//                CROP_REQUEST_CODE_CAMERA, CROP_REQUEST_CODE_GALLERY -> {
+//                    val result = CropImage.getActivityResult(data)
+//                    val resultUri = result.uri
+//                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, resultUri)
+//                    activityUploadBusinessDetailsBinding.businessImage.setImageBitmap(bitmap)
+//                    val encodedImageStr = encodeImageString(bitmap)
+//                    print("base64 Stirng $encodedImageStr")
+//
+//                    uploadBusinessCard(encodedImageStr)
+//                }
+//
+//                CROP_REQUEST_CODE_CAMERA_SHOP_OWNER, CROP_REQUEST_CODE_GALLERY_SHOP_OWNER -> {
+//                    val result = CropImage.getActivityResult(data)
+//                    val resultUri = result.uri
+//                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, resultUri)
+//                    activityUploadBusinessDetailsBinding.businessOwnerImage.setImageBitmap(bitmap)
+//                    val encodedImageStr = encodeImageString(bitmap)
+//                    print("base64 Stirng $encodedImageStr")
+//                    uploadBusinessCard(encodedImageStr)
+//                }
+//
+//                CROP_REQUEST_CODE_CAMERA_STOCK, CROP_REQUEST_CODE_GALLERY_STOCK -> {
+//                    val result = CropImage.getActivityResult(data)
+//                    val resultUri = result.uri
+//                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, resultUri)
+//                    activityUploadBusinessDetailsBinding.businessStockImage.setImageBitmap(bitmap)
+//                    val encodedImageStr = encodeImageString(bitmap)
+//                    print("base64 Stirng $encodedImageStr")
+//                    uploadBusinessCard(encodedImageStr)
+//                }
+//
+//                CROP_REQUEST_CODE_CAMERA_SHOP_LOCALITY, CROP_REQUEST_CODE_GALLERY_SHOP_LOCALITY -> {
+//                    val result = CropImage.getActivityResult(data)
+//                    val resultUri = result.uri
+//                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, resultUri)
+//                    activityUploadBusinessDetailsBinding.businessLocalityImage.setImageBitmap(bitmap)
+//                    val encodedImageStr = encodeImageString(bitmap)
+//                    print("base64 Stirng $encodedImageStr")
+//                    uploadBusinessCard(encodedImageStr)
+//                }
 //                REQ_CODE_BANK_STATEMENT -> {
 //                    data?.apply {
 //                        if (this.data == null) return
@@ -969,26 +985,26 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
         }
     }
 
-    private fun setImage(encodedImageStr: String?) {
-        Glide.with(this)
-            .asBitmap()
-            .load(encodedImageStr)
-            .into(object : CustomTarget<Bitmap>() {
-                override fun onResourceReady(
-                    resource: Bitmap,
-                    transition: Transition<in Bitmap>?
-                ) {
-                    activityUploadBusinessDetailsBinding.businessImage.setImageBitmap(resource)
-                    val encodedImageStr = encodeImageString(resource)
-
-                    showProgressDialog()
-                }
-
-                override fun onLoadCleared(placeholder: Drawable?) {
-
-                }
-            })
-    }
+//    private fun setImage(encodedImageStr: String?) {
+//        Glide.with(this)
+//            .asBitmap()
+//            .load(encodedImageStr)
+//            .into(object : CustomTarget<Bitmap>() {
+//                override fun onResourceReady(
+//                    resource: Bitmap,
+//                    transition: Transition<in Bitmap>?
+//                ) {
+//                    activityUploadBusinessDetailsBinding.businessImage.setImageBitmap(resource)
+//                    val encodedImageStr = encodeImageString(resource)
+//
+//                    showProgressDialog()
+//                }
+//
+//                override fun onLoadCleared(placeholder: Drawable?) {
+//
+//                }
+//            })
+//    }
 
     private fun cropGalleryImage(cropRequestCodeGallery: Int, data: Intent?) {
         try {
@@ -1124,5 +1140,41 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
             }
         }
 
+    }
+
+    private fun updateStage() {
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("customerId", customerData!!.customerId)
+        jsonObject.addProperty("stage", "BUSINESS")
+        showProgressDialog()
+        ApiClient().getAuthApiService(this).updateStage(jsonObject).enqueue(object :
+            Callback<AuthenticationResponse> {
+            override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
+                hideProgressDialog()
+                t.printStackTrace()
+                Toast.makeText(
+                    this@UploadBusinessDetailsActivity, "Current Stage not updated.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            override fun onResponse(
+                call: Call<AuthenticationResponse>,
+                response: Response<AuthenticationResponse>
+            ) {
+                hideProgressDialog()
+                if (response.body()?.apiCode == "200") {
+
+                    val intent = Intent(
+                        this@UploadBusinessDetailsActivity,
+                        UploadBusinessPhotos::class.java
+                    )
+                    intent.putExtra("customerData", customerData)
+                    startActivity(intent)
+                    finish()
+                }
+
+            }
+        })
     }
 }

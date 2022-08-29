@@ -130,7 +130,7 @@ fun copyFile(context: Context, uri: Uri): File? {
     if (!tempDirectory.exists()) {
         tempDirectory.mkdirs()
     }
-    val fileName = getFileName(context?.contentResolver, uri) ?: return null
+    val fileName = getFileName(context.contentResolver, uri) ?: return null
     val copiedFile: File = File(tempDirectory, fileName.replace(":", "")) ?: return null
     copiedFile.createNewFile()
     try {
@@ -197,7 +197,6 @@ object ArgumentKey {
     const val ElectricityBillOfcAdd = "ElectricityBill"
     const val BankStatement = "BankStatement"
     const val LeaveandLicenceagreement = "LeaveandLicenceagreement"
-
 
     const val Last2yearsITR = "Last2yearsITR"
     const val Auditedbalancesheet = "Auditedbalancesheet"

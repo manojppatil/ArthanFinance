@@ -55,6 +55,7 @@ class UploadReferenceActivity : BaseActivity() {
             // if the dialog is cancelable
             .setCancelable(false)
             .setPositiveButton("Yes") { dialog, id ->
+
                 dialog.dismiss()
                 addCoApplicantData()
             }.setNegativeButton("No") { dialog, id ->
@@ -181,7 +182,12 @@ class UploadReferenceActivity : BaseActivity() {
                 loanResponse?.emi = processingResponse.emi
                 loanResponse?.loanAmt = processingResponse.loanAmt
 
-                showCoApplicantDialog(processingResponse)
+                val intent =
+                    Intent(applicationContext, LoanEligibilitySubmittedActivity::class.java)
+                intent.putExtra("loanResponse", processingResponse)
+                startActivity(intent)
+                finish()
+//                showCoApplicantDialog(processingResponse)
 
 
             }

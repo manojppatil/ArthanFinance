@@ -147,6 +147,7 @@ class ApiClient {
         if (!::apiService.isInitialized) {
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://ext.digio.in:444/client/")
+//                .baseUrl("https://api.digio.in/client/")
                 .addConverterFactory(GsonConverterFactory.create())
 
                 .client(okhttpClient(context)) // Add our Okhttp client

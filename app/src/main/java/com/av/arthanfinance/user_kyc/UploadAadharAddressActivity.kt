@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -35,19 +36,42 @@ class UploadAadharAddressActivity : BaseActivity() {
     private lateinit var activityUploadAadharAddressBinding: ActivityUploadAadharAddressBinding
     private var kycCompleteStatus = "70"
     private var titleList = arrayOf("Select Title", "Mr.", "Ms.")
-    private var qualificationList = arrayOf("Select Qualification", "Graduate", "Post Graduate", "Under Graduate", "10th Pass")
-    private var maritalStatusList = arrayOf("Select Marital Status", "Single", "Married", "Separated", "Divorced")
+    private var qualificationList =
+        arrayOf("Select Qualification", "Graduate", "Post Graduate", "Under Graduate", "10th Pass")
+    private var maritalStatusList =
+        arrayOf("Select Marital Status", "Single", "Married", "Separated", "Divorced")
     private var religionList = arrayOf("Select Religion", "Hindu", "Muslim", "Christian", "Other")
     private var categoryList = arrayOf("Select Category", "General", "OBC", "SC", "ST")
-    private var stateList = arrayOf("Select State", "Odisha", "Telangana", "Andhra Pradesh", "Tamil Nadu","Karnataka", "Maharastra")
+    private var stateList = arrayOf(
+        "Select State",
+        "Odisha",
+        "Telangana",
+        "Andhra Pradesh",
+        "Tamil Nadu",
+        "Karnataka",
+        "Maharastra"
+    )
     private var genderList = arrayOf("Select Gender", "Male", "Female", "Other")
     private var addressState = ""
-    private  var a = 0
-    private  var b = 0
+    private var a = 0
+    private var b = 0
     private var addrFlag = true
-    private var fatherName = ""; private var name = ""; private var dob = ""; var gender = ""; var aadharImage = ""
-    private var addressLine1 = ""; private var addressLine2 = ""; private var addressLine3 = ""; var state = ""; var pincode = ""
-    private var landMark = ""; private var city = ""; private var currentLandMark = ""; var currentCity = ""; var currentPincode = ""; var currentState = ""
+    private var fatherName = ""
+    private var name = "";
+    private var dob = "";
+    var gender = "";
+    var aadharImage = ""
+    private var addressLine1 = "";
+    private var addressLine2 = "";
+    private var addressLine3 = "";
+    var state = "";
+    var pincode = ""
+    private var landMark = "";
+    private var city = "";
+    private var currentLandMark = "";
+    var currentCity = "";
+    var currentPincode = "";
+    var currentState = ""
     private var customerData: CustomerHomeTabResponse? = null
     override val layoutId: Int
         get() = R.layout.activity_upload_aadhar_address
@@ -62,7 +86,8 @@ class UploadAadharAddressActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityUploadAadharAddressBinding = ActivityUploadAadharAddressBinding.inflate(layoutInflater)
+        activityUploadAadharAddressBinding =
+            ActivityUploadAadharAddressBinding.inflate(layoutInflater)
         setContentView(activityUploadAadharAddressBinding.root)
 
         setSupportActionBar(activityUploadAadharAddressBinding.tbUploadAddress)
@@ -76,42 +101,46 @@ class UploadAadharAddressActivity : BaseActivity() {
             val obj: CustomerHomeTabResponse =
                 gson.fromJson(json, CustomerHomeTabResponse::class.java)
             customerData = obj
-        }
-
-        if (intent.hasExtra("name")){
-            name = intent.getStringExtra("name")!!
-            fatherName = intent.getStringExtra("fatherName")!!
-            dob = intent.getStringExtra("dob")!!
-            gender = intent.getStringExtra("gender")!!
-            aadharImage = intent.getStringExtra("image1")!!
-            addressLine1 = intent.getStringExtra("addressLine1")!!
-            addressLine2 = intent.getStringExtra("addressLine2")!!
-            addressLine3 = intent.getStringExtra("addressLine3")!!
-            state = intent.getStringExtra("state")!!
-            pincode = intent.getStringExtra("pincode")!!
-        }else{
-            val sharedPref: SharedPreferences = getSharedPreferences("father_name", Context.MODE_PRIVATE)
-            fatherName = sharedPref.getString("father_name", "").toString()
             getCustomerDetails()
         }
 
-        val decodedString: ByteArray = Base64.decode(aadharImage, Base64.NO_WRAP)
-        val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
-
-        //activityUploadAadharAddressBinding.ivUserImage.setImageBitmap(decodedByte)
-        activityUploadAadharAddressBinding.tieFatherName.setText(fatherName)
-        activityUploadAadharAddressBinding.tieAddress1.setText(addressLine1)
-        activityUploadAadharAddressBinding.tieAddress2.setText(addressLine2)
-        activityUploadAadharAddressBinding.tieAddress3.setText(addressLine3)
-        activityUploadAadharAddressBinding.tiePincode.setText(pincode)
+//        if (intent.hasExtra("name")) {
+//            name = intent.getStringExtra("name")!!
+//            fatherName = intent.getStringExtra("fatherName")!!
+//            dob = intent.getStringExtra("dob")!!
+//            gender = intent.getStringExtra("gender")!!
+//            aadharImage = intent.getStringExtra("image1")!!
+//            addressLine1 = intent.getStringExtra("addressLine1")!!
+//            addressLine2 = intent.getStringExtra("addressLine2")!!
+//            addressLine3 = intent.getStringExtra("addressLine3")!!
+//            state = intent.getStringExtra("state")!!
+//            pincode = intent.getStringExtra("pincode")!!
+//        } else {
+//            val sharedPref: SharedPreferences =
+//                getSharedPreferences("father_name", Context.MODE_PRIVATE)
+//            fatherName = sharedPref.getString("father_name", "").toString()
+//            getCustomerDetails()
+//        }
+//
+//        val decodedString: ByteArray = Base64.decode(aadharImage, Base64.NO_WRAP)
+//        val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+//
+//        //activityUploadAadharAddressBinding.ivUserImage.setImageBitmap(decodedByte)
+//        activityUploadAadharAddressBinding.tieFatherName.setText(fatherName)
+//        activityUploadAadharAddressBinding.tieAddress1.setText(addressLine1)
+//        activityUploadAadharAddressBinding.tieAddress2.setText(addressLine2)
+//        activityUploadAadharAddressBinding.tieAddress3.setText(addressLine3)
+//        activityUploadAadharAddressBinding.tiePincode.setText(pincode)
 
         val titleAdapter = this.let { ArrayAdapter(it, R.layout.emi_options, titleList) }
         activityUploadAadharAddressBinding.actTitle.setAdapter(titleAdapter)
 
-        val qualificationAdapter = this.let { ArrayAdapter(it, R.layout.emi_options, qualificationList) }
+        val qualificationAdapter =
+            this.let { ArrayAdapter(it, R.layout.emi_options, qualificationList) }
         activityUploadAadharAddressBinding.actEducation.setAdapter(qualificationAdapter)
 
-        val maritalStatusAdapter = this.let { ArrayAdapter(it, R.layout.emi_options, maritalStatusList) }
+        val maritalStatusAdapter =
+            this.let { ArrayAdapter(it, R.layout.emi_options, maritalStatusList) }
         activityUploadAadharAddressBinding.actMaritalStatus.setAdapter(maritalStatusAdapter)
 
         val religionAdapter = this.let { ArrayAdapter(it, R.layout.emi_options, religionList) }
@@ -130,9 +159,9 @@ class UploadAadharAddressActivity : BaseActivity() {
         activityUploadAadharAddressBinding.stateDropDown2.adapter = statesAdapter2
 
         activityUploadAadharAddressBinding.checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
-            if(!activityUploadAadharAddressBinding.checkbox.isChecked) {
+            if (!activityUploadAadharAddressBinding.checkbox.isChecked) {
                 activityUploadAadharAddressBinding.currentAddressLayout.visibility = View.VISIBLE
-            }else{
+            } else {
                 activityUploadAadharAddressBinding.currentAddressLayout.visibility = View.GONE
                 activityUploadAadharAddressBinding.tieCurrentAddress1.visibility = View.GONE
 
@@ -151,9 +180,16 @@ class UploadAadharAddressActivity : BaseActivity() {
 
         activityUploadAadharAddressBinding.stateDropDown.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                addressState = activityUploadAadharAddressBinding.stateDropDown.selectedItem.toString()
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                addressState =
+                    activityUploadAadharAddressBinding.stateDropDown.selectedItem.toString()
             }
+
             override fun onNothingSelected(parent: AdapterView<*>) {
                 // write code to perform some action
             }
@@ -183,11 +219,12 @@ class UploadAadharAddressActivity : BaseActivity() {
         }
 
         activityUploadAadharAddressBinding.pbKycAddress.max = 100
-        ObjectAnimator.ofInt(activityUploadAadharAddressBinding.pbKycAddress, "progress", 70).setDuration(1000).start()
+        ObjectAnimator.ofInt(activityUploadAadharAddressBinding.pbKycAddress, "progress", 70)
+            .setDuration(1000).start()
         activityUploadAadharAddressBinding.tvPercent.text = "${kycCompleteStatus}%"
 
         activityUploadAadharAddressBinding.btnAadharDetails.setOnClickListener {
-            if (hasValidAadharDetailsData()){
+            if (hasValidAadharDetailsData()) {
                 savePersonalDetails()
             }
         }
@@ -196,6 +233,7 @@ class UploadAadharAddressActivity : BaseActivity() {
     private fun getCustomerDetails() {
         showProgressDialog()
         val customerId = customerData!!.customerId.toString()
+        Log.e("TAG::", customerId)
         val jsonObject = JsonObject()
         jsonObject.addProperty("customerId", customerId)
 
@@ -208,11 +246,9 @@ class UploadAadharAddressActivity : BaseActivity() {
                 hideProgressDialog()
                 val apiCode = response.body()!!.apiCode
 
-                if (apiCode.equals("200")){
-                    name = response.body()!!.fullName
-                    dob = response.body()!!.dob.toString()
-                    gender = response.body()!!.gender.toString()
-                    aadharImage = response.body()!!.customerPic.toString()
+                if (response.body() != null) {
+                    name = response.body()!!.customerName
+                    fatherName = response.body()!!.fatherName.toString()
                     addressLine1 = response.body()!!.addressLine1.toString()
                     addressLine2 = response.body()!!.addressLine2.toString()
                     addressLine3 = response.body()!!.addressLine3.toString()
@@ -220,16 +256,17 @@ class UploadAadharAddressActivity : BaseActivity() {
                     pincode = response.body()!!.pinCode.toString()
 
                     val decodedString: ByteArray = Base64.decode(aadharImage, Base64.NO_WRAP)
-                    val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+                    val decodedByte =
+                        BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
 
-                    //activityUploadAadharAddressBinding.ivUserImage.setImageBitmap(decodedByte)
+//                    activityUploadAadharAddressBinding.ivUserImage.setImageBitmap(decodedByte)
                     activityUploadAadharAddressBinding.tieFatherName.setText(fatherName)
                     activityUploadAadharAddressBinding.tieAddress1.setText(addressLine1)
                     activityUploadAadharAddressBinding.tieAddress2.setText(addressLine2)
                     activityUploadAadharAddressBinding.tieAddress3.setText(addressLine3)
                     activityUploadAadharAddressBinding.tiePincode.setText(pincode)
 
-                }else{
+                } else {
                     Toast.makeText(
                         this@UploadAadharAddressActivity,
                         "Service Failure, Once server connection is stable, will try to resend again",
@@ -260,8 +297,14 @@ class UploadAadharAddressActivity : BaseActivity() {
         jsonObject.addProperty("addrFlag", addrFlag)
         jsonObject.addProperty("applicantType", "PA")
         jsonObject.addProperty("fullName", name)
-        jsonObject.addProperty("fatherOrSpousename", activityUploadAadharAddressBinding.tieFatherName.text.toString())
-        jsonObject.addProperty("motherName", activityUploadAadharAddressBinding.tieMotherName.text.toString())
+        jsonObject.addProperty(
+            "fatherOrSpousename",
+            activityUploadAadharAddressBinding.tieFatherName.text.toString()
+        )
+        jsonObject.addProperty(
+            "motherName",
+            activityUploadAadharAddressBinding.tieMotherName.text.toString()
+        )
         jsonObject.addProperty("customerId", customerId)
         jsonObject.addProperty("gender", gender)
         jsonObject.addProperty("dob", dob)
@@ -269,33 +312,102 @@ class UploadAadharAddressActivity : BaseActivity() {
         jsonObject.addProperty("email", customerEmail)
         jsonObject.addProperty("nationality", "Indian")
         jsonObject.addProperty("relationship", "NA")
-        jsonObject.addProperty("addressLine1", activityUploadAadharAddressBinding.tieAddress1.text.toString())
-        jsonObject.addProperty("addressLine2", activityUploadAadharAddressBinding.tieAddress2.text.toString())
-        jsonObject.addProperty("addressLine3", activityUploadAadharAddressBinding.tieAddress3.text.toString())
-        jsonObject.addProperty("landmark", activityUploadAadharAddressBinding.tieLandmark.text.toString())
+        jsonObject.addProperty(
+            "addressLine1",
+            activityUploadAadharAddressBinding.tieAddress1.text.toString()
+        )
+        jsonObject.addProperty(
+            "addressLine2",
+            activityUploadAadharAddressBinding.tieAddress2.text.toString()
+        )
+        jsonObject.addProperty(
+            "addressLine3",
+            activityUploadAadharAddressBinding.tieAddress3.text.toString()
+        )
+        jsonObject.addProperty(
+            "landmark",
+            activityUploadAadharAddressBinding.tieLandmark.text.toString()
+        )
         jsonObject.addProperty("city", activityUploadAadharAddressBinding.tieCity.text.toString())
-        jsonObject.addProperty("district", activityUploadAadharAddressBinding.tieDistrict.text.toString())
-        jsonObject.addProperty("pincode", activityUploadAadharAddressBinding.tiePincode.text.toString())
-        jsonObject.addProperty("state", activityUploadAadharAddressBinding.stateDropDown.selectedItem.toString())
+        jsonObject.addProperty(
+            "district",
+            activityUploadAadharAddressBinding.tieDistrict.text.toString()
+        )
+        jsonObject.addProperty(
+            "pincode",
+            activityUploadAadharAddressBinding.tiePincode.text.toString()
+        )
+        jsonObject.addProperty(
+            "state",
+            activityUploadAadharAddressBinding.stateDropDown.selectedItem.toString()
+        )
 
-        if (addrFlag){
-            jsonObject.addProperty("addressLine1p", activityUploadAadharAddressBinding.tieAddress1.text.toString())
-            jsonObject.addProperty("addressLine2p", activityUploadAadharAddressBinding.tieAddress2.text.toString())
-            jsonObject.addProperty("addressLine3p", activityUploadAadharAddressBinding.tieAddress3.text.toString())
-            jsonObject.addProperty("landmarkp", activityUploadAadharAddressBinding.tieLandmark.text.toString())
-            jsonObject.addProperty("cityp", activityUploadAadharAddressBinding.tieCity.text.toString())
-            jsonObject.addProperty("districtp", activityUploadAadharAddressBinding.tieDistrict.text.toString())
-            jsonObject.addProperty("pinCodep", activityUploadAadharAddressBinding.tiePincode.text.toString())
-            jsonObject.addProperty("statep", activityUploadAadharAddressBinding.stateDropDown.selectedItem.toString())
-        }else{
-            jsonObject.addProperty("addressLine1", activityUploadAadharAddressBinding.tieCurrentAddress1.text.toString())
-            jsonObject.addProperty("addressLine2", activityUploadAadharAddressBinding.tieCurrentAddress2.text.toString())
-            jsonObject.addProperty("addressLine3", activityUploadAadharAddressBinding.tieCurrentAddress3.text.toString())
-            jsonObject.addProperty("landmarkp", activityUploadAadharAddressBinding.tieLandmark2.text.toString())
-            jsonObject.addProperty("cityp", activityUploadAadharAddressBinding.tieCity2.text.toString())
-            jsonObject.addProperty("districtp", activityUploadAadharAddressBinding.tieDistrict2.text.toString())
-            jsonObject.addProperty("pinCodep", activityUploadAadharAddressBinding.tiePincode2.text.toString())
-            jsonObject.addProperty("statep", activityUploadAadharAddressBinding.stateDropDown2.selectedItem.toString())
+        if (addrFlag) {
+            jsonObject.addProperty(
+                "addressLine1p",
+                activityUploadAadharAddressBinding.tieAddress1.text.toString()
+            )
+            jsonObject.addProperty(
+                "addressLine2p",
+                activityUploadAadharAddressBinding.tieAddress2.text.toString()
+            )
+            jsonObject.addProperty(
+                "addressLine3p",
+                activityUploadAadharAddressBinding.tieAddress3.text.toString()
+            )
+            jsonObject.addProperty(
+                "landmarkp",
+                activityUploadAadharAddressBinding.tieLandmark.text.toString()
+            )
+            jsonObject.addProperty(
+                "cityp",
+                activityUploadAadharAddressBinding.tieCity.text.toString()
+            )
+            jsonObject.addProperty(
+                "districtp",
+                activityUploadAadharAddressBinding.tieDistrict.text.toString()
+            )
+            jsonObject.addProperty(
+                "pinCodep",
+                activityUploadAadharAddressBinding.tiePincode.text.toString()
+            )
+            jsonObject.addProperty(
+                "statep",
+                activityUploadAadharAddressBinding.stateDropDown.selectedItem.toString()
+            )
+        } else {
+            jsonObject.addProperty(
+                "addressLine1",
+                activityUploadAadharAddressBinding.tieCurrentAddress1.text.toString()
+            )
+            jsonObject.addProperty(
+                "addressLine2",
+                activityUploadAadharAddressBinding.tieCurrentAddress2.text.toString()
+            )
+            jsonObject.addProperty(
+                "addressLine3",
+                activityUploadAadharAddressBinding.tieCurrentAddress3.text.toString()
+            )
+            jsonObject.addProperty(
+                "landmarkp",
+                activityUploadAadharAddressBinding.tieLandmark2.text.toString()
+            )
+            jsonObject.addProperty(
+                "cityp",
+                activityUploadAadharAddressBinding.tieCity2.text.toString()
+            )
+            jsonObject.addProperty(
+                "districtp",
+                activityUploadAadharAddressBinding.tieDistrict2.text.toString()
+            )
+            jsonObject.addProperty(
+                "pinCodep",
+                activityUploadAadharAddressBinding.tiePincode2.text.toString()
+            )
+            jsonObject.addProperty(
+                "statep",
+                activityUploadAadharAddressBinding.stateDropDown2.selectedItem.toString()
+            )
         }
 
         ApiClient().getAuthApiService(this).saveCustomerDetails(jsonObject).enqueue(object :
@@ -308,12 +420,19 @@ class UploadAadharAddressActivity : BaseActivity() {
                 val docResponse = response.body() as AuthenticationResponse
                 val apiCode = docResponse.apiCode
 
-                if (apiCode.equals("200")){
-                    Toast.makeText(this@UploadAadharAddressActivity, "Personal details uploaded successfully", Toast.LENGTH_SHORT).show()
-                     val intent1 = Intent(this@UploadAadharAddressActivity, UploadBankDetailsActivity::class.java)
-                     startActivity(intent1)
-                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                }else{
+                if (apiCode.equals("200")) {
+                    Toast.makeText(
+                        this@UploadAadharAddressActivity,
+                        "Personal details uploaded successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    val intent1 = Intent(
+                        this@UploadAadharAddressActivity,
+                        UploadBankDetailsActivity::class.java
+                    )
+                    startActivity(intent1)
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                } else {
                     try {
                         val jObjError = JSONObject(response.errorBody()!!.string())
                         Toast.makeText(
@@ -322,7 +441,11 @@ class UploadAadharAddressActivity : BaseActivity() {
                             Toast.LENGTH_LONG
                         ).show()
                     } catch (e: Exception) {
-                        Toast.makeText(this@UploadAadharAddressActivity, e.message, Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            this@UploadAadharAddressActivity,
+                            e.message,
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                     Toast.makeText(
                         this@UploadAadharAddressActivity,
@@ -381,7 +504,7 @@ class UploadAadharAddressActivity : BaseActivity() {
                 Toast.LENGTH_SHORT
             ).show()
             return false
-        }else if (qualification.equals("") || qualification.equals("Select Qualification")) {
+        } else if (qualification.equals("") || qualification.equals("Select Qualification")) {
             Toast.makeText(
                 applicationContext,
                 "Please select your qualification",
@@ -411,7 +534,7 @@ class UploadAadharAddressActivity : BaseActivity() {
             Toast.makeText(applicationContext, "Please fill address line 3", Toast.LENGTH_SHORT)
                 .show()
             return false
-        }  else if (activityUploadAadharAddressBinding.tieCity.text.isNullOrEmpty()) {
+        } else if (activityUploadAadharAddressBinding.tieCity.text.isNullOrEmpty()) {
             Toast.makeText(applicationContext, "Please provide your city name", Toast.LENGTH_SHORT)
                 .show()
             return false
@@ -432,19 +555,35 @@ class UploadAadharAddressActivity : BaseActivity() {
         } else if (activityUploadAadharAddressBinding.checkbox.isChecked) {
             return true
         } else if (activityUploadAadharAddressBinding.tieCurrentAddress1.text.isNullOrEmpty()) {
-            Toast.makeText(applicationContext, "Please fill current address line 1", Toast.LENGTH_SHORT)
+            Toast.makeText(
+                applicationContext,
+                "Please fill current address line 1",
+                Toast.LENGTH_SHORT
+            )
                 .show()
             return false
-        }else if (activityUploadAadharAddressBinding.tieCurrentAddress2.text.isNullOrEmpty()) {
-            Toast.makeText(applicationContext, "Please fill current address line 2", Toast.LENGTH_SHORT)
+        } else if (activityUploadAadharAddressBinding.tieCurrentAddress2.text.isNullOrEmpty()) {
+            Toast.makeText(
+                applicationContext,
+                "Please fill current address line 2",
+                Toast.LENGTH_SHORT
+            )
                 .show()
             return false
-        }else if (activityUploadAadharAddressBinding.tieCurrentAddress3.text.isNullOrEmpty()) {
-            Toast.makeText(applicationContext, "Please fill current address line 3", Toast.LENGTH_SHORT)
+        } else if (activityUploadAadharAddressBinding.tieCurrentAddress3.text.isNullOrEmpty()) {
+            Toast.makeText(
+                applicationContext,
+                "Please fill current address line 3",
+                Toast.LENGTH_SHORT
+            )
                 .show()
             return false
-        }  else if (activityUploadAadharAddressBinding.tieCity2.text.isNullOrEmpty()) {
-            Toast.makeText(applicationContext, "Please provide your current city name", Toast.LENGTH_SHORT)
+        } else if (activityUploadAadharAddressBinding.tieCity2.text.isNullOrEmpty()) {
+            Toast.makeText(
+                applicationContext,
+                "Please provide your current city name",
+                Toast.LENGTH_SHORT
+            )
                 .show()
             return false
         } else if (activityUploadAadharAddressBinding.tieDistrict2.text.isNullOrEmpty()) {
@@ -454,17 +593,25 @@ class UploadAadharAddressActivity : BaseActivity() {
                 Toast.LENGTH_SHORT
             ).show()
             return false
-        }else if (currentPinCode == "" || currentPinCode.length < 6) {
-            Toast.makeText(applicationContext, "Please provide your current pincode", Toast.LENGTH_SHORT)
+        } else if (currentPinCode == "" || currentPinCode.length < 6) {
+            Toast.makeText(
+                applicationContext,
+                "Please provide your current pincode",
+                Toast.LENGTH_SHORT
+            )
                 .show()
             return false
-        }  else if (locationAddress.equals("") || currentState.equals("Your Location")) {
-            Toast.makeText(applicationContext, "Please Provide Your Current Location", Toast.LENGTH_SHORT).show()
+        } else if (locationAddress.equals("") || currentState.equals("Your Location")) {
+            Toast.makeText(
+                applicationContext,
+                "Please Provide Your Current Location",
+                Toast.LENGTH_SHORT
+            ).show()
             return false
-        }else if (currentState.equals("") || currentState.equals("Select State")) {
+        } else if (currentState.equals("") || currentState.equals("Select State")) {
             Toast.makeText(applicationContext, "Please Select State", Toast.LENGTH_SHORT).show()
             return false
-        }else {
+        } else {
             return true
         }
 

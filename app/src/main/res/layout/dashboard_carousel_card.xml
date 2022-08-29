@@ -37,14 +37,15 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
+            android:layout_marginBottom="4dp"
             android:background="@drawable/bg_orange_solid"
             android:padding="10dp"
-            android:layout_marginBottom="4dp"
             android:text="Check Eligibility/ Limit"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

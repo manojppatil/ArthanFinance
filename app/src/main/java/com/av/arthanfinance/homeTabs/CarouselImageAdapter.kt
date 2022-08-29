@@ -12,10 +12,11 @@ import com.av.arthanfinance.CustomerHomeTabResponse
 import com.av.arthanfinance.InitiateApplyLoanActivity2
 import com.av.arthanfinance.R
 import com.av.arthanfinance.applyLoan.ApplyCoupon
+import com.av.arthanfinance.applyLoan.CompletedScreensResponse
 import com.av.arthanfinance.applyLoan.InitiateApplyLoanActivity
 import com.av.arthanfinance.applyLoan.LoanProcessResponse
 import com.av.arthanfinance.networkService.ApiClient
-import com.av.arthanfinance.user_kyc.UploadBusinessDetailsActivity
+import com.av.arthanfinance.user_kyc.*
 import com.av.arthanfinance.util.ArthanFinConstants
 import com.github.islamkhsh.CardSliderAdapter
 import com.google.gson.JsonObject
@@ -40,8 +41,9 @@ class CarouselImageAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarouselImageViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.dashboard_carousel_card, parent, false)
-        view.applyLoan.setOnClickListener {
+        view.setOnClickListener {
 //            sendLoanRequest(parent.context)
+//            getLastCompletedScreen(customerData, parent.context)
             val intent = Intent(it.context, UploadBusinessDetailsActivity::class.java)
             intent.putExtra(ArthanFinConstants.IS_CREATE_FLOW, true)
             intent.putExtra(ArthanFinConstants.MOVE_TO_BUSINESS_DETAILS, true)
@@ -50,6 +52,95 @@ class CarouselImageAdapter(
             it.context.startActivity(intent)
         }
         return CarouselImageViewHolder(view)
+    }
+
+    private fun getLastCompletedScreen(custData: CustomerHomeTabResponse, context: Context) {
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("customerId", custData.customerId)
+
+//        context.showProgressDialog()
+        ApiClient().getAuthApiService(context).getCompletedScreens(jsonObject).enqueue(object :
+            Callback<CompletedScreensResponse> {
+            override fun onFailure(call: Call<CompletedScreensResponse>, t: Throwable) {
+//                hideProgressDialog()
+                t.printStackTrace()
+                Toast.makeText(
+                    context, "Something went wrong, Please try again later!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            override fun onResponse(
+                call: Call<CompletedScreensResponse>,
+                response: Response<CompletedScreensResponse>
+            ) {
+//                context.hideProgressDialog()
+                val screenData = response.body()
+
+                if (screenData != null) {
+                    val lastScreenArray = screenData.screens
+
+                    if (lastScreenArray.isNullOrEmpty()) {
+                        val intent = Intent(context, UploadPanActivity::class.java)
+                        intent.putExtra("customerData", custData)
+                        context.startActivity(intent)
+//                        context.finish()
+                    } else {
+                        for (i in 0 until lastScreenArray.size) {
+                            when (screenData.screens!![i]) {
+                                "PAN_PA" -> {
+                                    val intent = Intent(
+                                        context,
+                                        UploadPhotoActivity::class.java
+                                    )
+                                    intent.putExtra("customerData", custData)
+                                    context.startActivity(intent)
+//                                    finish()
+                                }
+                                "PIC_PA" -> {
+                                    val intent = Intent(
+                                        context,
+                                        UploadAadharActivity::class.java
+                                    )
+                                    intent.putExtra("customerData", custData)
+                                    context.startActivity(intent)
+//                                    finish()
+                                }
+                                "OFFLINE_AADHAR_PA" -> {
+                                    val intent = Intent(
+                                        context,
+                                        UploadAadharAddressActivity::class.java
+                                    )
+                                    intent.putExtra("customerData", custData)
+                                    context.startActivity(intent)
+//                                    finish()
+                                }
+                                "PERSONAL_PA" -> {
+                                    val intent = Intent(
+                                        context,
+                                        UploadBankDetailsActivity::class.java
+                                    )
+                                    intent.putExtra("customerData", custData)
+                                    context.startActivity(intent)
+//                                    finish()
+                                }
+                                "BANK_PA" -> {
+                                    val intent = Intent(
+                                        context,
+                                        HomeDashboardActivity::class.java
+                                    )
+                                    intent.putExtra("customerData", custData)
+                                    context.startActivity(intent)
+//                                    finish()
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    Toast.makeText(context, "failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
     }
 
     private fun sendLoanRequest(context: Context) {

@@ -82,13 +82,13 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
         activityUploadAadharBinding.aadharFront.tag = 1
         activityUploadAadharBinding.aadharBack.tag = 2
 
-        if (intent.hasExtra("loanResponse")){
+        if (intent.hasExtra("loanResponse")) {
             loanResponse = intent.getSerializableExtra("loanResponse") as LoanProcessResponse
             customerId = intent.getStringExtra("customerId")!!
             customerFatherName = intent.getStringExtra("fatherName")!!
             customerName = intent.getStringExtra("customerName")!!
             customerDob = intent.getStringExtra("customerDob")!!
-        }else{
+        } else {
             if (intent.hasExtra("customerId")) {
                 customerId = intent.getStringExtra("customerId")!!
                 customerFatherName = intent.getStringExtra("fatherName")!!
@@ -122,11 +122,11 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
         /////////////////////////////////////////////
 
         activityUploadAadharBinding.btnNextAadhar.setOnClickListener {
-            if (afUploadStatus == 0){
+            if (afUploadStatus == 0) {
                 Toast.makeText(this, "Please upload Aadhar front photo", Toast.LENGTH_SHORT).show()
-            }else if (abUploadStatus == 0){
+            } else if (abUploadStatus == 0) {
                 Toast.makeText(this, "Please upload Aadhar back photo", Toast.LENGTH_SHORT).show()
-            }else{
+            } else {
                 uploadAadharData(1)
             }
 
@@ -135,20 +135,28 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
         activityUploadAadharBinding.btnAadharFrontPhotoCamera.setOnClickListener {
             startActivityForResult(Intent(this, CustomerCameraActivity::class.java).apply {
                 putExtra("doc_type", REQ_CODE_AADHAR_FP)
-                val dir = File(this@UploadAadharActivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "AB")
+                val dir = File(
+                    this@UploadAadharActivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+                    "AB"
+                )
                 // if (!dir.exists())
                 dir.mkdirs()
                 putExtra("FilePath", "${dir.absolutePath}/IMG_AADHAR_FRONT.jpg")
+                putExtra("is_front", true)
             }, REQ_CODE_AADHAR_FP)
         }
 
         activityUploadAadharBinding.btnAadharBackPhotoCamera.setOnClickListener {
             startActivityForResult(Intent(this, CustomerCameraActivity::class.java).apply {
                 putExtra("doc_type", REQ_CODE_AADHAR_BP)
-                val dir = File(this@UploadAadharActivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "AB")
+                val dir = File(
+                    this@UploadAadharActivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+                    "AB"
+                )
                 // if (!dir.exists())
                 dir.mkdirs()
                 putExtra("FilePath", "${dir.absolutePath}/IMG_AADHAR_BACK.jpg")
+                putExtra("is_front", true)
             }, REQ_CODE_AADHAR_BP)
         }
 
@@ -169,7 +177,10 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
         activityUploadAadharBinding.btnRetakeFront.setOnClickListener {
             startActivityForResult(Intent(this, CustomerCameraActivity::class.java).apply {
                 putExtra("doc_type", REQ_CODE_AADHAR_FP)
-                val dir = File(this@UploadAadharActivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "AB")
+                val dir = File(
+                    this@UploadAadharActivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+                    "AB"
+                )
                 // if (!dir.exists())
                 dir.mkdirs()
                 putExtra("FilePath", "${dir.absolutePath}/IMG_AADHAR_FRONT.jpg")
@@ -179,7 +190,10 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
         activityUploadAadharBinding.btnRetakeBack.setOnClickListener {
             startActivityForResult(Intent(this, CustomerCameraActivity::class.java).apply {
                 putExtra("doc_type", REQ_CODE_AADHAR_BP)
-                val dir = File(this@UploadAadharActivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "AB")
+                val dir = File(
+                    this@UploadAadharActivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+                    "AB"
+                )
                 // if (!dir.exists())
                 dir.mkdirs()
                 putExtra("FilePath", "${dir.absolutePath}/IMG_AADHAR_BACK.jpg")
@@ -297,13 +311,13 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
 
         val jsonObject = JsonObject()
 
-        if (intent.hasExtra("loanResponse")){
+        if (intent.hasExtra("loanResponse")) {
             jsonObject.addProperty("customerId", customerId)
             jsonObject.addProperty("applicantType", "CA")
             jsonObject.addProperty("idType", idType)
             jsonObject.addProperty("imageBase64", encodedImageStr!!)
             jsonObject.addProperty("applicationType", "CUSTOMER")
-        }else{
+        } else {
             jsonObject.addProperty("customerId", customerId)
             jsonObject.addProperty("applicantType", "PA")
             jsonObject.addProperty("idType", idType)
@@ -320,19 +334,19 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
             ) {
                 val docResponse = response.body()
                 hideProgressDialog()
-                if (statusFrom == 1 && idType.equals("AF")){
+                if (statusFrom == 1 && idType.equals("AF")) {
                     Toast.makeText(
                         this@UploadAadharActivity,
                         "Aadhar front photo uploaded successfully",
                         Toast.LENGTH_SHORT
                     ).show()
-                }else if (statusFrom == 1 && idType.equals("AB")){
+                } else if (statusFrom == 1 && idType.equals("AB")) {
                     Toast.makeText(
                         this@UploadAadharActivity,
                         "Aadhar back photo uploaded successfully",
                         Toast.LENGTH_SHORT
                     ).show()
-                }else{
+                } else {
                     uploadAadharData(statusFrom)
                 }
             }
@@ -352,10 +366,10 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
 
         val jsonObject = JsonObject()
 
-        if (intent.hasExtra("loanResponse")){
+        if (intent.hasExtra("loanResponse")) {
             jsonObject.addProperty("customerId", customerId)
             jsonObject.addProperty("applicantType", "CA")
-        }else{
+        } else {
             jsonObject.addProperty("customerId", customerId)
             jsonObject.addProperty("applicantType", "PA")
         }
@@ -368,7 +382,7 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
                 response: Response<LoanProcessResponse>
             ) {
                 val docResponse = response.body()
-                if (statusFrom == 1){
+                if (statusFrom == 1) {
                     val addressLine1 = docResponse?.addressLine1
                     /*val address2 = docResponse?.addressLine2
                     val address3 = docResponse?.addressLine3
@@ -389,13 +403,17 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
                     val addr5 = parts[5]
                     val address3 = "$addr4, $addr5"
 
-                    if (intent.hasExtra("loanResponse")){
-                        val intent1 = Intent(this@UploadAadharActivity, ApplyForLoanActivity::class.java)
+                    if (intent.hasExtra("loanResponse")) {
+                        val intent1 =
+                            Intent(this@UploadAadharActivity, ApplyForLoanActivity::class.java)
                         intent1.putExtra("loanResponse", loanResponse)
                         startActivity(intent1)
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    }else{
-                        val intent1 = Intent(this@UploadAadharActivity, UploadAadharAddressActivity::class.java)
+                    } else {
+                        val intent1 = Intent(
+                            this@UploadAadharActivity,
+                            UploadAadharAddressActivity::class.java
+                        )
                             .putExtra("name", customerName)
                             .putExtra("fatherName", customerFatherName)
                             .putExtra("gender", gender)
@@ -588,7 +606,7 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
     ) {
         val jsonObject = JsonObject()
 
-        if (intent.hasExtra("loanResponse")){
+        if (intent.hasExtra("loanResponse")) {
             jsonObject.addProperty("customerId", customerId)
             jsonObject.addProperty("applicantType", "CA")
             jsonObject.addProperty("customerName", name)
@@ -601,7 +619,7 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
             jsonObject.addProperty("addressLine3", district)
             jsonObject.addProperty("pincode", pinCode)
             jsonObject.addProperty("state", state)
-        }else{
+        } else {
             jsonObject.addProperty("customerId", customerId)
             jsonObject.addProperty("applicantType", "PA")
             jsonObject.addProperty("customerName", name)
@@ -634,13 +652,17 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
                         Toast.LENGTH_SHORT
                     ).show()
 
-                    if (intent.hasExtra("loanResponse")){
-                        val intent1 = Intent(this@UploadAadharActivity, ApplyForLoanActivity::class.java)
+                    if (intent.hasExtra("loanResponse")) {
+                        val intent1 =
+                            Intent(this@UploadAadharActivity, ApplyForLoanActivity::class.java)
                         intent1.putExtra("loanResponse", loanResponse)
                         startActivity(intent1)
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    }else{
-                        val intent1 = Intent(this@UploadAadharActivity, UploadAadharAddressActivity::class.java)
+                    } else {
+                        val intent1 = Intent(
+                            this@UploadAadharActivity,
+                            UploadAadharAddressActivity::class.java
+                        )
                             .putExtra("name", name)
                             .putExtra("fatherName", customerFatherName)
                             .putExtra("gender", gender)
@@ -655,7 +677,6 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
                         startActivity(intent1)
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     }
-
 
 
                 } else {
@@ -705,9 +726,8 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
         jsonObject.addProperty("customer_name", customerData!!.customerName)
         jsonObject.addProperty("notify_customer", false)
         jsonObject.addProperty("generate_access_token", true)
-
-        jsonObject1.addProperty("type", "DIGILOCKER");
-        jsonObject1.addProperty("title", "Digilocker KYC");
+        jsonObject1.addProperty("type", "DIGILOCKER")
+        jsonObject1.addProperty("title", "Digilocker KYC")
         jsonObject1.addProperty("description", "Please share your Aadhar from digilocker")
         jsonArray1.add("AADHAAR")
         jsonObject1.add("document_types", jsonArray1)
@@ -715,8 +735,13 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
         jsonArray.add(jsonObject1)
         jsonObject.add("actions", jsonArray)
 
-        val clientId = "AIV9X8IU1LYFM9RE7EKINUO98RE6MX6L"
-        val clientSecret = "FJ872EVIBCC11XJE1HR3KAZRK2ZU4O5P"
+        //SANDBOX CREDS
+        val clientId = "AI52KOUVC2PQTONW1ZKB92RU22UL8491"
+        val clientSecret = "B6DXG4SV4YJJC2VDA54WTLY6CTJKEUZH"
+
+        //PRD CREDS
+//        val clientId = "AIZ1SHB77YJBZ6HFAGYR4BTUI84A6DOF"
+//        val clientSecret = "ZLYKT9FT7UUAIZGVVUPIWSFN3N62Y99O"
 
         val base = clientId + ":" + clientSecret
 
@@ -728,13 +753,20 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
                     call: Call<DigilockerTokenResponse>,
                     response: Response<DigilockerTokenResponse>
                 ) {
-                    val tokenBody = response.body()
-                    val accessToken = tokenBody!!.accessToken1
-                    val tokenId = accessToken.token
-                    val kId = accessToken.kId
+                    try {
+                        val tokenBody = response.body()
+                        val accessToken = tokenBody!!.accessToken1
+                        val tokenId = accessToken.token
+                        val kId = accessToken.kId
 
-                    customerData!!.mobNo?.let { getRid(tokenId, kId, it) }
+                        customerData!!.mobNo?.let { getRid(tokenId, kId, it) }
+                    } catch (ex: Exception) {
+                        ex.printStackTrace()
+                        Log.e("TAG", ex.toString())
+                        digioLayout.visibility = View.GONE
+                        arthanLayout.visibility = View.VISIBLE
 
+                    }
                 }
 
                 override fun onFailure(call: Call<DigilockerTokenResponse>, t: Throwable) {
@@ -774,16 +806,20 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
         ).show()
         getAadharDataFromDigio()*/
 
+        digioLayout.visibility = View.GONE
+        arthanLayout.visibility = View.VISIBLE
+        Toast.makeText(
+            this,
+            "KYC through Digilocker failed. Upload your aadhar photos to complete the KYC",
+            Toast.LENGTH_SHORT
+        ).show()
+        /*if (errorCode == 10012) {
             digioLayout.visibility = View.GONE
             arthanLayout.visibility = View.VISIBLE
-            Toast.makeText(this, "KYC through Digilocker failed. Upload your aadhar photos to complete the KYC", Toast.LENGTH_SHORT).show()
-            /*if (errorCode == 10012) {
-                digioLayout.visibility = View.GONE
-                arthanLayout.visibility = View.VISIBLE
-                Toast.makeText(this, "" + msg, Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "" + msg, Toast.LENGTH_SHORT).show()
-            }*/
+            Toast.makeText(this, "" + msg, Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "" + msg, Toast.LENGTH_SHORT).show()
+        }*/
 
     }
 
@@ -793,8 +829,13 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
 
     private fun getAadharDataFromDigilocker(requestId: String?) {
 
-        val clientId = "AIV9X8IU1LYFM9RE7EKINUO98RE6MX6L"
-        val clientSecret = "FJ872EVIBCC11XJE1HR3KAZRK2ZU4O5P"
+        //SANDBOX CREDS
+        val clientId = "AI52KOUVC2PQTONW1ZKB92RU22UL8491"
+        val clientSecret = "B6DXG4SV4YJJC2VDA54WTLY6CTJKEUZH"
+
+        //PRD CREDS
+//        val clientId = "AIZ1SHB77YJBZ6HFAGYR4BTUI84A6DOF"
+//        val clientSecret = "ZLYKT9FT7UUAIZGVVUPIWSFN3N62Y99O"
 
         val base = "$clientId:$clientSecret"
 

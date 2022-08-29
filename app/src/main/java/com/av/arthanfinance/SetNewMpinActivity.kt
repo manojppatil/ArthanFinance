@@ -15,6 +15,7 @@ import androidx.annotation.RequiresApi
 import com.arthanfinance.core.base.BaseActivity
 import com.av.arthanfinance.applyLoan.AuthenticationResponse
 import com.av.arthanfinance.applyLoan.model.GenericResponse
+import com.av.arthanfinance.homeTabs.HomeDashboardActivity
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.user_kyc.UploadBankDetailsActivity
 import com.av.arthanfinance.user_kyc.UploadPanActivity
@@ -192,7 +193,7 @@ class SetNewMpinActivity : BaseActivity() {
                     prefsEditor?.putString("customerData", json)
                     prefsEditor?.apply()
 
-                    val intent = Intent(this@SetNewMpinActivity, UploadPanActivity::class.java)
+                    val intent = Intent(this@SetNewMpinActivity, CheckEligibilityActivity::class.java)
                     intent.putExtra("customerData", custData)
                     startActivity(intent)
                     finish()
