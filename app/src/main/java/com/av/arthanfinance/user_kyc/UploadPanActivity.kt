@@ -56,7 +56,7 @@ import java.util.ArrayList
 
 class UploadPanActivity : BaseActivity(), DigioResponseListener {
     private lateinit var uploadPanBinding: ActivityUploadPanBinding
-    private var kycCompleteStatus = "20"
+    private var kycCompleteStatus = "10"
     private var MY_CAMERA_PERMISSION_CODE = 100
     private var customerData: CustomerHomeTabResponse? = null
     private var loanResponse: LoanProcessResponse? = null

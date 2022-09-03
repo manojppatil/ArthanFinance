@@ -111,6 +111,7 @@
         <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/app/src/main/res/drawable/bg_rect_gains_boro.xml" value="0.1445" />
         <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/app/src/main/res/drawable/bg_register_rect_orange.xml" value="0.165" />
         <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/app/src/main/res/drawable/bg_register_rect_silver.xml" value="0.1445" />
+        <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/app/src/main/res/drawable/bg_spinner.xml" value="0.155" />
         <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/app/src/main/res/drawable/bg_white_smoke_rect.xml" value="0.165" />
         <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/app/src/main/res/drawable/gradient_spinner.xml" value="0.1445" />
         <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/app/src/main/res/drawable/ic_adhar_pic.xml" value="0.165" />
@@ -128,6 +129,7 @@
         <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/app/src/main/res/drawable/ic_location_marker.xml" value="0.165" />
         <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/app/src/main/res/drawable/ic_login_bg.xml" value="0.1445" />
         <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/app/src/main/res/drawable/ic_mini_arthan_logo.xml" value="0.142" />
+        <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/app/src/main/res/drawable/ic_or_logo.xml" value="0.155" />
         <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/app/src/main/res/drawable/ic_retake.xml" value="0.165" />
         <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/app/src/main/res/drawable/ic_success_bg.xml" value="0.1445" />
         <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/app/src/main/res/drawable/layer_layout.xml" value="0.165" />
@@ -182,8 +184,11 @@
         <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/app/src/main/res/layout/layout_upload_kyc_details.xml" value="0.20436083796494228" />
         <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/app/src/main/res/layout/videokyc_layout.xml" value="0.1936725096194955" />
         <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/app/src/main/res/menu/labels.xml" value="0.19452757588713127" />
+        <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.155" />
         <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/core/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1075" />
         <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/core/src/main/res/drawable/ic_launcher_background.xml" value="0.1075" />
+        <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/core/src/main/res/drawable/progress_gradient.xml" value="0.109" />
+        <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/core/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.155" />
         <entry key="..\:/Users/Manoj Patil/AndroidStudioProjects/ArthanFinance/core/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1075" />
         <entry key="..\:/Users/Manoj Patil/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_list_item_1.xml" value="0.19452757588713127" />
       </map>

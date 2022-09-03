@@ -116,7 +116,8 @@ class ApiClient {
         // Initialize ApiService if not initialized yet
         if (!::apiService.isInitialized) {
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://ext.digio.in:444/client/kyc/v2/$requestId/")
+//                .baseUrl("https://ext.digio.in:444/client/kyc/v2/$requestId/")
+                .baseUrl("https://api.digio.in/client/kyc/v2/$requestId/")
                 .addConverterFactory(GsonConverterFactory.create())
 
                 .client(okhttpClient(context)) // Add our Okhttp client
@@ -146,8 +147,7 @@ class ApiClient {
         // Initialize ApiService if not initialized yet
         if (!::apiService.isInitialized) {
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://ext.digio.in:444/client/")
-//                .baseUrl("https://api.digio.in/client/")
+                .baseUrl("https://api.digio.in/client/")
                 .addConverterFactory(GsonConverterFactory.create())
 
                 .client(okhttpClient(context)) // Add our Okhttp client

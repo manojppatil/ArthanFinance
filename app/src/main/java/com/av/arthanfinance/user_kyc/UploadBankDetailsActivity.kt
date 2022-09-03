@@ -39,10 +39,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import java.lang.NullPointerException
 
 class UploadBankDetailsActivity : BaseActivity() {
     private lateinit var activityUploadBankDetailsBinding: ActivityUploadBankDetailsBinding
-    private var kycCompleteStatus = "90"
+    private var kycCompleteStatus = "50"
     private var customerData: CustomerHomeTabResponse? = null
     private var REQ_CODE_BANK_STATEMENT = 444
     private var mLoanId: String? = null
@@ -144,7 +145,12 @@ class UploadBankDetailsActivity : BaseActivity() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                fetchAllBranches(mBankId!!)
+                try {
+                    fetchAllBranches(mBankId!!)
+                } catch (e: NullPointerException) {
+                    e.printStackTrace()
+                    Log.e("Error", e.toString())
+                }
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -215,12 +221,12 @@ class UploadBankDetailsActivity : BaseActivity() {
         jsonObject.addProperty("beneficiary_ifsc", ifsc)
 
         //SANDBOX CREDS
-        val clientId = "AI52KOUVC2PQTONW1ZKB92RU22UL8491"
-        val clientSecret = "B6DXG4SV4YJJC2VDA54WTLY6CTJKEUZH"
+//        val clientId = "AI52KOUVC2PQTONW1ZKB92RU22UL8491"
+//        val clientSecret = "B6DXG4SV4YJJC2VDA54WTLY6CTJKEUZH"
 
         //PRD CREDS
-//        val clientId = "AIZ1SHB77YJBZ6HFAGYR4BTUI84A6DOF"
-//        val clientSecret = "ZLYKT9FT7UUAIZGVVUPIWSFN3N62Y99O"
+        val clientId = "AIZ1SHB77YJBZ6HFAGYR4BTUI84A6DOF"
+        val clientSecret = "ZLYKT9FT7UUAIZGVVUPIWSFN3N62Y99O"
 
         val base = "$clientId:$clientSecret"
 

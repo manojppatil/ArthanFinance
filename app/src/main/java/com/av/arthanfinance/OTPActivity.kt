@@ -6,6 +6,7 @@ import `in`.finbox.mobileriskmanager.common.annotations.FinBoxErrorCode
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import android.widget.*
 import androidx.annotation.Nullable
 import com.arthanfinance.core.base.BaseActivity
@@ -89,13 +90,9 @@ class OTPActivity : BaseActivity() {
         //We can add sender phone number or leave it blank
         // I'm adding null here
         client.startSmsUserConsent(null).addOnSuccessListener {
-            Toast.makeText(
-                applicationContext,
-                "On Success",
-                Toast.LENGTH_LONG
-            ).show()
+            Log.e("TAG", "On Success")
         }.addOnFailureListener {
-            Toast.makeText(applicationContext, "On OnFailure", Toast.LENGTH_LONG).show()
+            Log.e("Error", "On OnFailure")
         }
     }
 
@@ -107,14 +104,6 @@ class OTPActivity : BaseActivity() {
                 //That gives all message to us.
                 // We need to get the code from inside with regex
                 val message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)
-//                Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
-//                otpView.otp(
-//                    String.format(
-//                        "%s - %s",
-//                        getString(R.string.received_message),
-//                        message
-//                    )
-//                )
                 getOtpFromMessage(message!!)
             }
         }
@@ -280,15 +269,11 @@ class OTPActivity : BaseActivity() {
                 if (custData != null) {
                     if (custData.apiCode == "200") {
                         registerFinbox(custData.customerId!!)
-                        Toast.makeText(this@OTPActivity, "Registration success", Toast.LENGTH_SHORT)
-                            .show()
-
                         custData.customerId?.let {
                             saveCustomerData(name, email, mobile, it)
                         }
                     } else {
-                        Toast.makeText(this@OTPActivity, custData.message, Toast.LENGTH_SHORT)
-                            .show()
+                        Log.e("Error", custData.message + "")
                     }
                 }
             }
@@ -307,25 +292,12 @@ class OTPActivity : BaseActivity() {
             val status =
                 databaseHandler.saveCustomer(Customer(name, email, mobile, custId, null))
             if (status > -1) {
-                Toast.makeText(
-                    applicationContext,
-                    "Record saved to DB.",
-                    Toast.LENGTH_LONG
-                ).show()
-
+                Log.e("Success", "Record saved to DB")
             } else if (status == (-2).toLong()) {
-                Toast.makeText(
-                    applicationContext,
-                    "Record already exists.",
-                    Toast.LENGTH_LONG
-                ).show()
+                Log.e("Warning", "Record already exists.")
             }
         } else {
-            Toast.makeText(
-                applicationContext,
-                "mobile no cannot be blank",
-                Toast.LENGTH_LONG
-            ).show()
+            Log.e("Error", "mobile no cannot be blank")
         }
     }
 
@@ -349,7 +321,7 @@ class OTPActivity : BaseActivity() {
                 }
 
                 override fun onError(@FinBoxErrorCode errorCode: Int) {
-                    Toast.makeText(this@OTPActivity, "" + errorCode, Toast.LENGTH_SHORT).show()
+                    Log.e("Error", "" + errorCode)
                 }
             })
     }

@@ -53,7 +53,7 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
     private val CROP_AAADHAR_FRONT = 1040
     private var loanResponse: LoanProcessResponse? = null
     private lateinit var activityUploadAadharBinding: ActivityUploadAadharBinding
-    private var kycCompleteStatus = "50"
+    private var kycCompleteStatus = "30"
     private var afUploadStatus = 0
     private var abUploadStatus = 0
     private var gender = ""
@@ -230,6 +230,7 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         if (resultCode == Activity.RESULT_OK) {
@@ -736,14 +737,14 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
         jsonObject.add("actions", jsonArray)
 
         //SANDBOX CREDS
-        val clientId = "AI52KOUVC2PQTONW1ZKB92RU22UL8491"
-        val clientSecret = "B6DXG4SV4YJJC2VDA54WTLY6CTJKEUZH"
+//        val clientId = "AI52KOUVC2PQTONW1ZKB92RU22UL8491"
+//        val clientSecret = "B6DXG4SV4YJJC2VDA54WTLY6CTJKEUZH"
 
         //PRD CREDS
-//        val clientId = "AIZ1SHB77YJBZ6HFAGYR4BTUI84A6DOF"
-//        val clientSecret = "ZLYKT9FT7UUAIZGVVUPIWSFN3N62Y99O"
+        val clientId = "AIZ1SHB77YJBZ6HFAGYR4BTUI84A6DOF"
+        val clientSecret = "ZLYKT9FT7UUAIZGVVUPIWSFN3N62Y99O"
 
-        val base = clientId + ":" + clientSecret
+        val base = "$clientId:$clientSecret"
 
         val authHeader = "Basic " + Base64.encodeToString(base.toByteArray(), Base64.NO_WRAP)
 
@@ -784,7 +785,7 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
     private fun getRid(tokenId: String, kId: String, mobNo: String) {
         try {
             val config = DigioKycConfig()
-            config.setEnvironment(DigioEnvironment.SANDBOX)
+            config.setEnvironment(DigioEnvironment.PRODUCTION)
             val digioSession = DigioSession()
             digioSession.init(this@UploadAadharActivity, config)
             digioSession.startSession(
@@ -830,12 +831,12 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
     private fun getAadharDataFromDigilocker(requestId: String?) {
 
         //SANDBOX CREDS
-        val clientId = "AI52KOUVC2PQTONW1ZKB92RU22UL8491"
-        val clientSecret = "B6DXG4SV4YJJC2VDA54WTLY6CTJKEUZH"
+//        val clientId = "AI52KOUVC2PQTONW1ZKB92RU22UL8491"
+//        val clientSecret = "B6DXG4SV4YJJC2VDA54WTLY6CTJKEUZH"
 
         //PRD CREDS
-//        val clientId = "AIZ1SHB77YJBZ6HFAGYR4BTUI84A6DOF"
-//        val clientSecret = "ZLYKT9FT7UUAIZGVVUPIWSFN3N62Y99O"
+        val clientId = "AIZ1SHB77YJBZ6HFAGYR4BTUI84A6DOF"
+        val clientSecret = "ZLYKT9FT7UUAIZGVVUPIWSFN3N62Y99O"
 
         val base = "$clientId:$clientSecret"
 

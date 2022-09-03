@@ -37,7 +37,7 @@ class VideoKyc : AppCompatActivity(), DigioKycResponseListener {
     private lateinit var tokenId: String
     private lateinit var kId: String
     private var MY_CAMERA_PERMISSION_CODE = 100
-    private var kycCompleteStatus = "100"
+    private var kycCompleteStatus = "60"
     private var progressView: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +58,7 @@ class VideoKyc : AppCompatActivity(), DigioKycResponseListener {
             getKid()
         }
         skipVideoKyc.setOnClickListener {
-            updateStage()
+            updateStage("VKYC_SKIP")
         }
     }
 
@@ -94,12 +94,12 @@ class VideoKyc : AppCompatActivity(), DigioKycResponseListener {
         jsonObject.add("actions", actionArray)
 
         //SANDBOX CREDS
-        val clientId = "AI52KOUVC2PQTONW1ZKB92RU22UL8491"
-        val clientSecret = "B6DXG4SV4YJJC2VDA54WTLY6CTJKEUZH"
+//        val clientId = "AI52KOUVC2PQTONW1ZKB92RU22UL8491"
+//        val clientSecret = "B6DXG4SV4YJJC2VDA54WTLY6CTJKEUZH"
 
         //PRD CREDS
-//        val clientId = "AIZ1SHB77YJBZ6HFAGYR4BTUI84A6DOF"
-//        val clientSecret = "ZLYKT9FT7UUAIZGVVUPIWSFN3N62Y99O"
+        val clientId = "AIZ1SHB77YJBZ6HFAGYR4BTUI84A6DOF"
+        val clientSecret = "ZLYKT9FT7UUAIZGVVUPIWSFN3N62Y99O"
 
         val base = "$clientId:$clientSecret"
 
@@ -226,7 +226,7 @@ class VideoKyc : AppCompatActivity(), DigioKycResponseListener {
         if (requestPermission()) {
             try {
                 val config = DigioKycConfig()
-                config.setEnvironment(DigioEnvironment.SANDBOX)
+                config.setEnvironment(DigioEnvironment.PRODUCTION)
                 val digioSession = DigioSession()
                 digioSession.init(this, config)
                 digioSession.startSession(
@@ -255,7 +255,7 @@ class VideoKyc : AppCompatActivity(), DigioKycResponseListener {
     }
 
     override fun onDigioKycSuccess(requestId: String?, response: String?) {
-        updateStage()
+        updateStage("VKYC_PA")
     }
 
     fun showProgressDialog(message: String = "Loading...") {
@@ -283,10 +283,10 @@ class VideoKyc : AppCompatActivity(), DigioKycResponseListener {
         }
     }
 
-    private fun updateStage() {
+    private fun updateStage(stage: String) {
         val jsonObject = JsonObject()
         jsonObject.addProperty("customerId", customerData!!.customerId)
-        jsonObject.addProperty("stage", "VKYC_PA")
+        jsonObject.addProperty("stage", stage)
         showProgressDialog()
         ApiClient().getAuthApiService(this).updateStage(jsonObject).enqueue(object :
             Callback<AuthenticationResponse> {

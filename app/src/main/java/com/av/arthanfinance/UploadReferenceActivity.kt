@@ -21,12 +21,12 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class UploadReferenceActivity : BaseActivity() {
-    private lateinit var apiClient: ApiClient
     private lateinit var activityUploadReferenceBinding: ActivityUploadReferenceBinding
 
     private var loanResponse: LoanProcessResponse? = null
     var customerData: CustomerHomeTabResponse? = null
-    private val isViewShown = false
+
+    private var kycCompleteStatus = "90"
 
     override val layoutId: Int
         get() = R.layout.activity_upload_reference
@@ -36,7 +36,7 @@ class UploadReferenceActivity : BaseActivity() {
         activityUploadReferenceBinding =
             ActivityUploadReferenceBinding.inflate(layoutInflater)
         setContentView(activityUploadReferenceBinding.root)
-
+        activityUploadReferenceBinding.tvPercent.text = "${kycCompleteStatus}%"
         if (intent.hasExtra("loanResponse")) {
             loanResponse = intent.getSerializableExtra("loanResponse") as LoanProcessResponse
         }
@@ -87,10 +87,6 @@ class UploadReferenceActivity : BaseActivity() {
                     "Not able to add coApplicant, proceeding further",
                     Toast.LENGTH_SHORT
                 ).show()
-
-                /*val intent = Intent(this@UploadReferenceActivity, UploadPanActivity::class.java)
-                intent.putExtra("loanResponse", loanResponse)
-                startActivity(intent)*/
             }
 
             override fun onResponse(
@@ -117,8 +113,10 @@ class UploadReferenceActivity : BaseActivity() {
         val neighbourMobileText = activityUploadReferenceBinding.edtMobNum.text.toString()
         val supplierNameText = activityUploadReferenceBinding.edtNameSup.text.toString()
         val supplierMobileText = activityUploadReferenceBinding.edtMobNumSup.text.toString()
+        val familyNameText = activityUploadReferenceBinding.edtNameFamily.text.toString()
+        val familyMobileText = activityUploadReferenceBinding.edtMobNumFamily.text.toString()
 
-        if (neightbourNameText.isEmpty() || neighbourMobileText.isEmpty() || supplierNameText.isEmpty() || supplierMobileText.isEmpty()) {
+        if (neightbourNameText.isEmpty() || neighbourMobileText.isEmpty() || supplierNameText.isEmpty() || supplierMobileText.isEmpty() || familyNameText.isEmpty() || familyMobileText.isEmpty()) {
             Toast.makeText(
                 this,
                 "Enter all required fields",
@@ -145,8 +143,16 @@ class UploadReferenceActivity : BaseActivity() {
             return
         }
 
+        if (!isValidPhoneNumber(familyMobileText)) {
+            Toast.makeText(
+                this,
+                "Please enter VALID Supplier Mobile Number.",
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
         val jsonObject = JsonObject()
-//        jsonObject.addProperty("loanId", loanResponse?.loanId)
         jsonObject.addProperty("customerId", customerData?.customerId)
 
         val jsonArray = JsonArray()
@@ -161,6 +167,12 @@ class UploadReferenceActivity : BaseActivity() {
         referenceJson1.addProperty("refMobNo", supplierMobileText)
         referenceJson1.addProperty("refType", "Supplier")
 
+        val referenceJson2 = JsonObject()
+        referenceJson1.addProperty("refName", familyNameText)
+        referenceJson1.addProperty("refMobNo", familyMobileText)
+        referenceJson1.addProperty("refType", "Family Member")
+
+        jsonArray.add(referenceJson2)
         jsonArray.add(referenceJson1)
         jsonArray.add(referenceJson)
         jsonObject.add("refDetails", jsonArray)
@@ -205,11 +217,7 @@ class UploadReferenceActivity : BaseActivity() {
 
     }
 
-    fun isValidPhoneNumber(phoneNumber: CharSequence?): Boolean {
-        return if (phoneNumber == null || phoneNumber.length < 10) {
-            false
-        } else {
-            Patterns.PHONE.matcher(phoneNumber).matches()
-        }
+    private fun isValidPhoneNumber(phoneNumber: CharSequence?): Boolean {
+        return if (phoneNumber == null || phoneNumber.length < 10) false else Patterns.PHONE.matcher(phoneNumber).matches()
     }
 }

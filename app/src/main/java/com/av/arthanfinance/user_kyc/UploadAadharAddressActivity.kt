@@ -34,7 +34,7 @@ import retrofit2.Response
 
 class UploadAadharAddressActivity : BaseActivity() {
     private lateinit var activityUploadAadharAddressBinding: ActivityUploadAadharAddressBinding
-    private var kycCompleteStatus = "70"
+    private var kycCompleteStatus = "40"
     private var titleList = arrayOf("Select Title", "Mr.", "Ms.")
     private var qualificationList =
         arrayOf("Select Qualification", "Graduate", "Post Graduate", "Under Graduate", "10th Pass")

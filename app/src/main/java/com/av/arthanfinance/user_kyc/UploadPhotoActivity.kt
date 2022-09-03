@@ -38,7 +38,7 @@ import java.io.File
 
 class UploadPhotoActivity : BaseActivity() {
     private lateinit var activityUploadPhotoBinding: ActivityUploadPhotoBinding
-    private var kycCompleteStatus = "30"
+    private var kycCompleteStatus = "20"
     private var MY_CAMERA_PERMISSION_CODE = 100
     private var REQ_CODE_PHOTO_ID = 321
     private var REQ_CODE = 33
@@ -148,6 +148,7 @@ class UploadPhotoActivity : BaseActivity() {
         return false
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         if (resultCode == Activity.RESULT_OK) {

@@ -52,6 +52,8 @@ class UploadBusinessPhotos : BaseActivity() {
     private var CROP_REQUEST_CODE_CAMERA_SHOP_LOCALITY = 403
     private var REQ_CODE_CAMERA_SHOP_LOCALITY = 622
 
+    private var kycCompleteStatus = "80"
+
     private var mCustomerId: String? = null
 
     var customerData: CustomerHomeTabResponse? = null
@@ -74,7 +76,7 @@ class UploadBusinessPhotos : BaseActivity() {
             }
 
         }
-
+        activityUploadBusinessPhotosBinding.tvPercent.text = "${kycCompleteStatus}%"
         activityUploadBusinessPhotosBinding.btnUpload.setOnClickListener {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.addCategory(Intent.CATEGORY_OPENABLE)
@@ -491,7 +493,7 @@ class UploadBusinessPhotos : BaseActivity() {
                 call: Call<LoanProcessResponse>,
                 response: Response<LoanProcessResponse>
             ) {
-                val docResponse = response.body()
+                response.body()
 
                 Toast.makeText(
                     this@UploadBusinessPhotos,
