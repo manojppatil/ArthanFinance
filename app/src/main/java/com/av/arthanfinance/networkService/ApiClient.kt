@@ -59,7 +59,7 @@ class ApiClient {
         // Initialize ApiService if not initialized yet
         if (!::apiService.isInitialized) {
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://testapi.karza.in/v3/udyam/")
+                .baseUrl("https://api.karza.in/v3/udyam/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okhttpClient(context)) // Add our Okhttp client
                 .build()

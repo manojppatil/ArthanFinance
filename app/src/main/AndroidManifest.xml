@@ -10,7 +10,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -24,8 +26,7 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
-        android:allowBackup="false"
-        android:fullBackupContent="true"
+        android:fullBackupOnly="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
@@ -35,6 +36,7 @@
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustResize"
         tools:ignore="LockedOrientationActivity"
+        tools:replace="android:theme"
         tools:targetApi="n">
         <activity
             android:name=".applyLoan.UploadBusinessPhotos"
@@ -67,11 +69,11 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".MapsActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+        <!--        <activity-->
+        <!--            android:name=".MapsActivity"-->
+        <!--            android:exported="false"-->
+        <!--            android:screenOrientation="portrait"-->
+        <!--            android:windowSoftInputMode="adjustResize" />-->
         <activity
             android:name=".user_kyc.VideoKyc"
             android:exported="false"
@@ -186,7 +188,6 @@
             android:name=".user_kyc.UploadAadharAddressActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme2"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".user_kyc.UploadBusinessDetailsActivity"
@@ -207,9 +208,12 @@
         <activity
             android:name=".user_kyc.UploadBankDetailsActivity"
             android:exported="false"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
+
         <activity
             android:name=".ChooseLanguageActivity"
             android:exported="false"

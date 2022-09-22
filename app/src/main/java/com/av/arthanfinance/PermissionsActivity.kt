@@ -67,7 +67,7 @@ class PermissionsActivity : AppCompatActivity() {
             val dialog = builder.create()
             dialog.show()
 
-        }else if (permissionReadSms != PackageManager.PERMISSION_GRANTED){
+        } else if (permissionReadSms != PackageManager.PERMISSION_GRANTED) {
             val builder = AlertDialog.Builder(this)
             builder.setTitle(R.string.readSmsDialogTitle)
             builder.setMessage(R.string.readSmsDialogMessage)
@@ -88,7 +88,7 @@ class PermissionsActivity : AppCompatActivity() {
             val alertDialog: AlertDialog = builder.create()
             alertDialog.setCancelable(false)
             alertDialog.show()
-        }else if (permissionReadContacts != PackageManager.PERMISSION_GRANTED){
+        } else if (permissionReadContacts != PackageManager.PERMISSION_GRANTED) {
             val builder = AlertDialog.Builder(this)
             builder.setTitle(R.string.contactDialogTitle)
             builder.setMessage(R.string.contactDialogMessage)
@@ -109,7 +109,7 @@ class PermissionsActivity : AppCompatActivity() {
             val alertDialog: AlertDialog = builder.create()
             alertDialog.setCancelable(false)
             alertDialog.show()
-        }else if (permissionReadPhoneState != PackageManager.PERMISSION_GRANTED){
+        } else if (permissionReadPhoneState != PackageManager.PERMISSION_GRANTED) {
             val builder = AlertDialog.Builder(this)
             builder.setTitle(R.string.readPhoneStateDialogTitle)
             builder.setMessage(R.string.readPhoneStatesDialogMessage)
@@ -213,7 +213,8 @@ class PermissionsActivity : AppCompatActivity() {
                 phoneStateStatus = "1"
                 Toast.makeText(this, "Phone state permission granted", Toast.LENGTH_SHORT).show()
 
-                val sharedPref: SharedPreferences = getSharedPreferences("isFirstTime", Context.MODE_PRIVATE)
+                val sharedPref: SharedPreferences =
+                    getSharedPreferences("isFirstTime", Context.MODE_PRIVATE)
                 val editor = sharedPref.edit()
                 editor.putBoolean("isFirstTime", false)
                 editor.apply()

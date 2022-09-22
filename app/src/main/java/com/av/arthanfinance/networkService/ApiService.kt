@@ -301,4 +301,8 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     fun getBranch(@Body updateJson: JsonObject): Call<Bank>
 
+    @POST("getAAReferenceId")
+    @Headers("Content-Type: application/json")
+    fun getAAReferenceId(@Body updateJson: JsonObject): Call<AggregatorConsentResponse>
+
 }

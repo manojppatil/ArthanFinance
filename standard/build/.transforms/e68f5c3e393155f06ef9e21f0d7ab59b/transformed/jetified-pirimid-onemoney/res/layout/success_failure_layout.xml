@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relative_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/success_drawable"
+    android:visibility="visible">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dimen_20"
+        android:paddingTop="@dimen/dimen_20"
+        android:paddingRight="@dimen/dimen_20"
+        android:paddingBottom="@dimen/dimen_20">
+
+        <ImageView
+            android:id="@+id/iv_success"
+            android:layout_width="@dimen/dimen_35"
+            android:layout_height="@dimen/dimen_35"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_success_tick" />
+
+        <TextView
+            android:id="@+id/tv_success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:layout_toRightOf="@+id/iv_success"
+            android:textColor="@color/white" />
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/tv_close"-->
+        <!--            android:layout_width="@dimen/dimen_15"-->
+        <!--            android:layout_height="@dimen/dimen_15"-->
+        <!--            android:layout_centerVertical="true"-->
+        <!--            android:layout_alignParentRight="true"-->
+        <!--            app:srcCompat="@drawable/ic_close_white" />-->
+
+    </RelativeLayout>
+
+</RelativeLayout>

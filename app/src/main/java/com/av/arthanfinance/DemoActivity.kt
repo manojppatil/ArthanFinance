@@ -37,14 +37,14 @@ class DemoActivity : FragmentActivity(){
     private lateinit var map: GoogleMap
 
 
-    private var mSettingsClient: SettingsClient? = null
-    private var mLocationSettingsRequest: LocationSettingsRequest? = null
-    private var locationManager: LocationManager? = null
-    private var mFusedLocationClient: FusedLocationProviderClient? = null
-    private var wayLatitude = 0.0
-    private var wayLongitude = 0.0
-    private var locationRequest: LocationRequest? = null
-    private var locationCallback: LocationCallback? = null
+//    private var mSettingsClient: SettingsClient? = null
+//    private var mLocationSettingsRequest: LocationSettingsRequest? = null
+//    private var locationManager: LocationManager? = null
+//    private var mFusedLocationClient: FusedLocationProviderClient? = null
+//    private var wayLatitude = 0.0
+//    private var wayLongitude = 0.0
+//    private var locationRequest: LocationRequest? = null
+//    private var locationCallback: LocationCallback? = null
     private val isContinue = false
     private var isGPS = false
     private val REQUEST_ID_MULTIPLE_PERMISSIONS = 0x2

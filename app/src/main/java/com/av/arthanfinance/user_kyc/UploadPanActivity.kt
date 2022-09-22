@@ -43,7 +43,6 @@ import com.bumptech.glide.request.transition.Transition
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.theartofdev.edmodo.cropper.CropImage
-import kotlinx.android.synthetic.main.activity_loan_details.*
 import kotlinx.android.synthetic.main.layout_upload_kyc_details.*
 import org.json.JSONObject
 import retrofit2.Call
@@ -92,7 +91,7 @@ class UploadPanActivity : BaseActivity(), DigioResponseListener {
         (this as AppCompatActivity).supportActionBar!!.title = "Upload Pan Details"
 
         uploadPanBinding.pbKyc.max = 100
-        ObjectAnimator.ofInt(uploadPanBinding.pbKyc, "progress", 20).setDuration(1000).start()
+        ObjectAnimator.ofInt(uploadPanBinding.pbKyc, "progress", 10).setDuration(1000).start()
         uploadPanBinding.tvPercent.text = "${kycCompleteStatus}%"
 
         uploadPanBinding.btnCaptureDigioPan.setOnClickListener {
@@ -105,11 +104,11 @@ class UploadPanActivity : BaseActivity(), DigioResponseListener {
         }
 
         uploadPanBinding.btnSendDigioPan.setOnClickListener {
-            launchCamera(REQ_CODE)
+            launchCamera()
         }
     }
 
-    private fun launchCamera(reqCode: Int) {
+    private fun launchCamera() {
         startActivityForResult(Intent(this, CustomerCameraActivity::class.java).apply {
             putExtra("doc_type", REQ_CODE_PHOTO_ID)
             val dir = File(
@@ -169,44 +168,49 @@ class UploadPanActivity : BaseActivity(), DigioResponseListener {
                 call: Call<AuthenticationResponse>,
                 response: Response<AuthenticationResponse>
             ) {
+                try {
+                    val docResponse = response.body() as AuthenticationResponse
+                    val apiCode = docResponse.apiCode
+                    //val message = docResponse.message
 
-                val docResponse = response.body() as AuthenticationResponse
-                val apiCode = docResponse.apiCode
-                //val message = docResponse.message
-
-                if (apiCode.equals("200")) {
-                    Toast.makeText(
-                        this@UploadPanActivity,
-                        "PAN uploaded successfully",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    hideProgressDialog()
-                    val intent1 = Intent(this@UploadPanActivity, UploadPhotoActivity::class.java)
-                    intent1.putExtra("customerId", customerId)
-                    intent1.putExtra("fatherName", "")
-                    intent1.putExtra("customerName", customerData!!.customerName)
-                    intent1.putExtra("customerDob", "")
-                    startActivity(intent1)
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                } else {
-                    hideProgressDialog()
-                    try {
-                        val jObjError = JSONObject(response.errorBody()!!.string())
+                    if (apiCode.equals("200")) {
                         Toast.makeText(
                             this@UploadPanActivity,
-                            jObjError.getJSONObject("error").getString("message"),
-                            Toast.LENGTH_LONG
+                            "PAN uploaded successfully",
+                            Toast.LENGTH_SHORT
                         ).show()
-                    } catch (e: java.lang.Exception) {
-                        Toast.makeText(this@UploadPanActivity, e.message, Toast.LENGTH_LONG)
-                            .show()
+                        hideProgressDialog()
+                        val intent1 =
+                            Intent(this@UploadPanActivity, UploadPhotoActivity::class.java)
+                        intent1.putExtra("customerId", customerId)
+                        intent1.putExtra("fatherName", "")
+                        intent1.putExtra("customerName", customerData!!.customerName)
+                        intent1.putExtra("customerDob", "")
+                        startActivity(intent1)
+                        finish()
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    } else {
+                        hideProgressDialog()
+                        try {
+                            val jObjError = JSONObject(response.errorBody()!!.string())
+                            Toast.makeText(
+                                this@UploadPanActivity,
+                                jObjError.getJSONObject("error").getString("message"),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } catch (e: java.lang.Exception) {
+                            Toast.makeText(this@UploadPanActivity, e.message, Toast.LENGTH_LONG)
+                                .show()
+                        }
+                        Toast.makeText(
+                            this@UploadPanActivity,
+                            "PAN Details Upload Failed. Please Try After Sometime",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        hideProgressDialog()
                     }
-                    Toast.makeText(
-                        this@UploadPanActivity,
-                        "PAN Details Upload Failed. Please Try After Sometime",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    hideProgressDialog()
+                } catch (ex: NullPointerException) {
+                    Log.e("TAG", ex.toString())
                 }
             }
 

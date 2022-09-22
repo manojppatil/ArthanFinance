@@ -21,16 +21,16 @@
             android:id="@+id/tbUploadPhoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp"
-            app:contentInsetStartWithNavigation="0dp"
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ToolbarStyleTheme"
-            app:titleTextColor="@color/dark_orange2"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:contentInsetStartWithNavigation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="@color/white" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -78,69 +78,85 @@
             app:layout_constraintTop_toBottomOf="@+id/pbKycPhoto" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-            <LinearLayout
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textview_verify_pan_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"
+            android:text="Take Your Selfie"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/photoImgView">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_uploadPhoto"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:orientation="horizontal"
-                android:weightSum="2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/photoImgView">
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_register_rect_orange"
+                android:drawableLeft="@drawable/ic_folder"
+                android:drawablePadding="-40dp"
+                android:drawableTint="@color/white"
+                android:paddingVertical="9dp"
+                android:paddingStart="25dp"
+                android:text="@string/upload"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_18" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_uploadPhoto"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_language_rect"
-                    android:drawableLeft="@drawable/ic_folder"
-                    android:drawablePadding="-40dp"
-                    android:paddingVertical="9dp"
-                    android:paddingStart="25dp"
-                    android:text="@string/upload"
-                    android:textAllCaps="false"
-                    android:textColor="@color/dark_orange2"
-                    android:textSize="@dimen/text_18" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_camera_uploadPhoto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_register_rect_orange"
+                android:drawableLeft="@drawable/ic_camera_icon_yellow"
+                android:drawablePadding="-40dp"
+                android:drawableTint="@color/white"
+                android:paddingVertical="9dp"
+                android:paddingStart="25dp"
+                android:text="@string/camera"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_18" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_camera_uploadPhoto"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_language_rect"
-                    android:drawableLeft="@drawable/ic_camera_icon_yellow"
-                    android:drawablePadding="-40dp"
-                    android:paddingVertical="9dp"
-                    android:paddingStart="25dp"
-                    android:text="@string/camera"
-                    android:textAllCaps="false"
-                    android:textColor="@color/dark_orange2"
-                    android:textSize="@dimen/text_18" />
+        </LinearLayout>
 
-            </LinearLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/photoImgView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="56dp"
+            android:background="@drawable/bg_image_circle"
+            android:src="@drawable/ic_aadhar_placeholder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/bg_circle_orange_rect" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/photoImgView"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/bg_image_circle"
-                android:src="@drawable/ic_aadhar_placeholder"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/bg_circle_orange_rect" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>

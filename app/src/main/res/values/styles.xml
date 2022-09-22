@@ -12,6 +12,7 @@
         <item name="colorSecondaryVariant">@color/colorAccent</item>
         <item name="colorOnSecondary">@color/colorAccent</item>
         <item name="android:dialogTheme">@style/AppTheme.Dialog</item>
+        <item name="android:fontFamily">@font/poppins</item>
         <!-- Status bar color. -->
         <!--<item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>-->
         <!-- Customize your theme here. -->
@@ -40,7 +41,7 @@
 
 
     <style name="ToolbarStyleTheme" parent="Widget.AppCompat.ActionButton.Overflow">
-        <item name="android:tint">@color/dark_orange2</item>
+        <item name="android:tint">@color/white</item>
         <item name="titleTextColor">@color/white</item>
         <item name="android:fontFamily">@font/mukta_vaani</item>
     </style>

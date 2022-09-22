@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.OnemoneyLoginActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/dimen_50">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:background="@color/app_bg"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_60"
+                android:layout_gravity="left"
+                android:padding="@dimen/dimen_7"
+                android:layout_margin="@dimen/dimen_10"
+                android:gravity="left"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:scaleType="fitStart"
+                    app:srcCompat="@drawable/awesome_bank" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    app:tint="@color/white"
+                    app:srcCompat="@drawable/info_icon" />
+
+            </LinearLayout>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/image_viewer"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen_200"
+                android:layout_gravity="center" />
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/dimen_10"
+                android:id="@+id/sliderDots"
+                android:layout_below="@+id/viewPager"
+                android:orientation="horizontal"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_marginLeft="@dimen/dimen_30"
+                android:layout_marginRight="@dimen/dimen_30"
+                android:orientation="vertical">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_24"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:padding="@dimen/dimen_5"
+                    android:textColor="@color/black"
+                    android:text="@string/welcome_onemoney"/>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/dimen_15">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:text="@string/vua"
+                            android:textAllCaps="false"
+                            android:textSize="@dimen/font_16"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins_regular"
+                            android:layout_height="wrap_content"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txt_vua"
+                            android:textSize="@dimen/font_16"
+                            android:textColor="@color/pale_red"
+                            android:text="9999999999@onemoney"
+                            android:fontFamily="@font/poppins_regular"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:text="@string/otp_sent_to"
+                            android:textAllCaps="false"
+                            android:textSize="@dimen/font_16"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins_regular"
+                            android:layout_height="wrap_content"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txt_mobileNumber"
+                            android:textSize="@dimen/font_16"
+                            android:textColor="@color/pale_red"
+                            android:text="9999999999"
+                            android:fontFamily="@font/poppins_regular"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:orientation="vertical">
+                        <com.poovam.pinedittextfield.SquarePinField
+                            android:id="@+id/squareField"
+                            android:focusable="false"
+                            android:focusableInTouchMode="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dimen_40"
+                            android:background="@null"
+                            android:inputType="number"
+                            android:cursorVisible="true"
+                            app:bottomTextPaddingDp="@dimen/dimen_5"
+                            app:distanceInBetween="@dimen/dimen_20"
+                            app:fieldColor="@color/grey_light"
+                            app:highlightColor="@color/app_range"
+                            app:highlightType="currentField"
+                            app:isCursorEnabled="true"
+                            app:isCustomBackground="true"
+                            app:lineThickness="@dimen/dimen_1"
+                            app:noOfFields="6" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_60"
+
+                    android:text="@string/proceed"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/font_18"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:background="@drawable/ic_active_button"
+                    android:id="@+id/proceed"/>
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/dimen_25"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/user_count_img"
+                        android:id="@+id/user_count_image"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center"
+                        android:textSize="@dimen/font_18"
+                        android:fontFamily="@font/poppins_regular"
+                        android:layout_height="wrap_content"
+                        android:text="@string/user_signup"
+                        android:id="@+id/user_count_text"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/powerby_layout"
+        android:gravity="center"
+        android:background="@color/white"
+        android:padding="@dimen/dimen_10"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_regular"
+            android:textSize="@dimen/font_16"
+            android:text="@string/power_by"/>
+        <androidx.appcompat.widget.AppCompatImageView
+            app:srcCompat="@drawable/one_money_logo"
+            android:layout_width="@dimen/dimen_80"
+            android:layout_height="@dimen/dimen_30"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

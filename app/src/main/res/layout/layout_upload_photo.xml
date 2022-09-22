@@ -23,13 +23,13 @@
                 android:text="Upload your photo"
                 android:textColor="@color/black"
                 android:textSize="22sp" />
-            <ImageView
-                android:id="@+id/photoImgView"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginVertical="30dp"
-                android:src="@drawable/sample_profile" />
+            <!--            <ImageView-->
+            <!--                android:id="@+id/photoImgView"-->
+            <!--                android:layout_width="200dp"-->
+            <!--                android:layout_height="200dp"-->
+            <!--                android:layout_gravity="center_horizontal"-->
+            <!--                android:layout_marginVertical="30dp"-->
+            <!--                android:src="@drawable/sample_profile" />-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -87,7 +87,6 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
-
 
 
         </LinearLayout>

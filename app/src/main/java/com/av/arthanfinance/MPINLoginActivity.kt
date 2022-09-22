@@ -178,7 +178,7 @@ class MPINLoginActivity : BaseActivity() {
                                     )
                                     intent.putExtra("customerData", custData)
                                     startActivity(intent)
-                                    finish()
+//                                    finish()
                                 }
                                 "PIC_PA" -> {
                                     val intent = Intent(
@@ -187,7 +187,7 @@ class MPINLoginActivity : BaseActivity() {
                                     )
                                     intent.putExtra("customerData", custData)
                                     startActivity(intent)
-                                    finish()
+//                                    finish()
                                 }
                                 "OFFLINE_AADHAR_PA" -> {
                                     val intent = Intent(
@@ -196,7 +196,7 @@ class MPINLoginActivity : BaseActivity() {
                                     )
                                     intent.putExtra("customerData", custData)
                                     startActivity(intent)
-                                    finish()
+//                                    finish()
                                 }
                                 "PERSONAL_PA" -> {
                                     val intent = Intent(
@@ -205,16 +205,16 @@ class MPINLoginActivity : BaseActivity() {
                                     )
                                     intent.putExtra("customerData", custData)
                                     startActivity(intent)
-                                    finish()
+//                                    finish()
                                 }
                                 "BANK_PA" -> {
                                     val intent = Intent(
                                         this@MPINLoginActivity,
-                                        VideoKyc::class.java
+                                        UploadBusinessDetailsActivity::class.java
                                     )
                                     intent.putExtra("customerData", custData)
                                     startActivity(intent)
-                                    finish()
+//                                    finish()
                                 }
                                 "VKYC_PA" -> {
                                     val intent = Intent(

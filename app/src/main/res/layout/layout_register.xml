@@ -83,9 +83,9 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="25dp"
                     android:text="@string/your_name"
-                    android:visibility="gone"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/edt_name"
@@ -97,12 +97,12 @@
                     android:autofillHints="name"
                     android:background="@drawable/bg_grey92_rect"
                     android:ems="10"
-                    android:visibility="gone"
                     android:hint="Your name"
                     android:inputType="textPersonName"
                     android:paddingVertical="11dp"
                     android:paddingStart="19dp"
                     android:textSize="16sp"
+                    android:visibility="gone"
                     app:hintTextColor="@color/very_light_grey" />
 
                 <TextView

@@ -5,6 +5,7 @@ import `in`.digio.sdk.kyc.callback.DigioResponseListener
 import `in`.digio.sdk.kyc.nativeflow.DigioTaskRequest
 import `in`.digio.sdk.kyc.nativeflow.DigioTaskType
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -33,7 +34,10 @@ import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.theartofdev.edmodo.cropper.CropImage
+import kotlinx.android.synthetic.main.activity_upload_aadhar.*
 import kotlinx.android.synthetic.main.layout_adhar.*
+import kotlinx.android.synthetic.main.layout_adhar.arthanLayout
+import kotlinx.android.synthetic.main.layout_adhar.digioLayout
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -65,6 +69,8 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
     override val layoutId: Int
         get() = R.layout.activity_upload_aadhar
     private var customerData: CustomerHomeTabResponse? = null
+
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityUploadAadharBinding = ActivityUploadAadharBinding.inflate(layoutInflater)
@@ -110,7 +116,7 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
         (this as AppCompatActivity).supportActionBar!!.title = "Upload Aadhar Details"
 
         activityUploadAadharBinding.pbKycAadhar.max = 100
-        ObjectAnimator.ofInt(activityUploadAadharBinding.pbKycAadhar, "progress", 50)
+        ObjectAnimator.ofInt(activityUploadAadharBinding.pbKycAadhar, "progress", 30)
             .setDuration(1000).start()
         activityUploadAadharBinding.tvPercent.text = "${kycCompleteStatus}%"
 
@@ -364,7 +370,6 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
     }
 
     private fun uploadAadharData(statusFrom: Int) {
-
         val jsonObject = JsonObject()
 
         if (intent.hasExtra("loanResponse")) {
@@ -374,7 +379,7 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
             jsonObject.addProperty("customerId", customerId)
             jsonObject.addProperty("applicantType", "PA")
         }
-
+        Log.e("TAG", jsonObject.toString())
 
         ApiClient().getAuthApiService(this).updateAadhar2(jsonObject).enqueue(object :
             Callback<LoanProcessResponse> {
@@ -384,67 +389,79 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
             ) {
                 val docResponse = response.body()
                 if (statusFrom == 1) {
-                    val addressLine1 = docResponse?.addressLine1
-                    /*val address2 = docResponse?.addressLine2
-                    val address3 = docResponse?.addressLine3
-                    val district = docResponse?.city*/
-                    val state = docResponse?.state
-                    val pinCode = docResponse?.pincode
+                    try {
+                        val addressLine1 = docResponse?.addressLine1
+                        /*val address2 = docResponse?.addressLine2
+                        val address3 = docResponse?.addressLine3
+                        val district = docResponse?.city*/
+                        val state = docResponse?.state
+                        val pinCode = docResponse?.pincode
 
-                    val parts: List<String> = addressLine1!!.split(",")
-                    val addr0 = parts[0]
-                    val addr1 = parts[1]
-                    val address1 = "$addr0, $addr1"
+                        val parts: List<String> = addressLine1!!.split(",")
+                        val addr0 = parts[0]
+                        val addr1 = parts[1]
+                        val address1 = "$addr0, $addr1"
 
-                    val addr2 = parts[2]
-                    val addr3 = parts[3]
-                    val address2 = "$addr2, $addr3"
+                        val addr2 = parts[2]
+                        val addr3 = parts[3]
+                        val address2 = "$addr2, $addr3"
 
-                    val addr4 = parts[4]
-                    val addr5 = parts[5]
-                    val address3 = "$addr4, $addr5"
+                        val addr4 = parts[4]
+                        val addr5 = parts[5]
+                        val address3 = "$addr4, $addr5"
 
-                    if (intent.hasExtra("loanResponse")) {
-                        val intent1 =
-                            Intent(this@UploadAadharActivity, ApplyForLoanActivity::class.java)
-                        intent1.putExtra("loanResponse", loanResponse)
+                        if (intent.hasExtra("loanResponse")) {
+                            val intent1 =
+                                Intent(this@UploadAadharActivity, ApplyForLoanActivity::class.java)
+                            intent1.putExtra("loanResponse", loanResponse)
+                            startActivity(intent1)
+                            finish()
+                            overridePendingTransition(
+                                android.R.anim.fade_in,
+                                android.R.anim.fade_out
+                            )
+                        } else {
+                            val intent1 = Intent(
+                                this@UploadAadharActivity,
+                                UploadAadharAddressActivity::class.java
+                            )
+                                .putExtra("name", customerName)
+                                .putExtra("fatherName", customerFatherName)
+                                .putExtra("gender", gender)
+                                .putExtra("dob", customerDob)
+                                .putExtra("image1", "")
+                                .putExtra("addressLine1", address1)
+                                .putExtra("addressLine2", address2)
+                                .putExtra("addressLine3", address3)
+                                .putExtra("city", "")
+                                .putExtra("state", state)
+                                .putExtra("pincode", pinCode)
+                            startActivity(intent1)
+                            finish()
+                            overridePendingTransition(
+                                android.R.anim.fade_in,
+                                android.R.anim.fade_out
+                            )
+                        }
+
+                        /*val intent1 =
+                            Intent(this@UploadAadharActivity, UploadAadharAddressActivity::class.java)
+                                .putExtra("name", customerName)
+                                .putExtra("fatherName", customerFatherName)
+                                .putExtra("gender", customerGender)
+                                .putExtra("dob", customerDob)
+                                .putExtra("image1", "")
+                                .putExtra("addressLine1", address1)
+                                .putExtra("addressLine2", address2)
+                                .putExtra("addressLine3", address3)
+                                .putExtra("city", "")
+                                .putExtra("state", state)
+                                .putExtra("pincode", pinCode)
                         startActivity(intent1)
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    } else {
-                        val intent1 = Intent(
-                            this@UploadAadharActivity,
-                            UploadAadharAddressActivity::class.java
-                        )
-                            .putExtra("name", customerName)
-                            .putExtra("fatherName", customerFatherName)
-                            .putExtra("gender", gender)
-                            .putExtra("dob", customerDob)
-                            .putExtra("image1", "")
-                            .putExtra("addressLine1", address1)
-                            .putExtra("addressLine2", address2)
-                            .putExtra("addressLine3", address3)
-                            .putExtra("city", "")
-                            .putExtra("state", state)
-                            .putExtra("pincode", pinCode)
-                        startActivity(intent1)
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)*/
+                    } catch (ex: NullPointerException) {
+                        Log.e("TAG", ex.toString())
                     }
-
-                    /*val intent1 =
-                        Intent(this@UploadAadharActivity, UploadAadharAddressActivity::class.java)
-                            .putExtra("name", customerName)
-                            .putExtra("fatherName", customerFatherName)
-                            .putExtra("gender", customerGender)
-                            .putExtra("dob", customerDob)
-                            .putExtra("image1", "")
-                            .putExtra("addressLine1", address1)
-                            .putExtra("addressLine2", address2)
-                            .putExtra("addressLine3", address3)
-                            .putExtra("city", "")
-                            .putExtra("state", state)
-                            .putExtra("pincode", pinCode)
-                    startActivity(intent1)
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)*/
                 }
             }
 
@@ -495,7 +512,7 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
         for (digiTaskResponse in failure) {
             val errorCode = digiTaskResponse.getResponse().get("responseCode")
             val msg = digiTaskResponse.getResponse().get("message")
-            digioLayout.visibility = View.GONE
+            digilockerLayout.visibility = View.GONE
             arthanLayout.visibility = View.VISIBLE
             Toast.makeText(this, "" + msg, Toast.LENGTH_SHORT).show()
             /*if (errorCode == 10012) {
@@ -658,6 +675,7 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
                             Intent(this@UploadAadharActivity, ApplyForLoanActivity::class.java)
                         intent1.putExtra("loanResponse", loanResponse)
                         startActivity(intent1)
+                        finish()
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     } else {
                         val intent1 = Intent(
@@ -676,6 +694,7 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
                             .putExtra("state", state)
                             .putExtra("pincode", pinCode)
                         startActivity(intent1)
+                        finish()
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     }
 
@@ -764,7 +783,7 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
                     } catch (ex: Exception) {
                         ex.printStackTrace()
                         Log.e("TAG", ex.toString())
-                        digioLayout.visibility = View.GONE
+                        digilockerLayout.visibility = View.GONE
                         arthanLayout.visibility = View.VISIBLE
 
                     }
@@ -786,6 +805,7 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
         try {
             val config = DigioKycConfig()
             config.setEnvironment(DigioEnvironment.PRODUCTION)
+            config.setLogo("https://arthan.finance/assets/images/logo-blue.png")
             val digioSession = DigioSession()
             digioSession.init(this@UploadAadharActivity, config)
             digioSession.startSession(
@@ -807,7 +827,8 @@ class UploadAadharActivity : BaseActivity(), DigioResponseListener, DigioKycResp
         ).show()
         getAadharDataFromDigio()*/
 
-        digioLayout.visibility = View.GONE
+//        digioLayout.visibility = View.GONE
+        digilockerLayout.visibility = View.GONE
         arthanLayout.visibility = View.VISIBLE
         Toast.makeText(
             this,

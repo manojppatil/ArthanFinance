@@ -5,6 +5,7 @@ import `in`.digio.sdk.kyc.DigioKycConfig
 import `in`.digio.sdk.kyc.DigioKycResponseListener
 import `in`.digio.sdk.kyc.DigioSession
 import android.Manifest
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -27,7 +28,9 @@ import com.av.arthanfinance.networkService.ApiClient
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import kotlinx.android.synthetic.main.activity_upload_bank_details.*
 import kotlinx.android.synthetic.main.activity_video_kyc.*
+import kotlinx.android.synthetic.main.activity_video_kyc.tvPercent
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -52,6 +55,9 @@ class VideoKyc : AppCompatActivity(), DigioKycResponseListener {
                 gson.fromJson(json, CustomerHomeTabResponse::class.java)
             customerData = obj
         }
+        pbKyc.max = 100
+        ObjectAnimator.ofInt(pbKyc, "progress", 60)
+            .setDuration(1000).start()
         tvPercent.text = "${kycCompleteStatus}%"
 
         btn_captureDigioVkyc.setOnClickListener {
@@ -275,9 +281,9 @@ class VideoKyc : AppCompatActivity(), DigioKycResponseListener {
 
     fun hideProgressDialog() {
         progressView?.let {
-            progressView?.setVisibility(View.GONE)
+            progressView?.visibility = View.GONE
             progressView!!.findViewById<TextView>(com.arthanfinance.core.R.id.txtMessage).text = ""
-            val vg = progressView?.getParent() as ViewGroup
+            val vg = progressView?.parent as ViewGroup
             vg.removeView(progressView)
             progressView = null
         }

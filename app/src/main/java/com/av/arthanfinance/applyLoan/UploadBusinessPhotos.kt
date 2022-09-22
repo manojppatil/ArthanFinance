@@ -1,6 +1,7 @@
 package com.av.arthanfinance.applyLoan
 
 import android.Manifest
+import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -76,6 +77,10 @@ class UploadBusinessPhotos : BaseActivity() {
             }
 
         }
+
+        activityUploadBusinessPhotosBinding.pbKyc.max = 100
+        ObjectAnimator.ofInt(activityUploadBusinessPhotosBinding.pbKyc, "progress", 80)
+            .setDuration(1000).start()
         activityUploadBusinessPhotosBinding.tvPercent.text = "${kycCompleteStatus}%"
         activityUploadBusinessPhotosBinding.btnUpload.setOnClickListener {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)

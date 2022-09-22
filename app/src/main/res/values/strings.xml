@@ -23,8 +23,8 @@
     <string name="dob_format">DD/MM/YYYY</string>
     <string name="enter_email">Enter email ID</string>
     <string name="dob">Date of Birth <font color='#FF0000'>*</font></string>
-    <string name="email_id">Email ID <font color='#FF0000' /></string>
-    <string name="accept_tos">I accept the <b>Terms &amp; Conditions</b></string>
+    <string name="email_id">Email ID <font color='#FF0000'>*</font></string>
+    <string name="accept_tos">I accept the <b><html><a href="https://arthan.finance/Termsandconditions"> Terms &amp; Conditions</a></html></b></string>
     <string name="submit">Submit</string>
     <string name="otp">OTP</string>
     <string name="one_time_pw">One Time Password</string>
@@ -32,7 +32,7 @@
     <string name="enter_otp">Enter One Time Password</string>
     <string name="resend_otp">Resend OTP</string>
     <string name="set_new_mpin">Set New Mpin</string>
-    <string name="used_to_login">This will be used each time login to app</string>
+    <string name="used_to_login">Please set up a 4 digit numeric code to access your application easily in future,in case you forget your MPIN, you can reset the same using OTP authentication.</string>
     <string name="enter_new_mpin">Enter New Mpin</string>
     <string name="setup_bio">Setup Biometric</string>
     <string name="finger_login">Fingerprint Login</string>
@@ -48,7 +48,7 @@
     <string name="name">Name <font color='#FF0000'>*</font></string>
     <string name="date_of_birth">Date of Birth</string>
     <string name="mob_num">Mobile Number</string>
-    <string name="upload_pan">Upload PAN</string>
+    <string name="upload_pan">Capture PAN</string>
     <string name="pan_num">PAN : BKOPY8778F</string>
     <string name="next">Next</string>
     <string name="login_face_id">Login with Face ID</string>
@@ -97,7 +97,7 @@
     <string name="demo_address">Arthan Finance , Near Ravi Talkies, Old Town, Bhubaneswar</string>
     <string name="capture">Capture</string>
     <string name="offline_kyc">Do Offline Kyc</string>
-    <string name="aadhar_kyc">Aadhar Kyc</string>
+    <string name="aadhar_kyc">Proceed to Aadhar KYC</string>
     <string name="service_request">Service Request</string>
     <string name="view_loan_details">View Loan Details</string>
     <string name="generate_loan_statement">Generate Loan Statement</string>
@@ -151,7 +151,7 @@
     <string name="completed">Completed</string>
     <string name="state">State</string>
     <string name="business_pan">Business Pan Number</string>
-    <string name="udyog_aadhar">Udyog Aadhar Number</string>
+    <string name="udyog_aadhar">Udyog Aadhar Number<font color='#FF0000'>*</font></string>
     <string name="gst_number">Gst Number</string>
     <string name="margin">Margin (%)<font color='#FF0000'>*</font></string>
     <string name="monthly_income">Monthly Income <font color='#FF0000'>*</font></string>
@@ -217,4 +217,13 @@
     <string name="congratulations">Congratulations!</string>
     <string name="start_video_kyc">Start My Video KYC</string>
     <string name="branch_name">Branch Name</string>
+    <string name="we_need_pan_detail">We need to verify your PAN details</string>
+    <string name="we_need_aadhar_detail">We need to verify your Aadhar Card details</string>
+    <string name="we_need_bank_detail">Verifying your Bank Account details</string>
+    <string name="kyc_requirement">Please take a photo of your original PANCARD, ensure that the lighting is good and the PANCARD is in focus of your camera.</string>
+    <string name="aadhar_requirement">Please take a photo of your original Aadhaar Card, ensure that the lighting is good and the Aadhaar Card is in focus of your camera.</string>
+    <string name="aadhar_kyc_requirement">Your Aadhar card number <b>must be linked with your Mobile number</b> to receive and confirm OTP. \nNo additional documents required.</string>
+    <string name="aadhar_kyc_declaration">By Clicking<b> Proceed </b>button, you declare that you are fully aware that you are submitting your aadhaar details to Arthan Finance in order to complete KYC for opening a Loan Account. </string>
+    <string name="pan_kyc_declaration">By Clicking<b> Capture </b>button, you declare that you are fully aware that you are submitting your PAN details to Arthan Finance in order to complete KYC for opening a Loan Account. </string>
+    <string name="bank_kyc_declaration">By Clicking<b> Proceed </b>button, you declare that you are fully aware that you are submitting your bank details to Arthan Finance in order to Access your bank Account Statement. </string>
 </resources>

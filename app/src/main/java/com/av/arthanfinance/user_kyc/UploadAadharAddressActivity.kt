@@ -1,6 +1,7 @@
 package com.av.arthanfinance.user_kyc
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -37,7 +38,13 @@ class UploadAadharAddressActivity : BaseActivity() {
     private var kycCompleteStatus = "40"
     private var titleList = arrayOf("Select Title", "Mr.", "Ms.")
     private var qualificationList =
-        arrayOf("Select Qualification", "Graduate", "Post Graduate", "Under Graduate", "10th Pass")
+        arrayOf(
+            "Select Qualification",
+            "10th Pass",
+            "Under Graduate",
+            "Graduate",
+            "Post Graduate"
+        )
     private var maritalStatusList =
         arrayOf("Select Marital Status", "Single", "Married", "Separated", "Divorced")
     private var religionList = arrayOf("Select Religion", "Hindu", "Muslim", "Christian", "Other")
@@ -49,7 +56,7 @@ class UploadAadharAddressActivity : BaseActivity() {
         "Andhra Pradesh",
         "Tamil Nadu",
         "Karnataka",
-        "Maharastra"
+        "Maharashtra"
     )
     private var genderList = arrayOf("Select Gender", "Male", "Female", "Other")
     private var addressState = ""
@@ -57,20 +64,20 @@ class UploadAadharAddressActivity : BaseActivity() {
     private var b = 0
     private var addrFlag = true
     private var fatherName = ""
-    private var name = "";
-    private var dob = "";
-    var gender = "";
+    private var name = ""
+    private var dob = ""
+    var gender = ""
     var aadharImage = ""
-    private var addressLine1 = "";
-    private var addressLine2 = "";
-    private var addressLine3 = "";
-    var state = "";
+    private var addressLine1 = ""
+    private var addressLine2 = ""
+    private var addressLine3 = ""
+    var state = ""
     var pincode = ""
-    private var landMark = "";
-    private var city = "";
-    private var currentLandMark = "";
-    var currentCity = "";
-    var currentPincode = "";
+    private var landMark = ""
+    private var city = ""
+    private var currentLandMark = ""
+    var currentCity = ""
+    var currentPincode = ""
     var currentState = ""
     private var customerData: CustomerHomeTabResponse? = null
     override val layoutId: Int
@@ -92,7 +99,7 @@ class UploadAadharAddressActivity : BaseActivity() {
 
         setSupportActionBar(activityUploadAadharAddressBinding.tbUploadAddress)
         (supportActionBar)?.setDisplayHomeAsUpEnabled(false)
-        (this as AppCompatActivity).supportActionBar!!.title = "Provide Address Details"
+        (this as AppCompatActivity).supportActionBar!!.title = "Let us know you more and better"
 
         val mPrefs: SharedPreferences? = getSharedPreferences("customerData", Context.MODE_PRIVATE)
         val gson = Gson()
@@ -132,8 +139,8 @@ class UploadAadharAddressActivity : BaseActivity() {
 //        activityUploadAadharAddressBinding.tieAddress3.setText(addressLine3)
 //        activityUploadAadharAddressBinding.tiePincode.setText(pincode)
 
-        val titleAdapter = this.let { ArrayAdapter(it, R.layout.emi_options, titleList) }
-        activityUploadAadharAddressBinding.actTitle.setAdapter(titleAdapter)
+//        val titleAdapter = this.let { ArrayAdapter(it, R.layout.emi_options, titleList) }
+//        activityUploadAadharAddressBinding.actTitle.setAdapter(titleAdapter)
 
         val qualificationAdapter =
             this.let { ArrayAdapter(it, R.layout.emi_options, qualificationList) }
@@ -152,8 +159,8 @@ class UploadAadharAddressActivity : BaseActivity() {
         val genderAdapter = ArrayAdapter(this, R.layout.emi_options, genderList)
         activityUploadAadharAddressBinding.actGender.setAdapter(genderAdapter)
 
-        val statesAdapter = this.let { ArrayAdapter(it, R.layout.emi_options, stateList) }
-        activityUploadAadharAddressBinding.stateDropDown.adapter = statesAdapter
+//        val statesAdapter = this.let { ArrayAdapter(it, R.layout.emi_options, stateList) }
+//        activityUploadAadharAddressBinding.stateDropDown.adapter = statesAdapter
 
         val statesAdapter2 = this.let { ArrayAdapter(it, R.layout.emi_options, stateList) }
         activityUploadAadharAddressBinding.stateDropDown2.adapter = statesAdapter2
@@ -168,32 +175,32 @@ class UploadAadharAddressActivity : BaseActivity() {
             }
         }
 
-        val statePosition = stateList.indexOf(state)
-        a = Integer.parseInt(statePosition.toString())
-        activityUploadAadharAddressBinding.stateDropDown.setSelection(a, true)
-
-        val genderPosition = genderList.indexOf(gender)
-        b = Integer.parseInt(genderPosition.toString())
-        activityUploadAadharAddressBinding.stateDropDown.setSelection(b, true)
-
-        addressState = activityUploadAadharAddressBinding.stateDropDown.selectedItem.toString()
-
-        activityUploadAadharAddressBinding.stateDropDown.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                addressState =
-                    activityUploadAadharAddressBinding.stateDropDown.selectedItem.toString()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // write code to perform some action
-            }
-        }
+//        val statePosition = stateList.indexOf(state)
+//        a = Integer.parseInt(statePosition.toString())
+//        activityUploadAadharAddressBinding.stateDropDown.setSelection(a, true)
+//
+//        val genderPosition = genderList.indexOf(gender)
+//        b = Integer.parseInt(genderPosition.toString())
+//        activityUploadAadharAddressBinding.stateDropDown.setSelection(b, true)
+//
+//        addressState = activityUploadAadharAddressBinding.stateDropDown.selectedItem.toString()
+//
+//        activityUploadAadharAddressBinding.stateDropDown.onItemSelectedListener = object :
+//            AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(
+//                parent: AdapterView<*>,
+//                view: View?,
+//                position: Int,
+//                id: Long
+//            ) {
+//                addressState =
+//                    activityUploadAadharAddressBinding.stateDropDown.selectedItem.toString()
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<*>) {
+//                // write code to perform some action
+//            }
+//        }
 
         val mapActivityResultLauncher = registerForActivityResult(
             StartActivityForResult()
@@ -209,6 +216,7 @@ class UploadAadharAddressActivity : BaseActivity() {
                     locationPostalCode = data.getStringExtra("postalCode").toString()
 
                     activityUploadAadharAddressBinding.tvLocationAddress.text = locationAddress
+                    activityUploadAadharAddressBinding.tieCity.setText(locationCity)
                 }
             }
         }
@@ -219,7 +227,7 @@ class UploadAadharAddressActivity : BaseActivity() {
         }
 
         activityUploadAadharAddressBinding.pbKycAddress.max = 100
-        ObjectAnimator.ofInt(activityUploadAadharAddressBinding.pbKycAddress, "progress", 70)
+        ObjectAnimator.ofInt(activityUploadAadharAddressBinding.pbKycAddress, "progress", 40)
             .setDuration(1000).start()
         activityUploadAadharAddressBinding.tvPercent.text = "${kycCompleteStatus}%"
 
@@ -239,6 +247,7 @@ class UploadAadharAddressActivity : BaseActivity() {
 
         ApiClient().getAuthApiService(this).getCustomerDetails(jsonObject).enqueue(object :
             Callback<UserDetailsResponse> {
+            @SuppressLint("SetTextI18n")
             override fun onResponse(
                 call: Call<UserDetailsResponse>,
                 response: Response<UserDetailsResponse>
@@ -248,7 +257,7 @@ class UploadAadharAddressActivity : BaseActivity() {
 
                 if (response.body() != null) {
                     name = response.body()!!.customerName
-                    fatherName = response.body()!!.fatherName.toString()
+                    fatherName = response.body()!!.fatherName
                     addressLine1 = response.body()!!.addressLine1.toString()
                     addressLine2 = response.body()!!.addressLine2.toString()
                     addressLine3 = response.body()!!.addressLine3.toString()
@@ -260,11 +269,13 @@ class UploadAadharAddressActivity : BaseActivity() {
                         BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
 
 //                    activityUploadAadharAddressBinding.ivUserImage.setImageBitmap(decodedByte)
+                    activityUploadAadharAddressBinding.actTitle.text = "Hi, $name"
                     activityUploadAadharAddressBinding.tieFatherName.setText(fatherName)
                     activityUploadAadharAddressBinding.tieAddress1.setText(addressLine1)
                     activityUploadAadharAddressBinding.tieAddress2.setText(addressLine2)
                     activityUploadAadharAddressBinding.tieAddress3.setText(addressLine3)
                     activityUploadAadharAddressBinding.tiePincode.setText(pincode)
+                    activityUploadAadharAddressBinding.tieState.setText(state)
 
                 } else {
                     Toast.makeText(
@@ -314,15 +325,15 @@ class UploadAadharAddressActivity : BaseActivity() {
         jsonObject.addProperty("relationship", "NA")
         jsonObject.addProperty(
             "addressLine1",
-            activityUploadAadharAddressBinding.tieAddress1.text.toString()
+            addressLine1
         )
         jsonObject.addProperty(
             "addressLine2",
-            activityUploadAadharAddressBinding.tieAddress2.text.toString()
+            addressLine2
         )
         jsonObject.addProperty(
             "addressLine3",
-            activityUploadAadharAddressBinding.tieAddress3.text.toString()
+            addressLine3
         )
         jsonObject.addProperty(
             "landmark",
@@ -335,11 +346,11 @@ class UploadAadharAddressActivity : BaseActivity() {
         )
         jsonObject.addProperty(
             "pincode",
-            activityUploadAadharAddressBinding.tiePincode.text.toString()
+            pincode
         )
         jsonObject.addProperty(
             "state",
-            activityUploadAadharAddressBinding.stateDropDown.selectedItem.toString()
+            pincode
         )
 
         if (addrFlag) {
@@ -373,7 +384,7 @@ class UploadAadharAddressActivity : BaseActivity() {
             )
             jsonObject.addProperty(
                 "statep",
-                activityUploadAadharAddressBinding.stateDropDown.selectedItem.toString()
+                activityUploadAadharAddressBinding.tieState.text.toString()
             )
         } else {
             jsonObject.addProperty(
@@ -431,6 +442,7 @@ class UploadAadharAddressActivity : BaseActivity() {
                         UploadBankDetailsActivity::class.java
                     )
                     startActivity(intent1)
+                    finish()
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 } else {
                     try {
@@ -469,21 +481,22 @@ class UploadAadharAddressActivity : BaseActivity() {
     }
 
     private fun hasValidAadharDetailsData(): Boolean {
-        val title = activityUploadAadharAddressBinding.actTitle.text.toString()
+//        val title = activityUploadAadharAddressBinding.actTitle.text.toString()
         val qualification = activityUploadAadharAddressBinding.actEducation.text.toString()
         val maritalStatus = activityUploadAadharAddressBinding.actMaritalStatus.text.toString()
-        val religion = activityUploadAadharAddressBinding.actReligion.text.toString()
-        val category = activityUploadAadharAddressBinding.actCategory.text.toString()
-        val gender = activityUploadAadharAddressBinding.actGender.text.toString()
-        val currentState = activityUploadAadharAddressBinding.stateDropDown2.selectedItem.toString()
-        val pinCode = activityUploadAadharAddressBinding.tiePincode.text.toString()
+//        val religion = activityUploadAadharAddressBinding.actReligion.text.toString()
+//        val category = activityUploadAadharAddressBinding.actCategory.text.toString()
+//        val gender = activityUploadAadharAddressBinding.actGender.text.toString()
+//        val currentState = activityUploadAadharAddressBinding.stateDropDown2.selectedItem.toString()
+//        val pinCode = activityUploadAadharAddressBinding.tiePincode.text.toString()
         val currentPinCode = activityUploadAadharAddressBinding.tiePincode2.text.toString()
         val locationAddress = activityUploadAadharAddressBinding.tvLocationAddress.text.toString()
 
-        if (title.equals("") || title.equals("Select Title")) {
-            Toast.makeText(this, "Please select your title", Toast.LENGTH_SHORT).show()
-            return false
-        } else if (activityUploadAadharAddressBinding.tieFatherName.text.isNullOrEmpty()) {
+//        if (title.equals("") || title.equals("Select Title")) {
+//            Toast.makeText(this, "Please select your title", Toast.LENGTH_SHORT).show()
+//            return false
+//        } else
+            if (activityUploadAadharAddressBinding.tieFatherName.text.isNullOrEmpty()) {
             Toast.makeText(
                 applicationContext,
                 "Please provide your father's or spouse's name",
@@ -497,14 +510,16 @@ class UploadAadharAddressActivity : BaseActivity() {
                 Toast.LENGTH_SHORT
             ).show()
             return false
-        } else if (gender.equals("") || qualification.equals("Select Gender")) {
-            Toast.makeText(
-                applicationContext,
-                "Please select your gender",
-                Toast.LENGTH_SHORT
-            ).show()
-            return false
-        } else if (qualification.equals("") || qualification.equals("Select Qualification")) {
+        } else 
+//            if (gender.equals("") || qualification.equals("Select Gender")) {
+//            Toast.makeText(
+//                applicationContext,
+//                "Please select your gender",
+//                Toast.LENGTH_SHORT
+//            ).show()
+//            return false
+//        } else 
+            if (qualification.equals("") || qualification.equals("Select Qualification")) {
             Toast.makeText(
                 applicationContext,
                 "Please select your qualification",
@@ -514,45 +529,50 @@ class UploadAadharAddressActivity : BaseActivity() {
         } else if (maritalStatus.equals("") || maritalStatus.equals("Select Marital Status")) {
             Toast.makeText(this, "Please select your marital status", Toast.LENGTH_SHORT).show()
             return false
-        } else if (religion.equals("") || religion.equals("Select Religion")) {
-            Toast.makeText(applicationContext, "Please select your religion", Toast.LENGTH_SHORT)
-                .show()
-            return false
-        } else if (category.equals("") || category.equals("Select Category")) {
-            Toast.makeText(applicationContext, "Please select your category", Toast.LENGTH_SHORT)
-                .show()
-            return false
-        } else if (activityUploadAadharAddressBinding.tieAddress1.text.isNullOrEmpty()) {
-            Toast.makeText(applicationContext, "Please fill address line 1", Toast.LENGTH_SHORT)
-                .show()
-            return false
-        } else if (activityUploadAadharAddressBinding.tieAddress2.text.isNullOrEmpty()) {
-            Toast.makeText(applicationContext, "Please fill address line 2", Toast.LENGTH_SHORT)
-                .show()
-            return false
-        } else if (activityUploadAadharAddressBinding.tieAddress3.text.isNullOrEmpty()) {
-            Toast.makeText(applicationContext, "Please fill address line 3", Toast.LENGTH_SHORT)
-                .show()
-            return false
-        } else if (activityUploadAadharAddressBinding.tieCity.text.isNullOrEmpty()) {
-            Toast.makeText(applicationContext, "Please provide your city name", Toast.LENGTH_SHORT)
-                .show()
-            return false
-        } else if (activityUploadAadharAddressBinding.tieDistrict.text.isNullOrEmpty()) {
-            Toast.makeText(
-                applicationContext,
-                "Please provide your district name",
-                Toast.LENGTH_SHORT
-            ).show()
-            return false
-        } else if (pinCode == "" || pinCode.length < 6) {
-            Toast.makeText(applicationContext, "Please provide your pincode", Toast.LENGTH_SHORT)
-                .show()
-            return false
-        } else if (addressState.equals("") || addressState.equals("Select State")) {
-            Toast.makeText(applicationContext, "Please Select State", Toast.LENGTH_SHORT).show()
-            return false
-        } else if (activityUploadAadharAddressBinding.checkbox.isChecked) {
+        } 
+//            else if (religion.equals("") || religion.equals("Select Religion")) {
+//            Toast.makeText(applicationContext, "Please select your religion", Toast.LENGTH_SHORT)
+//                .show()
+//            return false
+//        }
+//        else if (category.equals("") || category.equals("Select Category")) {
+//            Toast.makeText(applicationContext, "Please select your category", Toast.LENGTH_SHORT)
+//                .show()
+//            return false
+//        }
+//        else if (activityUploadAadharAddressBinding.tieAddress1.text.isNullOrEmpty()) {
+//            Toast.makeText(applicationContext, "Please fill address line 1", Toast.LENGTH_SHORT)
+//                .show()
+//            return false
+//        } else if (activityUploadAadharAddressBinding.tieAddress2.text.isNullOrEmpty()) {
+//            Toast.makeText(applicationContext, "Please fill address line 2", Toast.LENGTH_SHORT)
+//                .show()
+//            return false
+//        } else if (activityUploadAadharAddressBinding.tieAddress3.text.isNullOrEmpty()) {
+//            Toast.makeText(applicationContext, "Please fill address line 3", Toast.LENGTH_SHORT)
+//                .show()
+//            return false
+//        } else if (activityUploadAadharAddressBinding.tieCity.text.isNullOrEmpty()) {
+//            Toast.makeText(applicationContext, "Please provide your city name", Toast.LENGTH_SHORT)
+//                .show()
+//            return false
+//        } else if (activityUploadAadharAddressBinding.tieDistrict.text.isNullOrEmpty()) {
+//            Toast.makeText(
+//                applicationContext,
+//                "Please provide your district name",
+//                Toast.LENGTH_SHORT
+//            ).show()
+//            return false
+//        } else if (pinCode == "" || pinCode.length < 6) {
+//            Toast.makeText(applicationContext, "Please provide your pincode", Toast.LENGTH_SHORT)
+//                .show()
+//            return false
+//        }
+//        else if (addressState.equals("") || addressState.equals("Select State")) {
+//            Toast.makeText(applicationContext, "Please Select State", Toast.LENGTH_SHORT).show()
+//            return false
+//        }
+        else if (activityUploadAadharAddressBinding.checkbox.isChecked) {
             return true
         } else if (activityUploadAadharAddressBinding.tieCurrentAddress1.text.isNullOrEmpty()) {
             Toast.makeText(
@@ -608,10 +628,12 @@ class UploadAadharAddressActivity : BaseActivity() {
                 Toast.LENGTH_SHORT
             ).show()
             return false
-        } else if (currentState.equals("") || currentState.equals("Select State")) {
-            Toast.makeText(applicationContext, "Please Select State", Toast.LENGTH_SHORT).show()
-            return false
-        } else {
+        }
+//        else if (currentState.equals("") || currentState.equals("Select State")) {
+//            Toast.makeText(applicationContext, "Please Select State", Toast.LENGTH_SHORT).show()
+//            return false
+//        }
+        else {
             return true
         }
 

@@ -61,7 +61,7 @@ class SplashActivity : AppCompatActivity() {
                 }
                 customerID == "" -> {
         //                val intent = Intent(this@SplashActivity, FingerPrintLoginActivity::class.java)//
-                    val intent = Intent(this@SplashActivity, MPINLoginActivity::class.java)
+                    val intent = Intent(this@SplashActivity, IntroductionPagerActivity::class.java)
                     startActivity(intent)
                     finish()
                 }

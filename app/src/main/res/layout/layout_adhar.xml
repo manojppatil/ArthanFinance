@@ -115,19 +115,18 @@
 
                     <ImageButton
                         android:id="@+id/remove_aadhar_front_photo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="29dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="14dp"
+                        android:layout_marginEnd="10dp"
                         android:background="@drawable/ic_close" />
 
                     <ImageView
                         android:id="@+id/aadharFront"
                         android:layout_width="152dp"
                         android:layout_height="86dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/ic_adhar_pic" />
+                        android:layout_centerInParent="true" />
 
                 </RelativeLayout>
 

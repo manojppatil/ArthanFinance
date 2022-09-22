@@ -27,7 +27,7 @@ class CustomerCameraActivity : AppCompatActivity() {
             @SuppressLint("CheckResult")
             override fun onPictureTaken(picture: ByteArray?) {
                 super.onPictureTaken(picture)
-                CameraUtils.decodeBitmap(picture) {
+                CameraUtils.decodeBitmap(picture) { it ->
                     //Here comes your bitmap
                     BitmapUtils.saveBitmapToFile(it, getOutputMediaFile())
                         .subscribe({ filePath ->

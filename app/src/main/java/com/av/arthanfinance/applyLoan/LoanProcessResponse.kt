@@ -490,6 +490,17 @@ class UdyamDetailsResponse : Serializable {
     var statusCode: Int? = null
 }
 
+class AggregatorConsentResponse : Serializable {
+
+    @SerializedName("applicantId")
+    @Expose
+    val applicantId: String? = null
+
+    @SerializedName("referenceId")
+    @Expose
+    val referenceId: String? = null
+}
+
 data class Result(
     @SerializedName("udyamRegistrationNo") var udyamRegistrationNo: String? = null,
     @SerializedName("dateOfRegistration") var dateOfRegistration: String? = null,

@@ -26,6 +26,12 @@
 
     }
 }*/
+/// TODO: (Pirimid SDK Integration)
+//include ':pirimid-sdk'
+include ':pirimid-sdk-release'
+include ':standard'
+include ':custom'
 include ':core'
+//include ':kyccamera'
 include ':app', ':digio-kyc-2.1.17'
 rootProject.name = "ArthanFinance"

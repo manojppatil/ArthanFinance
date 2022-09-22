@@ -29,6 +29,8 @@ import com.av.arthanfinance.networkService.ApiClient
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.theartofdev.edmodo.cropper.CropImage
+import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.activity_upload_photo.*
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -52,6 +54,8 @@ class UploadPhotoActivity : BaseActivity() {
     private lateinit var customerGender: String
     private lateinit var userImg: String
     private var customerData: CustomerHomeTabResponse? = null
+    private lateinit var photoImgView : CircleImageView
+
     override val layoutId: Int
         get() = R.layout.activity_upload_photo
 
@@ -81,13 +85,13 @@ class UploadPhotoActivity : BaseActivity() {
             }
         }
 
-
+        photoImgView = findViewById<CircleImageView>(R.id.photoImgView)
         setSupportActionBar(activityUploadPhotoBinding.tbUploadPhoto)
         (supportActionBar)?.setDisplayHomeAsUpEnabled(false)
         (this as AppCompatActivity).supportActionBar!!.title = "Upload Your Photo"
 
         activityUploadPhotoBinding.pbKycPhoto.max = 100
-        ObjectAnimator.ofInt(activityUploadPhotoBinding.pbKycPhoto, "progress", 30)
+        ObjectAnimator.ofInt(activityUploadPhotoBinding.pbKycPhoto, "progress", 20)
             .setDuration(1000).start()
         activityUploadPhotoBinding.tvPercent.text = "${kycCompleteStatus}%"
 
@@ -175,7 +179,7 @@ class UploadPhotoActivity : BaseActivity() {
                     val result = CropImage.getActivityResult(data)
                     val resultUri = result.uri
                     val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, resultUri)
-                    activityUploadPhotoBinding.photoImgView.setImageBitmap(bitmap)
+                    photoImgView.setImageBitmap(bitmap)
                     val encodedImageStr = encodeImageString(bitmap)
                     print("base64 Stirng $encodedImageStr")
                     showProgressDialog()
@@ -217,8 +221,8 @@ class UploadPhotoActivity : BaseActivity() {
                     intent1.putExtra("fatherName", customerFatherName)
                     intent1.putExtra("customerName", customerName)
                     intent1.putExtra("customerDob", customerDob)
-
                     startActivity(intent1)
+                    finish()
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 } else {
                     hideProgressDialog()

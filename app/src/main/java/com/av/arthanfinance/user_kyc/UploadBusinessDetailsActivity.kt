@@ -1,5 +1,7 @@
 package com.av.arthanfinance.user_kyc
 
+import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
@@ -13,6 +15,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.arthanfinance.core.base.BaseActivity
 import com.av.arthanfinance.CustomerHomeTabResponse
 import com.av.arthanfinance.GstValidationActivity
@@ -55,6 +58,7 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
     override val layoutId: Int
         get() = R.layout.activity_upload_business_details
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityUploadBusinessDetailsBinding =
@@ -66,8 +70,16 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
             mCustomerId = customerData!!.customerId
         }
 
+        setSupportActionBar(activityUploadBusinessDetailsBinding.tbUploadPan)
+        (supportActionBar)?.setDisplayHomeAsUpEnabled(false)
+        (this as AppCompatActivity).supportActionBar!!.title = "Provide Your Business Details"
+
+
+        activityUploadBusinessDetailsBinding.pbKyc.max = 100
+        ObjectAnimator.ofInt(activityUploadBusinessDetailsBinding.pbKyc, "progress", 70)
+            .setDuration(1000).start()
         activityUploadBusinessDetailsBinding.tvPercent.text = "${kycCompleteStatus}%"
-        activityUploadBusinessDetailsBinding.radioGroup.setOnCheckedChangeListener { radioGroup, i ->
+        activityUploadBusinessDetailsBinding.radioGroup.setOnCheckedChangeListener { _, i ->
             if (i == R.id.radio_yes) {
                 activityUploadBusinessDetailsBinding.tilAddress.visibility = View.GONE
             } else {
@@ -174,12 +186,12 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
                 val data = result.data
                 if (data != null) {
 
-                    locationAddress = data!!.getStringExtra("address").toString()
-                    subLocality = data!!.getStringExtra("sub_locality").toString()
-                    locationCity = data!!.getStringExtra("city").toString()
-                    locationState = data!!.getStringExtra("state").toString()
-                    locationCountry = data!!.getStringExtra("country").toString()
-                    locationPostalCode = data!!.getStringExtra("postalCode").toString()
+                    locationAddress = data.getStringExtra("address").toString()
+                    subLocality = data.getStringExtra("sub_locality").toString()
+                    locationCity = data.getStringExtra("city").toString()
+                    locationState = data.getStringExtra("state").toString()
+                    locationCountry = data.getStringExtra("country").toString()
+                    locationPostalCode = data.getStringExtra("postalCode").toString()
 
                     activityUploadBusinessDetailsBinding.tvLocationAddress.text = locationAddress
                 }
@@ -224,7 +236,7 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
             )
             jsonObject.addProperty("isPDFRequired", "N")
 
-            val clientId = "8jn2bAml0S4xcorY5EQM"
+            val clientId = "QyxO5SCDPkDIX00"
 
             ApiClient().getUdyamApiService(this).verifyUdyamAadhar(clientId, jsonObject)
                 .enqueue(object :
@@ -259,9 +271,9 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
                                 activityUploadBusinessDetailsBinding.tieType.setText(
                                     udyamReturnResponse.result!!.industry[0].activity.toString()
                                 )
-                                activityUploadBusinessDetailsBinding.tieBusinessPan.setText(
-                                    udyamReturnResponse.result!!.profile!!.pan.toString()
-                                )
+//                                activityUploadBusinessDetailsBinding.tieBusinessPan.setText(
+//                                    udyamReturnResponse.result!!.profile!!.pan.toString()
+//                                )
                                 val udyamAddress =
                                     udyamReturnResponse.result!!.officialAddress!!.flat + "," + udyamReturnResponse.result!!.officialAddress!!.premises + "," +
                                             udyamReturnResponse.result!!.officialAddress!!.village + "," + udyamReturnResponse.result!!.officialAddress!!.block + "," +
@@ -304,6 +316,7 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
         activityUploadBusinessDetailsBinding.tvSegment.visibility = View.GONE
         activityUploadBusinessDetailsBinding.tvType.visibility = View.GONE
 
+        activityUploadBusinessDetailsBinding.lytBusiness.visibility = View.VISIBLE
         activityUploadBusinessDetailsBinding.tilConstitution.visibility = View.VISIBLE
         activityUploadBusinessDetailsBinding.tilCategory.visibility = View.VISIBLE
         activityUploadBusinessDetailsBinding.tilSegment.visibility = View.VISIBLE
@@ -476,84 +489,91 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
                 Toast.LENGTH_SHORT
             ).show()
             return false
-        } else if (activityUploadBusinessDetailsBinding.constitutionSpiner.selectedItem.toString() == ""
-        ) {
-            Toast.makeText(
-                this, "Please Add Your Constitution",
-                Toast.LENGTH_SHORT
-            ).show()
-            return false
-        } else if (activityUploadBusinessDetailsBinding.categorySpinner.selectedItem.toString() == ""
-        ) {
-            Toast.makeText(
-                this, "Please Add Your Business Category",
-                Toast.LENGTH_SHORT
-            ).show()
-            return false
-        } else if (activityUploadBusinessDetailsBinding.segmentSpinner.selectedItem.toString() == ""
-        ) {
-            Toast.makeText(
-                this, "Please Add Your Business Segment",
-                Toast.LENGTH_SHORT
-            ).show()
-            return false
-        } else if (activityUploadBusinessDetailsBinding.typeSpinner.selectedItem.toString() == ""
-        ) {
-            Toast.makeText(
-                this, "Please Add Your Business Type",
-                Toast.LENGTH_SHORT
-            ).show()
-            return false
-        } else if (activityUploadBusinessDetailsBinding.tieMonthlyTurnover.text.toString() == ""
-        ) {
-            Toast.makeText(
-                this, "Please Specify Your Business Turnover",
-                Toast.LENGTH_SHORT
-            ).show()
-            return false
-        } else if (activityUploadBusinessDetailsBinding.tieMargin.text.toString() == "") {
-            Toast.makeText(
-                this, "Please Specify Your Income Margin",
-                Toast.LENGTH_SHORT
-            ).show()
-            return false
-        } else if (activityUploadBusinessDetailsBinding.tieMonthlyIncome.text.toString() == ""
-        ) {
-            Toast.makeText(
-                this, "Please Specify Your Monthly Income",
-                Toast.LENGTH_SHORT
-            ).show()
-            return false
-        } else if (activityUploadBusinessDetailsBinding.tieMonthlyExpense.text.toString() == ""
-        ) {
-            Toast.makeText(
-                this, "Please  Specify Your Monthly Expense",
-                Toast.LENGTH_SHORT
-            ).show()
-            return false
-        } else if (activityUploadBusinessDetailsBinding.radioGroup.checkedRadioButtonId == -1) {
-            Toast.makeText(
-                this, "Please Select Your Address Preference",
-                Toast.LENGTH_SHORT
-            ).show()
-            return false
-        } else if (activityUploadBusinessDetailsBinding.radioGroup.checkedRadioButtonId != -1) {
-            val radioButtonID = activityUploadBusinessDetailsBinding.radioGroup.checkedRadioButtonId
-            val radioButton =
-                activityUploadBusinessDetailsBinding.radioGroup.findViewById<View>(radioButtonID) as RadioButton
-            val selectedText = radioButton.text as String
-            if (selectedText == "No") {
-                return if (activityUploadBusinessDetailsBinding.tieAddress.text.toString() == "") {
+        }
+//           else if (activityUploadBusinessDetailsBinding.constitutionSpiner.selectedItem.toString() == ""
+//            ) {
+//                Toast.makeText(
+//                    this, "Please Add Your Constitution",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//                return false
+//            } else if (activityUploadBusinessDetailsBinding.categorySpinner.selectedItem.toString() == ""
+//            ) {
+//                Toast.makeText(
+//                    this, "Please Add Your Business Category",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//                return false
+//            } else
+//                if (activityUploadBusinessDetailsBinding.segmentSpinner.selectedItem.toString() == ""
+//                ) {
+//                    Toast.makeText(
+//                        this, "Please Add Your Business Segment",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                    return false
+//                } else if (activityUploadBusinessDetailsBinding.typeSpinner.selectedItem.toString() == ""
+//                ) {
+//                    Toast.makeText(
+//                        this, "Please Add Your Business Type",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                    return false
+//                }
+//        else if (activityUploadBusinessDetailsBinding.tieMonthlyTurnover.text.toString() == ""
+//        ) {
+//            Toast.makeText(
+//                this, "Please Specify Your Business Turnover",
+//                Toast.LENGTH_SHORT
+//            ).show()
+//            return false
+//        } else if (activityUploadBusinessDetailsBinding.tieMargin.text.toString() == "") {
+//            Toast.makeText(
+//                this, "Please Specify Your Income Margin",
+//                Toast.LENGTH_SHORT
+//            ).show()
+//            return false
+//        } else if (activityUploadBusinessDetailsBinding.tieMonthlyIncome.text.toString() == ""
+//        ) {
+//            Toast.makeText(
+//                this, "Please Specify Your Monthly Income",
+//                Toast.LENGTH_SHORT
+//            ).show()
+//            return false
+//        } else if (activityUploadBusinessDetailsBinding.tieMonthlyExpense.text.toString() == ""
+//        ) {
+//            Toast.makeText(
+//                this, "Please  Specify Your Monthly Expense",
+//                Toast.LENGTH_SHORT
+//            ).show()
+//            return false
+//        }
+                else if (activityUploadBusinessDetailsBinding.radioGroup.checkedRadioButtonId == -1) {
                     Toast.makeText(
-                        this, "Please Select Your Business Address",
+                        this, "Please Select Your Address Preference",
                         Toast.LENGTH_SHORT
                     ).show()
-                    false
-                } else {
-                    true
+                    return false
+                } else if (activityUploadBusinessDetailsBinding.radioGroup.checkedRadioButtonId != -1) {
+                    val radioButtonID =
+                        activityUploadBusinessDetailsBinding.radioGroup.checkedRadioButtonId
+                    val radioButton =
+                        activityUploadBusinessDetailsBinding.radioGroup.findViewById<View>(
+                            radioButtonID
+                        ) as RadioButton
+                    val selectedText = radioButton.text as String
+                    if (selectedText == "No") {
+                        return if (activityUploadBusinessDetailsBinding.tieAddress.text.toString() == "") {
+                            Toast.makeText(
+                                this, "Please Select Your Business Address",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            false
+                        } else {
+                            true
+                        }
+                    }
                 }
-            }
-        }
         return true
     }
 

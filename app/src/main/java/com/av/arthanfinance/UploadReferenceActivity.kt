@@ -1,5 +1,6 @@
 package com.av.arthanfinance
 
+import android.animation.ObjectAnimator
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
@@ -36,6 +37,10 @@ class UploadReferenceActivity : BaseActivity() {
         activityUploadReferenceBinding =
             ActivityUploadReferenceBinding.inflate(layoutInflater)
         setContentView(activityUploadReferenceBinding.root)
+
+        activityUploadReferenceBinding.pbKyc.max = 100
+        ObjectAnimator.ofInt(activityUploadReferenceBinding.pbKyc, "progress", 90)
+            .setDuration(1000).start()
         activityUploadReferenceBinding.tvPercent.text = "${kycCompleteStatus}%"
         if (intent.hasExtra("loanResponse")) {
             loanResponse = intent.getSerializableExtra("loanResponse") as LoanProcessResponse

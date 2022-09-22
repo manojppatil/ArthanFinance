@@ -8,8 +8,127 @@
     tools:context=".user_kyc.UploadBankDetailsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lyt_bankaggregator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout13">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textview_verify_pan_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/we_need_bank_detail"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textview_verify_pan_note_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:justificationMode="inter_word"
+                android:text="We will take you to the banking account aggregator platform to get your statement of account with your consent for assessment, this is a requirement for assessing your eligibility."
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="#000000"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <EditText
+                    android:id="@+id/textview_bank_mobile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="1"
+                    android:justificationMode="inter_word"
+                    android:text="7738790221"
+                    android:textAlignment="center"
+                    android:textColor="#FF9300"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/poppins" />
+
+                <ImageView
+                    android:id="@+id/edit_bank_mobile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="50dp"
+                    android:gravity="center"
+                    app:srcCompat="@drawable/ic_edit_profile" />
+            </LinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textview_bank_change_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp"
+                android:justificationMode="inter_word"
+                android:text="You can change the above Mobile number using the edit option, In case your Mobile number is not linked to any bank account."
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="10dp"
+                android:justificationMode="inter_word"
+                android:padding="10dp"
+                android:text="@string/bank_kyc_declaration"
+                android:textSize="13dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAggregator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="36dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_register_rect_orange"
+                android:fontFamily="@font/mukta_vaani"
+                android:gravity="center"
+                android:minWidth="200dp"
+                android:paddingTop="9dp"
+                android:paddingBottom="9dp"
+                android:text="Proceed"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_18"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lyt_bankpage"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/imageView23"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,12 +193,12 @@
             android:imeOptions="actionSearch"
             android:inputType="textAutoComplete|textAutoCorrect"
             android:paddingVertical="11dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:paddingStart="19dp"
             android:textSize="16sp"
-            app:hintTextColor="@color/very_light_grey" />
+            app:hintTextColor="@color/very_light_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <AutoCompleteTextView
             android:id="@+id/tieBankBranch"
@@ -93,12 +212,12 @@
             android:imeOptions="actionSearch"
             android:inputType="textAutoComplete|textAutoCorrect"
             android:paddingVertical="11dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tieBankName"
             android:paddingStart="19dp"
             android:textSize="16sp"
-            app:hintTextColor="@color/very_light_grey" />
+            app:hintTextColor="@color/very_light_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tieBankName" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilIfscCode"
@@ -117,8 +236,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/mukta_vaani"
-                android:inputType="textCapCharacters"
-                android:hint="@string/ifsc_code" />
+                android:hint="@string/ifsc_code"
+                android:inputType="textCapCharacters" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -169,8 +288,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="25dp"
             android:layout_marginTop="16dp"
-            android:padding="5sp"
             android:fontFamily="@font/mukta_vaani"
+            android:padding="5sp"
             android:text="@string/upload_bank_statement_pdf_file_downloaded_from_bank"
             android:textColor="@color/black"
             android:textSize="16sp"
@@ -194,9 +313,9 @@
                 android:id="@+id/btnUploadbankstmt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_20"
                 android:layout_marginEnd="7.5dp"
                 android:layout_weight="1"
-                android:layout_margin="@dimen/dimen_20"
                 android:background="@drawable/bg_language_rect"
                 android:drawableStart="@drawable/ic_folder"
                 android:drawablePadding="-40dp"
@@ -204,12 +323,12 @@
                 android:gravity="center"
                 android:paddingLeft="25dp"
                 android:paddingTop="9dp"
-                android:textStyle="bold"
                 android:paddingBottom="9dp"
                 android:text="@string/upload"
                 android:textAllCaps="false"
                 android:textColor="@color/dark_orange2"
-                android:textSize="@dimen/text_18" />
+                android:textSize="@dimen/text_18"
+                android:textStyle="bold" />
         </LinearLayout>
 
 

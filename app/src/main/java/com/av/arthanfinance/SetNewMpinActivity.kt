@@ -49,7 +49,7 @@ class SetNewMpinActivity : BaseActivity() {
         btnBack = findViewById(R.id.img_back_mpin)
 
         mobileNum = intent.extras?.get("mob") as String
-        fbtoken = intent.extras?.get("fbtoken") as String
+//        fbtoken = intent.extras?.get("fbtoken") as String
 
         btnBack.setOnClickListener {
             this.finish()

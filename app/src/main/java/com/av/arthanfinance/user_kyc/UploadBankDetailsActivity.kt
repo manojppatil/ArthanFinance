@@ -1,6 +1,7 @@
 package com.av.arthanfinance.user_kyc
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
@@ -13,18 +14,27 @@ import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.view.Window
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.arthanfinance.core.base.BaseActivity
 import com.av.arthanfinance.CustomerHomeTabResponse
 import com.av.arthanfinance.R
+import com.av.arthanfinance.aa_sdk_integration.FiuAPIClient
+import com.av.arthanfinance.aa_sdk_integration.FiuAPIInterface
+import com.av.arthanfinance.aa_sdk_integration.InitiateConsentRequest
+import com.av.arthanfinance.aa_sdk_integration.InitiateConsentResponse
 import com.av.arthanfinance.applyLoan.*
 import com.av.arthanfinance.databinding.ActivityUploadBankDetailsBinding
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.util.copyFile
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.sdk.pirimid_sdk.PirimidSDK
+import com.sdk.pirimid_sdk.ResponseData
 import kotlinx.android.synthetic.main.activity_upload_bank_details.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -33,13 +43,12 @@ import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.internal.cache2.Relay.Companion.edit
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
-import java.lang.NullPointerException
+import java.util.*
 
 class UploadBankDetailsActivity : BaseActivity() {
     private lateinit var activityUploadBankDetailsBinding: ActivityUploadBankDetailsBinding
@@ -61,9 +70,19 @@ class UploadBankDetailsActivity : BaseActivity() {
         "Akola bank"
     )
 
+    //    val baseUrl = "https://app-uat.onemoney.in/" // uat env
+    private val baseUrl = "https://aa-app.onemoney.in/" // prod env
+    private val orgId = "ARTHANFINANCE"
+    private val clientId = "27d42d7fd01205a52baed74050d1db71efedb1eb"
+    private val clientSecret = "ab2f77d17afd5d574b71d4e52d2a75f427f14a1b"
+    private val fipId = "ICICI-FIP"
+    private var fiuAPIInterface: FiuAPIInterface? = null
+    var initiateConsentResponse: InitiateConsentResponse? = null
+
     override val layoutId: Int
         get() = R.layout.activity_upload_bank_details
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityUploadBankDetailsBinding = ActivityUploadBankDetailsBinding.inflate(layoutInflater)
@@ -78,14 +97,24 @@ class UploadBankDetailsActivity : BaseActivity() {
             customerData = obj
         }
 
+        mCustomerId = customerData!!.customerId
+
+        fiuAPIInterface = FiuAPIClient.getClient().create(
+            FiuAPIInterface::class.java
+        )
+
+//        createConsentMethod(mCustomerId!!)
+
         setSupportActionBar(activityUploadBankDetailsBinding.tbUploadBankDetails)
         (supportActionBar)?.setDisplayHomeAsUpEnabled(false)
         (this as AppCompatActivity).supportActionBar!!.title = "Provide Bank Account Details"
 
         activityUploadBankDetailsBinding.pbKycBank.max = 100
-        ObjectAnimator.ofInt(activityUploadBankDetailsBinding.pbKycBank, "progress", 90)
+        ObjectAnimator.ofInt(activityUploadBankDetailsBinding.pbKycBank, "progress", 50)
             .setDuration(1000).start()
         activityUploadBankDetailsBinding.tvPercent.text = "${kycCompleteStatus}%"
+
+        activityUploadBankDetailsBinding.textviewBankMobile.setText(customerData!!.mobNo)
 
         activityUploadBankDetailsBinding.btnBankDetails.setOnClickListener {
 
@@ -113,6 +142,13 @@ class UploadBankDetailsActivity : BaseActivity() {
                 )
                 showProgressDialog()
             }
+        }
+
+        activityUploadBankDetailsBinding.editBankMobile.setOnClickListener {
+            activityUploadBankDetailsBinding.textviewBankMobile.isFocusable = true
+            activityUploadBankDetailsBinding.textviewBankMobile.isEnabled = true
+            activityUploadBankDetailsBinding.textviewBankMobile.isClickable = true
+            activityUploadBankDetailsBinding.textviewBankMobile.isFocusableInTouchMode = true
         }
 
         activityUploadBankDetailsBinding.btnUploadbankstmt.setOnClickListener {
@@ -159,7 +195,72 @@ class UploadBankDetailsActivity : BaseActivity() {
 
         })
 
+        activityUploadBankDetailsBinding.btnAggregator.setOnClickListener {
+            createConsentMethod(mCustomerId!!)
+        }
+
 //        fetchAllBanks()
+    }
+
+    private fun createConsentMethod(requestId: String) {
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("applicantId", requestId)
+        jsonObject.addProperty("mobileNo", customerData!!.mobNo)
+        showProgressDialog()
+        ApiClient().getAuthApiService(this).getAAReferenceId(jsonObject).enqueue(object :
+            Callback<AggregatorConsentResponse> {
+            override fun onFailure(call: Call<AggregatorConsentResponse>, t: Throwable) {
+                hideProgressDialog()
+                t.printStackTrace()
+                Toast.makeText(
+                    this@UploadBankDetailsActivity, "Consent Failed.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            override fun onResponse(
+                call: Call<AggregatorConsentResponse>,
+                response: Response<AggregatorConsentResponse>
+            ) {
+                hideProgressDialog()
+                val res = response.body()
+                val referenceId = res?.referenceId
+                Log.e("TAGCONSENT", referenceId + "")
+                initializeSDK(referenceId!!)
+            }
+        })
+    }
+
+    private fun initializeSDK(consentId: String) {
+        val intent = Intent()
+        intent.putExtra("ORGANISATION_ID", orgId)
+        intent.putExtra("CLIENT_ID", clientId)
+        intent.putExtra("CLIENT_SECRET", clientSecret)
+        intent.putExtra("BASE_URL", baseUrl)
+        intent.putExtra("consent_id", consentId)
+        intent.putExtra("party_identifier", customerData!!.mobNo)
+//        intent.putExtra("fipId", fipId)
+
+        /// PIRIMID SDK Call
+        PirimidSDK.initializePirimidSDK(this, intent, object : ResponseData {
+            /// Success Response
+            override fun onSuccess(responseDetails: Intent) {
+                Log.d("main", responseDetails.getStringExtra("consent_action_type")!!)
+                Log.d("main", responseDetails.getStringExtra("consent_status")!!)
+                val consentActionType = responseDetails.getStringExtra("consent_action_type")
+                Log.d("main", responseDetails.getStringExtra("CODE")!!)
+                Log.d("main", responseDetails.getStringExtra("MESSAGE")!!)
+                updateStage("BANK_PA")
+            }
+
+            /// Failure Response
+            override fun onFailure(responseDetails: Intent) {
+                Log.d("main", responseDetails.getStringExtra("CODE")!!)
+                Log.d("main", responseDetails.getStringExtra("MESSAGE")!!)
+                lyt_bankaggregator.visibility = View.GONE
+                lyt_bankpage.visibility = View.VISIBLE
+            }
+        })
     }
 
     @Deprecated("Deprecated in Java")
@@ -194,7 +295,7 @@ class UploadBankDetailsActivity : BaseActivity() {
                     MultipartBody.Part.createFormData("file", file.name, requestBody)
                 val response =
                     ApiClient().getMasterApiService(this@UploadBankDetailsActivity)
-                        .uploadStatement(multiPartBody, "KBPI-I00X-P6WR", mCustomerId)
+                        .uploadStatement(multiPartBody, mCustomerId, mCustomerId)
 
                 withContext(Dispatchers.Main) {
                     try {
@@ -378,7 +479,7 @@ class UploadBankDetailsActivity : BaseActivity() {
         yesBtn.setOnClickListener {
             val intent = Intent(
                 this@UploadBankDetailsActivity,
-                VideoKyc::class.java
+                UploadBusinessDetailsActivity::class.java
             )
             intent.putExtra("customerData", customerData)
             startActivity(intent)
@@ -484,6 +585,42 @@ class UploadBankDetailsActivity : BaseActivity() {
                         activityUploadBankDetailsBinding.tieIfscCode.setText(docResponse.branches[i].ifsc.toString())
                     }
                 }
+            }
+        })
+    }
+
+    private fun updateStage(stage: String) {
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("customerId", customerData!!.customerId)
+        jsonObject.addProperty("stage", stage)
+        showProgressDialog()
+        ApiClient().getAuthApiService(this).updateStage(jsonObject).enqueue(object :
+            Callback<AuthenticationResponse> {
+            override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
+                hideProgressDialog()
+                t.printStackTrace()
+                Toast.makeText(
+                    this@UploadBankDetailsActivity, "Current Stage not updated.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            override fun onResponse(
+                call: Call<AuthenticationResponse>,
+                response: Response<AuthenticationResponse>
+            ) {
+                hideProgressDialog()
+                if (response.body()?.apiCode == "200") {
+
+                    val intent = Intent(
+                        this@UploadBankDetailsActivity,
+                        UploadBusinessDetailsActivity::class.java
+                    )
+                    intent.putExtra("customerData", customerData)
+                    startActivity(intent)
+                    finish()
+                }
+
             }
         })
     }

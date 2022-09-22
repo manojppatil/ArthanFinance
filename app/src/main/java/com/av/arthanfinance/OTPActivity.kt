@@ -1,8 +1,6 @@
 package com.av.arthanfinance
 
 import `in`.aabhasjindal.otptextview.OtpTextView
-import `in`.finbox.mobileriskmanager.FinBox
-import `in`.finbox.mobileriskmanager.common.annotations.FinBoxErrorCode
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
@@ -268,7 +266,7 @@ class OTPActivity : BaseActivity() {
                 val custData = response.body()
                 if (custData != null) {
                     if (custData.apiCode == "200") {
-                        registerFinbox(custData.customerId!!)
+//                        registerFinbox(custData.customerId!!)
                         custData.customerId?.let {
                             saveCustomerData(name, email, mobile, it)
                         }
@@ -291,6 +289,12 @@ class OTPActivity : BaseActivity() {
         if (mobile.trim() != "") {
             val status =
                 databaseHandler.saveCustomer(Customer(name, email, mobile, custId, null))
+            val intent = Intent(this@OTPActivity, SetNewMpinActivity::class.java)
+            intent.putExtra("customerId", custId)
+            intent.putExtra("mob", mobileNo)
+            intent.putExtra("fbtoken", "")
+            startActivity(intent)
+            finish()
             if (status > -1) {
                 Log.e("Success", "Record saved to DB")
             } else if (status == (-2).toLong()) {
@@ -302,27 +306,28 @@ class OTPActivity : BaseActivity() {
     }
 
 
-    private fun registerFinbox(customerId: String) {
-        FinBox.createUser("FLMtON74y17xzANePjLp7aMtP98Za0Iv3ig2AmPr", customerId,
-            object : FinBox.FinBoxAuthCallback {
-                override fun onSuccess(accessToken: String) {
-                    val finBox = FinBox()
-                    finBox.startPeriodicSync()
-                    Toast.makeText(
-                        this@OTPActivity,
-                        "FinBox Registration success",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    val intent = Intent(this@OTPActivity, SetNewMpinActivity::class.java)
-                    intent.putExtra("customerId", customerId)
-                    intent.putExtra("mob", mobileNo)
-                    intent.putExtra("fbtoken", accessToken)
-                    startActivity(intent)
-                }
-
-                override fun onError(@FinBoxErrorCode errorCode: Int) {
-                    Log.e("Error", "" + errorCode)
-                }
-            })
-    }
+//    private fun registerFinbox(customerId: String) {
+//        FinBox.createUser("FLMtON74y17xzANePjLp7aMtP98Za0Iv3ig2AmPr", customerId,
+//            object : FinBox.FinBoxAuthCallback {
+//                override fun onSuccess(accessToken: String) {
+//                    val finBox = FinBox()
+//                    finBox.startPeriodicSync()
+////                    Toast.makeText(
+////                        this@OTPActivity,
+////                        "FinBox Registration success",
+////                        Toast.LENGTH_SHORT
+////                    ).show()
+//                    val intent = Intent(this@OTPActivity, SetNewMpinActivity::class.java)
+//                    intent.putExtra("customerId", customerId)
+//                    intent.putExtra("mob", mobileNo)
+//                    intent.putExtra("fbtoken", accessToken)
+//                    startActivity(intent)
+//                    finish()
+//                }
+//
+//                override fun onError(@FinBoxErrorCode errorCode: Int) {
+//                    Log.e("Error", "" + errorCode)
+//                }
+//            })
+//    }
 }

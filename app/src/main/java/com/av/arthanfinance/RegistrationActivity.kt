@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.IntentSender.SendIntentException
 import android.os.Bundle
 import android.text.TextUtils
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.util.Patterns
 import android.widget.*
@@ -49,6 +50,7 @@ class RegistrationActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
 //        dobText = findViewById(R.id.edt_dob)
         emailText = findViewById(R.id.edt_email)
         btnTC = findViewById(R.id.accept_tc)
+        btnTC.movementMethod = LinkMovementMethod.getInstance()
 
 
 //        dobText.setOnClickListener {
@@ -91,14 +93,14 @@ class RegistrationActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
                     return@setOnClickListener
                 }
 
-//                if(!isValidMail(emailText.text)) {
-//                    Toast.makeText(
-//                        this@RegistrationActivity,
-//                        "Please enter VALID Email Id.",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                    return@setOnClickListener
-//                }
+                if (!isValidMail(emailText.text)) {
+                    Toast.makeText(
+                        this@RegistrationActivity,
+                        "Please enter VALID Email Id.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@setOnClickListener
+                }
 
                 if (!btnTC.isChecked) {
                     Toast.makeText(
@@ -142,6 +144,7 @@ class RegistrationActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
         intent.putExtra("mobNo", mobileNoText.text.toString())
         intent.putExtra("email", emailText.text.toString())
         startActivity(intent)
+        finish()
         /*custData.customerId?.let {
             saveCustomerData(name, email, mobile, dob, it)
         }*/
@@ -219,6 +222,7 @@ class RegistrationActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
         return cal
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1008) {

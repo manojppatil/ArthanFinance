@@ -45,24 +45,25 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilTitle"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dimen_24"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="18dp"
                     app:boxStrokeColor="@color/grey"
                     app:endIconTint="@color/dark_orange1"
                     app:hintTextColor="@color/black">
 
-                    <AutoCompleteTextView
+                    <TextView
                         android:id="@+id/actTitle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:enabled="true"
+                        android:text="Hi Username"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
                         android:fontFamily="@font/mukta_vaani"
-                        android:hint="@string/title"
                         android:inputType="none"
-                        android:textColor="@color/indigo"></AutoCompleteTextView>
+                        android:textColor="@color/indigo" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -71,7 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="14dp"
                     android:layout_marginEnd="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -117,6 +118,7 @@
                     android:layout_marginHorizontal="@dimen/dimen_24"
                     android:layout_marginTop="4dp"
                     app:boxStrokeColor="@color/grey"
+                    android:visibility="gone"
                     app:endIconTint="@color/dark_orange1"
                     app:hintTextColor="@color/black">
 
@@ -127,7 +129,7 @@
                         android:enabled="true"
                         android:hint="@string/gender"
                         android:inputType="none"
-                        android:textColor="@color/indigo"></AutoCompleteTextView>
+                        android:textColor="@color/indigo" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -149,7 +151,7 @@
                         android:enabled="true"
                         android:hint="@string/qualification"
                         android:inputType="none"
-                        android:textColor="@color/indigo"></AutoCompleteTextView>
+                        android:textColor="@color/indigo" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -170,7 +172,7 @@
                         android:enabled="true"
                         android:hint="@string/marital_status"
                         android:inputType="none"
-                        android:textColor="@color/indigo"></AutoCompleteTextView>
+                        android:textColor="@color/indigo" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -201,6 +203,7 @@
                     android:layout_height="62dp"
                     android:layout_marginHorizontal="@dimen/dimen_24"
                     android:layout_marginTop="4dp"
+                    android:visibility="gone"
                     app:endIconTint="@color/dark_orange1"
                     app:hintTextColor="@color/black">
 
@@ -211,7 +214,7 @@
                         android:enabled="true"
                         android:hint="@string/religion"
                         android:inputType="none"
-                        android:textColor="@color/indigo"></AutoCompleteTextView>
+                        android:textColor="@color/indigo" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -221,6 +224,7 @@
                     android:layout_height="62dp"
                     android:layout_marginHorizontal="@dimen/dimen_24"
                     android:layout_marginTop="4dp"
+                    android:visibility="gone"
                     app:endIconTint="@color/dark_orange1"
                     app:hintTextColor="@color/black">
 
@@ -241,6 +245,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="4dp"
+                    android:visibility="gone"
                     android:layout_marginEnd="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -263,6 +268,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="24dp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -284,6 +290,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="24dp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -303,6 +310,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
+                    android:visibility="gone"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -326,6 +334,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="24dp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -346,6 +355,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="4dp"
+                    android:visibility="gone"
                     android:layout_marginEnd="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -368,6 +378,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="24dp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -380,6 +391,28 @@
                         android:hint="@string/pincode_name"
                         android:inputType="number"
                         android:maxLength="6" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilState"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="4dp"
+                    android:visibility="gone"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieState"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mukta_vaani"
+                        android:hint="@string/state_name"
+                        android:inputType="textCapCharacters" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -420,47 +453,47 @@
                         app:srcCompat="@drawable/ic_baseline_my_location" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:orientation="horizontal">
+                <!--                <LinearLayout-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginTop="4dp"-->
+                <!--                    android:orientation="horizontal">-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen_24"
-                        android:layout_marginEnd="@dimen/dimen_24"
-                        android:orientation="vertical">
+                <!--                    <LinearLayout-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_marginStart="@dimen/dimen_24"-->
+                <!--                        android:layout_marginEnd="@dimen/dimen_24"-->
+                <!--                        android:orientation="vertical">-->
 
-                        <TextView
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen_10"
-                            android:fontFamily="@font/mukta_vaani"
-                            android:text="@string/state_name"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
+                <!--                        <TextView-->
+                <!--                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"-->
+                <!--                            android:layout_width="match_parent"-->
+                <!--                            android:layout_height="wrap_content"-->
+                <!--                            android:layout_marginTop="@dimen/dimen_10"-->
+                <!--                            android:fontFamily="@font/mukta_vaani"-->
+                <!--                            android:text="@string/state_name"-->
+                <!--                            android:textColor="@color/black"-->
+                <!--                            android:textSize="16sp" />-->
 
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/stateDropDown"
-                            style="@style/Widget.AppCompat.DropDownItem.Spinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen_10"
-                            android:background="@drawable/bg_spinner"
-                            android:ems="10"
+                <!--                        <androidx.appcompat.widget.AppCompatSpinner-->
+                <!--                            android:id="@+id/stateDropDown"-->
+                <!--                            style="@style/Widget.AppCompat.DropDownItem.Spinner"-->
+                <!--                            android:layout_width="match_parent"-->
+                <!--                            android:layout_height="wrap_content"-->
+                <!--                            android:layout_marginTop="@dimen/dimen_10"-->
+                <!--                            android:background="@drawable/bg_spinner"-->
+                <!--                            android:ems="10"-->
 
-                            android:fontFamily="@font/mukta_vaani"
-                            android:hint="@string/state"
-                            android:paddingEnd="30dp"
-                            android:textColor="@color/indigo"
-                            android:textSize="18sp"
-                            app:hintTextColor="@color/whisper" />
+                <!--                            android:fontFamily="@font/mukta_vaani"-->
+                <!--                            android:hint="@string/state"-->
+                <!--                            android:paddingEnd="30dp"-->
+                <!--                            android:textColor="@color/indigo"-->
+                <!--                            android:textSize="18sp"-->
+                <!--                            app:hintTextColor="@color/whisper" />-->
 
-                    </LinearLayout>
-                </LinearLayout>
+                <!--                    </LinearLayout>-->
+                <!--                </LinearLayout>-->
 
                 <CheckBox
                     android:id="@+id/checkbox"
