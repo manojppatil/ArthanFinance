@@ -4,27 +4,29 @@ import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.arthanfinance.core.base.BaseActivity
-import com.av.arthanfinance.CustomerHomeTabResponse
-import com.av.arthanfinance.GstValidationActivity
+import com.av.arthanfinance.models.CustomerHomeTabResponse
+import com.av.arthanfinance.applyLoan.GstValidationActivity
 import com.av.arthanfinance.MapLocationActivity
 import com.av.arthanfinance.R
-import com.av.arthanfinance.applyLoan.*
+import com.av.arthanfinance.applyLoan.model.*
 import com.av.arthanfinance.databinding.ActivityUploadBusinessDetailsBinding
 import com.av.arthanfinance.networkService.ApiClient
-import com.google.gson.Gson
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -52,6 +54,9 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
     private lateinit var locationState: String
     private lateinit var locationCountry: String
     private lateinit var locationPostalCode: String
+    private var mCatId: String? = null
+
+    var categorylistArray = arrayOf("")
 
     private var mCustomerId: String? = null
 
@@ -136,49 +141,61 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
             }
         }
 
-        activityUploadBusinessDetailsBinding.categorySpinner.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?, position: Int, id: Long
-            ) {
-                val category = categories[position]
-                segmentList = category.segments as ArrayList<String>
+        activityUploadBusinessDetailsBinding.categorySpinner.addTextChangedListener(object :
+            TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
-                val segmentAdapter = ArrayAdapter(
-                    this@UploadBusinessDetailsActivity,
-                    R.layout.emi_options, segmentList
-                )
-                activityUploadBusinessDetailsBinding.segmentSpinner.adapter = segmentAdapter
-                activityUploadBusinessDetailsBinding.segmentSpinner.onItemSelectedListener =
-                    object :
-                        AdapterView.OnItemSelectedListener {
-                        override fun onItemSelected(
-                            parent: AdapterView<*>,
-                            view: View?, position: Int, id: Long
-                        ) {
-
-                        }
-
-                        override fun onNothingSelected(parent: AdapterView<*>) {
-                        }
-                    }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                getCategoryAndSegmentData()
             }
-        }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+
+        })
+//        activityUploadBusinessDetailsBinding.categorySpinner.onItemSelectedListener = object :
+//            AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(
+//                parent: AdapterView<*>,
+//                view: View?, position: Int, id: Long
+//            ) {
+//                val category = categories[position]
+//                segmentList = category.segments as ArrayList<String>
+//
+//                val segmentAdapter = ArrayAdapter(
+//                    this@UploadBusinessDetailsActivity,
+//                    R.layout.emi_options, segmentList
+//                )
+//                activityUploadBusinessDetailsBinding.segmentSpinner.adapter = segmentAdapter
+//                activityUploadBusinessDetailsBinding.segmentSpinner.onItemSelectedListener =
+//                    object :
+//                        AdapterView.OnItemSelectedListener {
+//                        override fun onItemSelected(
+//                            parent: AdapterView<*>,
+//                            view: View?, position: Int, id: Long
+//                        ) {
+//
+//                        }
+//
+//                        override fun onNothingSelected(parent: AdapterView<*>) {
+//                        }
+//                    }
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<*>) {
+//            }
+//        }
 
         activityUploadBusinessDetailsBinding.tvUdyamlink.setOnClickListener {
-            val url = "https://udyamregistration.gov.in/UdyamRegistration.aspx"
-            if (url.startsWith("https://") || url.startsWith("http://")) {
-                val uri = Uri.parse(url)
-                val intent = Intent(Intent.ACTION_VIEW, uri)
-                startActivity(intent)
-            } else {
-                Toast.makeText(this, "Invalid Url", Toast.LENGTH_SHORT).show()
-            }
+            activityUploadBusinessDetailsBinding.lytBusiness.visibility = View.VISIBLE
+            activityUploadBusinessDetailsBinding.lytUdyam.visibility = View.GONE
+            showDialog()
         }
+
+
         val mapActivityResultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result: ActivityResult ->
@@ -228,7 +245,7 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
         activityUploadBusinessDetailsBinding.btnVerifyUdyam.setOnClickListener {
             val jsonObject = JsonObject()
             showProgressDialog()
-
+            activityUploadBusinessDetailsBinding.lytUdyam.visibility = View.GONE
             jsonObject.addProperty("consent", "Y")
             jsonObject.addProperty(
                 "udyamRegistrationNo",
@@ -259,18 +276,18 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
                                 activityUploadBusinessDetailsBinding.edtDateOfIncorporation.setText(
                                     udyamReturnResponse.result!!.profile!!.dateOfIncorporation.toString()
                                 )
-                                activityUploadBusinessDetailsBinding.tieConstitution.setText(
-                                    udyamReturnResponse.result!!.profile!!.organizationType.toString()
-                                )
-                                activityUploadBusinessDetailsBinding.tieCategory.setText(
-                                    udyamReturnResponse.result!!.industry[0].industry.toString()
-                                )
-                                activityUploadBusinessDetailsBinding.tieSegment.setText(
-                                    udyamReturnResponse.result!!.industry[0].subSector.toString()
-                                )
-                                activityUploadBusinessDetailsBinding.tieType.setText(
-                                    udyamReturnResponse.result!!.industry[0].activity.toString()
-                                )
+//                                activityUploadBusinessDetailsBinding.tieConstitution.setText(
+//                                    udyamReturnResponse.result!!.profile!!.organizationType.toString()
+//                                )
+//                                activityUploadBusinessDetailsBinding.tieCategory.setText(
+//                                    udyamReturnResponse.result!!.industry[0].industry.toString()
+//                                )
+//                                activityUploadBusinessDetailsBinding.tieSegment.setText(
+//                                    udyamReturnResponse.result!!.industry[0].subSector.toString()
+//                                )
+//                                activityUploadBusinessDetailsBinding.tieType.setText(
+//                                    udyamReturnResponse.result!!.industry[0].activity.toString()
+//                                )
 //                                activityUploadBusinessDetailsBinding.tieBusinessPan.setText(
 //                                    udyamReturnResponse.result!!.profile!!.pan.toString()
 //                                )
@@ -284,9 +301,14 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
                                     udyamAddress
                                 )
 
+                            } else {
+                                activityUploadBusinessDetailsBinding.lytBusiness.visibility =
+                                    View.VISIBLE
                             }
                         } catch (ex: Exception) {
                             ex.printStackTrace()
+                            activityUploadBusinessDetailsBinding.lytBusiness.visibility =
+                                View.VISIBLE
                             Log.e("TAG", ex.toString())
                         }
                     }
@@ -299,6 +321,7 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
                             "Service Failure, Once Network connection is stable, will try to resend again",
                             Toast.LENGTH_SHORT
                         ).show()
+                        activityUploadBusinessDetailsBinding.lytBusiness.visibility = View.VISIBLE
                     }
                 })
 
@@ -306,26 +329,51 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
         getCategoryAndSegmentData()
     }
 
+    private fun showDialog() {
+        val dialog = Dialog(this)
+        dialog.setCancelable(false)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.udaym_layout)
+        val yesBtn = dialog.findViewById(R.id.yesBtn) as Button
+        val noBtn = dialog.findViewById(R.id.noBtn) as Button
+        yesBtn.setOnClickListener {
+            val url = "https://udyamregistration.gov.in/UdyamRegistration.aspx"
+            if (url.startsWith("https://") || url.startsWith("http://")) {
+                val uri = Uri.parse(url)
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Invalid Url", Toast.LENGTH_SHORT).show()
+            }
+            dialog.dismiss()
+        }
+        noBtn.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+
+    }
+
     private fun changeVisibility() {
-        activityUploadBusinessDetailsBinding.constitutionSpiner.visibility = View.GONE
-        activityUploadBusinessDetailsBinding.categorySpinner.visibility = View.GONE
-        activityUploadBusinessDetailsBinding.segmentSpinner.visibility = View.GONE
-        activityUploadBusinessDetailsBinding.typeSpinner.visibility = View.GONE
+        activityUploadBusinessDetailsBinding.constitutionSpiner.visibility = View.VISIBLE
+        activityUploadBusinessDetailsBinding.categorySpinner.visibility = View.VISIBLE
+        activityUploadBusinessDetailsBinding.segmentSpinner.visibility = View.VISIBLE
+        activityUploadBusinessDetailsBinding.typeSpinner.visibility = View.VISIBLE
         activityUploadBusinessDetailsBinding.tvCategory.visibility = View.GONE
         activityUploadBusinessDetailsBinding.tvConst.visibility = View.GONE
         activityUploadBusinessDetailsBinding.tvSegment.visibility = View.GONE
         activityUploadBusinessDetailsBinding.tvType.visibility = View.GONE
 
         activityUploadBusinessDetailsBinding.lytBusiness.visibility = View.VISIBLE
-        activityUploadBusinessDetailsBinding.tilConstitution.visibility = View.VISIBLE
-        activityUploadBusinessDetailsBinding.tilCategory.visibility = View.VISIBLE
-        activityUploadBusinessDetailsBinding.tilSegment.visibility = View.VISIBLE
-        activityUploadBusinessDetailsBinding.tilType.visibility = View.VISIBLE
+        activityUploadBusinessDetailsBinding.tilConstitution.visibility = View.GONE
+        activityUploadBusinessDetailsBinding.tilCategory.visibility = View.GONE
+        activityUploadBusinessDetailsBinding.tilSegment.visibility = View.GONE
+        activityUploadBusinessDetailsBinding.tilType.visibility = View.GONE
     }
 
     private fun getCategoryAndSegmentData() {
         showProgressDialog()
-        ApiClient().getAuthApiService(this).getCategorySegment().enqueue(
+        ApiClient().getMasterApiService(this).getCategorySegment().enqueue(
             object :
                 Callback<Categories> {
                 override fun onFailure(call: Call<Categories>, t: Throwable) {
@@ -338,38 +386,76 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
                     response: Response<Categories>
                 ) {
                     hideProgressDialog()
-                    val custData = response.body()
-                    val sharedPref: SharedPreferences? = getSharedPreferences(
-                        "categoriesList",
-                        Context.MODE_PRIVATE
+                    val docResponse = response.body() as Categories
+//                    Log.d("TAG", docResponse.data!![0].value)
+                    categorylistArray = arrayOf(docResponse.data.toString())
+                    Log.d("TAGLIST", docResponse.data.toString())
+                    val banksnames = arrayOf(docResponse.data!![0].value)
+                    val adapter = ArrayAdapter(
+                        this@UploadBusinessDetailsActivity,
+                        android.R.layout.simple_dropdown_item_1line,
+                        banksnames
                     )
-                    val prefsEditor = sharedPref?.edit()
-                    val gson = Gson()
-                    val json: String = gson.toJson(custData)
-                    prefsEditor?.putString("categoriesList", "")
-                    prefsEditor?.putString("categoriesList", json)
-                    prefsEditor?.apply()
-
-                    categories = custData?.categories!!
-                    categoryList.clear()
-                    for (category: Category in categories) {
-                        categoryList.add(category.categoryDesc)
+                    activityUploadBusinessDetailsBinding.categorySpinner.setAdapter(adapter)
+                    activityUploadBusinessDetailsBinding.categorySpinner.setOnItemClickListener { adapterView, view, i, l ->
+//                        Toast.makeText(applicationContext, "" + banklistArray[i], Toast.LENGTH_LONG)
+//                            .show()
+                        mCatId = docResponse.data[i].value
                     }
 
-                    loadAdapter(categoryList)
+//                    loadAdapter(categoryList)
                 }
 
             })
     }
 
-    private fun loadAdapter(categoryList: ArrayList<String>) {
-        val categoryAdapter = ArrayAdapter(
-            this,
-            R.layout.emi_options, categoryList
-        )
+//    private fun getSegmentData() {
+//        showProgressDialog()
+//        ApiClient().getMasterApiService(this).getBusinessActivity()?.enqueue(
+//            object :
+//                Callback<Categories> {
+//                override fun onFailure(call: Call<Categories>, t: Throwable) {
+//                    hideProgressDialog()
+//                    t.printStackTrace()
+//                }
+//
+//                override fun onResponse(
+//                    call: Call<Categories>,
+//                    response: Response<Categories>
+//                ) {
+//                    hideProgressDialog()
+//                    val custData = response.body()
+//                    val sharedPref: SharedPreferences? = getSharedPreferences(
+//                        "categoriesList",
+//                        Context.MODE_PRIVATE
+//                    )
+//                    val prefsEditor = sharedPref?.edit()
+//                    val gson = Gson()
+//                    val json: String = gson.toJson(custData)
+//                    prefsEditor?.putString("categoriesList", "")
+//                    prefsEditor?.putString("categoriesList", json)
+//                    prefsEditor?.apply()
+//
+//                    categories = custData?.data!!
+//                    categoryList.clear()
+//                    for (category: Category in categories) {
+//                        categoryList.add(category.value)
+//                    }
+//
+////                    loadAdapter(categoryList)
+//                }
+//
+//            })
+//    }
 
-        activityUploadBusinessDetailsBinding.categorySpinner.adapter = categoryAdapter
-    }
+//    private fun loadAdapter(categoryList: ArrayList<String>) {
+//        val categoryAdapter = ArrayAdapter(
+//            this,
+//            R.layout.emi_options, categoryList
+//        )
+//
+//        activityUploadBusinessDetailsBinding.categorySpinner.adapter = categoryAdapter
+//    }
 
     private fun saveCustomerBusinessData() {
 
@@ -438,7 +524,6 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
         currentLocation?.latitude?.let {
             jsonObject.addProperty("lat", it)
         }
-
         currentLocation?.longitude?.let {
             jsonObject.addProperty("lng", it)
         }
@@ -454,7 +539,14 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
                 hideProgressDialog()
 //                if (response.body()?.apiCode == "200") {
 ////                                    hideProgressDialog()
-                updateStage()
+//                updateStage()
+                val intent = Intent(
+                    this@UploadBusinessDetailsActivity,
+                    UploadBusinessPhotos::class.java
+                )
+                intent.putExtra("customerData", customerData)
+                startActivity(intent)
+                finish()
 //                } else {
 //                    Toast.makeText(
 //                        this@UploadBusinessDetailsActivity,
@@ -548,32 +640,32 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
 //            ).show()
 //            return false
 //        }
-                else if (activityUploadBusinessDetailsBinding.radioGroup.checkedRadioButtonId == -1) {
-                    Toast.makeText(
-                        this, "Please Select Your Address Preference",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    return false
-                } else if (activityUploadBusinessDetailsBinding.radioGroup.checkedRadioButtonId != -1) {
-                    val radioButtonID =
-                        activityUploadBusinessDetailsBinding.radioGroup.checkedRadioButtonId
-                    val radioButton =
-                        activityUploadBusinessDetailsBinding.radioGroup.findViewById<View>(
-                            radioButtonID
-                        ) as RadioButton
-                    val selectedText = radioButton.text as String
-                    if (selectedText == "No") {
-                        return if (activityUploadBusinessDetailsBinding.tieAddress.text.toString() == "") {
-                            Toast.makeText(
-                                this, "Please Select Your Business Address",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            false
-                        } else {
-                            true
-                        }
-                    }
-                }
+//                else if (activityUploadBusinessDetailsBinding.radioGroup.checkedRadioButtonId == -1) {
+//                    Toast.makeText(
+//                        this, "Please Select Your Address Preference",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                    return false
+//                } else if (activityUploadBusinessDetailsBinding.radioGroup.checkedRadioButtonId != -1) {
+//                    val radioButtonID =
+//                        activityUploadBusinessDetailsBinding.radioGroup.checkedRadioButtonId
+//                    val radioButton =
+//                        activityUploadBusinessDetailsBinding.radioGroup.findViewById<View>(
+//                            radioButtonID
+//                        ) as RadioButton
+//                    val selectedText = radioButton.text as String
+//                    if (selectedText == "No") {
+//                        return if (activityUploadBusinessDetailsBinding.tieAddress.text.toString() == "") {
+//                            Toast.makeText(
+//                                this, "Please Select Your Business Address",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                            false
+//                        } else {
+//                            true
+//                        }
+//                    }
+//                }
         return true
     }
 
@@ -583,6 +675,7 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
         imm.hideSoftInputFromWindow(view.applicationWindowToken, 0)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         val sdf = SimpleDateFormat("dd/M/yyyy", Locale.getDefault())
         val currentDate = sdf.format(Date())
@@ -616,41 +709,5 @@ class UploadBusinessDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSet
         val cal = Calendar.getInstance(Locale.getDefault())
         cal.time = date
         return cal
-    }
-
-    private fun updateStage() {
-        val jsonObject = JsonObject()
-        jsonObject.addProperty("customerId", customerData!!.customerId)
-        jsonObject.addProperty("stage", "BUSINESS")
-        showProgressDialog()
-        ApiClient().getAuthApiService(this).updateStage(jsonObject).enqueue(object :
-            Callback<AuthenticationResponse> {
-            override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
-                hideProgressDialog()
-                t.printStackTrace()
-                Toast.makeText(
-                    this@UploadBusinessDetailsActivity, "Current Stage not updated.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-            override fun onResponse(
-                call: Call<AuthenticationResponse>,
-                response: Response<AuthenticationResponse>
-            ) {
-                hideProgressDialog()
-                if (response.body()?.apiCode == "200") {
-
-                    val intent = Intent(
-                        this@UploadBusinessDetailsActivity,
-                        UploadBusinessPhotos::class.java
-                    )
-                    intent.putExtra("customerData", customerData)
-                    startActivity(intent)
-                    finish()
-                }
-
-            }
-        })
     }
 }

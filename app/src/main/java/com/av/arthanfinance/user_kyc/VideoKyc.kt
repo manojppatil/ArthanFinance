@@ -6,6 +6,7 @@ import `in`.digio.sdk.kyc.DigioKycResponseListener
 import `in`.digio.sdk.kyc.DigioSession
 import android.Manifest
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -20,15 +21,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.av.arthanfinance.CustomerHomeTabResponse
+import com.av.arthanfinance.models.CustomerHomeTabResponse
 import com.av.arthanfinance.R
-import com.av.arthanfinance.applyLoan.AuthenticationResponse
+import com.av.arthanfinance.applyLoan.model.AuthenticationResponse
 import com.av.arthanfinance.applyLoan.model.DigilockerTokenResponse
 import com.av.arthanfinance.networkService.ApiClient
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-import kotlinx.android.synthetic.main.activity_upload_bank_details.*
 import kotlinx.android.synthetic.main.activity_video_kyc.*
 import kotlinx.android.synthetic.main.activity_video_kyc.tvPercent
 import retrofit2.Call
@@ -264,6 +264,7 @@ class VideoKyc : AppCompatActivity(), DigioKycResponseListener {
         updateStage("VKYC_PA")
     }
 
+    @SuppressLint("InflateParams")
     fun showProgressDialog(message: String = "Loading...") {
         if (progressView == null) {
             val rootLayout = findViewById<FrameLayout>(android.R.id.content)
@@ -271,7 +272,6 @@ class VideoKyc : AppCompatActivity(), DigioKycResponseListener {
             progressView =
                 inflater.inflate(com.arthanfinance.core.R.layout.progress_layout, null, true)
             progressView?.isEnabled = false
-            progressView?.setOnClickListener { v: View? -> }
             progressView?.findViewById<TextView>(com.arthanfinance.core.R.id.txtMessage)?.text =
                 message
             rootLayout.addView(progressView)

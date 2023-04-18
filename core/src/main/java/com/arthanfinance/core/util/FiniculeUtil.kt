@@ -46,7 +46,7 @@ object FiniculeUtil {
         }
 
         // Expansion speed of 1dp/ms
-        a.setDuration(((targetHeight / v.context.resources.displayMetrics.density).toLong()))
+        a.duration = ((targetHeight / v.context.resources.displayMetrics.density).toLong())
         v.startAnimation(a)
     }
 

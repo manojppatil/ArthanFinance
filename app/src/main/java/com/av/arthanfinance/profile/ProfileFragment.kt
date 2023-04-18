@@ -1,104 +1,76 @@
 package com.av.arthanfinance.profile
 
-import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.core.widget.NestedScrollView
-import com.av.arthanfinance.CustomerHomeTabResponse
-import com.av.arthanfinance.MPINLoginActivity
+import androidx.fragment.app.Fragment
+import com.av.arthanfinance.*
 import com.av.arthanfinance.R
-import com.av.arthanfinance.applyLoan.AuthenticationResponse
-import com.av.arthanfinance.applyLoan.LoanProcessResponse
-import com.av.arthanfinance.applyLoan.UploadKycDetailsActivity
+import com.av.arthanfinance.user_kyc.UploadBusinessPhotos
+import com.av.arthanfinance.applyLoan.model.AuthenticationResponse
+import com.av.arthanfinance.applyLoan.model.UserDetailsResponse
 import com.av.arthanfinance.homeTabs.HomeDashboardActivity
+import com.av.arthanfinance.introductionPager.IntroductionPagerActivity
 import com.av.arthanfinance.networkService.ApiClient
+import com.av.arthanfinance.serviceRequest.Getintouch
+import com.bumptech.glide.Glide
+import com.example.awesomedialog.*
 import com.google.gson.JsonObject
+import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.fragment_profile.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 
 
-class ProfileFragment : Fragment(), DatePickerDialog.OnDateSetListener {
-    var customerData: CustomerHomeTabResponse? = null
-
+class ProfileFragment : Fragment() {
+    var customerData: UserDetailsResponse? = null
+    private var mCustomerId: String? = null
+    private lateinit var circleImg: CircleImageView
+    private lateinit var iv_logout: ImageButton
+    private var mpinStatus: String? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
+        val mPrefs: SharedPreferences? =
+            context?.getSharedPreferences("customerData", Context.MODE_PRIVATE)
+        mCustomerId = mPrefs?.getString("customerId", null)
+        mpinStatus = mPrefs?.getString("mpinStatus", null)
+        iv_logout = view.findViewById(R.id.iv_logout)
+        circleImg = view.findViewById(R.id.iv_profile_image)
+        iv_logout.setOnClickListener {
+            if (mpinStatus == "Complete") {
+                logOut()
+            } else {
+                AwesomeDialog.build(activity as HomeDashboardActivity)
+                    .title("Warning")
+                    .body("Please set your MPIN before Logging out")
+                    .icon(R.drawable.ic_info_icon)
+                    .onPositive("Set MPIN now") {
+                        val intent = Intent(
+                            activity,
+                            SetNewMpinActivity::class.java
+                        )
+                        startActivity(intent)
+                    }
+            }
+        }
 
         getProfileData()
 
-        view.findViewById<ImageView>(R.id.iv_update)?.setOnClickListener {
-            //updateProfileData()
-        }
-
-        /*view.findViewById<Button>(R.id.btn_update)?.setOnClickListener {
-            updateProfileData()
-        }
-        view.findViewById<EditText>(R.id.edt_dob)?.setOnClickListener {
-            val calendar: Calendar = Calendar.getInstance()
-            val datePickerDialog =
-                DatePickerDialog(requireContext(), this, calendar.get(
-                    Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
-            datePickerDialog.datePicker.maxDate = calendar.timeInMillis
-            datePickerDialog.show()
-        }*/
         return view
     }
 
-    /*private fun updateProfileData() {
-        (activity as HomeDashboardActivity).showProgressDialog()
-        val jsonObject = JsonObject()
-        jsonObject.addProperty("name", view?.findViewById<EditText>(R.id.edt_name)?.text.toString())
-        jsonObject.addProperty("panNo", view?.findViewById<EditText>(R.id.edt_pan)?.text.toString())
-        jsonObject.addProperty("dob", view?.findViewById<EditText>(R.id.edt_dob)?.text.toString())
-        jsonObject.addProperty("emailId", view?.findViewById<EditText>(R.id.edt_email)?.text.toString())
-        jsonObject.addProperty("mobileNo", view?.findViewById<EditText>(R.id.edt_mob_num)?.text.toString())
-        jsonObject.addProperty("resiAddress", view?.findViewById<EditText>(R.id.edt_residency)?.text.toString())
-        jsonObject.addProperty("ofcAddress", view?.findViewById<EditText>(R.id.edt_office)?.text.toString())
-        val context = activity?.applicationContext!!
-        ApiClient().getAuthApiService(context).updateProfile(jsonObject).enqueue(object :
-            Callback<AuthenticationResponse> {
-            override fun onResponse(
-                call: Call<AuthenticationResponse>,
-                response: Response<AuthenticationResponse>
-            ) {
-                (activity as HomeDashboardActivity).hideProgressDialog()
-                val updateRespoonse = response.body() as AuthenticationResponse
-                if (updateRespoonse.apiCode == 200.toString()) {
-                    Toast.makeText(
-                        context,
-                        "Update success",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }else{
-                    Toast.makeText(
-                        context,
-                        "Service Failure, Once Network connection is stable, will try to resend again",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-
-            override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
-                (activity as HomeDashboardActivity).hideProgressDialog()
-                t.printStackTrace()
-                Toast.makeText(
-                    context,
-                    "Service Failure, Once Network connection is stable, will try to resend again",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
-    }*/
 
     override fun onResume() {
         super.onResume()
@@ -107,51 +79,64 @@ class ProfileFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
     private fun getProfileData() {
         (activity as HomeDashboardActivity).showProgressDialog()
-        val context = getContext()
+        val context = context
         if (context != null) {
-            var mobileNo = ""
-            customerData?.mobNo?.let {
-                mobileNo = it
-            }
-            ApiClient().getAuthApiService(context).getProfile(mobileNo).enqueue(object :
+            val customerId = mCustomerId.toString()
+
+            ApiClient().getAuthApiService(context).getProfile(customerId).enqueue(object :
                 Callback<ProfileResponse> {
                 override fun onResponse(
                     call: Call<ProfileResponse>,
                     response: Response<ProfileResponse>
                 ) {
-                    (activity as HomeDashboardActivity).hideProgressDialog()
-                    val userData = response.body()
+                    try {
+                        (activity as HomeDashboardActivity).hideProgressDialog()
+                        val userData = response.body()
 
-                    view?.findViewById<CardView>(R.id.cv_progress)?.visibility = View.GONE
-                    view?.findViewById<TextView>(R.id.tv_no_data)?.visibility = View.GONE
-                    view?.findViewById<NestedScrollView>(R.id.nsv_data_layout)?.visibility = View.VISIBLE
-
-
-                    if (userData != null){
-                        userData.name?.let {
-                            view?.findViewById<TextView>(R.id.user_name)?.setText(it)
-                        }
-                        userData.mobileNo?.let {
-                            view?.findViewById<TextView>(R.id.user_mobile)?.setText(it)
-                        }
-                        userData.dob?.let {
-                            view?.findViewById<TextView>(R.id.user_dob)?.setText(it)
-                        }
-                        userData.emailId?.let {
-                            view?.findViewById<TextView>(R.id.user_email)?.setText(it)
-                        }
-                        userData.panNo?.let {
-                            view?.findViewById<TextView>(R.id.user_pan)?.setText(it)
-                        }
-                        userData.resiAddress?.let {
-                            view?.findViewById<TextView>(R.id.user_residence_address)?.setText(it)
-                        }
-                        userData.ofcAddress?.let {
-                            view?.findViewById<TextView>(R.id.user_office_address)?.setText(it)
-                        }
-                    }else{
                         view?.findViewById<CardView>(R.id.cv_progress)?.visibility = View.GONE
-                        view?.findViewById<TextView>(R.id.tv_no_data)?.visibility = View.VISIBLE
+                        view?.findViewById<TextView>(R.id.tv_no_data)?.visibility = View.GONE
+                        view?.findViewById<NestedScrollView>(R.id.nsv_data_layout)?.visibility =
+                            View.VISIBLE
+
+                        if (userData != null) {
+                            userData.name?.let {
+                                view?.findViewById<TextView>(R.id.user_name)
+                                    ?.setText(it)
+                            }
+                            userData.customerId?.let {
+                                view?.findViewById<TextView>(R.id.customer_id)?.setText(it)
+                            }
+                            userData.mobileNo?.let {
+                                view?.findViewById<TextView>(R.id.user_mobile)?.setText(it)
+                            }
+                            userData.panNo?.let {
+                                view?.findViewById<TextView>(R.id.user_pan)?.setText(it)
+                            }
+                            userData.cibil_score?.let {
+                                view?.findViewById<TextView>(R.id.credit_score)?.setText("$it/900")
+                            }
+                            if (response.body()?.customerImg.equals("") || response.body()?.customerImg == null) {
+                                Glide
+                                    .with(activity as HomeDashboardActivity)
+                                    .load(R.drawable.ic_accounts).fitCenter()
+                                    .placeholder(R.drawable.ic_accounts)
+                                    .into(circleImg)
+
+                            } else {
+                                response.body()?.customerImg?.let {
+                                    Glide
+                                        .with(activity as HomeDashboardActivity)
+                                        .load(it).fitCenter()
+                                        .placeholder(R.drawable.ic_accounts)
+                                        .into(circleImg)
+                                }
+                            }
+                        } else {
+                            view?.findViewById<CardView>(R.id.cv_progress)?.visibility = View.GONE
+                            view?.findViewById<TextView>(R.id.tv_no_data)?.visibility = View.VISIBLE
+                        }
+                    } catch (ex: NullPointerException) {
+                        ex.printStackTrace()
                     }
                 }
 
@@ -160,18 +145,104 @@ class ProfileFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                     t.printStackTrace()
                     view?.findViewById<CardView>(R.id.cv_progress)?.visibility = View.GONE
                     view?.findViewById<TextView>(R.id.tv_no_data)?.visibility = View.VISIBLE
-                    Toast.makeText(context, "A server error occurred. Please try after some time", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        "A server error occurred. Please try after some time",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             })
         }
 
     }
 
-    override fun onDateSet(datePicker: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        /*val text =  view?.findViewById<EditText>(R.id.edt_dob)
-        val date = "${dayOfMonth}/${month + 1}/${year}"
-        text?.setText(date)*/
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+//        lyt_credit.setOnClickListener {
+//            val intent = Intent(context, Credit_score::class.java)
+//            startActivity(intent)
+//        }
+
+        lyt_account.setOnClickListener {
+            val intent = Intent(context, MyAccount::class.java)
+            startActivity(intent)
+        }
+
+        lyt_business_pic.setOnClickListener {
+            val intent = Intent(context, UploadBusinessPhotos::class.java)
+            startActivity(intent)
+        }
+        lyt_help.setOnClickListener {
+            val intent = Intent(context, Getintouch::class.java)
+            startActivity(intent)
+        }
+
+        lyt_refer.setOnClickListener {
+            val intent = Intent(context, RewardsActivity::class.java)
+            startActivity(intent)
+        }
+
+        lyt_settings.setOnClickListener {
+            val intent = Intent(context, SettingsActivity::class.java)
+            startActivity(intent)
+        }
+
+        lyt_about.setOnClickListener {
+            val intent = Intent(context, IntroductionPagerActivity::class.java)
+            startActivity(intent)
+        }
+
+        lyt_Tnc.setOnClickListener {
+            val browserIntent =
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://arthan.finance/Termsandconditions"))
+            startActivity(browserIntent)
+        }
+
+        lyt_privacy_policy.setOnClickListener {
+            val browserIntent =
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://arthan.finance/Privacypolicy"))
+            startActivity(browserIntent)
+        }
     }
 
+    private fun logOut() {
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("customerId", mCustomerId)
+        (activity as HomeDashboardActivity).showProgressDialog("Logging out...")
+        if (context != null) {
+            ApiClient().getAuthApiService(requireContext()).logOut(jsonObject).enqueue(object :
+                Callback<AuthenticationResponse> {
+                override fun onResponse(
+                    call: Call<AuthenticationResponse>,
+                    response: Response<AuthenticationResponse>
+                ) {
+                    (activity as HomeDashboardActivity).hideProgressDialog()
+                    val custData = response.body()
+                    val sharedPref: SharedPreferences =
+                        (activity as HomeDashboardActivity).getSharedPreferences(
+                            "customerData",
+                            Context.MODE_PRIVATE
+                        )
+                    val editor = sharedPref.edit()
+                    editor.clear()
+                    editor.apply()
 
+                    if (custData != null && custData.message.trim() == "Success") {
+                        val intent =
+                            Intent(activity, MPINLoginActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                        (activity as HomeDashboardActivity).finish()
+                    }
+                }
+
+                override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
+                    (activity as HomeDashboardActivity).hideProgressDialog()
+                    t.printStackTrace()
+                    Toast.makeText(activity, "LogOut Failed", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            })
+        }
+    }
 }

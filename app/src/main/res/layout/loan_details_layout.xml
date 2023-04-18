@@ -1,121 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
-    android:layout_height="wrap_content">
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="8dp"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        app:cardCornerRadius="8dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
             android:id="@+id/root"
-            android:background="@drawable/bg_white_rect"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="35dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_height="35dp">
+                android:layout_marginRight="10dp"
+                android:visibility="visible">
+
                 <ImageView
-                    android:layout_width="25dp"
                     android:id="@+id/loanIconType"
-                    android:layout_gravity="center"
+                    android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/ic_personal_loan"/>
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_personal_loan" />
+
                 <TextView
+                    android:id="@+id/loanTypeText"
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
-                    android:id="@+id/loanTypeText"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
                     android:layout_marginStart="15dp"
                     android:gravity="center_vertical"
+                    android:text=""
+                    android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:text="Business Loan"/>
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-                <ImageButton
-                    android:layout_width="8dp"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/payBtn"
+                    android:layout_width="80dp"
+                    android:layout_height="30sp"
                     android:layout_gravity="center_vertical"
-                    android:layout_height="12dp"
-                    android:background="@drawable/ic_right_arrow" />
+                    android:background="@drawable/bg_language_rect"
+                    android:text="PAY"
+                    android:visibility="visible"
+                    android:textColor="@color/dark_orange2"
+                    android:textSize="14sp" />
             </LinearLayout>
+
             <ProgressBar
                 android:id="@+id/loanProgressBar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
+                android:layout_height="8dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:progressDrawable="@drawable/loandetails_progressbar_layout"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_height="8dp"/>
+                android:visibility="visible" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:orientation="horizontal">
+
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
+                    android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="16dp"
-                        android:textColor="@color/title_label_color"
-                        android:textStyle="normal"
                         android:gravity="center_vertical"
+                        android:text="Transaction ID"
+                        android:textColor="@color/title_label_color"
                         android:textSize="14sp"
-                        android:text= "Loan Account No"/>
+                        android:textStyle="normal" />
+
                     <TextView
+                        android:id="@+id/loanAccountNo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/loanAccountNo"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
                         android:gravity="center_vertical"
-                        android:textSize="14sp"
-                        android:text="XXXX XXXX 2285"/>
+                        android:text="XXXX XXXX 2285"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
                 </LinearLayout>
+
                 <View
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
+
                 <LinearLayout
                     android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:orientation="vertical"
-                    android:layout_height="match_parent">
+                    android:orientation="vertical">
+
                     <TextView
+                        android:id="@+id/loanAmountText"
                         android:layout_width="wrap_content"
                         android:layout_height="16dp"
-                        android:textColor="@color/title_label_color"
-                        android:id="@+id/loanAmountText"
-                        android:textStyle="normal"
                         android:gravity="center_vertical"
+                        android:text="Amount"
                         android:textSize="14sp"
-                        android:text="Loan Amount"/>
+                        android:textStyle="normal" />
+
                     <TextView
+                        android:id="@+id/loanAmountValue"
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
-                        android:textColor="@color/black"
-                        android:id="@+id/loanAmountValue"
-                        android:textStyle="bold"
                         android:gravity="center_vertical"
+                        android:text="1,00,000.00"
+                        android:textColor="@color/black"
                         android:textSize="14sp"
-                        android:text="1,00,000.00"/>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 

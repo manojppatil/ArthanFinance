@@ -12,7 +12,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.av.arthanfinance.R
-import com.av.arthanfinance.applyLoan.LoanDetails
+import com.av.arthanfinance.applyLoan.model.LoanDetails
 import com.av.arthanfinance.serviceRequest.GenerateLoanStatementActivity
 import com.av.arthanfinance.serviceRequest.LoanDetailsActivity
 import com.av.arthanfinance.serviceRequest.PaymentDuesActivity
@@ -54,13 +54,13 @@ class ViewLoansListAdapter(
 
         ObjectAnimator.ofInt(holder.loanProgressBar, "progress", 100).setDuration(1000).start()
         holder.root?.setOnClickListener {
-            if (status.equals("1")){
+            if (status == "1"){
                 val intent = Intent(context, LoanDetailsActivity::class.java)
                 context.startActivity(intent)
-            }else if (status.equals("2")){
+            }else if (status == "2"){
                 val intent = Intent(context, GenerateLoanStatementActivity::class.java)
                 context.startActivity(intent)
-            } else if (status.equals("3")) {
+            } else if (status == "3") {
                 val intent = Intent(context, PaymentDuesActivity::class.java)
                 context.startActivity(intent)
             }

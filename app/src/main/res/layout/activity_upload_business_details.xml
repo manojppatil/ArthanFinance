@@ -12,6 +12,7 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,77 +81,85 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilUdhyogAadharNo"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <LinearLayout
+                android:id="@+id/lyt_udyam"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tieUdhyogAadharNo"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilUdhyogAadharNo"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieUdhyogAadharNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mukta_vaani"
+                        android:hint="@string/udyog_aadhar"
+                        android:inputType="textCapCharacters"
+                        android:text="" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tv_udyamlink"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/not_availble_register_now"
+                    android:textAlignment="viewEnd"
+                    android:textColor=" @color/dark_orange1"
+                    android:textSize="16sp" />
+
+                <CheckBox
+                    android:id="@+id/cb_sameAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:checked="true"
+                    android:text="@string/udyam_consent"
+                    android:textSize="@dimen/dimen_10"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tl_state"
+                    app:layout_constraintVertical_bias="0"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnVerifyUdyam"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_24"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="@dimen/dimen_24"
+                    android:layout_marginBottom="10sp"
+                    android:background="@drawable/bg_register_rect_orange"
                     android:fontFamily="@font/mukta_vaani"
-                    android:hint="@string/udyog_aadhar"
-                    android:inputType="textCapCharacters"
-                    android:text="UDYAM-MP-23-0007772" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:id="@+id/tv_udyamlink"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="25dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/not_availble_register_now"
-                android:textAlignment="viewEnd"
-                android:textColor=" @color/dark_orange1"
-                android:textSize="16sp" />
-
-            <CheckBox
-                android:id="@+id/cb_sameAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_20"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="@dimen/dimen_20"
-                android:checked="true"
-                android:text="@string/udyam_consent"
-                android:textSize="@dimen/dimen_10"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tl_state"
-                app:layout_constraintVertical_bias="0"
-                app:layout_constraintVertical_chainStyle="packed" />
-
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnVerifyUdyam"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_24"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="@dimen/dimen_24"
-                android:layout_marginBottom="@dimen/dimen_24"
-                android:background="@drawable/bg_register_rect_orange"
-                android:fontFamily="@font/mukta_vaani"
-                android:paddingVertical="10dp"
-                android:text="@string/verify_udyam"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
+                    android:paddingVertical="10dp"
+                    android:text="@string/verify_udyam"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/lyt_business"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilBusinessName"
@@ -249,7 +258,9 @@
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="4dp"
                     android:background="@drawable/bg_spinner"
+                    android:editable="false"
                     android:ems="10"
+                    android:focusable="false"
                     android:hint="@string/constitution"
                     android:minHeight="50dp"
                     android:paddingEnd="30dp"
@@ -292,21 +303,22 @@
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
-                <androidx.appcompat.widget.AppCompatSpinner
+                <AutoCompleteTextView
                     android:id="@+id/categorySpinner"
                     style="@style/Widget.AppCompat.DropDownItem.Spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/bg_spinner"
-                    android:ems="10"
-                    android:hint="@string/category"
-                    android:minHeight="50dp"
-                    android:paddingEnd="30dp"
-                    android:textColor="@color/black"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/bg_grey92_rect"
+                    android:hint="Search Category"
+                    android:imeOptions="actionSearch"
+                    android:inputType="textAutoComplete|textAutoCorrect"
+                    android:paddingVertical="11dp"
+                    android:paddingStart="19dp"
                     android:textSize="16sp"
-                    app:hintTextColor="@color/whisper" />
+                    app:hintTextColor="@color/very_light_grey" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilCategory"
@@ -351,7 +363,9 @@
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="4dp"
                     android:background="@drawable/bg_spinner"
+                    android:editable="false"
                     android:ems="10"
+                    android:focusable="false"
                     android:hint="Segment"
                     android:minHeight="50dp"
                     android:paddingEnd="30dp"
@@ -402,7 +416,9 @@
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="4dp"
                     android:background="@drawable/bg_spinner"
+                    android:editable="false"
                     android:ems="10"
+                    android:focusable="false"
                     android:hint="@string/type"
                     android:minHeight="50dp"
                     android:paddingEnd="30dp"
@@ -573,6 +589,7 @@
                     android:layout_marginEnd="24dp"
                     android:background="@drawable/bg_rect_gains_boro"
                     android:drawablePadding="8dp"
+                    android:visibility="gone"
                     app:drawableEndCompat="@drawable/ic_baseline_my_location">
 
                     <TextView
@@ -612,7 +629,8 @@
                     android:fontFamily="@font/mukta_vaani"
                     android:text="@string/address_same_as_residence"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:visibility="gone" />
 
                 <RadioGroup
                     android:id="@+id/radio_group"
@@ -620,7 +638,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="25dp"
                     android:gravity="center|start"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <RadioButton
                         android:id="@+id/radio_yes"

@@ -1,21 +1,13 @@
 package com.av.arthanfinance
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import com.arthanfinance.core.base.BaseActivity
-import com.av.arthanfinance.applyLoan.AuthenticationResponse
+import com.av.arthanfinance.applyLoan.model.AuthenticationResponse
 import com.av.arthanfinance.applyLoan.model.GenericResponse
-import com.av.arthanfinance.homeTabs.HomeDashboardActivity
 import com.av.arthanfinance.networkService.ApiClient
-import com.google.gson.Gson
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.layout_forgot_password.*
 import retrofit2.Call

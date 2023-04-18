@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.widget.AppCompatTextView
 import com.av.arthanfinance.R
+import com.av.arthanfinance.applyLoan.model.LoanProcessResponse
 import com.av.arthanfinance.homeTabs.HomeDashboardActivity
 
 class LoanApplicationSubmittedActivity : AppCompatActivity() {
@@ -36,9 +37,9 @@ class LoanApplicationSubmittedActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 0) {
-            supportFragmentManager.popBackStack();
+            supportFragmentManager.popBackStack()
         } else {
-            super.onBackPressed();
+            super.onBackPressed()
         }
     }
 }

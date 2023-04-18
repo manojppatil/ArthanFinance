@@ -7,358 +7,17 @@
     android:orientation="vertical"
     tools:context=".user_kyc.UploadBankDetailsActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/lyt_bankaggregator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout13">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:ignore="MissingConstraints">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textview_verify_pan_detail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/we_need_bank_detail"
-                android:textColor="@color/black"
-                android:textSize="16dp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textview_verify_pan_note_detail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="30dp"
-                android:justificationMode="inter_word"
-                android:text="We will take you to the banking account aggregator platform to get your statement of account with your consent for assessment, this is a requirement for assessing your eligibility."
-                android:textColor="@color/black"
-                android:textSize="15dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:background="#000000"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <EditText
-                    android:id="@+id/textview_bank_mobile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_weight="1"
-                    android:justificationMode="inter_word"
-                    android:text="7738790221"
-                    android:textAlignment="center"
-                    android:textColor="#FF9300"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    app:fontFamily="@font/poppins" />
-
-                <ImageView
-                    android:id="@+id/edit_bank_mobile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="50dp"
-                    android:gravity="center"
-                    app:srcCompat="@drawable/ic_edit_profile" />
-            </LinearLayout>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textview_bank_change_mobile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="30dp"
-                android:justificationMode="inter_word"
-                android:text="You can change the above Mobile number using the edit option, In case your Mobile number is not linked to any bank account."
-                android:textColor="@color/black"
-                android:textSize="15dp" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginRight="10dp"
-                android:justificationMode="inter_word"
-                android:padding="10dp"
-                android:text="@string/bank_kyc_declaration"
-                android:textSize="13dp" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnAggregator"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="36dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/bg_register_rect_orange"
-                android:fontFamily="@font/mukta_vaani"
-                android:gravity="center"
-                android:minWidth="200dp"
-                android:paddingTop="9dp"
-                android:paddingBottom="9dp"
-                android:text="Proceed"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_18"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/lyt_bankpage"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/imageView23"
+    <ImageView
+        android:id="@+id/imageView23"
+        android:layout_width="250dp"
+        android:layout_height="50sp"
+        android:layout_marginTop="24dp"
+        android:scaleType="centerCrop"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout13">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnBankDetails"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:background="@drawable/bg_register_rect_orange"
-            android:paddingVertical="10dp"
-            android:text="@string/next"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="@+id/lyt_banking"
-            app:layout_constraintStart_toStartOf="@+id/lyt_banking"
-            app:layout_constraintTop_toBottomOf="@+id/lyt_banking" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnVideoKyc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:background="@drawable/bg_register_rect_orange"
-            android:paddingVertical="10dp"
-            android:text="@string/go_for_video_kyc"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@+id/lyt_banking"
-            app:layout_constraintStart_toStartOf="@+id/lyt_banking"
-            app:layout_constraintTop_toBottomOf="@+id/lyt_banking" />
-
-        <TextView
-            android:id="@+id/btnSkipVideoKyc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:gravity="center_horizontal"
-            android:paddingVertical="10dp"
-            android:text="@string/skip"
-            android:textAllCaps="false"
-            android:textColor="@color/blue_1"
-            android:textSize="17sp"
-            app:layout_constraintEnd_toEndOf="@+id/lyt_banking"
-            app:layout_constraintStart_toStartOf="@+id/lyt_banking"
-            app:layout_constraintTop_toBottomOf="@+id/lyt_banking" />
-
-
-        <AutoCompleteTextView
-            android:id="@+id/tieBankName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="14dp"
-            android:layout_marginRight="25dp"
-            android:background="@drawable/bg_grey92_rect"
-            android:hint="@string/bank_name"
-            android:imeOptions="actionSearch"
-            android:inputType="textAutoComplete|textAutoCorrect"
-            android:paddingVertical="11dp"
-            android:paddingStart="19dp"
-            android:textSize="16sp"
-            app:hintTextColor="@color/very_light_grey"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <AutoCompleteTextView
-            android:id="@+id/tieBankBranch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="25dp"
-            android:background="@drawable/bg_grey92_rect"
-            android:hint="@string/branch_name"
-            android:imeOptions="actionSearch"
-            android:inputType="textAutoComplete|textAutoCorrect"
-            android:paddingVertical="11dp"
-            android:paddingStart="19dp"
-            android:textSize="16sp"
-            app:hintTextColor="@color/very_light_grey"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tieBankName" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilIfscCode"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="@dimen/dimen_24"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tieBankBranch">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tieIfscCode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/mukta_vaani"
-                android:hint="@string/ifsc_code"
-                android:inputType="textCapCharacters" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilAccountNumber"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tilIfscCode">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tieAccountNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/mukta_vaani"
-                android:hint="@string/account_number"
-                android:inputType="numberPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilCAccountNumber"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tilAccountNumber">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tieCAccountNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/mukta_vaani"
-                android:hint="Confirm Account Number"
-                android:inputType="number" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <TextView
-            android:id="@+id/tv_banking"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/mukta_vaani"
-            android:padding="5sp"
-            android:text="@string/upload_bank_statement_pdf_file_downloaded_from_bank"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tilCAccountNumber" />
-
-        <LinearLayout
-            android:id="@+id/lyt_banking"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/dimen_24"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_banking">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnUploadbankstmt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_20"
-                android:layout_marginEnd="7.5dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_language_rect"
-                android:drawableStart="@drawable/ic_folder"
-                android:drawablePadding="-40dp"
-                android:fontFamily="@font/mukta_vaani"
-                android:gravity="center"
-                android:paddingLeft="25dp"
-                android:paddingTop="9dp"
-                android:paddingBottom="9dp"
-                android:text="@string/upload"
-                android:textAllCaps="false"
-                android:textColor="@color/dark_orange2"
-                android:textSize="@dimen/text_18"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:theme="@style/ToolbarStyleTheme"
-        app:elevation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/tbUploadBankDetails"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/ToolbarStyleTheme"
-            app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp"
-            app:contentInsetStartWithNavigation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:titleTextColor="@color/dark_orange2" />
-    </com.google.android.material.appbar.AppBarLayout>
+        app:srcCompat="@drawable/power_by_transp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout13"
@@ -409,15 +68,412 @@
             app:layout_constraintTop_toBottomOf="@+id/pbKycBank" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/imageView23"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_arthan_blue" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout13">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/lyt_bankaggregator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout13">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    tools:ignore="MissingConstraints">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50sp"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="30dp"
+                            android:text="Digital Loan Application"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="22dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/textview_verify_pan_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="30dp"
+                        android:text="Share your bank statement digitally"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="17dp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/textview_verify_pan_note_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="30dp"
+                        android:text="Please select your primary bank account in the next screen to calculate your limit eligibility, Rest assured, we will not share your information with anyone."
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/checkanimationView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="180dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        app:lottie_autoPlay="true"
+                        app:lottie_fileName="119048-login-verification.json"
+                        app:lottie_loop="false"
+                        app:lottie_repeatCount="10"
+                        app:lottie_repeatMode="restart"
+                        app:lottie_speed="1" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginRight="10dp"
+                        android:checked="true"
+                        android:padding="10dp"
+                        android:text="@string/bank_kyc_declaration"
+                        android:textSize="13dp"
+                        app:buttonTint="@color/indigoBlue" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnAggregator"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="36dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/bg_register_rect_orange"
+                        android:fontFamily="@font/mukta_vaani"
+                        android:gravity="center"
+                        android:minWidth="200dp"
+                        android:paddingTop="9dp"
+                        android:paddingBottom="9dp"
+                        android:text="Proceed"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_18"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/lyt_bankpage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout13">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnBankDetails"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/bg_register_rect_orange"
+                    android:paddingVertical="10dp"
+                    android:text="@string/next"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="@+id/lyt_banking"
+                    app:layout_constraintStart_toStartOf="@+id/lyt_banking"
+                    app:layout_constraintTop_toBottomOf="@+id/lyt_banking" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnVideoKyc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="25dp"
+                    android:background="@drawable/bg_register_rect_orange"
+                    android:paddingVertical="10dp"
+                    android:text="@string/go_for_video_kyc"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@+id/lyt_banking"
+                    app:layout_constraintStart_toStartOf="@+id/lyt_banking"
+                    app:layout_constraintTop_toBottomOf="@+id/lyt_banking" />
+
+                <TextView
+                    android:id="@+id/btnSkipVideoKyc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="25dp"
+                    android:gravity="center_horizontal"
+                    android:paddingVertical="10dp"
+                    android:text="@string/skip"
+                    android:textAllCaps="false"
+                    android:textColor="@color/blue_1"
+                    android:textSize="17sp"
+                    app:layout_constraintEnd_toEndOf="@+id/lyt_banking"
+                    app:layout_constraintStart_toStartOf="@+id/lyt_banking"
+                    app:layout_constraintTop_toBottomOf="@+id/lyt_banking" />
+
+
+                <AutoCompleteTextView
+                    android:id="@+id/tieBankName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/bg_grey92_rect"
+                    android:hint="@string/bank_name"
+                    android:imeOptions="actionSearch"
+                    android:inputType="textAutoComplete|textAutoCorrect"
+                    android:paddingVertical="11dp"
+                    android:paddingStart="19dp"
+                    android:textSize="16sp"
+                    app:hintTextColor="@color/very_light_grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/tieBankBranch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/bg_grey92_rect"
+                    android:hint="@string/branch_name"
+                    android:imeOptions="actionSearch"
+                    android:inputType="textAutoComplete|textAutoCorrect"
+                    android:paddingVertical="11dp"
+                    android:paddingStart="19dp"
+                    android:textSize="16sp"
+                    app:hintTextColor="@color/very_light_grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tieBankName" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilIfscCode"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tieBankBranch">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieIfscCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mukta_vaani"
+                        android:hint="@string/ifsc_code"
+                        android:inputType="textCapCharacters" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilAccountNumber"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tilIfscCode">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieAccountNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mukta_vaani"
+                        android:hint="@string/account_number"
+                        android:inputType="numberPassword" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilCAccountNumber"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tilAccountNumber">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieCAccountNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mukta_vaani"
+                        android:hint="@string/confirm_account_number"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilUpiId"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tilCAccountNumber">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieUpiId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mukta_vaani"
+                        android:hint="@string/upi_id"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_banking"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/mukta_vaani"
+                    android:padding="5sp"
+                    android:text="@string/upload_bank_statement_pdf_file_downloaded_from_bank"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tilUpiId" />
+
+                <LinearLayout
+                    android:id="@+id/lyt_banking"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_24"
+                    android:layout_marginTop="1dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_banking">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnUploadbankstmt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15sp"
+                        android:layout_marginEnd="7.5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_language_rect"
+                        android:drawableStart="@drawable/ic_folder"
+                        android:drawablePadding="-40dp"
+                        android:fontFamily="@font/mukta_vaani"
+                        android:gravity="center"
+                        android:paddingLeft="25dp"
+                        android:paddingTop="9dp"
+                        android:paddingBottom="9dp"
+                        android:text="@string/upload"
+                        android:textAllCaps="false"
+                        android:textColor="@color/dark_orange2"
+                        android:textSize="@dimen/text_18"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/lyt_animationView"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/animationView"
+                    android:layout_width="200sp"
+                    android:layout_height="200sp"
+                    app:lottie_autoPlay="true"
+                    app:lottie_fileName="49805-business-analysis.json"
+                    app:lottie_loop="true"
+                    app:lottie_repeatCount="100"
+                    app:lottie_repeatMode="restart"
+                    app:lottie_speed="1" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/ToolbarStyleTheme"
+        app:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tbUploadBankDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ToolbarStyleTheme"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:contentInsetStartWithNavigation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="@color/white" />
+    </com.google.android.material.appbar.AppBarLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

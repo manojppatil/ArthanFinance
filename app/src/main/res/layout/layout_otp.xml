@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/indigo"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -19,7 +18,6 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="40dp"
             android:background="@drawable/ic_back"
-            android:backgroundTint="@color/dark_orange2"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView
@@ -27,13 +25,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="30dp"
             android:layout_toEndOf="@id/img_back_otp"
             android:layout_toRightOf="@id/img_back_otp"
             android:text="@string/otp"
-            android:textColor="@color/white"
-            android:textSize="22sp" />
+            android:textColor="@color/indigo"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/img_mobile"
@@ -42,7 +41,8 @@
             android:layout_below="@id/tv_register"
             android:layout_marginLeft="27dp"
             android:layout_marginTop="40dp"
-            android:src="@drawable/ic_mobile_icon" />
+            android:src="@drawable/common_full_open_on_phone"
+            app:tint="@color/indigo" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_otp"
@@ -51,10 +51,10 @@
             android:layout_below="@+id/img_mobile"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="7dp"
-            android:fontFamily="@font/mukta_vaani"
             android:text="@string/one_time_pw"
-            android:textColor="@color/white"
-            android:textSize="28sp" />
+            android:textColor="@color/indigo"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_enter_6"
@@ -64,7 +64,7 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="1dp"
             android:layout_marginRight="25dp"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -75,7 +75,7 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="21dp"
             android:text="@string/enter_otp"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
 
@@ -86,7 +86,7 @@
             android:layout_below="@+id/tv_enter_otp"
             android:layout_marginHorizontal="@dimen/dimen_24"
             android:layout_marginTop="@dimen/dimen_20"
-            android:textColor="@color/blue_1"
+            android:textColor="@color/black"
             android:visibility="visible"
             app:bar_enabled="false"
             app:bar_height="2dp"

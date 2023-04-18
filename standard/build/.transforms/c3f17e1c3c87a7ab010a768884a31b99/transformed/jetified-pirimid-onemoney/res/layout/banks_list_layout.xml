@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.OnemoneyLoginActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/dimen_200">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:background="@color/app_bg"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_60"
+                android:layout_gravity="left"
+                android:padding="@dimen/dimen_7"
+                android:layout_margin="@dimen/dimen_10"
+                android:gravity="left"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:scaleType="fitStart"
+                    app:srcCompat="@drawable/arthan_logo" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    app:tint="@color/white"
+                    app:srcCompat="@drawable/info_icon" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dimen_0"
+                android:layout_marginLeft="@dimen/dimen_30"
+                android:layout_marginRight="@dimen/dimen_30"
+                android:orientation="vertical">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_24"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/poppins_medium"
+                    android:padding="@dimen/dimen_5"
+                    android:textColor="@color/black"
+                    android:text="@string/select_your_bank"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="7dp"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:background="@color/grey_light">
+                    <LinearLayout
+                        android:layout_width="@dimen/dimen_100"
+                        android:layout_height="7dp"
+                        android:background="@drawable/gradiant_border"
+                        android:orientation="horizontal" />
+                </RelativeLayout>
+                <GridView
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="visible"
+                    android:id="@+id/fips_list"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/continue_txt"
+            android:layout_marginLeft="@dimen/dimen_30"
+            android:layout_marginRight="@dimen/dimen_30"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="@dimen/font_18"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:background="@drawable/login_button"
+            android:id="@+id/button_continue"/>
+        <LinearLayout
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/user_count_img"
+                android:id="@+id/user_count_image"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="@dimen/font_18"
+                android:fontFamily="@font/poppins_regular"
+                android:layout_height="wrap_content"
+                android:text="@string/account_linked"
+                android:id="@+id/user_count_text"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/account_not_found_layout"
+            android:gravity="center"
+            android:layout_above="@+id/powerby_layout"
+            android:background="@color/thin_grey"
+            android:padding="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/pale_red"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="@dimen/font_12"
+                android:text="@string/didnot_find_your_bank_account"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                app:srcCompat="@drawable/ic_info_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="VectorDrawableCompat" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/powerby_layout"
+            android:gravity="center"
+            android:background="@color/white"
+            android:padding="@dimen/dimen_7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="@dimen/font_16"
+                android:text="@string/power_by"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                app:srcCompat="@drawable/one_money_logo"
+                android:layout_width="@dimen/dimen_80"
+                android:layout_height="@dimen/dimen_30"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

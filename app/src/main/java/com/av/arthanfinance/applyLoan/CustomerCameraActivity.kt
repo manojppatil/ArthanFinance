@@ -5,10 +5,12 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.av.arthanfinance.R
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraUtils
+import com.otaliastudios.cameraview.Flash
 import kotlinx.android.synthetic.main.activity_customer_camera.*
 import java.io.File
 
@@ -30,7 +32,7 @@ class CustomerCameraActivity : AppCompatActivity() {
                 CameraUtils.decodeBitmap(picture) { it ->
                     //Here comes your bitmap
                     BitmapUtils.saveBitmapToFile(it, getOutputMediaFile())
-                        .subscribe({ filePath ->
+                        .subscribe({
                             run {
                                 val resultIntent = Intent()
                                 resultIntent.putExtra("FilePath", getOutputMediaFile().absolutePath)
@@ -49,6 +51,18 @@ class CustomerCameraActivity : AppCompatActivity() {
 
         btn_front_camera.setOnClickListener {
             camera.toggleFacing()
+        }
+
+        btn_flash_off.setOnClickListener {
+            camera.flash = Flash.ON
+            btn_flash_off.visibility = View.GONE
+            btn_flash_on.visibility = View.VISIBLE
+        }
+
+        btn_flash_on.setOnClickListener {
+            camera.flash = Flash.OFF
+            btn_flash_off.visibility = View.VISIBLE
+            btn_flash_on.visibility = View.GONE
         }
 
         if (intent.getBooleanExtra("is_front", false)) {

@@ -1,5 +1,6 @@
 package com.av.arthanfinance.util
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
@@ -7,7 +8,6 @@ import android.content.IntentSender.SendIntentException
 import android.location.LocationManager
 import android.util.Log
 import android.widget.Toast
-import com.av.arthanfinance.DemoActivity
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
@@ -18,6 +18,7 @@ class GpsUtil {
     private var mLocationSettingsRequest: LocationSettingsRequest? = null
     private var locationManager: LocationManager? = null
 
+    @SuppressLint("NotConstructor")
     fun GpsUtil(context: Context) {
         this.context = context
         locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager

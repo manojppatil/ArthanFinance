@@ -13,14 +13,12 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.arthanfinance.core.base.BaseActivity
-import com.av.arthanfinance.applyLoan.AuthenticationResponse
 import com.av.arthanfinance.applyLoan.model.GenericResponse
 import com.av.arthanfinance.homeTabs.HomeDashboardActivity
+import com.av.arthanfinance.models.CustomerHomeTabResponse
 import com.av.arthanfinance.networkService.ApiClient
-import com.av.arthanfinance.user_kyc.UploadBankDetailsActivity
-import com.av.arthanfinance.user_kyc.UploadPanActivity
+import com.av.arthanfinance.util.ArthanFinConstants
 import com.chaos.view.PinView
-import com.google.gson.Gson
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.layout_set_new_mpin.*
 import retrofit2.Call
@@ -38,17 +36,26 @@ class SetNewMpinActivity : BaseActivity() {
         get() = R.layout.layout_set_new_mpin
     private var mobileNum = ""
     private var fbtoken = ""
+    private var mCustomerId: String? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val mPrefs: SharedPreferences? = getSharedPreferences("customerData", Context.MODE_PRIVATE)
+        mCustomerId = mPrefs?.getString("customerId", null)
+
         if (supportActionBar != null)
             supportActionBar?.hide()
         apiClient = ApiClient()
-        btnBack = findViewById(R.id.img_back_mpin)
+        btnBack = findViewById(R.id.img_back)
 
-        mobileNum = intent.extras?.get("mob") as String
+        when {
+            intent.hasExtra("mob") -> {
+                mobileNum = intent.extras?.get("mob") as String
+            }
+        }
+
 //        fbtoken = intent.extras?.get("fbtoken") as String
 
         btnBack.setOnClickListener {
@@ -81,9 +88,27 @@ class SetNewMpinActivity : BaseActivity() {
         mpin2.isPasswordHidden = true
         findViewById<Button>(R.id.save_m_pin).setOnClickListener {
             if (intent.hasExtra("MOBILE")) {
-                resetPin()
+                if (pin1.isNotEmpty()) {
+                    resetPin()
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Please enter valid MPIN",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
             } else {
-                setMPIN()
+                if (pin1.isNotEmpty()) {
+                    setMPIN()
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Please enter valid MPIN",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
             }
         }
     }
@@ -118,6 +143,11 @@ class SetNewMpinActivity : BaseActivity() {
                 val custData = response.body()
                 if (custData != null) {
                     if (custData.apiCode == "200") {
+                        val sharedPref: SharedPreferences =
+                            getSharedPreferences("customerData", Context.MODE_PRIVATE)
+                        val editor = sharedPref.edit()
+                        editor.putBoolean(ArthanFinConstants.isMpinSet, true)
+                        editor.apply()
                         val intent = Intent(this@SetNewMpinActivity, MPINLoginActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
@@ -157,7 +187,7 @@ class SetNewMpinActivity : BaseActivity() {
         }
         val mpin = pin1
         showProgressDialog()
-        val customerId = intent.extras?.get("customerId") as String
+        val customerId = mCustomerId
         val jsonObject = JsonObject()
         if (intent.hasExtra("MOBILE")) {
             jsonObject.addProperty("customerId", customerId)
@@ -185,16 +215,13 @@ class SetNewMpinActivity : BaseActivity() {
                 val custData = response.body()
 
                 if (custData != null && custData.errCode == 200.toString()) {
-                    val sharedPref: SharedPreferences? =
+                    val sharedPref: SharedPreferences =
                         getSharedPreferences("customerData", Context.MODE_PRIVATE)
-                    val prefsEditor = sharedPref?.edit()
-                    val gson = Gson()
-                    val json: String = gson.toJson(custData)
-                    prefsEditor?.putString("customerData", json)
-                    prefsEditor?.apply()
-
-                    val intent = Intent(this@SetNewMpinActivity, CheckEligibilityActivity::class.java)
-                    intent.putExtra("customerData", custData)
+                    val editor = sharedPref.edit()
+                    editor.putBoolean(ArthanFinConstants.isMpinSet, true)
+                    editor.apply()
+                    val intent =
+                        Intent(this@SetNewMpinActivity, HomeDashboardActivity::class.java)
                     startActivity(intent)
                     finish()
 

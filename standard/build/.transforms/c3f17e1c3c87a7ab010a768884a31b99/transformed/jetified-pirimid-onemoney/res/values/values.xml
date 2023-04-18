@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="active_dot">#7EDE9C</color>
+    <color name="app_bg">#003FB2</color>
+    <color name="app_range">#FF8C00</color>
+    <color name="black">#191E2F</color>
+    <color name="colorBlue">#213A8F</color>
+    <color name="dark_green">#4DC671</color>
+    <color name="grey_dark">#677A8D</color>
+    <color name="grey_light">#B9CADB</color>
+    <color name="grey_thinlight">#EAECED</color>
+    <color name="light_green">#80DE9C</color>
+    <color name="link_blue">#1775D9</color>
+    <color name="non_active_dot">#D9D9D9</color>
+    <color name="pale_red">#FF8C00</color>
+    <color name="purple_200">#FFFFFF</color>
+    <color name="purple_500">#EFEEF1</color>
+    <color name="purple_700">#E9E8EC</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="thin_grey">#EDF1F6</color>
+    <color name="white">#FFFFFFFF</color>
+    <dimen name="dimen_0">0dp</dimen>
+    <dimen name="dimen_1">1dp</dimen>
+    <dimen name="dimen_10">10dp</dimen>
+    <dimen name="dimen_100">100dp</dimen>
+    <dimen name="dimen_110">110dp</dimen>
+    <dimen name="dimen_12">12dp</dimen>
+    <dimen name="dimen_120">120dp</dimen>
+    <dimen name="dimen_13">13dp</dimen>
+    <dimen name="dimen_130">130dp</dimen>
+    <dimen name="dimen_14">14dp</dimen>
+    <dimen name="dimen_140">140dp</dimen>
+    <dimen name="dimen_15">15dp</dimen>
+    <dimen name="dimen_150">150dp</dimen>
+    <dimen name="dimen_16">16dp</dimen>
+    <dimen name="dimen_160">160dp</dimen>
+    <dimen name="dimen_18">18dp</dimen>
+    <dimen name="dimen_180">180dp</dimen>
+    <dimen name="dimen_19">19dp</dimen>
+    <dimen name="dimen_2">2dp</dimen>
+    <dimen name="dimen_20">20dp</dimen>
+    <dimen name="dimen_200">200dp</dimen>
+    <dimen name="dimen_210">210dp</dimen>
+    <dimen name="dimen_22">22dp</dimen>
+    <dimen name="dimen_220">220dp</dimen>
+    <dimen name="dimen_230">230dp</dimen>
+    <dimen name="dimen_24">24dp</dimen>
+    <dimen name="dimen_25">25dp</dimen>
+    <dimen name="dimen_250">250dp</dimen>
+    <dimen name="dimen_26">26dp</dimen>
+    <dimen name="dimen_260">260dp</dimen>
+    <dimen name="dimen_280">280dp</dimen>
+    <dimen name="dimen_3">3dp</dimen>
+    <dimen name="dimen_30">30dp</dimen>
+    <dimen name="dimen_300">300dp</dimen>
+    <dimen name="dimen_35">35dp</dimen>
+    <dimen name="dimen_4">4dp</dimen>
+    <dimen name="dimen_40">40dp</dimen>
+    <dimen name="dimen_44">44dp</dimen>
+    <dimen name="dimen_47">47dp</dimen>
+    <dimen name="dimen_5">5dp</dimen>
+    <dimen name="dimen_50">50dp</dimen>
+    <dimen name="dimen_6">6dp</dimen>
+    <dimen name="dimen_60">60dp</dimen>
+    <dimen name="dimen_66">66dp</dimen>
+    <dimen name="dimen_7">7dp</dimen>
+    <dimen name="dimen_70">70dp</dimen>
+    <dimen name="dimen_8">8dp</dimen>
+    <dimen name="dimen_80">80dp</dimen>
+    <dimen name="dimen_9">9dp</dimen>
+    <dimen name="dimen_90">90dp</dimen>
+    <dimen name="font_10">10sp</dimen>
+    <dimen name="font_11">11sp</dimen>
+    <dimen name="font_12">12sp</dimen>
+    <dimen name="font_13">13sp</dimen>
+    <dimen name="font_14">14sp</dimen>
+    <dimen name="font_16">16sp</dimen>
+    <dimen name="font_18">18sp</dimen>
+    <dimen name="font_20">20sp</dimen>
+    <dimen name="font_22">22sp</dimen>
+    <dimen name="font_24">24sp</dimen>
+    <dimen name="font_26">26sp</dimen>
+    <dimen name="font_28">28sp</dimen>
+    <dimen name="font_30">30sp</dimen>
+    <dimen name="font_7">7sp</dimen>
+    <string name="account_linked">6L+ Linked Accounts</string>
+    <string name="accounts_are_discovered_for_mobile_no">Accounts are discovered for mobile no.</string>
+    <string name="app_name">onemoney_commonsdk</string>
+    <string name="approve">Approve</string>
+    <string name="approve_consent">Approve Consent</string>
+    <string name="areyousure_want_reject_consent">Are you sure, you want to reject the consent? By doing so, may delay the process.</string>
+    <string name="change_number">Change number</string>
+    <string name="chnage_mobule_number">Change Mobile number</string>
+    <string name="choose_bank_accounts_click_link">Choose bank accounts and click “Link” to connect the account</string>
+    <string name="consent_approved">Consent Approved</string>
+    <string name="consent_approved_successfully">Consent Approved successfully.</string>
+    <string name="consent_data">Account Balance, Transactions and Profile</string>
+    <string name="consent_reject">Consent Rejected</string>
+    <string name="consent_rejected_successfully">Consent Rejected successfully.</string>
+    <string name="consent_valid_till">Consent valid till:</string>
+    <string name="consents_approved">10L+ Approved Consent</string>
+    <string name="continue_txt">Continue</string>
+    <string name="data_deleted_bef">Data deleted before</string>
+    <string name="did_not_getconsent_data">Consent not in Pending State. Please try with another new consent.</string>
+    <string name="didnot_find_your_accounts_list">Didn’t find your account listed?</string>
+    <string name="didnot_find_your_bank_account">Didn’t find your bank listed?</string>
+    <string name="empty_string"> </string>
+    <string name="enter_valid_mobilenumber">Please enter valid mobile number</string>
+    <string name="go_back">Go Back</string>
+    <string name="hereby_authorise">I hereby authorise the </string>
+    <string name="hereby_authorise_bank_to_fetch_bank_statement">I hereby authorise the <font color="#FF8C00">Arthan Finance </font> to fetch my bank statement  to check loan eligibility.</string>
+    <string name="in">in</string>
+    <string name="invalid_otp_please_try_again">Invalid OTP. Please try again.</string>
+    <string name="its_ok">Its OK!</string>
+    <string name="lets_get_started">Let’s Get Started</string>
+    <string name="link_account">Link</string>
+    <string name="link_another_account">Link another Account</string>
+    <string name="multiple_fip_accounts_not_aloed">Multiple Fips accounts linking not allowed. Please lik single fip accounts.</string>
+    <string name="no">No</string>
+    <string name="no_accounts_found">No Accounts Found.</string>
+    <string name="no_internet_connection">No Internet Connection!</string>
+    <string name="no_of_times">No. of times</string>
+    <string name="oh_no">Oh, No!</string>
+    <string name="onemoney_android_app">Onemoney \nAndroid App</string>
+    <string name="onemoney_web_app">Onemoney \nWeb App</string>
+    <string name="otp_resent_successfully">OTP resent successfully</string>
+    <string name="otp_sent_successfully">OTP sent successfully</string>
+    <string name="otp_sent_to">OTP sent to </string>
+    <string name="please_accept_terms_conditions">Please accpt terms and conditions to process signup.</string>
+    <string name="please_check_authorise">Please confirm checkbox before consent approval.</string>
+    <string name="please_enter_otp">Please enter valid OTP.</string>
+    <string name="please_link_account">Please link atleast one account</string>
+    <string name="please_link_selected_account">Please link selected account.</string>
+    <string name="please_select_account">Please select atleast one account</string>
+    <string name="please_select_atlease_one_bank">Please select atleast one bank to continue.</string>
+    <string name="please_select_atleast_linked_accounts_only">Please select atleast one linked account to continue.</string>
+    <string name="please_select_linked_accounts_only">Please select only linked accounts to continue.</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="power_by">Powered by</string>
+    <string name="proceed">Proceed</string>
+    <string name="profile">Profile</string>
+    <string name="puprose">Purpose</string>
+    <string name="reject">Reject</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="resend_otp_in">Resend OTP in 29 Secs</string>
+    <string name="select_all">Select All</string>
+    <string name="select_atleast_one_account">Please select atleast one account</string>
+    <string name="select_your_account_to_link">Select your account to link</string>
+    <string name="select_your_bank">Select your Bank</string>
+    <string name="send_otp">Send OTP</string>
+    <string name="statement_period">Statement Period</string>
+    <string name="summary">Summary</string>
+    <string name="terms_condition">I agree to Onemoney <font color="#1775D9">terms and conditions</font></string>
+    <string name="to">to</string>
+    <string name="to_fetch_my_bank_statement">to fetch my bank statement to consider me for loan.</string>
+    <string name="to_pause_revoke_use">To Pause or Revoke this Consent use</string>
+    <string name="transactions">Transactions</string>
+    <string name="user_signup">5L+ Happy Customers</string>
+    <string name="verify_otp">Verify OTP</string>
+    <string name="vua">VUA:</string>
+    <string name="we_are_redirect_back">We are redirecting back to Arthan Finance in <font color="#FF8C00" size="28">3 secs</font></string>
+    <string name="welcome_onemoney">Welcome to Onemoney</string>
+    <string name="yes">Yes</string>
+    <string name="your_consent_is_approved">Your consent is Approved!</string>
+    <string name="your_consent_is_rejected">Your consent is Rejected!</string>
+    <style name="ButtonKeyboard">
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="ButtonKeyboardWord">
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="CheckboxStyle" parent="Wrap_Wrap">
+        <item name="android:button">@drawable/checkbox_selector</item>
+        <item name="android:padding">@dimen/dimen_2</item>
+    </style>
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_down</item>
+        <item name="android:windowExitAnimation">@anim/slide_up</item>
+    </style>
+    <style name="Theme.Onemoneyandroidstandardcommonsdk" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryDark">@color/purple_700</item>
+        <item name="colorAccent">@color/teal_200</item>
+        <!-- Customize your theme here. -->
+    </style>
+    <style name="Wrap_Wrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="negative_button_style">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/colorBlue</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
+    <style name="overlay_styles" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="android:padding">3dp</item>
+        <item name="android:background">@color/white</item>
+        <item name="buttonBarPositiveButtonStyle">@style/positive_button_style</item>
+        <item name="buttonBarNegativeButtonStyle">@style/negative_button_style</item>
+        <item name="buttonBarNeutralButtonStyle">@style/positive_button_style</item>
+        <item name="titleMarginBottom">0dp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="positive_button_style">
+        <item name="android:background">@drawable/shape_button</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
+</resources>

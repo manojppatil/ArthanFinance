@@ -6,15 +6,51 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:padding="5sp">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="4dp"
+            android:fontFamily="@font/poppins"
+            android:gravity="center"
+            android:text="@string/powered_by"
+            android:textColor="@color/indigo"
+            android:textSize="17dp" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:layout_marginStart="4dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+            app:srcCompat="@drawable/ic_arthan_blue" />
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/imageView22"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_width="250dp"
+        android:layout_height="50sp"
+        android:layout_marginTop="24dp"
+        android:scaleType="centerCrop"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_arthan_blue" />
+        app:srcCompat="@drawable/power_by" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout12"
@@ -98,27 +134,44 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
+                <ImageView
+                    android:id="@+id/img_stay"
+                    android:layout_width="275sp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:src="@drawable/upload_pan_card"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/textview_verify_pan_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="30dp"
+                    android:gravity="center"
                     android:text="@string/we_need_pan_detail"
                     android:textColor="@color/black"
                     android:textSize="16dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/textview_verify_pan_note_detail"
+                    android:id="@+id/textview_verify_pan_note"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="30dp"
-                    android:justificationMode="inter_word"
-                    android:text="@string/kyc_requirement"
-                    android:textColor="@color/black" />
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="30dp"
+                    android:text="As mandated by RBI, We need your PAN Card for your identity verification"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+
 
                 <LinearLayout
                     android:id="@+id/digioPan"
@@ -139,15 +192,30 @@
                 </LinearLayout>
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textview_verify_pan_note_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginRight="15dp"
-                    android:justificationMode="inter_word"
-                    android:padding="10dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="30dp"
+                    android:text="@string/kyc_requirement"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/accept_tc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:checked="true"
+                    android:padding="5dp"
                     android:text="@string/pan_kyc_declaration"
-                    android:textSize="13dp" />
+                    android:textSize="12sp"
+                    app:buttonTint="@color/indigoBlue" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -177,11 +245,14 @@
                         android:textSize="@dimen/text_18"
                         android:visibility="gone" />
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <com.google.android.material.button.MaterialButton
+                        app:strokeColor="@color/colorAccent"
+                        app:strokeWidth="6dp"
                         android:id="@+id/btn_sendDigioPan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        app:shapeAppearance="@drawable/bg_register_rect_orange"
+                        android:layout_marginTop="1dp"
                         android:layout_marginBottom="8dp"
                         android:background="@drawable/bg_register_rect_orange"
                         android:drawableStart="@drawable/ic_camera_icon_yellow"

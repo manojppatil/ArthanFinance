@@ -7,7 +7,7 @@
     <color name="transparent">#00000000</color>
     <color name="whisper">#E5E5E5</color>
     <color name="dark_orange1">#FF9300</color>
-    <color name="dark_orange2">#ff8c00 </color>
+    <color name="dark_orange2">#ff8c00</color>
     <color name="white">#FFFFFF</color>
     <color name="indigo">#003FB2</color>
     <color name="light_indigo">#3C6DC7</color>
@@ -28,9 +28,13 @@
     <color name="ford_grey">#979797</color>
     <color name="blue_1">#1955BB</color>
     <color name="dim_grey">#E3E3E3</color>
-    <color name="light_green">#11BF42</color>
+    <color name="light_green">#16CA48</color>
     <color name="title_label_color">#838383</color>
     <color name="bg_theme_color">#EDEDED</color>
     <color name="light_gray">#EDEDED</color>
     <color name="meteor_red">#FB2525</color>
+    <color name="colorGrey3">#ecf0f1</color>
+    <color name="colorred1">#F41D0A</color>
+    <color name="colorGreen1">#18E433</color>
+    <color name="colorGreen2">#94ED0E</color>
 </resources>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#CC4A4A4A"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/dimen_20"
+        android:background="@drawable/link_account_otp_border"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_10"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:id="@+id/close_popup"
+            android:src="@drawable/ic_baseline_close_24" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/one_money_logo"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_10"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/link_otp_verify_image"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="@string/chnage_mobule_number"
+            android:textSize="@dimen/font_20"
+            android:layout_gravity="center"
+            android:fontFamily="@font/poppins_semibold"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dimen_15"
+            android:background="@drawable/ic_login_edit_border">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_14"
+                android:hint="Mobile Number"
+                android:maxLength="10"
+                android:focusable="false"
+                android:enabled="false"
+                android:clickable="false"
+                android:focusableInTouchMode="true"
+                android:inputType="number"
+                android:fontFamily="@font/poppins_regular"
+                android:background="@null"
+                android:textColor="@color/black"
+                android:drawablePadding="@dimen/dimen_5"
+                android:drawableLeft="@drawable/ic_mobile_icon"
+                android:id="@+id/verify_mobile_number"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dimen_15"
+            android:background="@drawable/otp_border">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_14"
+                android:hint="000000"
+                android:letterSpacing="1"
+                android:maxLength="6"
+                android:inputType="number"
+                android:fontFamily="@font/poppins_regular"
+                android:background="@null"
+                android:textColor="@color/black"
+                android:drawablePadding="@dimen/dimen_5"
+                android:id="@+id/verify_otp_input"/>
+        </RelativeLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_gravity="center"
+            android:id="@+id/resend_otpin"
+            android:textColor="@color/grey_dark"
+            android:fontFamily="@font/poppins_regular"
+            android:textSize="@dimen/font_16"
+            android:text="@string/resend_otp_in"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/verify_otp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="@dimen/font_16"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:background="@drawable/login_button"
+            android:id="@+id/verify_otp"/>
+
+    </LinearLayout>
+
+   <com.onemoney.android.commonsdk.utility.CustomKeyboard
+            android:id="@+id/otp_keyboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_margin="@dimen/dimen_10"
+            android:layout_alignParentBottom="true" />
+</RelativeLayout>

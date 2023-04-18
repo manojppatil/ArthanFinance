@@ -1,21 +1,23 @@
 package com.av.arthanfinance
 
 import `in`.aabhasjindal.otptextview.OtpTextView
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.annotation.Nullable
 import com.arthanfinance.core.base.BaseActivity
-import com.av.arthanfinance.applyLoan.AuthenticationResponse
-import com.av.arthanfinance.applyLoan.OtpResponse
+import com.av.arthanfinance.applyLoan.model.AuthenticationResponse
+import com.av.arthanfinance.applyLoan.model.OtpResponse
 import com.av.arthanfinance.networkService.ApiClient
-import com.av.arthanfinance.networkService.Customer
-import com.av.arthanfinance.networkService.DatabaseHandler
 import com.av.arthanfinance.util.SmsBroadcastReceiver
 import com.av.arthanfinance.util.SmsBroadcastReceiver.SmsBroadcastReceiverListener
 import com.google.android.gms.auth.api.phone.SmsRetriever
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,15 +33,13 @@ class OTPActivity : BaseActivity() {
     private lateinit var otpView: OtpTextView
     private lateinit var mobileTextView: TextView
     private lateinit var apiClient: ApiClient
-    private var customerId: String = ""
-    private lateinit var email: String
-    private lateinit var name: String
     private lateinit var mobileNo: String
     override val layoutId: Int
         get() = R.layout.layout_otp
     private val REQ_USER_CONSENT = 200
     var smsBroadcastReceiver: SmsBroadcastReceiver? = null
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -47,11 +47,6 @@ class OTPActivity : BaseActivity() {
             supportActionBar?.hide()
 
         mobileNo = intent.getStringExtra("mobNo").toString()
-        name = intent.getStringExtra("name").toString()
-        email = intent.getStringExtra("email").toString()
-//        customerId = intent.extras?.get("customerId") as String
-        val maskedMobileNo = mobileNo.substring(mobileNo.length - 2, mobileNo.length)
-        //mobileTextView.text = "Enter the 6 digit OTP sent on mobile number XXXXXXXX${maskedMobileNo}"
 
         btnBack = findViewById(R.id.img_back_otp)
 
@@ -85,8 +80,6 @@ class OTPActivity : BaseActivity() {
 
     private fun startSmsUserConsent() {
         val client = SmsRetriever.getClient(this)
-        //We can add sender phone number or leave it blank
-        // I'm adding null here
         client.startSmsUserConsent(null).addOnSuccessListener {
             Log.e("TAG", "On Success")
         }.addOnFailureListener {
@@ -99,8 +92,6 @@ class OTPActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_USER_CONSENT) {
             if (resultCode == RESULT_OK && data != null) {
-                //That gives all message to us.
-                // We need to get the code from inside with regex
                 val message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)
                 getOtpFromMessage(message!!)
             }
@@ -181,21 +172,11 @@ class OTPActivity : BaseActivity() {
                 override fun onResponse(call: Call<OtpResponse>, response: Response<OtpResponse>) {
                     hideProgressDialog()
                     val otpData = response.body()
-
-                    /*if (otpData != null) {
-                        if (otpData.status == "success") {
-                            Toast.makeText(this@OTPActivity,"An OTP has been sent to your mobile number", Toast.LENGTH_SHORT).show()
-                        } else {
-                            Toast.makeText(this@OTPActivity,"Could not generate OTP, please try after sometime",
-                                Toast.LENGTH_SHORT).show()
-                        }
-                    }*/
                 }
             })
     }
 
     private fun verifyOTP(mobileNo: String, otp: String) {
-
         val jsonObject = JsonObject()
         showProgressDialog()
         jsonObject.addProperty("mobileNo", mobileNo)
@@ -233,19 +214,13 @@ class OTPActivity : BaseActivity() {
     }
 
     private fun registerCustomerData() {
-        val name = name
-        val email = email
         val mobile = mobileNo
 
         showProgressDialog()
         //Need to create GSON JsonObject rather than creating a new class object and sending the data in the API Calls
         val jsonObject = JsonObject()
-        jsonObject.addProperty("name", name)
-        jsonObject.addProperty("mobNo", mobile)
-//        jsonObject.addProperty("dob", dob)
-        jsonObject.addProperty("emailId", email)
-        jsonObject.addProperty("consent", "Y")
-        jsonObject.addProperty("userLanguage", "English")
+        jsonObject.addProperty("mobileNo", mobile)
+        jsonObject.addProperty("aaConsent", "Y")
         ApiClient().getAuthApiService(this).registerCustomer(jsonObject).enqueue(object :
             Callback<AuthenticationResponse> {
             override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
@@ -267,9 +242,20 @@ class OTPActivity : BaseActivity() {
                 if (custData != null) {
                     if (custData.apiCode == "200") {
 //                        registerFinbox(custData.customerId!!)
-                        custData.customerId?.let {
-                            saveCustomerData(name, email, mobile, it)
-                        }
+//                        custData.customerId?.let {
+//                            saveCustomerData(name, email, mobile, it)
+//                        }
+                        val sharedPref: SharedPreferences? =
+                            getSharedPreferences("customerData", Context.MODE_PRIVATE)
+                        val prefsEditor = sharedPref?.edit()
+                        val gson = Gson()
+                        val json: String = gson.toJson(custData)
+                        prefsEditor?.putString("customerData", json)
+                        prefsEditor?.putString("mobNo", mobileNo)
+                        prefsEditor?.apply()
+                        val intent = Intent(this@OTPActivity, CheckEligibilityActivity::class.java)
+                        startActivity(intent)
+                        finish()
                     } else {
                         Log.e("Error", custData.message + "")
                     }
@@ -279,31 +265,36 @@ class OTPActivity : BaseActivity() {
     }
 
     //method for saving records in database
-    private fun saveCustomerData(
-        name: String,
-        email: String,
-        mobile: String,
-        custId: String
-    ) {
-        val databaseHandler = DatabaseHandler(this)
-        if (mobile.trim() != "") {
-            val status =
-                databaseHandler.saveCustomer(Customer(name, email, mobile, custId, null))
-            val intent = Intent(this@OTPActivity, SetNewMpinActivity::class.java)
-            intent.putExtra("customerId", custId)
-            intent.putExtra("mob", mobileNo)
-            intent.putExtra("fbtoken", "")
-            startActivity(intent)
-            finish()
-            if (status > -1) {
-                Log.e("Success", "Record saved to DB")
-            } else if (status == (-2).toLong()) {
-                Log.e("Warning", "Record already exists.")
-            }
-        } else {
-            Log.e("Error", "mobile no cannot be blank")
-        }
-    }
+//    private fun saveCustomerData(
+//        name: String,
+//        email: String,
+//        mobile: String,
+//        custId: String
+//    ) {
+//        val databaseHandler = DatabaseHandler(this)
+//        if (mobile.trim() != "") {
+//            val status =
+//                databaseHandler.saveCustomer(Customer(name, email, mobile, custId, null))
+////            val intent = Intent(this@OTPActivity, SetNewMpinActivity::class.java)
+////            intent.putExtra("customerId", custId)
+////            intent.putExtra("mob", mobileNo)
+////            intent.putExtra("fbtoken", "")
+////            startActivity(intent)
+////            finish()
+//            val intent =
+//                Intent(this, CheckEligibilityActivity::class.java)
+//            intent.putExtra("customerId", custId)
+//            startActivity(intent)
+//            finish()
+//            if (status > -1) {
+//                Log.e("Success", "Record saved to DB")
+//            } else if (status == (-2).toLong()) {
+//                Log.e("Warning", "Record already exists.")
+//            }
+//        } else {
+//            Log.e("Error", "mobile no cannot be blank")
+//        }
+//    }
 
 
 //    private fun registerFinbox(customerId: String) {

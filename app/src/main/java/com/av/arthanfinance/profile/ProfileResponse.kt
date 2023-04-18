@@ -12,13 +12,19 @@ data class ProfileResponse(
     @SerializedName("emailId")
     val emailId: String? = "",
     @SerializedName("mobileNo")
-    val mobileNo:String? = "",
+    val mobileNo: String? = "",
     @SerializedName("name")
     val name: String? = "",
+    @SerializedName("customerId")
+    val customerId: String? = "",
     @SerializedName("ofcAddress")
-    val ofcAddress:String? = "",
+    val ofcAddress: String? = "",
     @SerializedName("panNo")
-    val panNo:String? = "",
+    val panNo: String? = "",
     @SerializedName("resiAddress")
-    val resiAddress: String? = ""
+    val resiAddress: String? = "",
+    @SerializedName("customerImg")
+    val customerImg: String? = "",
+    @SerializedName("cibil_score")
+    val cibil_score: String? = ""
 ) : Parcelable

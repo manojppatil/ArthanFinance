@@ -14,7 +14,7 @@ class SmsBroadcastReceiver : BroadcastReceiver() {
         if (intent.action === SmsRetriever.SMS_RETRIEVED_ACTION) {
             val extras = intent.extras
             val smsRetrieverStatus: Status? = extras!![SmsRetriever.EXTRA_STATUS] as Status?
-            when (smsRetrieverStatus?.getStatusCode()) {
+            when (smsRetrieverStatus?.statusCode) {
                 CommonStatusCodes.SUCCESS -> {
                     val messageIntent =
                         extras.getParcelable<Intent>(SmsRetriever.EXTRA_CONSENT_INTENT)

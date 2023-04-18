@@ -27,16 +27,16 @@
             <ImageView
                 android:id="@+id/img_fingerprint"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="32dp"
                 android:src="@drawable/ic_fingerprint_logo"
-                android:visibility="invisible" />
+                android:visibility="visible" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_fingerprint"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="18dp"
                 android:layout_marginRight="40dp"
@@ -49,7 +49,7 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:visibility="invisible" />
+                android:visibility="visible" />
 
             <ImageView
                 android:id="@+id/img_or"
