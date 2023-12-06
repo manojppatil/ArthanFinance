@@ -228,6 +228,14 @@ class AuthenticationResponse : Serializable {
     @SerializedName("message")
     @Expose
     val message: String = ""
+
+    @SerializedName("aaStatus")
+    @Expose
+    val aaStatus: Boolean = false
+
+    @SerializedName("eligibilityStatus")
+    @Expose
+    val eligibilityStatus: String = ""
 }
 
 class GstReturnResponse : Serializable {
@@ -271,29 +279,45 @@ class OtpResponse : Serializable {
 }
 
 class LoanDetails : Serializable {
-    @SerializedName("loanId")
+    @SerializedName("balance")
     @Expose
-    var loanId: String? = null
+    var balance: String? = null
 
-    @SerializedName("loanAmount")
+    @SerializedName("accountId")
     @Expose
-    var loanAmount: String? = null
+    var accountId: String? = null
 
-    @SerializedName("loanSactionedDate")
+    @SerializedName("transactionName")
     @Expose
-    var loanSactionedDate: String? = null
+    var transactionName: String? = null
 
-    @SerializedName("loanType")
+    @SerializedName("transactionDateStr")
     @Expose
-    var loanType: String? = null
+    var transactionDateStr: String? = null
 
-    @SerializedName("loanAccountNum")
+    @SerializedName("accountEntryType")
     @Expose
-    var loanAccountNum: String? = null
+    var accountEntryType: String? = null
 
-    @SerializedName("percentCompleted")
+    @SerializedName("amount")
     @Expose
-    var percentCompleted: String? = null
+    var amount: String? = null
+
+    @SerializedName("description")
+    @Expose
+    var description: String? = null
+
+    @SerializedName("transactionId")
+    @Expose
+    var transactionId: String? = null
+
+    @SerializedName("debitAmount")
+    @Expose
+    var debitAmount: String? = null
+
+    @SerializedName("creditAmount")
+    @Expose
+    var creditAmount: String? = null
 
 }
 
@@ -326,10 +350,17 @@ class LoansResponse : Serializable {
     @Expose
     var limitPercent: Int? = null
 
-    @SerializedName("loans")
+    @SerializedName("accountStatement")
     @Expose
     var loans: ArrayList<LoanDetails>? = null
 
+    @SerializedName("totalCreditAmount")
+    @Expose
+    var totalCreditAmount: Int? = null
+
+    @SerializedName("totalDebitAmount")
+    @Expose
+    var totalDebitAmount: Int? = null
 }
 
 class CustomerAppHistoryResponse : Serializable {
@@ -467,6 +498,10 @@ class UserDetailsResponse : Serializable {
     @Expose
     var dob: String? = null
 
+    @SerializedName("mobileNo")
+    @Expose
+    var mobileNo: String? = null
+
     @SerializedName("gender")
     @Expose
     var gender: String? = null
@@ -586,6 +621,14 @@ class UserDetailsResponse : Serializable {
     @SerializedName("canWithdraw")
     @Expose
     var canWithdraw: String = ""
+
+    @SerializedName("rejectCode")
+    @Expose
+    var rejectCode: String = ""
+
+    @SerializedName("rejectReason")
+    @Expose
+    var rejectReason: String = ""
 
 }
 

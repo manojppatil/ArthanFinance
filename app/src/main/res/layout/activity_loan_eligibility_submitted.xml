@@ -17,72 +17,35 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/checkanimationView"
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dimen_20"
-                app:lottie_autoPlay="true"
-                app:lottie_fileName="69013-successful-check.json"
-                app:lottie_loop="false"
-                app:lottie_repeatCount="1"
-                app:lottie_repeatMode="restart"
-                app:lottie_speed="1" />
-
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/submitTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="90dp"
+                android:layout_marginHorizontal="30dp"
                 android:gravity="center"
-                android:text="Congratulations!"
+                android:text="Congratulations"
                 android:textColor="@color/white"
-                android:textSize="30sp"
+                android:textSize="35sp"
                 android:textStyle="bold" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:text="Application Submitted!"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:visibility="visible" />
-
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="38dp"
-                android:layout_marginTop="17dp"
-                android:layout_marginEnd="37dp"
-                android:gravity="center"
-                android:text="Your Arthik account is ready!"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="normal" />
 
             <LinearLayout
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:background="@drawable/godrayspg"
+                android:layout_marginTop="@dimen/dimen_35"
                 android:gravity="center">
 
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/animationView"
-                    android:layout_width="180sp"
-                    android:layout_height="180dp"
+                    android:layout_width="250sp"
+                    android:layout_height="250sp"
                     android:layout_gravity="center_horizontal"
                     android:scaleType="centerCrop"
+                    android:visibility="gone"
                     app:lottie_autoPlay="true"
-                    app:lottie_fileName="16729-congratulation-icon.json"
+                    app:lottie_fileName="animation_lk81pl70.json"
                     app:lottie_loop="true"
                     app:lottie_repeatCount="100"
                     app:lottie_repeatMode="restart"
@@ -93,12 +56,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="#FF9300"
-                    android:textSize="35sp"
+                    android:textColor="@color/white"
+                    android:textSize="65sp"
                     android:textStyle="bold"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
             </LinearLayout>
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/submit_subTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/submitDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="17dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="normal" />
 
             <View
                 android:layout_width="wrap_content"
@@ -107,7 +93,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150sp"
                 android:layout_marginTop="13dp"
                 android:orientation="vertical">
 
@@ -120,15 +106,15 @@
                     android:background="@drawable/bg_orange_border_25_radius"
                     android:gravity="center"
                     android:paddingLeft="50dp"
-                    android:paddingTop="@dimen/dimen_10"
+                    android:paddingTop="15dp"
                     android:paddingRight="50dp"
-                    android:paddingBottom="@dimen/dimen_10"
-                    android:text="Grab Your Offer"
+                    android:paddingBottom="15dp"
+                    android:text="Go To Dashboard"
                     android:textAllCaps="false"
                     android:textColor="@color/dark_orange2"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
 
             </LinearLayout>

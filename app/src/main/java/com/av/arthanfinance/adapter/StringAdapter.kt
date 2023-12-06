@@ -7,7 +7,7 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.av.arthanfinance.R
 
-public class StringAdapter(private val uploadDocsList: ArrayList<String>) : RecyclerView.Adapter<StringAdapter.StringViewHolder>() {
+class StringAdapter(private val uploadDocsList: ArrayList<String>) : RecyclerView.Adapter<StringAdapter.StringViewHolder>() {
 
     class StringViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val descriptionText: TextView? = itemView.findViewById<TextView>(R.id.fileNameText)

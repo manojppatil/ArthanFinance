@@ -15,6 +15,7 @@ import com.av.arthanfinance.databinding.ActivityCalculateKfsBinding
 import com.av.arthanfinance.models.CustomerHomeTabResponse
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.util.ArthanFinConstants
+import com.clevertap.android.sdk.CleverTapAPI
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_upi_mandate.*
@@ -26,6 +27,9 @@ class CalculateKfs : BaseActivity() {
     private lateinit var activity2: ActivityCalculateKfsBinding
     private lateinit var apiClient: ApiClient
     private lateinit var customerData: CustomerHomeTabResponse
+    var clevertapDefaultInstance: CleverTapAPI? = null
+
+
     override val layoutId: Int
         get() = R.layout.activity_calculate_kfs
 
@@ -34,7 +38,8 @@ class CalculateKfs : BaseActivity() {
         super.onCreate(savedInstanceState)
         activity2 = ActivityCalculateKfsBinding.inflate(layoutInflater)
         setContentView(activity2.root)
-
+        clevertapDefaultInstance =
+            CleverTapAPI.getDefaultInstance(applicationContext)//added by CleverTap Assistant
         if (supportActionBar != null)
             supportActionBar?.hide()
 
@@ -88,12 +93,13 @@ class CalculateKfs : BaseActivity() {
         showProgressDialog()
         val jsonObject = JsonObject()
         jsonObject.addProperty("customerId", customerData.customerId)
-
+        clevertapDefaultInstance?.pushEvent("Agreement Initiate started")//added by CleverTap Assistant
         ApiClient().getAuthApiService(this).initiateAgreement(jsonObject).enqueue(object :
             Callback<AuthenticationResponse> {
             override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
                 t.printStackTrace()
                 hideProgressDialog()
+                clevertapDefaultInstance?.pushEvent("Agreement Initiate failure")//added by CleverTap Assistant
                 Toast.makeText(
                     this@CalculateKfs,
                     "Agreement not initiated. Try after some time",
@@ -103,12 +109,13 @@ class CalculateKfs : BaseActivity() {
 
             override fun onResponse(
                 call: Call<AuthenticationResponse>,
-                response: Response<AuthenticationResponse>
+                response: Response<AuthenticationResponse>,
             ) {
                 hideProgressDialog()
                 val custData = response.body()
                 if (custData != null) {
 //                    if (custData.apiCode == "200") {
+                    clevertapDefaultInstance?.pushEvent("Agreement Initiate success")//added by CleverTap Assistant
                     updateStage(ArthanFinConstants.agreement)
 //                    } else {
 //                        Log.e("Error", custData.message + "")
@@ -136,10 +143,11 @@ class CalculateKfs : BaseActivity() {
 
             override fun onResponse(
                 call: Call<AuthenticationResponse>,
-                response: Response<AuthenticationResponse>
+                response: Response<AuthenticationResponse>,
             ) {
                 hideProgressDialog()
                 if (response.body()?.apiCode == "200") {
+                    clevertapDefaultInstance?.pushEvent("Agreement stage updated")//added by CleverTap Assistant
                     val intent = Intent(this@CalculateKfs, UpiMandateSuccess::class.java)
                     intent.putExtra("from", "agreement")
                     startActivity(intent)

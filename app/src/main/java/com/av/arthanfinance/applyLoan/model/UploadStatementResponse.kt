@@ -9,5 +9,8 @@ data class UploadStatementResponse(
     val ocrFile: String?,
     val fileCount: String?,
     val totalPages: String?,
-    val error: String?
+    val error: String?,
+    val trackingId: String,
+    val timestamp: String,
+    val message: String
 )

@@ -20,10 +20,7 @@ import android.util.Base64
 import android.util.Log
 import android.util.Patterns
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.cardview.widget.CardView
 import com.arthanfinance.core.base.BaseActivity
 import com.av.arthanfinance.R
@@ -32,8 +29,8 @@ import com.av.arthanfinance.applyLoan.model.AuthenticationResponse
 import com.av.arthanfinance.applyLoan.model.UserDetailsResponse
 import com.av.arthanfinance.homeTabs.HomeDashboardActivity
 import com.av.arthanfinance.networkService.ApiClient
-import com.av.arthanfinance.util.ArthanFinConstants
 import com.bumptech.glide.Glide
+import com.clevertap.android.sdk.CleverTapAPI
 import com.google.gson.JsonObject
 import com.theartofdev.edmodo.cropper.CropImage
 import de.hdodenhof.circleimageview.CircleImageView
@@ -60,23 +57,26 @@ class MyAccount : BaseActivity() {
     private var CROP_REQUEST_CODE_CAMERA = 103
     private var isPhotoUploaded: Boolean = false
     private lateinit var circleImg: CircleImageView
-    private var maritalStatusList =
-        arrayOf("Select Marital Status", "Single", "Married", "Separated", "Divorced")
+    var clevertapDefaultInstance: CleverTapAPI? = null
+
+
     override val layoutId: Int
         get() = R.layout.activity_my_account
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_account)
+        clevertapDefaultInstance =
+            CleverTapAPI.getDefaultInstance(applicationContext)//added by CleverTap Assistant
 
         val mPrefs: SharedPreferences? =
             getSharedPreferences("customerData", Context.MODE_PRIVATE)
         mCustomerId = mPrefs?.getString("customerId", null)
         circleImg = findViewById(R.id.iv_profile_image)
 
-        val maritalStatusAdapter =
-            ArrayAdapter(this, R.layout.emi_options, maritalStatusList)
-        sp_maritalstatus.adapter = maritalStatusAdapter
+//        val maritalStatusAdapter =
+//            ArrayAdapter(this, R.layout.emi_options, maritalStatusList)
+//        sp_maritalstatus.adapter = maritalStatusAdapter
 
         getProfileData()
 
@@ -134,10 +134,11 @@ class MyAccount : BaseActivity() {
             Callback<ProfileResponse> {
             override fun onResponse(
                 call: Call<ProfileResponse>,
-                response: Response<ProfileResponse>
+                response: Response<ProfileResponse>,
             ) {
                 hideProgressDialog()
                 val userData = response.body()
+                clevertapDefaultInstance?.pushEvent("Profile fetch success")//added by CleverTap Assistant
 
                 findViewById<CardView>(R.id.cv_progress)?.visibility = View.GONE
                 if (userData != null) {
@@ -166,8 +167,19 @@ class MyAccount : BaseActivity() {
                         findViewById<TextView>(R.id.edt_resi_address)?.setText(it)
                     }
                     userData.ofcAddress?.let {
-                        findViewById<TextView>(R.id.edt_ofc_address)?.setText(it)
+                        findViewById<EditText>(R.id.edt_ofc_address)?.setText(it)
                     }
+
+                    val adapter = ArrayAdapter.createFromResource(this@MyAccount,
+                        R.array.marital_status,
+                        android.R.layout.simple_spinner_item)
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    sp_maritalstatus.adapter = adapter
+                    if (userData.marital_status != null) {
+                        val spinnerPosition = adapter.getPosition(userData.marital_status)
+                        sp_maritalstatus.setSelection(spinnerPosition)
+                    }
+
                     if (response.body()?.customerImg.equals("") || response.body()?.customerImg == null) {
                         Glide
                             .with(this@MyAccount)
@@ -192,6 +204,8 @@ class MyAccount : BaseActivity() {
             override fun onFailure(call: Call<ProfileResponse>, t: Throwable) {
                 hideProgressDialog()
                 t.printStackTrace()
+                clevertapDefaultInstance?.pushEvent("Profile fetch failure")//added by CleverTap Assistant
+
                 findViewById<CardView>(R.id.cv_progress)?.visibility = View.GONE
                 Toast.makeText(
                     this@MyAccount,
@@ -200,8 +214,6 @@ class MyAccount : BaseActivity() {
                 ).show()
             }
         })
-
-
     }
 
     private fun updateProfileData() {
@@ -238,11 +250,12 @@ class MyAccount : BaseActivity() {
             Callback<AuthenticationResponse> {
             override fun onResponse(
                 call: Call<AuthenticationResponse>,
-                response: Response<AuthenticationResponse>
+                response: Response<AuthenticationResponse>,
             ) {
                 hideProgressDialog()
                 val updateRespoonse = response.body() as AuthenticationResponse
                 if (updateRespoonse.apiCode == 200.toString()) {
+                    clevertapDefaultInstance?.pushEvent("Profile update success")//added by CleverTap Assistant
                     Toast.makeText(
                         this@MyAccount,
                         "Profile Updated Successfully",
@@ -255,6 +268,7 @@ class MyAccount : BaseActivity() {
                     startActivity(intent)
                     finish()
                 } else {
+                    clevertapDefaultInstance?.pushEvent("Profile update failure")//added by CleverTap Assistant
                     Toast.makeText(
                         this@MyAccount,
                         "Service Failure, Once Network connection is stable, will try to resend again",
@@ -266,6 +280,7 @@ class MyAccount : BaseActivity() {
             override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
                 hideProgressDialog()
                 t.printStackTrace()
+                clevertapDefaultInstance?.pushEvent("Profile update service failure")//added by CleverTap Assistant
                 Toast.makeText(
                     this@MyAccount,
                     "Service Failure, Once Network connection is stable, will try to resend again",
@@ -338,6 +353,7 @@ class MyAccount : BaseActivity() {
                     val encodedImageStr = encodeImageString(scaled)
                     print("base64 Stirng $encodedImageStr")
                     showProgressDialog()
+                    clevertapDefaultInstance?.pushEvent("Profile photo captured")//added by CleverTap Assistant
                     uploadPhotoImage(encodedImageStr)
 
                 }
@@ -360,7 +376,7 @@ class MyAccount : BaseActivity() {
             Callback<AuthenticationResponse> {
             override fun onResponse(
                 call: Call<AuthenticationResponse>,
-                response: Response<AuthenticationResponse>
+                response: Response<AuthenticationResponse>,
             ) {
 
                 val docResponse = response.body() as AuthenticationResponse
@@ -370,6 +386,7 @@ class MyAccount : BaseActivity() {
                 if (apiCode.equals("200")) {
                     hideProgressDialog()
                     isPhotoUploaded = true
+                    clevertapDefaultInstance?.pushEvent("Profile photo uploaded")//added by CleverTap Assistant
                     Toast.makeText(
                         this@MyAccount,
                         "Photo uploaded successfully",
@@ -392,6 +409,7 @@ class MyAccount : BaseActivity() {
                         )
                             .show()
                     }
+                    clevertapDefaultInstance?.pushEvent("Profile photo not uploaded")//added by CleverTap Assistant
                     Toast.makeText(
                         this@MyAccount,
                         "Photo Upload Failed. Please Try After Sometime",
@@ -404,6 +422,7 @@ class MyAccount : BaseActivity() {
             override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
                 t.printStackTrace()
                 hideProgressDialog()
+                clevertapDefaultInstance?.pushEvent("Profile photo service failure")//added by CleverTap Assistant
                 Toast.makeText(
                     this@MyAccount,
                     "Service Failure, Once Network connection is stable, will try to resend again",
@@ -422,6 +441,7 @@ class MyAccount : BaseActivity() {
     }
 
     override fun onBackPressed() {
+        clevertapDefaultInstance?.pushEvent("Back from profile")//added by CleverTap Assistant
         finish()
     }
 
@@ -563,7 +583,7 @@ class MyAccount : BaseActivity() {
     private fun calculateInSampleSize(
         options: BitmapFactory.Options,
         reqWidth: Int,
-        reqHeight: Int
+        reqHeight: Int,
     ): Int {
         val height: Int = options.outHeight
         val width: Int = options.outWidth

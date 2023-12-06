@@ -2006,6 +2006,7 @@ int dimen dimen_210 0x0
 int dimen dimen_22 0x0
 int dimen dimen_220 0x0
 int dimen dimen_230 0x0
+int dimen dimen_24 0x0
 int dimen dimen_25 0x0
 int dimen dimen_250 0x0
 int dimen dimen_26 0x0
@@ -2586,6 +2587,7 @@ int drawable abc_vector_test 0x0
 int drawable acc_item_border 0x0
 int drawable account_item_border 0x0
 int drawable active_dot 0x0
+int drawable arthan_logo 0x0
 int drawable avd_hide_password 0x0
 int drawable avd_show_password 0x0
 int drawable awesome_bank 0x0
@@ -2606,6 +2608,7 @@ int drawable design_password_eye 0x0
 int drawable design_snackbar_background 0x0
 int drawable disable_link_acc_border 0x0
 int drawable drawable_failure 0x0
+int drawable fip_search_box 0x0
 int drawable gradiant_border 0x0
 int drawable ic_active_button 0x0
 int drawable ic_android_bg 0x0
@@ -2822,6 +2825,7 @@ int id auto 0x0
 int id autoComplete 0x0
 int id autoCompleteToEnd 0x0
 int id autoCompleteToStart 0x0
+int id bank_bottom_layout 0x0
 int id bank_small_icon 0x0
 int id barrier 0x0
 int id baseline 0x0
@@ -2829,6 +2833,7 @@ int id beginning 0x0
 int id bestChoice 0x0
 int id blocking 0x0
 int id bottom 0x0
+int id bottom_layout 0x0
 int id bounce 0x0
 int id browser_actions_header_text 0x0
 int id browser_actions_menu_item_icon 0x0
@@ -3024,6 +3029,7 @@ int id link_otp_keyboard 0x0
 int id linked_account 0x0
 int id linked_account_layout 0x0
 int id linked_accounts_list 0x0
+int id linked_bottom 0x0
 int id linked_fip_logo 0x0
 int id listMode 0x0
 int id list_item 0x0
@@ -3157,6 +3163,7 @@ int id scrollIndicatorDown 0x0
 int id scrollIndicatorUp 0x0
 int id scrollView 0x0
 int id scrollable 0x0
+int id searchView 0x0
 int id search_badge 0x0
 int id search_bar 0x0
 int id search_button 0x0

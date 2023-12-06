@@ -2482,6 +2482,7 @@ int drawable design_password_eye 0x0
 int drawable design_snackbar_background 0x0
 int drawable disable_link_acc_border 0x0
 int drawable drawable_failure 0x0
+int drawable fip_search_box 0x0
 int drawable gradiant_border 0x0
 int drawable ic_active_button 0x0
 int drawable ic_android_bg 0x0
@@ -2945,6 +2946,7 @@ int id navigation_header_container 0x0
 int id never 0x0
 int id noFields 0x0
 int id no_accounts 0x0
+int id no_data_found_text 0x0
 int id none 0x0
 int id normal 0x0
 int id notification_background 0x0
@@ -2998,6 +3000,7 @@ int id scrollIndicatorDown 0x0
 int id scrollIndicatorUp 0x0
 int id scrollView 0x0
 int id scrollable 0x0
+int id searchView 0x0
 int id search_badge 0x0
 int id search_bar 0x0
 int id search_button 0x0
@@ -3493,6 +3496,7 @@ int string mtrl_timepicker_confirm 0x0
 int string multiple_fip_accounts_not_aloed 0x0
 int string no 0x0
 int string no_accounts_found 0x0
+int string no_data_found 0x0
 int string no_internet_connection 0x0
 int string no_of_times 0x0
 int string oh_no 0x0

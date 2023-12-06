@@ -5,6 +5,7 @@ import `in`.digio.sdk.kyc.DigioKycConfig
 import `in`.digio.sdk.kyc.DigioKycResponseListener
 import `in`.digio.sdk.kyc.DigioSession
 import android.Manifest
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
@@ -23,6 +24,7 @@ import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.arthanfinance.core.base.BaseActivity
 import com.av.arthanfinance.R
@@ -36,6 +38,7 @@ import com.av.arthanfinance.databinding.ActivityUploadAadharBinding
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.util.AppLocationProvider
 import com.av.arthanfinance.util.ArthanFinConstants
+import com.clevertap.android.sdk.CleverTapAPI
 import com.fondesa.kpermissions.extension.listeners
 import com.fondesa.kpermissions.extension.permissionsBuilder
 import com.google.gson.Gson
@@ -68,16 +71,20 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
     private var leadId: String? = null
     private var lat: String? = null
     private var lng: String? = null
+    private var kycCompleteStatus = "66"
     override val layoutId: Int
         get() = R.layout.activity_upload_aadhar
     private var customerData: AuthenticationResponse? = null
+    var clevertapDefaultInstance: CleverTapAPI? = null
+
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityUploadAadharBinding = ActivityUploadAadharBinding.inflate(layoutInflater)
         setContentView(activityUploadAadharBinding.root)
-
+        clevertapDefaultInstance =
+            CleverTapAPI.getDefaultInstance(applicationContext)//added by CleverTap Assistant
         val mPrefs: SharedPreferences? = getSharedPreferences("customerData", Context.MODE_PRIVATE)
         val gson = Gson()
         val json: String? = mPrefs?.getString("customerData", null)
@@ -87,7 +94,16 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
             customerData = obj
         }
 
+        setSupportActionBar(activityUploadAadharBinding.tbUploadAdharDetails)
+        (supportActionBar)?.setDisplayHomeAsUpEnabled(false)
+        (this as AppCompatActivity).supportActionBar!!.title = "Let's finish your KYC!"
+
         fetchLocation(1)
+
+        activityUploadAadharBinding.pbKycAdhar.max = 100
+        ObjectAnimator.ofInt(activityUploadAadharBinding.pbKycAdhar, "progress", 66)
+            .setDuration(1000).start()
+        activityUploadAadharBinding.tvPercent.text = "${kycCompleteStatus}%"
 
         mobNo = mPrefs?.getString("mobNo", null)
         customerId = mPrefs?.getString("customerId", null)
@@ -211,9 +227,9 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
             activityUploadAadharBinding.aadharBack.tag = 2
         }
 
-        activityUploadAadharBinding.imgBack.setOnClickListener {
-            finish()
-        }
+//        activityUploadAadharBinding.imgBack.setOnClickListener {
+//            finish()
+//        }
     }
 
     private fun fetchLocation(from: Int) {
@@ -283,9 +299,6 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
                 AAADHAR_FRONT, AAADHAR_BACK -> {
                     try {
                         val fileUri = data!!.data
-//                        data.data?.let { uri ->
-//                            compressImage(uri.toString())
-//                        }
                         val intent = CropImage.activity(fileUri)
                             .getIntent(this)
                         if (requestCode == AAADHAR_FRONT)
@@ -310,6 +323,7 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
                         activityUploadAadharBinding.aadharFront.tag = 3
                         val base64 = BitmapUtils.getBase64(bitmap)
                         afUploadStatus = 1
+                        clevertapDefaultInstance?.pushEvent("Aadhaar Front captured")//added by CleverTap Assistant
                         uploadAadharImage2(base64, "AF", 1)
                     } else {
                         activityUploadAadharBinding.aadharBack.setImageBitmap(bitmap)
@@ -319,6 +333,7 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
                         activityUploadAadharBinding.aadharBack.tag = 4
                         val base64 = BitmapUtils.getBase64(bitmap)
                         abUploadStatus = 1
+                        clevertapDefaultInstance?.pushEvent("Aadhaar Back captured")//added by CleverTap Assistant
                         uploadAadharImage2(base64, "AB", 1)
                     }
                 }
@@ -332,10 +347,12 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
                     if (requestCode == CROP_AAADHAR_FRONT) {
                         activityUploadAadharBinding.aadharFront.setImageBitmap(bitmap)
                         afUploadStatus = 1
+                        clevertapDefaultInstance?.pushEvent("Aadhaar Front selected")//added by CleverTap Assistant
                         uploadAadharImage2(base64, "AF", 1)
                     } else {
                         activityUploadAadharBinding.aadharBack.setImageBitmap(bitmap)
                         abUploadStatus = 1
+                        clevertapDefaultInstance?.pushEvent("Aadhaar Back selected")//added by CleverTap Assistant
                         uploadAadharImage2(base64, "AB", 1)
                     }
                 }
@@ -358,7 +375,7 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
         jsonObject.addProperty("idType", idType)
         jsonObject.addProperty("imageBase64", encodedImageStr!!)
         jsonObject.addProperty("applicationType", "CUSTOMER")
-
+        clevertapDefaultInstance?.pushEvent("Aadhaar upload service started")//added by CleverTap Assistant
 
         ApiClient().getAuthApiService(this).verifyKYCDocs(jsonObject).enqueue(object :
             Callback<LoanProcessResponse> {
@@ -369,15 +386,17 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
                 val docResponse = response.body()
                 hideProgressDialog()
                 if (statusFrom == 1 && idType == "AF") {
+                    clevertapDefaultInstance?.pushEvent("Aadhaar front uploaded")//added by CleverTap Assistant
                     Toast.makeText(
                         this@UploadAadharActivity,
-                        "Aadhar front photo uploaded successfully",
+                        "Aadhaar front photo uploaded successfully",
                         Toast.LENGTH_SHORT
                     ).show()
                 } else if (statusFrom == 1 && idType == "AB") {
+                    clevertapDefaultInstance?.pushEvent("Aadhaar back uploaded")//added by CleverTap Assistant
                     Toast.makeText(
                         this@UploadAadharActivity,
-                        "Aadhar back photo uploaded successfully",
+                        "Aadhaar back photo uploaded successfully",
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
@@ -388,6 +407,7 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
             override fun onFailure(call: Call<LoanProcessResponse>, t: Throwable) {
                 t.printStackTrace()
                 hideProgressDialog()
+                clevertapDefaultInstance?.pushEvent("Aadhaar upload service failure")//added by CleverTap Assistant
                 Toast.makeText(
                     this@UploadAadharActivity,
                     "Service Failure, Once Network connection is stable, will try to resend again",
@@ -459,10 +479,10 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
             ) {
                 hideProgressDialog()
                 if (response.body()?.apiCode == "200") {
-
+                    clevertapDefaultInstance?.pushEvent("Offline aadhaar uploaded")//added by CleverTap Assistant
                     val intent = Intent(
                         this@UploadAadharActivity,
-                        UploadBusinessPhotos::class.java
+                        UploadBankDetailsActivity::class.java
                     )
                     startActivity(intent)
                     finish()
@@ -509,7 +529,7 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
         jsonObject.addProperty("aadharId", aadharId)
         jsonObject.addProperty("requestId", requestId)
         jsonObject.addProperty("createdAt", createdAt)
-
+        clevertapDefaultInstance?.pushEvent("Upload aadhaar service started")//added by CleverTap Assistant
         ApiClient().getAuthApiService(this).uploadCustomerAadhar(jsonObject).enqueue(object :
             Callback<AuthenticationResponse> {
             override fun onResponse(
@@ -524,19 +544,17 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
                     if (apiCode.equals("200")) {
                         Toast.makeText(
                             this@UploadAadharActivity,
-                            "Aadhar data uploaded successfully",
+                            "Aadhaar data uploaded successfully",
                             Toast.LENGTH_SHORT
                         ).show()
-
+                        clevertapDefaultInstance?.pushEvent("Aadhaar upload success")//added by CleverTap Assistant
                         val intent1 = Intent(
                             this@UploadAadharActivity,
-                            UploadBusinessPhotos::class.java
+                            UploadBankDetailsActivity::class.java
                         )
                         startActivity(intent1)
                         finish()
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-
-
                     } else {
                         try {
                             val jObjError = JSONObject(response.errorBody()!!.string())
@@ -549,6 +567,7 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
                             Toast.makeText(this@UploadAadharActivity, e.message, Toast.LENGTH_LONG)
                                 .show()
                         }
+                        clevertapDefaultInstance?.pushEvent("Aadhaar upload failure")//added by CleverTap Assistant
                         Toast.makeText(
                             this@UploadAadharActivity,
                             "Aadhaar Details Upload Failed. Please Try After Sometime",
@@ -563,6 +582,7 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
 
             override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
                 t.printStackTrace()
+                clevertapDefaultInstance?.pushEvent("Aadhaar upload service failure")//added by CleverTap Assistant
                 Toast.makeText(
                     this@UploadAadharActivity,
                     "Service Failure, Once Network connection is stable, will try to resend again",
@@ -578,6 +598,7 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
     }
 
     private fun getTokenDataFromDigilocker() {
+        clevertapDefaultInstance?.pushEvent("Digio KYC clicked")//added by CleverTap Assistant
         val jsonObject = JsonObject()
         val jsonObject1 = JsonObject()
         val jsonArray = JsonArray()
@@ -595,7 +616,6 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
         for (i in arr.indices) {
             jsonArray1.add(arr[i])
         }
-//        jsonArray1.add(jsonArray1)
         jsonObject1.add("document_types", jsonArray1)
 
         jsonArray.add(jsonObject1)
@@ -626,13 +646,15 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
                         val accessToken = tokenBody!!.accessToken1
                         val tokenId = accessToken.token
                         val kId = accessToken.kId
+                        clevertapDefaultInstance?.pushEvent("Digio token generated")//added by CleverTap Assistant
 
                         mobNo?.let { getRid(tokenId, kId, it) }
                     } catch (ex: Exception) {
                         ex.printStackTrace()
                         Log.e("TAG", ex.toString())
-                        activityUploadAadharBinding.digilockerLayout.visibility = View.GONE
-                        activityUploadAadharBinding.arthanLayout.visibility = View.VISIBLE
+                        clevertapDefaultInstance?.pushEvent("User cancel digio journey")//added by CleverTap Assistant
+                        activityUploadAadharBinding.digilockerLayout.visibility = View.VISIBLE
+                        activityUploadAadharBinding.arthanLayout.visibility = View.GONE
 
                     }
                 }
@@ -640,6 +662,7 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
                 override fun onFailure(call: Call<DigilockerTokenResponse>, t: Throwable) {
                     hideProgressDialog()
                     t.printStackTrace()
+                    clevertapDefaultInstance?.pushEvent("Digio token service failure")//added by CleverTap Assistant
                     Toast.makeText(
                         this@UploadAadharActivity,
                         "Service Failure, Once Network connection is stable, will try to resend again",
@@ -654,6 +677,7 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
             val config = DigioKycConfig()
             config.setEnvironment(DigioEnvironment.PRODUCTION)
             config.setLogo("https://arthan.finance/assets/images/logo-blue.png")
+            clevertapDefaultInstance?.pushEvent("Digio session started")//added by CleverTap Assistant
             val digioSession = DigioSession()
             digioSession.init(this@UploadAadharActivity, config)
             digioSession.startSession(
@@ -663,6 +687,7 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
                 this
             )
         } catch (e: Exception) {
+            clevertapDefaultInstance?.pushEvent("Digio session start failure")//added by CleverTap Assistant
             Toast.makeText(this, "" + e, Toast.LENGTH_SHORT).show()
         }
     }
@@ -670,19 +695,21 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
     override fun onDigioKycFailure(requestId: String?, response: String?) {
         Toast.makeText(
             this,
-            "Unable to fetch data from Digilocker, try Offline Aadhaar KYC",
+            "Unable to fetch data from Digilocker, try again",
             Toast.LENGTH_LONG
         ).show()
-        activityUploadAadharBinding.btnOfflineKyc2.isEnabled = true
+        clevertapDefaultInstance?.pushEvent("Digio KYC not fetched")//added by CleverTap Assistant
+        activityUploadAadharBinding.btnOfflineKyc2.isEnabled = false
         activityUploadAadharBinding.btnOfflineKyc2.setBackgroundResource(R.drawable.bg_register_rect_orange)
         activityUploadAadharBinding.btnOfflineKyc.setBackgroundResource(R.drawable.bg_register_rect_orange)
-        activityUploadAadharBinding.constraintLayout6.visibility = View.VISIBLE
-        activityUploadAadharBinding.constraintLayout4.visibility = View.GONE
+        activityUploadAadharBinding.constraintLayout6.visibility = View.GONE
+        activityUploadAadharBinding.constraintLayout4.visibility = View.VISIBLE
         activityUploadAadharBinding.constraintLayout6.setBackgroundResource(R.drawable.bg_white_rect)
         activityUploadAadharBinding.constraintLayout4.setBackgroundResource(R.drawable.bg_white_rect)
     }
 
     override fun onDigioKycSuccess(requestId: String?, response: String?) {
+        clevertapDefaultInstance?.pushEvent("Digio KYC fetched")//added by CleverTap Assistant
         getAadharDataFromDigilocker(requestId)
     }
 
@@ -699,7 +726,6 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
         val base = "$clientId:$clientSecret"
 
         val authHeader = "Basic " + Base64.encodeToString(base.toByteArray(), Base64.NO_WRAP)
-
         ApiClient().getDigilockerApiService(this, requestId!!).getDataFromDigiLocker(authHeader)
             .enqueue(object :
                 Callback<DigilockerDataResponse> {
@@ -735,7 +761,7 @@ class UploadAadharActivity : BaseActivity(), DigioKycResponseListener {
                     val addressLine3 = addressDetails.districtCity
                     val state = addressDetails.state
                     val pincode = addressDetails.pincode
-
+                    clevertapDefaultInstance?.pushEvent("Aadhaar data generated")//added by CleverTap Assistant
                     uploadAadharImage(
                         image!!,
                         name!!,

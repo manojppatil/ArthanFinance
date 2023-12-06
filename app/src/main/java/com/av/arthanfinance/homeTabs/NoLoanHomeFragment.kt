@@ -24,9 +24,9 @@ import com.av.arthanfinance.applyLoan.model.UserDetailsResponse
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.profile.MyAccount
 import com.av.arthanfinance.serviceRequest.Getintouch
-import com.av.arthanfinance.user_kyc.UploadAadharActivity
 import com.av.arthanfinance.user_kyc.UploadBusinessPhotos
 import com.bumptech.glide.Glide
+import com.clevertap.android.sdk.CleverTapAPI
 import com.ebanx.swipebtn.SwipeButton
 import com.example.awesomedialog.*
 import com.google.gson.Gson
@@ -80,6 +80,25 @@ class NoLoanHomeFragment : Fragment() {
     private var agreementStatus: String? = null
     private var mpinStatus: String? = null
     private var canWithdraw: String? = null
+    var clevertapDefaultInstance: CleverTapAPI? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        clevertapDefaultInstance =
+            CleverTapAPI.getDefaultInstance(context)//added by CleverTap Assistant
+        val mPrefs: SharedPreferences? =
+            context?.getSharedPreferences("customerData", Context.MODE_PRIVATE)
+        mCustomerId = mPrefs?.getString("customerId", null)
+
+        if (mCustomerId != null) {
+            getDashboardDetails()
+            clevertapDefaultInstance?.pushEvent("Dashboard API called")//added by CleverTap Assistant
+        } else {
+            clevertapDefaultInstance?.pushEvent("Missing customer Id")//added by CleverTap Assistant
+            Log.e("ERROR", "Missing customer Id")
+        }
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val imagesList = arrayListOf<ImageData>()
@@ -127,69 +146,14 @@ class NoLoanHomeFragment : Fragment() {
         }
     }
 
-    private fun calculateKfs() {
-        (activity as HomeDashboardActivity).showProgressDialog()
-        val jsonObject = JsonObject()
-        jsonObject.addProperty("customerId", mCustomerId)
-        jsonObject.addProperty("loanAmount", mLoanAmount)
-
-        ApiClient().getAuthApiService(activity as HomeDashboardActivity).calculatekfs(jsonObject)
-            .enqueue(object : Callback<LoanProcessResponse> {
-                override fun onResponse(
-                    call: Call<LoanProcessResponse>,
-                    response: Response<LoanProcessResponse>,
-                ) {
-                    (activity as HomeDashboardActivity).hideProgressDialog()
-                    loanResponse = response.body()
-                    Log.e("TAG", loanResponse.toString())
-                    if (loanResponse != null) {
-                        val intent = Intent(
-                            activity,
-                            CalculateKfs::class.java
-                        )
-                        val loanId = loanResponse!!.applicationId
-                        Log.e("TAGid", loanResponse!!.applicationId.toString())
-                        intent.putExtra("loanId", loanId)
-                        intent.putExtra("loanResponse", loanResponse)
-                        intent.putExtra("loanAmount", mLoanAmount)
-                        intent.putExtra("netDisbursedAmt", loanResponse!!.loanAmount)
-                        intent.putExtra("repaymentDate", loanResponse!!.repaymentDate)
-                        intent.putExtra("tenure", loanResponse!!.tenure)
-                        intent.putExtra("totalInterest", loanResponse!!.totalInterest)
-                        intent.putExtra("payableAmt", loanResponse!!.payableAmt)
-                        startActivity(intent)
-                    } else {
-                        Toast.makeText(
-                            this@NoLoanHomeFragment.activity,
-                            "Service Failure, Please try after sometime",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-
-                override fun onFailure(call: Call<LoanProcessResponse>, t: Throwable) {
-                    t.printStackTrace()
-                    (activity as HomeDashboardActivity).hideProgressDialog()
-                    Toast.makeText(
-                        this@NoLoanHomeFragment.activity,
-                        "Service Failure, Once Network connection is stable, will try to resend again",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            })
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home_tab, container, false)
+        (activity as HomeDashboardActivity).showProgressDialog()
 
-        val mPrefs: SharedPreferences? =
-            context?.getSharedPreferences("customerData", Context.MODE_PRIVATE)
-        mCustomerId = mPrefs?.getString("customerId", null)
-        Log.e("TAG::", mCustomerId.toString())
         customerName = view.findViewById(R.id.customerName)
         customerLastLogin = view.findViewById(R.id.customerLastLogin)
         circleImg = view.findViewById(R.id.circle_img)
@@ -225,22 +189,29 @@ class NoLoanHomeFragment : Fragment() {
 //        }
 
         step_one_layout.setOnClickListener {
+            clevertapDefaultInstance?.pushEvent("Business details step clicked")//added by CleverTap Assistant
             val intent1 =
-                Intent(context, UploadAadharActivity::class.java)
+                Intent(context, UploadBusinessPhotos::class.java)
             startActivity(intent1)
         }
 
         refreshButton.setOnClickListener {
-            getDashboardDetails()
+            clevertapDefaultInstance?.pushEvent("Refresh button clicked")//added by CleverTap Assistant
+            if (mCustomerId != null) {
+                getDashboardDetails()
+            } else {
+                clevertapDefaultInstance?.pushEvent("Missing customer Id")//added by CleverTap Assistant
+                Log.e("ERROR", "Missing customer Id")
+            }
         }
-        getDashboardDetails()
+
         return view
     }
 
     private fun getDashboardDetails() {
-        (activity as HomeDashboardActivity).showProgressDialog()
+        (context as HomeDashboardActivity).showProgressDialog()
         val customerId = mCustomerId.toString()
-        Log.e("TAG::", customerId)
+        Log.e("TAG::", mCustomerId.toString())
         ApiClient().getAuthApiService(activity as HomeDashboardActivity)
             .getCustomerDashboard(customerId)
             .enqueue(object :
@@ -250,19 +221,23 @@ class NoLoanHomeFragment : Fragment() {
                     call: Call<UserDetailsResponse>,
                     response: Response<UserDetailsResponse>,
                 ) {
-                    (activity as HomeDashboardActivity).hideProgressDialog()
-                    if (response.body() != null) {
-                        try {
-                            Log.e("TAG", response.body().toString())
+                    try {
+                        (activity as HomeDashboardActivity).hideProgressDialog()
+                        if (response.body() != null) {
+                            clevertapDefaultInstance?.pushEvent("Dashboard API success")//added by CleverTap Assistant
+                            Log.e("TAG", response.body()!!.eligibilityStatus)
                             if (response.body()!!.eligibilityStatus == "N") {
+                                clevertapDefaultInstance?.pushEvent("User not eligible")//added by CleverTap Assistant
                                 val intent = Intent(
                                     activity,
                                     LoanEligibilityFailed::class.java
                                 )
                                 intent.putExtra("from", "home")
+                                intent.putExtra("rejectCode", response.body()!!.rejectCode)
                                 startActivity(intent)
                                 (activity as HomeDashboardActivity).finish()
                             } else {
+                                clevertapDefaultInstance?.pushEvent("User is eligible")//added by CleverTap Assistant
                                 mpinStatus = response.body()!!.mpinStatus
                                 iv_logout.setOnClickListener {
                                     if (mpinStatus == "Complete") {
@@ -298,6 +273,7 @@ class NoLoanHomeFragment : Fragment() {
                                 val three = random.substring(8, 12)
                                 card_number.text = "$one $two $three"
                                 if (response.body()!!.isApplied.equals("N")) {
+                                    swipeButton.visibility = View.GONE
                                     kycStatus = response.body()!!.kycStatus
                                     nachStatus = response.body()!!.nachStatus
                                     agreementStatus = response.body()!!.agreementStatus
@@ -337,28 +313,22 @@ class NoLoanHomeFragment : Fragment() {
 
                                     step_two_layout.setOnClickListener {
                                         if (kycStatus == "Complete") {
+                                            clevertapDefaultInstance?.pushEvent("Nach Mandate step clicked")//added by CleverTap Assistant
                                             val intent1 =
                                                 Intent(context, UpiMandate::class.java)
                                             startActivity(intent1)
                                         } else {
                                             AwesomeDialog.build(activity as HomeDashboardActivity)
                                                 .title("Warning")
-                                                .body("Please complete your KYC and business details")
+                                                .body("Please complete business details")
                                                 .icon(R.drawable.ic_info_icon)
-                                                .onPositive("Aadhaar KYC") {
+                                                .onPositive("Business Details") {
                                                     val intent1 =
                                                         Intent(
                                                             context,
-                                                            UploadAadharActivity::class.java
+                                                            UploadBusinessPhotos::class.java
                                                         )
                                                     startActivity(intent1)
-                                                }
-                                                .onNegative("Business Details") {
-                                                    val intent = Intent(
-                                                        context,
-                                                        UploadBusinessPhotos::class.java
-                                                    )
-                                                    startActivity(intent)
                                                 }
                                         }
                                     }
@@ -366,10 +336,13 @@ class NoLoanHomeFragment : Fragment() {
                                     step_three_layout.setOnClickListener {
                                         if (profileStatus == "Complete") {
                                             when (nachStatus) {
-                                                "NACH Registration Successful" -> {
+                                                "NACH Registration Successful",
+                                                -> {
+                                                    clevertapDefaultInstance?.pushEvent("Nach registration successful")//added by CleverTap Assistant
                                                     calculateKfs()
                                                 }
                                                 "partial" -> {
+                                                    clevertapDefaultInstance?.pushEvent("Nach mandate SMS received")//added by CleverTap Assistant
                                                     Toast.makeText(
                                                         this@NoLoanHomeFragment.activity,
                                                         "Please check your SMS to complete E-NACH mandate",
@@ -377,6 +350,7 @@ class NoLoanHomeFragment : Fragment() {
                                                     ).show()
                                                 }
                                                 "pending" -> {
+                                                    clevertapDefaultInstance?.pushEvent("Nach mandate pending")//added by CleverTap Assistant
                                                     Toast.makeText(
                                                         this@NoLoanHomeFragment.activity,
                                                         "Kindly register for E-NACH Mandate",
@@ -384,6 +358,7 @@ class NoLoanHomeFragment : Fragment() {
                                                     ).show()
                                                 }
                                                 "auth_failed" -> {
+                                                    clevertapDefaultInstance?.pushEvent("Nach mandate auth failed")//added by CleverTap Assistant
                                                     Toast.makeText(
                                                         this@NoLoanHomeFragment.activity,
                                                         "Nach authentication failed, Please try after some time",
@@ -406,6 +381,7 @@ class NoLoanHomeFragment : Fragment() {
 
                                     step_four_layout.setOnClickListener {
                                         if (canWithdraw == "Y") {
+                                            clevertapDefaultInstance?.pushEvent("Withdraw step clicked")//added by CleverTap Assistant
                                             val intent =
                                                 Intent(
                                                     activity?.applicationContext,
@@ -463,20 +439,21 @@ class NoLoanHomeFragment : Fragment() {
                                     }
                                 }
                             }
-
-                        } catch (ex: NullPointerException) {
-                            ex.printStackTrace()
+                        } else {
+                            clevertapDefaultInstance?.pushEvent("Dashboard API failure")//added by CleverTap Assistant
+                            Toast.makeText(
+                                context,
+                                "Service Failure, Once server connection is stable, will try to resend again",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-                    } else {
-                        Toast.makeText(
-                            context,
-                            "Service Failure, Once server connection is stable, will try to resend again",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                    } catch (ex: NullPointerException) {
+                        ex.printStackTrace()
                     }
                 }
 
                 override fun onFailure(call: Call<UserDetailsResponse>, t: Throwable) {
+                    clevertapDefaultInstance?.pushEvent("Dashboard service failure")//added by CleverTap Assistant
                     t.printStackTrace()
                     Toast.makeText(
                         context,
@@ -484,6 +461,59 @@ class NoLoanHomeFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                     (activity as HomeDashboardActivity).hideProgressDialog()
+                }
+            })
+    }
+
+    private fun calculateKfs() {
+        (activity as HomeDashboardActivity).showProgressDialog()
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("customerId", mCustomerId)
+        jsonObject.addProperty("loanAmount", mLoanAmount)
+
+        ApiClient().getAuthApiService(activity as HomeDashboardActivity).calculatekfs(jsonObject)
+            .enqueue(object : Callback<LoanProcessResponse> {
+                override fun onResponse(
+                    call: Call<LoanProcessResponse>,
+                    response: Response<LoanProcessResponse>,
+                ) {
+                    (activity as HomeDashboardActivity).hideProgressDialog()
+                    loanResponse = response.body()
+                    clevertapDefaultInstance?.pushEvent("Agreement step clicked")//added by CleverTap Assistant
+                    Log.e("TAG", loanResponse.toString())
+                    if (loanResponse != null) {
+                        val intent = Intent(
+                            activity,
+                            CalculateKfs::class.java
+                        )
+                        val loanId = loanResponse!!.applicationId
+                        Log.e("TAGid", loanResponse!!.applicationId.toString())
+                        intent.putExtra("loanId", loanId)
+                        intent.putExtra("loanResponse", loanResponse)
+                        intent.putExtra("loanAmount", mLoanAmount)
+                        intent.putExtra("netDisbursedAmt", loanResponse!!.loanAmount)
+                        intent.putExtra("repaymentDate", loanResponse!!.repaymentDate)
+                        intent.putExtra("tenure", loanResponse!!.tenure)
+                        intent.putExtra("totalInterest", loanResponse!!.totalInterest)
+                        intent.putExtra("payableAmt", loanResponse!!.payableAmt)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(
+                            this@NoLoanHomeFragment.activity,
+                            "Service Failure, Please try after sometime",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<LoanProcessResponse>, t: Throwable) {
+                    t.printStackTrace()
+                    (activity as HomeDashboardActivity).hideProgressDialog()
+                    Toast.makeText(
+                        this@NoLoanHomeFragment.activity,
+                        "Service Failure, Once Network connection is stable, will try to resend again",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             })
     }
@@ -509,7 +539,7 @@ class NoLoanHomeFragment : Fragment() {
                     val editor = sharedPref.edit()
                     editor.clear()
                     editor.apply()
-
+                    clevertapDefaultInstance?.pushEvent("User logout success")//added by CleverTap Assistant
                     if (custData != null && custData.message.trim() == "Success") {
                         val intent =
                             Intent(activity, MPINLoginActivity::class.java)
@@ -521,6 +551,7 @@ class NoLoanHomeFragment : Fragment() {
 
                 override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
                     (activity as HomeDashboardActivity).hideProgressDialog()
+                    clevertapDefaultInstance?.pushEvent("User logout failure")//added by CleverTap Assistant
                     t.printStackTrace()
                     Toast.makeText(activity, "LogOut Failed", Toast.LENGTH_SHORT)
                         .show()

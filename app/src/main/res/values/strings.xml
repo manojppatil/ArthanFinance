@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Arthik</string>
+    <string name="facebook_app_id">807445397469281</string>
     <string name="choose_lang">Choose Your Language</string>
     <string name="choose_later">You can change this later from settings</string>
     <string name="english">English</string>
@@ -181,7 +182,6 @@
     <string name="city">City <font color='#FF0000'>*</font></string>
     <string name="district">District <font color='#FF0000'>*</font></string>
 
-
     <string name="ACCESS_KEY">AKIAZUHCZC3Y5MJRHYXT</string>
     <string name="SECRET_KEY">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</string>
     <string name="sms">SMS</string>
@@ -231,4 +231,12 @@
     <string name="apply_loan_note"><b>Note: </b>Arthan Finance Pvt. Ltd. will collect your data on your consent to take decision on your Loan application</string>
     <string name="phone_number">18003133525</string>
     <string name="title_activity_credit_score">Credit_score</string>
+
+    <string-array name="marital_status">
+        <item>Select Marital Status</item>
+        <item>Single</item>
+        <item>Married</item>
+        <item>Separated</item>
+        <item>Divorced</item>
+    </string-array>
 </resources>

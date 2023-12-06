@@ -168,7 +168,7 @@ object ArgumentKey {
 }
 
 object ConstantValue {
-    const val BCM = "bcm";
+    const val BCM = "bcm"
 
     object CardStatus {
         const val Valid = "VALID"

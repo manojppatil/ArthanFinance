@@ -8,6 +8,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import com.arthanfinance.core.base.BaseActivity
+import com.av.arthanfinance.applyLoan.LoanEligibilityFailed
 import com.av.arthanfinance.applyLoan.model.CompletedScreensResponse
 import com.av.arthanfinance.applyLoan.LoanEligibilitySubmittedActivity
 import com.av.arthanfinance.homeTabs.HomeDashboardActivity
@@ -19,6 +20,11 @@ import com.av.arthanfinance.serviceRequest.LatestOffers
 import com.av.arthanfinance.serviceRequest.LocateUs
 import com.av.arthanfinance.user_kyc.*
 import com.av.arthanfinance.util.ArthanFinConstants
+import com.clevertap.android.sdk.CleverTapAPI
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import retrofit2.Call
@@ -42,11 +48,22 @@ class MPINLoginActivity : BaseActivity() {
     override val layoutId: Int get() = R.layout.layout_mpin_login
     private var contextFrom: Int = 0
     private lateinit var mobileNum: String
+    private var customerID: String = ""
+    private var appUpdate: AppUpdateManager? = null
+    private val REQUEST_CODE = 100
+    var clevertapDefaultInstance: CleverTapAPI? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (supportActionBar != null)
             supportActionBar?.hide()
+
+        appUpdate = AppUpdateManagerFactory.create(this@MPINLoginActivity)
+        checkUpdate()
+
+        clevertapDefaultInstance =
+            CleverTapAPI.getDefaultInstance(applicationContext)//added by CleverTap Assistant
 
 //        if (intent.hasExtra("context_from")) {
 //            contextFrom = intent.getIntExtra("context_from", 1)
@@ -144,7 +161,7 @@ class MPINLoginActivity : BaseActivity() {
 //            if (!validateMPIN()) {
 //                return@setOnClickListener
 //            } else {
-                verifyCustomerPin()
+            verifyCustomerPin()
 //            }
 
         }
@@ -205,16 +222,20 @@ class MPINLoginActivity : BaseActivity() {
             ) {
                 hideProgressDialog()
                 val custData = response.body()
-
+                customerID = custData?.customerId.toString()
                 if (custData != null) {
                     when (custData.errCode) {
                         "401" -> {
                             tvMobErrormsg.visibility = View.VISIBLE
                             tvMobErrormsg.text = custData.errDesc
+                            clevertapDefaultInstance?.pushEvent("Invalid Login Mob no")//added by CleverTap Assistant
+
                         }
                         "402" -> {
                             tvMpinErrormsg.visibility = View.VISIBLE
                             tvMpinErrormsg.text = custData.errDesc
+                            clevertapDefaultInstance?.pushEvent("Invalid Login MPIN")//added by CleverTap Assistant
+
                         }
                         else -> {
                             val sharedPref: SharedPreferences? =
@@ -227,8 +248,10 @@ class MPINLoginActivity : BaseActivity() {
                             val json: String = gson.toJson(custData)
                             prefsEditor?.putString("customerData", json)
                             prefsEditor?.apply()
+                            clevertapDefaultInstance?.pushEvent("Login success")//added by CleverTap Assistant
 
-                            getLastCompletedScreen(custData)
+
+                            getLastCompletedScreen(customerID)
                         }
                     }
                 } else {
@@ -244,10 +267,9 @@ class MPINLoginActivity : BaseActivity() {
         })
     }
 
-    private fun getLastCompletedScreen(custData: CustomerHomeTabResponse) {
+    private fun getLastCompletedScreen(customerId: String) {
         val jsonObject = JsonObject()
-        jsonObject.addProperty("customerId", custData.customerId)
-
+        jsonObject.addProperty("customerId", customerId)
         showProgressDialog()
         ApiClient().getAuthApiService(this).getCompletedScreens(jsonObject).enqueue(object :
             Callback<CompletedScreensResponse> {
@@ -255,7 +277,7 @@ class MPINLoginActivity : BaseActivity() {
                 hideProgressDialog()
                 t.printStackTrace()
                 Toast.makeText(
-                    this@MPINLoginActivity, "Login Failed. Please enter Valid MPIN",
+                    this@MPINLoginActivity, "Logging you in...",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -265,27 +287,19 @@ class MPINLoginActivity : BaseActivity() {
                 response: Response<CompletedScreensResponse>,
             ) {
                 val screenData = response.body()
-
+                hideProgressDialog()
                 if (screenData != null) {
                     val lastScreenArray = screenData.screens
 
                     if (lastScreenArray.isNullOrEmpty()) {
                         val intent =
-                            Intent(this@MPINLoginActivity, UploadBankDetailsActivity::class.java)
+                            Intent(this@MPINLoginActivity, UploadPanActivity::class.java)
                         startActivity(intent)
                         finish()
                     } else {
                         for (i in 0 until lastScreenArray.size) {
                             when (screenData.screens!![i]) {
                                 ArthanFinConstants.register -> {
-                                    val intent = Intent(
-                                        this@MPINLoginActivity,
-                                        UploadBankDetailsActivity::class.java
-                                    )
-                                    startActivity(intent)
-                                    finish()
-                                }
-                                ArthanFinConstants.bank -> {
                                     val intent = Intent(
                                         this@MPINLoginActivity,
                                         UploadPanActivity::class.java
@@ -296,15 +310,47 @@ class MPINLoginActivity : BaseActivity() {
                                 ArthanFinConstants.pan -> {
                                     val intent = Intent(
                                         this@MPINLoginActivity,
+                                        UploadAadharActivity::class.java
+                                    )
+                                    startActivity(intent)
+                                    finish()
+                                }
+                                ArthanFinConstants.digilocker -> {
+                                    val intent = Intent(
+                                        this@MPINLoginActivity,
+                                        UploadBankDetailsActivity::class.java
+                                    )
+                                    startActivity(intent)
+                                    finish()
+                                }
+                                ArthanFinConstants.offline_aadhar -> {
+                                    val intent = Intent(
+                                        this@MPINLoginActivity,
+                                        UploadBankDetailsActivity::class.java
+                                    )
+                                    startActivity(intent)
+                                    finish()
+                                }
+                                ArthanFinConstants.bank, ArthanFinConstants.bank_stmt -> {
+                                    val intent = Intent(
+                                        this@MPINLoginActivity,
                                         LoanEligibilitySubmittedActivity::class.java
                                     )
                                     startActivity(intent)
                                     finish()
                                 }
-                                ArthanFinConstants.eligibility, ArthanFinConstants.digilocker, ArthanFinConstants.offline_aadhar,
-                                ArthanFinConstants.business, ArthanFinConstants.business_photos, ArthanFinConstants.skip_business_photos,
-                                ArthanFinConstants.enach, ArthanFinConstants.pic_pa, ArthanFinConstants.agreement,
-                                ArthanFinConstants.apply_loan, ArthanFinConstants.withdraw,
+                                ArthanFinConstants.bank_fail, ArthanFinConstants.consent_reject -> {
+                                    val intent = Intent(
+                                        this@MPINLoginActivity,
+                                        UploadBankDetailsActivity::class.java
+                                    )
+                                    intent.putExtra("from", "banking")
+                                    startActivity(intent)
+                                    finish()
+                                }
+                                ArthanFinConstants.eligibility, ArthanFinConstants.business, ArthanFinConstants.business_photos,
+                                ArthanFinConstants.skip_business_photos, ArthanFinConstants.enach, ArthanFinConstants.pic_pa,
+                                ArthanFinConstants.agreement, ArthanFinConstants.apply_loan, ArthanFinConstants.withdraw,
                                 -> {
                                     val intent = Intent(
                                         this@MPINLoginActivity,
@@ -317,9 +363,41 @@ class MPINLoginActivity : BaseActivity() {
                         }
                     }
                 } else {
-                    Toast.makeText(this@MPINLoginActivity, "failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MPINLoginActivity, "Please wait...", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         })
+    }
+
+    fun checkUpdate() {
+        appUpdate?.appUpdateInfo?.addOnSuccessListener { updateInfo ->
+            if (updateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
+                updateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
+            ) {
+                appUpdate!!.startUpdateFlowForResult(updateInfo,
+                    AppUpdateType.IMMEDIATE,
+                    this@MPINLoginActivity,
+                    REQUEST_CODE)
+
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        inProgressUpdate()
+    }
+
+    fun inProgressUpdate() {
+        appUpdate?.appUpdateInfo?.addOnSuccessListener { updateInfo ->
+
+            if (updateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                appUpdate!!.startUpdateFlowForResult(updateInfo,
+                    AppUpdateType.IMMEDIATE,
+                    this@MPINLoginActivity,
+                    REQUEST_CODE)
+            }
+        }
     }
 }

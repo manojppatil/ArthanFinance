@@ -2007,6 +2007,7 @@ dimen dimen_210
 dimen dimen_22
 dimen dimen_220
 dimen dimen_230
+dimen dimen_24
 dimen dimen_25
 dimen dimen_250
 dimen dimen_26
@@ -2587,6 +2588,7 @@ drawable abc_vector_test
 drawable acc_item_border
 drawable account_item_border
 drawable active_dot
+drawable arthan_logo
 drawable avd_hide_password
 drawable avd_show_password
 drawable awesome_bank
@@ -2607,6 +2609,7 @@ drawable design_password_eye
 drawable design_snackbar_background
 drawable disable_link_acc_border
 drawable drawable_failure
+drawable fip_search_box
 drawable gradiant_border
 drawable ic_active_button
 drawable ic_android_bg
@@ -2823,6 +2826,7 @@ id auto
 id autoComplete
 id autoCompleteToEnd
 id autoCompleteToStart
+id bank_bottom_layout
 id bank_small_icon
 id barrier
 id baseline
@@ -2830,6 +2834,7 @@ id beginning
 id bestChoice
 id blocking
 id bottom
+id bottom_layout
 id bounce
 id browser_actions_header_text
 id browser_actions_menu_item_icon
@@ -3025,6 +3030,7 @@ id link_otp_keyboard
 id linked_account
 id linked_account_layout
 id linked_accounts_list
+id linked_bottom
 id linked_fip_logo
 id listMode
 id list_item
@@ -3158,6 +3164,7 @@ id scrollIndicatorDown
 id scrollIndicatorUp
 id scrollView
 id scrollable
+id searchView
 id search_badge
 id search_bar
 id search_button

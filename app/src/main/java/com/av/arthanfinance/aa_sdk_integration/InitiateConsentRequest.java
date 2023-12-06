@@ -30,6 +30,7 @@ public class InitiateConsentRequest {
     public String getPartyIdentifierValue() {
         return partyIdentifierValue;
     }
+
     public String getProductID() {
         return productID;
     }
@@ -51,7 +52,7 @@ public class InitiateConsentRequest {
 //    }
 
     @Keep
-    public InitiateConsentRequest(String vuaId, String partyIdentifierType,String partyIdentifierValue,String productID, String accountID) {
+    public InitiateConsentRequest(String vuaId, String partyIdentifierType, String partyIdentifierValue, String productID, String accountID) {
         this.vua = vuaId;
         this.partyIdentifierType = partyIdentifierType;
         this.partyIdentifierValue = partyIdentifierValue;

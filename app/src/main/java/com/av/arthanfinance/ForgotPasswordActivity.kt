@@ -8,6 +8,7 @@ import com.arthanfinance.core.base.BaseActivity
 import com.av.arthanfinance.applyLoan.model.AuthenticationResponse
 import com.av.arthanfinance.applyLoan.model.GenericResponse
 import com.av.arthanfinance.networkService.ApiClient
+import com.clevertap.android.sdk.CleverTapAPI
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.layout_forgot_password.*
 import retrofit2.Call
@@ -20,11 +21,11 @@ class ForgotPasswordActivity : BaseActivity() {
     private lateinit var apiClient: ApiClient
 
     private var isOtpViewVisible = false
+    var clevertapDefaultInstance: CleverTapAPI? = null
 
 
     override val layoutId: Int
         get() = R.layout.layout_forgot_password
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,19 +34,20 @@ class ForgotPasswordActivity : BaseActivity() {
             supportActionBar?.hide()
 
         apiClient = ApiClient()
-
+        clevertapDefaultInstance =
+            CleverTapAPI.getDefaultInstance(applicationContext)//added by CleverTap Assistant
         btnAction.setOnClickListener {
             if (!isOtpViewVisible) {
                 if (edtMobile.text.toString().isEmpty() || edtMobile.text.toString().length != 10) {
                     Toast.makeText(this, "Invalid Mobile Number", Toast.LENGTH_SHORT).show()
-                }else{
+                } else {
                     reguestForOTP()
                 }
 
-            }else{
-                if (edtOtp.text.toString().isEmpty()){
+            } else {
+                if (edtOtp.text.toString().isEmpty()) {
                     Toast.makeText(this, "Otp Empty", Toast.LENGTH_SHORT).show()
-                }else{
+                } else {
                     validateOtp()
                 }
             }
@@ -58,31 +60,34 @@ class ForgotPasswordActivity : BaseActivity() {
         jsonObject.addProperty("mobileNo", edtMobile.text.toString())
         jsonObject.addProperty("otp", edtOtp.text.toString())
         showProgressDialog()
-        ApiClient().getAuthApiService(this).verifyOTPForCustomer(jsonObject).enqueue(object : Callback<AuthenticationResponse> {
-            override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
+        ApiClient().getAuthApiService(this).verifyOTPForCustomer(jsonObject)
+            .enqueue(object : Callback<AuthenticationResponse> {
+                override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
 
-                hideProgressDialog()
-                t.printStackTrace()
-                Toast.makeText(
-                    this@ForgotPasswordActivity, "OTP Validation Failed. Please Try Again",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-            override fun onResponse(
-                call: Call<AuthenticationResponse>,
-                response: Response<AuthenticationResponse>
-            ) {
-                hideProgressDialog()
-                val genericResponse = response.body()
-                if (genericResponse != null && genericResponse.apiCode == 200.toString()) {
-                    val intent = Intent(this@ForgotPasswordActivity, SetNewMpinActivity::class.java)
-                    intent.putExtra("MOBILE",edtMobile.text.toString())
-                    startActivity(intent)
-                    finish()
+                    hideProgressDialog()
+                    t.printStackTrace()
+                    Toast.makeText(
+                        this@ForgotPasswordActivity, "OTP Validation Failed. Please Try Again",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-            }
-        })
+
+                override fun onResponse(
+                    call: Call<AuthenticationResponse>,
+                    response: Response<AuthenticationResponse>,
+                ) {
+                    hideProgressDialog()
+                    val genericResponse = response.body()
+                    if (genericResponse != null && genericResponse.apiCode == 200.toString()) {
+                        clevertapDefaultInstance?.pushEvent("OTP validated")//added by CleverTap Assistant
+                        val intent =
+                            Intent(this@ForgotPasswordActivity, SetNewMpinActivity::class.java)
+                        intent.putExtra("MOBILE", edtMobile.text.toString())
+                        startActivity(intent)
+                        finish()
+                    }
+                }
+            })
     }
 
     private fun reguestForOTP() {
@@ -92,7 +97,7 @@ class ForgotPasswordActivity : BaseActivity() {
         ApiClient().getAuthApiService(this).forgotMPin(jsonObject).enqueue(object :
             Callback<GenericResponse> {
             override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
-
+                clevertapDefaultInstance?.pushEvent("Reset Mpin OTP failure")//added by CleverTap Assistant
                 hideProgressDialog()
                 t.printStackTrace()
                 Toast.makeText(
@@ -103,11 +108,12 @@ class ForgotPasswordActivity : BaseActivity() {
 
             override fun onResponse(
                 call: Call<GenericResponse>,
-                response: Response<GenericResponse>
+                response: Response<GenericResponse>,
             ) {
                 hideProgressDialog()
                 val genericResponse = response.body()
                 if (genericResponse != null && genericResponse.apiCode == "200") {
+                    clevertapDefaultInstance?.pushEvent("Reset Mpin OTP sent")//added by CleverTap Assistant
                     lytOtp.visibility = View.VISIBLE
                     isOtpViewVisible = true
                 }

@@ -75,14 +75,14 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     fun request(
         @Header("Authorization") authHeader: String,
-        @Body documentsData: JsonObject
+        @Body documentsData: JsonObject,
     ): Call<DigioPanResponse>
 
     @POST("orders")
     @Headers("Content-Type: application/json")
     fun order(
         @Header("Authorization") authHeader: String,
-        @Body documentsData: JsonObject
+        @Body documentsData: JsonObject,
     ): Call<DigioPanResponse>
 
     @POST("response")
@@ -93,14 +93,14 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     fun verifyBank(
         @Header("Authorization") authHeader: String,
-        @Body documentsData: JsonObject
+        @Body documentsData: JsonObject,
     ): Call<BankDetilsResponse>
 
     @POST("kyc/v2/request")
     @Headers("Content-Type: application/json")
     fun createRequestDigilocker(
         @Header("Authorization") authHeader: String,
-        @Body documentsData: JsonObject
+        @Body documentsData: JsonObject,
     ): Call<DigilockerTokenResponse>
 
     @POST("updatePhoto")
@@ -151,7 +151,7 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     fun gstReturnStatus(
         @Header("x-karza-key") authHeader: String,
-        @Body documentsData: JsonObject
+        @Body documentsData: JsonObject,
     ): Call<GstReturnResponse>
 
     @POST("saveCustReference")
@@ -199,7 +199,7 @@ interface ApiService {
     fun uploadFile(
         @Part file: MultipartBody.Part,
         @Part("loanId") loanId: RequestBody,
-        @Part("customerId") customerId: RequestBody
+        @Part("customerId") customerId: RequestBody,
     ): Call<FileUploadResponse>
 
     @POST("getEmiRoi")
@@ -222,32 +222,32 @@ interface ApiService {
     @GET("getPRLoanDetails")
     fun getPRLoanDetails(
         @Query("loanId") loanId: String,
-        @Query("applicantType") applicantType: String
+        @Query("applicantType") applicantType: String,
     ): Call<LoanProcessResponse>
 
 
     @GET("getPRPanDetails")
     fun getPRPanDetails(
         @Query("loanId") loanId: String,
-        @Query("applicantType") applicantType: String
+        @Query("applicantType") applicantType: String,
     ): Call<LoanKYCDetailsResponse>
 
     @GET("getPRAadharDetails")
     fun getPRAadharDetails(
         @Query("loanId") loanId: String,
-        @Query("applicantType") applicantType: String
+        @Query("applicantType") applicantType: String,
     ): Call<LoanKYCDetailsResponse>
 
     @GET("getPRAddressDetails")
     fun getPRAddressDetails(
         @Query("loanId") loanId: String,
-        @Query("applicantType") applicantType: String
+        @Query("applicantType") applicantType: String,
     ): Call<LoanProcessResponse>
 
     @GET("getPRApplicantPhoto")
     fun getPRApplicantPhoto(
         @Query("loanId") loanId: String,
-        @Query("applicantType") applicantType: String
+        @Query("applicantType") applicantType: String,
     ): Call<LoanKYCDetailsResponse>
 
     @GET("getPRBusinessDetails")
@@ -274,11 +274,12 @@ interface ApiService {
     fun updateProfile(@Body updateJson: JsonObject): Call<AuthenticationResponse>
 
     @Multipart
-    @POST("rest/file/upload")
+    @POST("rest/file/uploadV2")
     suspend fun uploadStatement(
         @Part file: MultipartBody.Part,
+        @Part("password") password: String,
         @Part("loanId") loanId: String?,
-        @Part("customerId") customerId: String?
+        @Part("customerId") customerId: String?,
     ): UploadStatementResponse?
 
     @POST("saveGstRequestId1")
@@ -293,7 +294,7 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     fun verifyUdyamAadhar(
         @Header("x-karza-key") authHeader: String,
-        @Body udyamRequestData: JsonObject
+        @Body udyamRequestData: JsonObject,
     ): Call<UdyamDetailsResponse>
 
     @POST("updateStage")
@@ -340,6 +341,17 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     fun applyCheck(@Body userData: JsonObject): Call<LoanProcessResponse>
 
+    @GET("selectBusinessPhotos")
+    fun selectBusinessPhotos(@Query("customer_id") mobileNo: String): Call<BusinessDetails>
 
+    @POST("customerRepayment")
+    @Headers("Content-Type: application/json")
+    fun customerRepayment(@Body customerRepayment: JsonObject): Call<AuthenticationResponse>
+
+    @GET("getAAStatus")
+    fun getAAStatus(@Query("loanId") customerId: String): Call<AuthenticationResponse>
+
+    @GET("getCustomerEligibilityV2")
+    fun getCustomerEligibilityV2(@Query("customerId") customerId: String): Call<AuthenticationResponse>
 
 }

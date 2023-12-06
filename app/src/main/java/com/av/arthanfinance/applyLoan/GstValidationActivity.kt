@@ -97,7 +97,7 @@ class GstValidationActivity : BaseActivity() {
                 hideProgressDialog()
                 val gstReturnResponse = response.body()
                 val statusCode = gstReturnResponse!!.statusCode
-                val requestId = gstReturnResponse!!.requestId
+                val requestId = gstReturnResponse.requestId
                 saveGstRequestId2(requestId!!)
                 if (statusCode == 101) {
                     val intent = Intent(
@@ -161,7 +161,7 @@ class GstValidationActivity : BaseActivity() {
                 if (gstReturnResponse != null) {
                     val statusCode = gstReturnResponse.statusCode
                     requestId = gstReturnResponse.requestId.toString()
-                    saveGstRequestId1(requestId!!)
+                    saveGstRequestId1(requestId)
                     if (statusCode == 101) {
                         activityGstValidationBinding.llGst.visibility = View.GONE
                         activityGstValidationBinding.llOtp.visibility = View.VISIBLE

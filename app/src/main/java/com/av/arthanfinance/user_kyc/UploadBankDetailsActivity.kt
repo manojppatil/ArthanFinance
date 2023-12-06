@@ -2,10 +2,12 @@ package com.av.arthanfinance.user_kyc
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -16,21 +18,32 @@ import com.av.arthanfinance.aa_sdk_integration.FiuAPIClient
 import com.av.arthanfinance.aa_sdk_integration.FiuAPIInterface
 import com.av.arthanfinance.aa_sdk_integration.InitiateConsentResponse
 import com.av.arthanfinance.applyLoan.*
+import com.av.arthanfinance.applyLoan.model.AggregatorConsentResponse
 import com.av.arthanfinance.applyLoan.model.AuthenticationResponse
 import com.av.arthanfinance.databinding.ActivityUploadBankDetailsBinding
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.util.ArthanFinConstants
+import com.av.arthanfinance.util.copyFile
+import com.clevertap.android.sdk.CleverTapAPI
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.sdk.pirimid_sdk.PirimidSDK
 import com.sdk.pirimid_sdk.ResponseData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 class UploadBankDetailsActivity : BaseActivity() {
     private lateinit var activityUploadBankDetailsBinding: ActivityUploadBankDetailsBinding
-    private var kycCompleteStatus = "50"
+    private var kycCompleteStatus = "99"
     private var customerData: AuthenticationResponse? = null
     private var REQ_CODE_BANK_STATEMENT = 444
     private var mCustomerId: String? = null
@@ -48,6 +61,8 @@ class UploadBankDetailsActivity : BaseActivity() {
     private val fipId = ""
     private var fiuAPIInterface: FiuAPIInterface? = null
     var initiateConsentResponse: InitiateConsentResponse? = null
+    var clevertapDefaultInstance: CleverTapAPI? = null
+    private var statement_file: File? = null
 
     override val layoutId: Int
         get() = R.layout.activity_upload_bank_details
@@ -57,6 +72,8 @@ class UploadBankDetailsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         activityUploadBankDetailsBinding = ActivityUploadBankDetailsBinding.inflate(layoutInflater)
         setContentView(activityUploadBankDetailsBinding.root)
+        clevertapDefaultInstance =
+            CleverTapAPI.getDefaultInstance(applicationContext)//added by CleverTap Assistant
 //        if (intent.hasExtra("registerTime")) {
 //            Log.e("registerTime2", intent.getStringExtra("registerTime")!!)
 //        }
@@ -77,10 +94,10 @@ class UploadBankDetailsActivity : BaseActivity() {
 
         setSupportActionBar(activityUploadBankDetailsBinding.tbUploadBankDetails)
         (supportActionBar)?.setDisplayHomeAsUpEnabled(false)
-        (this as AppCompatActivity).supportActionBar!!.title = "Let's get you onboard faster!"
+        (this as AppCompatActivity).supportActionBar!!.title = "Last step to go...!"
 
         activityUploadBankDetailsBinding.pbKycBank.max = 100
-        ObjectAnimator.ofInt(activityUploadBankDetailsBinding.pbKycBank, "progress", 20)
+        ObjectAnimator.ofInt(activityUploadBankDetailsBinding.pbKycBank, "progress", 99)
             .setDuration(1000).start()
         activityUploadBankDetailsBinding.tvPercent.text = "${kycCompleteStatus}%"
 
@@ -119,13 +136,22 @@ class UploadBankDetailsActivity : BaseActivity() {
 //            activityUploadBankDetailsBinding.textviewBankMobile.isFocusableInTouchMode = true
 //        }
 //
-//        activityUploadBankDetailsBinding.btnUploadbankstmt.setOnClickListener {
-//            val pdfPickerIntent = Intent(Intent.ACTION_GET_CONTENT)
-//            pdfPickerIntent.type = "application/pdf"
-//            startActivityForResult(
-//                Intent.createChooser(pdfPickerIntent, "Choose File"),
-//                REQ_CODE_BANK_STATEMENT
-//            )
+        activityUploadBankDetailsBinding.btnUploadbankstmt.setOnClickListener {
+            val pdfPickerIntent = Intent(Intent.ACTION_GET_CONTENT)
+            pdfPickerIntent.type = "application/pdf"
+            startActivityForResult(
+                Intent.createChooser(pdfPickerIntent, "Choose File"),
+                REQ_CODE_BANK_STATEMENT
+            )
+        }
+
+        activityUploadBankDetailsBinding.tvFilename.setOnClickListener {
+            activityUploadBankDetailsBinding.btnUploadbankstmt.visibility = View.VISIBLE
+            activityUploadBankDetailsBinding.tvFilename.visibility = View.GONE
+        }
+
+//        activityUploadBankDetailsBinding.btnBankDetails.setOnClickListener {
+//            updateStage(ArthanFinConstants.bank, "SUCCESS")
 //        }
 //
 //        activityUploadBankDetailsBinding.tieBankName.addTextChangedListener(object : TextWatcher {
@@ -164,21 +190,65 @@ class UploadBankDetailsActivity : BaseActivity() {
 //        })
 
         activityUploadBankDetailsBinding.btnAggregator.setOnClickListener {
-            initializeSDK()
+            createConsentMethod(mCustomerId!!)
+        }
+
+        activityUploadBankDetailsBinding.btnBankDetails.setOnClickListener {
+            uploadStatement(statement_file.toString())
         }
 
     }
 
-    private fun initializeSDK() {
-        Log.e("REFID", customerData?.referenceId!!)
+    private fun createConsentMethod(requestId: String) {
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("applicantId", requestId)
+        jsonObject.addProperty("mobileNo", mobNo)
+        clevertapDefaultInstance?.pushEvent("Create AA consent started")//added by CleverTap Assistant
+        showProgressDialog()
+        ApiClient().getAuthApiService(this).getAAReferenceId(jsonObject).enqueue(object :
+            Callback<AggregatorConsentResponse> {
+            override fun onFailure(call: Call<AggregatorConsentResponse>, t: Throwable) {
+                hideProgressDialog()
+                t.printStackTrace()
+                clevertapDefaultInstance?.pushEvent("AA consent failure")//added by CleverTap Assistant
+                Toast.makeText(
+                    this@UploadBankDetailsActivity, "Consent Failed.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            override fun onResponse(
+                call: Call<AggregatorConsentResponse>,
+                response: Response<AggregatorConsentResponse>,
+            ) {
+                hideProgressDialog()
+                clevertapDefaultInstance?.pushEvent("AA consent success")//added by CleverTap Assistant
+                val res = response.body()
+                val referenceId = res?.referenceId
+                Log.e("TAGCONSENT", referenceId + "")
+                activityUploadBankDetailsBinding.lytBankaggregator.visibility = View.GONE
+                if (referenceId != "") {
+                    try {
+                        initializeSDK(referenceId!!)
+                    } catch (ex: NullPointerException) {
+                        ex.printStackTrace()
+                    }
+                }
+            }
+        })
+    }
+
+    private fun initializeSDK(consentId: String) {
+        val fiTypeList = arrayListOf("DEPOSIT", "TERM-DEPOSIT", "RECURRING_DEPOSIT")
+        clevertapDefaultInstance?.pushEvent("Initialize AA session")//added by CleverTap Assistant
         val intent = Intent()
         intent.putExtra("ORGANISATION_ID", orgId)
         intent.putExtra("CLIENT_ID", clientId)
         intent.putExtra("CLIENT_SECRET", clientSecret)
         intent.putExtra("BASE_URL", baseUrl)
-        intent.putExtra("consent_id", customerData?.referenceId)
+        intent.putExtra("consent_id", consentId)
         intent.putExtra("party_identifier", mobNo)
-//        intent.putExtra("fipId", fipId)
+        intent.putExtra("FI-TYPES", fiTypeList)
 
         /// PIRIMID SDK Call
         PirimidSDK.initializePirimidSDK(this, intent, object : ResponseData {
@@ -189,27 +259,58 @@ class UploadBankDetailsActivity : BaseActivity() {
                 val consentActionType = responseDetails.getStringExtra("consent_action_type")
                 Log.d("main", responseDetails.getStringExtra("CODE")!!)
                 Log.d("main", responseDetails.getStringExtra("MESSAGE")!!)
-                activityUploadBankDetailsBinding.lytBankaggregator.visibility = View.GONE
+
                 activityUploadBankDetailsBinding.lytAnimationView.visibility = View.VISIBLE
-                updateStage(ArthanFinConstants.bank)
+                if (responseDetails.getStringExtra("CODE") == "500") {
+                    clevertapDefaultInstance?.pushEvent("Bank account not found")//added by CleverTap Assistant
+                    activityUploadBankDetailsBinding.lytBankpage.visibility = View.VISIBLE
+                    activityUploadBankDetailsBinding.lytAnimationView.visibility = View.GONE
+                }
+                if (responseDetails.getStringExtra("CODE") == "503") {
+                    activityUploadBankDetailsBinding.lytBankaggregator.visibility = View.GONE
+                    activityUploadBankDetailsBinding.lytBankpage.visibility = View.VISIBLE
+                    activityUploadBankDetailsBinding.lytAnimationView.visibility = View.GONE
+                }
+                if (consentActionType == "REJECT") {
+                    activityUploadBankDetailsBinding.lytBankaggregator.visibility = View.GONE
+                    activityUploadBankDetailsBinding.lytBankpage.visibility = View.VISIBLE
+                    activityUploadBankDetailsBinding.lytAnimationView.visibility = View.GONE
+                    //                updateStage(ArthanFinConstants.bank_fail, "REJECT")
+                } else {
+                    object : CountDownTimer(30000, 1000) {
+
+                        // Callback function, fired on regular interval
+                        @SuppressLint("SetTextI18n")
+                        override fun onTick(millisUntilFinished: Long) {
+                            val minute = (millisUntilFinished / 1000) / 60
+                            val seconds = (millisUntilFinished / 1000) % 60
+                            activityUploadBankDetailsBinding.clock.text = "$minute:$seconds"
+                        }
+
+                        // Callback function, fired
+                        // when the time is up
+                        override fun onFinish() {
+                            activityUploadBankDetailsBinding.lytAnimationView.visibility =
+                                View.VISIBLE
+                            activityUploadBankDetailsBinding.clock.visibility = View.GONE
+                            getAAStatus(ArthanFinConstants.bank, consentActionType!!)
+                        }
+                    }.start()
+                }
             }
 
             /// Failure Response
             override fun onFailure(responseDetails: Intent) {
                 Log.d("main", responseDetails.getStringExtra("CODE")!!)
                 Log.d("main", responseDetails.getStringExtra("MESSAGE")!!)
-                val intent = Intent(
-                    this@UploadBankDetailsActivity,
-                    LoanEligibilityFailed::class.java
-                )
-                intent.putExtra("from", "banking")
-                startActivity(intent)
-                finish()
+                activityUploadBankDetailsBinding.lytBankpage.visibility = View.VISIBLE
+                activityUploadBankDetailsBinding.lytAnimationView.visibility = View.GONE
+//                updateStage(ArthanFinConstants.bank_fail, "FLOW_INTERRUPT")
             }
         })
     }
 
-    private fun updateStage(stage: String) {
+    private fun updateStage(stage: String, consentActionType: String) {
         val jsonObject = JsonObject()
         jsonObject.addProperty("customerId", mCustomerId)
         jsonObject.addProperty("stage", stage)
@@ -227,75 +328,157 @@ class UploadBankDetailsActivity : BaseActivity() {
 
             override fun onResponse(
                 call: Call<AuthenticationResponse>,
-                response: Response<AuthenticationResponse>
+                response: Response<AuthenticationResponse>,
             ) {
                 hideProgressDialog()
                 if (response.body()?.apiCode == "200") {
 
-                    val intent1 = Intent(
-                        this@UploadBankDetailsActivity,
-                        UploadPanActivity::class.java
-                    )
-//                    intent1.putExtra("registerTime", intent.getStringExtra("registerTime"))
-                    startActivity(intent1)
-                    finish()
+                    when (consentActionType) {
+//                        "REJECT" -> {
+//                            clevertapDefaultInstance?.pushEvent("Consent rejected by user")//added by CleverTap Assistant
+//                            val intent = Intent(
+//                                this@UploadBankDetailsActivity,
+//                                LoanEligibilityFailed::class.java
+//                            )
+//                            intent.putExtra("from", "banking")
+//                            startActivity(intent)
+//                            finish()
+//                        }
+//                        "FLOW_INTERRUPT" -> {
+//                            clevertapDefaultInstance?.pushEvent("AA flow interrupted")//added by CleverTap Assistant
+//                            val intent = Intent(
+//                                this@UploadBankDetailsActivity,
+//                                LoanEligibilityFailed::class.java
+//                            )
+//                            intent.putExtra("from", "banking")
+//                            startActivity(intent)
+//                            finish()
+//                        }
+                        "ACCEPT" -> {
+                            clevertapDefaultInstance?.pushEvent("Consent accepted by user")//added by CleverTap Assistant
+                            val intent1 = Intent(
+                                this@UploadBankDetailsActivity,
+                                LoanEligibilitySubmittedActivity::class.java
+                            )
+                            intent1.putExtra("done_by", "aggregator")
+                            //                    intent1.putExtra("registerTime", intent.getStringExtra("registerTime"))
+                            startActivity(intent1)
+                            finish()
+                        }
+
+                        "SUCCESS" -> {
+                            clevertapDefaultInstance?.pushEvent("Statement uploaded by user")//added by CleverTap Assistant
+                            val intent1 = Intent(
+                                this@UploadBankDetailsActivity,
+                                LoanEligibilitySubmittedActivity::class.java
+                            )
+                            intent1.putExtra("done_by", "statement")
+                            //                    intent1.putExtra("registerTime", intent.getStringExtra("registerTime"))
+                            startActivity(intent1)
+                            finish()
+                        }
+                    }
                 }
 
             }
         })
     }
 
-//    @Deprecated("Deprecated in Java")
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        if (resultCode == Activity.RESULT_OK) {
-//            when (requestCode) {
-//                REQ_CODE_BANK_STATEMENT -> {
-//                    data?.apply {
-//                        if (this.data == null) return
-//                        val file = copyFile(this@UploadBankDetailsActivity, this.data!!)
-//                        if (file != null && file.absolutePath.isNotEmpty()) {
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQ_CODE_BANK_STATEMENT -> {
+                    data?.apply {
+                        if (this.data == null) return
+                        val file = copyFile(this@UploadBankDetailsActivity, this.data!!)
+                        if (file != null && file.absolutePath.isNotEmpty()) {
+                            statement_file = file.absoluteFile
+                            val name = file.absoluteFile.name
+                            activityUploadBankDetailsBinding.btnUploadbankstmt.visibility =
+                                View.GONE
+                            activityUploadBankDetailsBinding.tvFilename.visibility = View.VISIBLE
+                            activityUploadBankDetailsBinding.tvFilename.text = name.toString()
 //                            uploadStatement(file.absolutePath)
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        super.onActivityResult(requestCode, resultCode, data)
-//    }
+                        }
+                    }
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
 
-//    private fun uploadStatement(fileLocation: String) {
-//        if (mCustomerId == null) {
-////            mLoanId = loanResponse!!.loanId
-//            mCustomerId = customerData!!.customerId
-//        }
-//        CoroutineScope(Dispatchers.IO).launch {
-//            try {
-//                val file = File(fileLocation)
-//                val requestBody: RequestBody =
-//                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
-//                val multiPartBody =
-//                    MultipartBody.Part.createFormData("file", file.name, requestBody)
-//                val response =
-//                    ApiClient().getMasterApiService(this@UploadBankDetailsActivity)
-//                        .uploadStatement(multiPartBody, mCustomerId, mCustomerId)
-//
-//                withContext(Dispatchers.Main) {
-//                    try {
-//                        Toast.makeText(
-//                            this@UploadBankDetailsActivity, "Statement Uploaded Successfully",
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//                        val mDocId = response?.docId ?: "DOC00053300"
-//
-//                    } catch (e: Exception) {
-//                        e.printStackTrace()
-//                    }
+    private fun uploadStatement(fileLocation: String) {
+        if (mCustomerId == null) {
+//            mLoanId = loanResponse!!.loanId
+            mCustomerId = customerData!!.customerId
+
+        }
+        val oldValue = """"""
+        val newValue = ""
+        val output = mCustomerId?.replace(oldValue, newValue, ignoreCase = true)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val file = File(fileLocation)
+                val requestBody: RequestBody =
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
+                val multiPartBody =
+                    MultipartBody.Part.createFormData("file", file.name, requestBody)
+                val password = activityUploadBankDetailsBinding.edtPdfPassword.text.toString()
+                Log.d("CID", mCustomerId.toString() + output)
+                val response =
+                    ApiClient().getMasterApiService(this@UploadBankDetailsActivity)
+                        .uploadStatement(multiPartBody, password, output, output)
+
+                if (response!!.status == "200") {
+                    withContext(Dispatchers.Main) {
+                        try {
+                            Toast.makeText(
+                                this@UploadBankDetailsActivity, response.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            updateStage(ArthanFinConstants.bank_stmt, "SUCCESS")
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun getAAStatus(stage: String, consentActionType: String) {
+        ApiClient().getAuthApiService(this).getAAStatus(mCustomerId.toString()).enqueue(object :
+            Callback<AuthenticationResponse> {
+            override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
+                hideProgressDialog()
+                t.printStackTrace()
+                activityUploadBankDetailsBinding.lytBankpage.visibility = View.VISIBLE
+                activityUploadBankDetailsBinding.lytAnimationView.visibility = View.GONE
+                Toast.makeText(
+                    this@UploadBankDetailsActivity, "Current Stage not updated.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            override fun onResponse(
+                call: Call<AuthenticationResponse>,
+                response: Response<AuthenticationResponse>,
+            ) {
+//                if (response.body()?.apiCode == "200") {
+                clevertapDefaultInstance?.pushEvent("AA Status fetched")//added by CleverTap Assistant
+                if (!response.body()!!.aaStatus) {
+                    activityUploadBankDetailsBinding.lytBankpage.visibility = View.VISIBLE
+                    activityUploadBankDetailsBinding.lytAnimationView.visibility = View.GONE
+                } else {
+                    updateStage(stage, consentActionType)
+                }
 //                }
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//            }
-//        }
-//    }
+            }
+        })
+    }
 
 //    private fun getBankDetailsFromDigio(ifsc: String, accNum: String, bankName: String) {
 //        val jsonObject = JsonObject()
@@ -481,6 +664,7 @@ class UploadBankDetailsActivity : BaseActivity() {
 //    }
 
     override fun onBackPressed() {
+        clevertapDefaultInstance?.pushEvent("Back from Banking")//added by CleverTap Assistant
         finish()
     }
 

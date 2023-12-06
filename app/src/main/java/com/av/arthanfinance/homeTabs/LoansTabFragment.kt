@@ -7,10 +7,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,9 +28,13 @@ import com.av.arthanfinance.applyLoan.model.AuthenticationResponse
 import com.av.arthanfinance.applyLoan.model.LoanDetails
 import com.av.arthanfinance.applyLoan.model.LoansResponse
 import com.av.arthanfinance.applyLoan.model.UserDetailsResponse
+import com.av.arthanfinance.models.CustomerHomeTabResponse
 import com.av.arthanfinance.networkService.ApiClient
+import com.av.arthanfinance.serviceRequest.ConfirmPayment
+import com.av.arthanfinance.serviceRequest.TransactionDetails
 import com.av.arthanfinance.util.ArthanFinConstants
 import com.example.awesomedialog.*
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.razorpay.Checkout
 import kotlinx.android.synthetic.main.fragment_loans_tab.*
@@ -44,16 +50,36 @@ class LoansTabFragment : Fragment() {
     lateinit var adapter: LoanDetailsAdapter
     private var mCustomerId: String? = null
     private var mpinStatus: String? = null
+    private var usedLimit: String? = null
+    private var availableLimit: String? = null
+    private var totalLimit: String? = null
     private lateinit var iv_logout: ImageButton
+    private lateinit var pay_btn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val mPrefs: SharedPreferences? =
             context?.getSharedPreferences("customerData", Context.MODE_PRIVATE)
         mCustomerId = mPrefs?.getString("customerId", null)
+        val gson = Gson()
+        val json: String? = mPrefs?.getString("customerData", null)
+        Log.e("json", json.toString())
+        if (json != null) {
+            val obj: UserDetailsResponse =
+                gson.fromJson(json, UserDetailsResponse::class.java)
+            customerData = obj
+            usedLimit = customerData?.borrowedAmount
+            availableLimit = customerData!!.availableAmount
+            totalLimit = customerData!!.eligibilityAmount
+
+        }
         mpinStatus = mPrefs?.getString("mpinStatus", null)
         loansList = ArrayList<LoanDetails>()
-        getListOfLoans()
+        if (mCustomerId != null) {
+            getListOfLoans()
+        } else {
+            Log.e("ERROR", "Missing customer Id at Loan")
+        }
         Checkout.preload(activity as HomeDashboardActivity)
         val co = Checkout()
         co.setKeyID("rzp_live_06qz6CizJP1S0D")
@@ -78,13 +104,14 @@ class LoansTabFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.fragment_loans_tab, container, false)
         val mPrefs: SharedPreferences? =
             context?.getSharedPreferences("customerData", Context.MODE_PRIVATE)
         mCustomerId = mPrefs?.getString("customerId", null)
         iv_logout = view.findViewById(R.id.iv_logout)
+        pay_btn = view.findViewById(R.id.payBtn)
         iv_logout.setOnClickListener {
             if (mpinStatus == "Complete") {
                 logOut()
@@ -102,6 +129,15 @@ class LoansTabFragment : Fragment() {
                     }
             }
         }
+        pay_btn.setOnClickListener {
+            val intent = Intent(
+                context,
+                ConfirmPayment::class.java
+            )
+            intent.putExtra("amount", totalDueAmount.text)
+            startActivity(intent)
+        }
+
         return view
     }
 
@@ -115,39 +151,39 @@ class LoansTabFragment : Fragment() {
                 @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
                 override fun onResponse(
                     call: Call<LoansResponse>,
-                    response: Response<LoansResponse>
+                    response: Response<LoansResponse>,
                 ) {
-                    (activity as HomeDashboardActivity).hideProgressDialog()
                     try {
+                        (activity as HomeDashboardActivity).hideProgressDialog()
                         val loansResponse = response.body()
                         loansList = loansResponse?.loans
                         val adapter = LoanDetailsAdapter(loansList!!, this)
                         adapter.notifyDataSetChanged()
                         loansRecyclerview.adapter = adapter
 
-                        val loansCount = loansList?.count()
-                        activeLoansText.text = "You have $loansCount active loans"
-                        availedtext.text = "Used (${getString(R.string.Rs)})"
-                        totalAvailedAmount.text = response.body()!!.usedLimit
-                        tv_available.text = "Available Balance (${getString(R.string.Rs)})"
-                        totalAvailableAmount.text = response.body()!!.availableAmount
-                        limitText.text = "Limit (${getString(R.string.Rs)})"
-                        totalLimitValue.text = response.body()!!.totalLimit
-                        totalDueAmount.text = response.body()!!.usedLimit
+//                        val loansCount = loansList?.count()
+//                        availedtext.text = "Used (${getString(R.string.Rs)})"
+                        Log.e("Logused", usedLimit + "")
+//                        totalAvailedAmount.text = usedLimit
+//                        tv_available.text = "Available Balance (${getString(R.string.Rs)})"
+//                        totalAvailableAmount.text = availableLimit
+//                        limitText.text = "Limit (${getString(R.string.Rs)})"
+//                        totalLimitValue.text = totalLimit
+                        totalDueAmount.text = loansResponse!!.totalDebitAmount.toString()
 
-                        val percentCompleted =
-                            response.body()!!.limitPercent //to be achieved from BE
-                        totalLoanlimitProgressBar.max = 100
-                        ObjectAnimator.ofInt(
-                            totalLoanlimitProgressBar,
-                            "progress",
-                            percentCompleted!!
-                        )
-                            .setDuration(1000).start()
+//                        val percentCompleted =
+//                            response.body()!!.limitPercent //to be achieved from BE
+//                        totalLoanlimitProgressBar.max = 100
+//                        ObjectAnimator.ofInt(
+//                            totalLoanlimitProgressBar,
+//                            "progress",
+//                            percentCompleted!!
+//                        )
+//                            .setDuration(1000).start()
 
-                        if (response.body()!!.applyStatus == "N") {
-                            applyforNewLoan.isEnabled = false
-                        }
+//                        if (response.body()!!.applyStatus == "N") {
+//                            applyforNewLoan.isEnabled = false
+//                        }
                     } catch (ex: NullPointerException) {
                         ex.printStackTrace()
                     }
@@ -164,41 +200,20 @@ class LoansTabFragment : Fragment() {
                 }
 
                 override fun onLoanItemClicked(loanDetails: LoanDetails) {
-                    startPayment(loanDetails.loanAmount.toString().trim().toInt())
+                    val intent = Intent(
+                        context,
+                        TransactionDetails::class.java
+                    )
+                    intent.putExtra("accountId", loanDetails.accountId)
+                    intent.putExtra("transactionName", loanDetails.transactionName)
+                    intent.putExtra("transactionDateStr", loanDetails.transactionDateStr)
+                    intent.putExtra("accountEntryType", loanDetails.accountEntryType)
+                    intent.putExtra("amount", loanDetails.amount)
+                    intent.putExtra("description", loanDetails.description)
+                    intent.putExtra("transactionId", loanDetails.transactionId)
+                    startActivity(intent)
                 }
             })
-        }
-    }
-
-    private fun startPayment(amount: Int?) {
-        val co = Checkout()
-        try {
-            val options = JSONObject()
-            options.put("name", "Arthan Finance")
-            options.put("description", "Repayment of Loan")
-            //You can omit the image option to fetch the image from the dashboard
-            options.put("theme.color", "#3399cc")
-            options.put("currency", "INR")
-            options.put("amount", amount!! * 100)//pass amount in currency subunits
-
-            val retryObj = JSONObject()
-            retryObj.put("enabled", true)
-            retryObj.put("max_count", 4)
-            options.put("retry", retryObj)
-
-//            val prefill = JSONObject()
-//            prefill.put("email", "gaurav.kumar@example.com")
-//            prefill.put("contact", "9876543210")
-//
-//            options.put("prefill", prefill)
-            co.open(activity as HomeDashboardActivity, options)
-        } catch (e: Exception) {
-            Toast.makeText(
-                activity as HomeDashboardActivity,
-                "Error in payment: " + e.message,
-                Toast.LENGTH_LONG
-            ).show()
-            e.printStackTrace()
         }
     }
 
@@ -211,7 +226,7 @@ class LoansTabFragment : Fragment() {
                 Callback<AuthenticationResponse> {
                 override fun onResponse(
                     call: Call<AuthenticationResponse>,
-                    response: Response<AuthenticationResponse>
+                    response: Response<AuthenticationResponse>,
                 ) {
                     (activity as HomeDashboardActivity).hideProgressDialog()
                     val custData = response.body()

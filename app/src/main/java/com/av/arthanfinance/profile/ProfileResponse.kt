@@ -26,5 +26,7 @@ data class ProfileResponse(
     @SerializedName("customerImg")
     val customerImg: String? = "",
     @SerializedName("cibil_score")
-    val cibil_score: String? = ""
+    val cibil_score: String? = "",
+    @SerializedName("maritalStatus")
+    val marital_status: String? = ""
 ) : Parcelable

@@ -15,6 +15,7 @@ import com.av.arthanfinance.databinding.ActivityLoanSummaryBinding
 import com.av.arthanfinance.models.CustomerHomeTabResponse
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.util.ArthanFinConstants
+import com.clevertap.android.sdk.CleverTapAPI
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_upi_mandate.*
@@ -27,6 +28,9 @@ class LoanSummaryActivity : BaseActivity() {
     private var loanResponse: LoanProcessResponse? = null
     private lateinit var apiClient: ApiClient
     private lateinit var customerData: CustomerHomeTabResponse
+    var clevertapDefaultInstance: CleverTapAPI? = null
+
+
     override val layoutId: Int
         get() = R.layout.activity_loan_summary
 
@@ -38,7 +42,8 @@ class LoanSummaryActivity : BaseActivity() {
 
         if (supportActionBar != null)
             supportActionBar?.hide()
-
+        clevertapDefaultInstance =
+            CleverTapAPI.getDefaultInstance(applicationContext)//added by CleverTap Assistant
         if (intent.hasExtra("customerData")) {
             customerData = intent.extras?.get("customerData") as CustomerHomeTabResponse
         } else {
@@ -62,18 +67,11 @@ class LoanSummaryActivity : BaseActivity() {
         activity2.tvNetDisbursedAmtRs.text = "Rs. " + intent.getStringExtra("loanAmount")
 
         activity2.btnProceed.setOnClickListener {
-            if (!accept_tc.isChecked) {
-                Toast.makeText(
-                    this@LoanSummaryActivity,
-                    "Please accept terms and Conditions.",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return@setOnClickListener
-            }
             confirmLoanRequest()
         }
 
         activity2.imgBack.setOnClickListener {
+            clevertapDefaultInstance?.pushEvent("Back from confirm loan")//added by CleverTap Assistant
             finish()
         }
     }
@@ -123,7 +121,8 @@ class LoanSummaryActivity : BaseActivity() {
         jsonObject.addProperty("repaymentDate", repaymentDate)
         jsonObject.addProperty("loanId", intent.getStringExtra("loanId"))
         jsonObject.addProperty("tenure", intent.getStringExtra("tenure"))
-        jsonObject.addProperty("consent", "Y")
+//        jsonObject.addProperty("consent", "Y")
+        clevertapDefaultInstance?.pushEvent("Confirm loan requested")//added by CleverTap Assistant
 
         apiClient.getAuthApiService(this).confirmLoan(jsonObject)
             .enqueue(object : Callback<LoanProcessResponse> {
@@ -137,6 +136,7 @@ class LoanSummaryActivity : BaseActivity() {
                         Log.e("TAGR", loanResponse.toString())
                         if (loanResponse != null) {
                             val loanId = loanResponse!!.applicationId
+                            clevertapDefaultInstance?.pushEvent("Confirm loan success")//added by CleverTap Assistant
 
                             Log.e("TAGid", loanResponse!!.applicationId.toString())
                             updateStage(ArthanFinConstants.withdraw, loanId!!)
@@ -153,6 +153,8 @@ class LoanSummaryActivity : BaseActivity() {
                 ) {
                     t.printStackTrace()
                     hideProgressDialog()
+
+                    clevertapDefaultInstance?.pushEvent("Confirm loan service failure")//added by CleverTap Assistant
                     Toast.makeText(
                         this@LoanSummaryActivity,
                         "Service Failure, Once Network connection is stable, will try to resend again",

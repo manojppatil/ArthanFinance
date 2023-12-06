@@ -27,7 +27,7 @@
                 <ImageView
                     android:id="@+id/imageView2"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="250dp"
                     android:src="@color/indigo"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -111,7 +111,8 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/bg_lightblue_rounded_rect"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -124,7 +125,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="30dp"
                                 android:gravity="center_vertical"
-                                android:text="Your Loan Limit"
+                                android:text="Your Credit Limit"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
@@ -248,13 +249,14 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="99dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
-                        android:visibility="gone"
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/bg_lightblue_rounded_rect"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:visibility="visible">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -265,7 +267,7 @@
 
                             <TextView
                                 android:layout_width="wrap_content"
-                                android:layout_height="30dp"
+                                android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="Billing Details"
                                 android:textColor="@color/white"
@@ -289,8 +291,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginEnd="10dp"
-                            android:layout_marginTop="15dp"
                             android:orientation="horizontal">
 
                             <LinearLayout
@@ -313,7 +315,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="20dp"
                                     android:gravity="center_vertical"
-                                    android:text="50,000.00"
+                                    android:text="0.00"
                                     android:textColor="@color/white"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
@@ -324,19 +326,19 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:gravity="right"
+                                android:gravity="bottom|end"
                                 android:orientation="vertical">
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:text="Pay"
-                                    android:padding="10dp"
-                                    android:background="@drawable/bg_register_rect_orange"
-                                    android:textColor="@color/white"
-                                    android:textSize="17sp"
-                                    android:textStyle="normal" />
+                                <Button
+                                    android:id="@+id/payBtn"
+                                    android:layout_width="80dp"
+                                    android:layout_height="35sp"
+                                    android:background="@drawable/bg_language_rect"
+                                    android:text="PAY"
+                                    android:textColor="@color/dark_orange2"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    android:visibility="visible" />
 
                             </LinearLayout>
 
@@ -345,13 +347,11 @@
                     </LinearLayout>
 
 
-
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/applyforNewLoan"
                         android:layout_width="wrap_content"
                         android:layout_height="45dp"
                         android:layout_gravity="center"
-                        android:visibility="gone"
                         android:layout_marginTop="13dp"
                         android:background="@drawable/bg_orange_solid"
                         android:padding="10dp"
@@ -359,22 +359,10 @@
                         android:textAllCaps="false"
                         android:textColor="@android:color/white"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="gone" />
 
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/activeLoansText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:gravity="center"
-                    android:visibility="gone"
-                    android:text="You have 3 active loans"
-                    android:textColor="@color/indigo"
-                    android:textSize="16sp"
-                    android:textStyle="normal"
-                    app:layout_constraintTop_toBottomOf="@id/yourloanslayout" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

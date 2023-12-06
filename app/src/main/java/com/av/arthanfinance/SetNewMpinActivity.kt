@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
@@ -19,6 +20,7 @@ import com.av.arthanfinance.models.CustomerHomeTabResponse
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.util.ArthanFinConstants
 import com.chaos.view.PinView
+import com.clevertap.android.sdk.CleverTapAPI
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.layout_set_new_mpin.*
 import retrofit2.Call
@@ -37,11 +39,14 @@ class SetNewMpinActivity : BaseActivity() {
     private var mobileNum = ""
     private var fbtoken = ""
     private var mCustomerId: String? = null
+    var clevertapDefaultInstance: CleverTapAPI? = null
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        clevertapDefaultInstance =
+            CleverTapAPI.getDefaultInstance(applicationContext)//added by CleverTap Assistant
         val mPrefs: SharedPreferences? = getSharedPreferences("customerData", Context.MODE_PRIVATE)
         mCustomerId = mPrefs?.getString("customerId", null)
 
@@ -59,6 +64,7 @@ class SetNewMpinActivity : BaseActivity() {
 //        fbtoken = intent.extras?.get("fbtoken") as String
 
         btnBack.setOnClickListener {
+            clevertapDefaultInstance?.pushEvent("Back from MPIN")//added by CleverTap Assistant
             this.finish()
         }
         val mpin1 = findViewById<PinView>(R.id.pinView)
@@ -124,11 +130,13 @@ class SetNewMpinActivity : BaseActivity() {
             jsonObject.addProperty("mobileNo", intent.getStringExtra("MOBILE"))
         }
         jsonObject.addProperty("mpin", mpin)
+        Log.e("REQ", jsonObject.toString())
         apiClient.getAuthApiService(this).resetMpin(jsonObject).enqueue(object :
             Callback<GenericResponse> {
             override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
                 t.printStackTrace()
                 hideProgressDialog()
+                clevertapDefaultInstance?.pushEvent("Reset Mpin failure")//added by CleverTap Assistant
                 Toast.makeText(
                     this@SetNewMpinActivity, "Please enter the valid MPIN",
                     Toast.LENGTH_SHORT
@@ -137,12 +145,13 @@ class SetNewMpinActivity : BaseActivity() {
 
             override fun onResponse(
                 call: Call<GenericResponse>,
-                response: Response<GenericResponse>
+                response: Response<GenericResponse>,
             ) {
                 hideProgressDialog()
                 val custData = response.body()
                 if (custData != null) {
                     if (custData.apiCode == "200") {
+                        clevertapDefaultInstance?.pushEvent("Reset Mpin success")//added by CleverTap Assistant
                         val sharedPref: SharedPreferences =
                             getSharedPreferences("customerData", Context.MODE_PRIVATE)
                         val editor = sharedPref.edit()
@@ -158,16 +167,14 @@ class SetNewMpinActivity : BaseActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-
                 }
             }
         })
     }
 
     private fun validateMPIN(): Boolean {
-
-        if (pin1 == pin2) {
-            return true
+        return if (pin1 == pin2) {
+            true
         } else {
             pinView.setText("")
             pinView2.setText("")
@@ -175,7 +182,7 @@ class SetNewMpinActivity : BaseActivity() {
                 this@SetNewMpinActivity, "Please enter the valid MPIN",
                 Toast.LENGTH_SHORT
             ).show()
-            return false
+            false
         }
         return false
     }
@@ -201,6 +208,7 @@ class SetNewMpinActivity : BaseActivity() {
             override fun onFailure(call: Call<CustomerHomeTabResponse>, t: Throwable) {
                 t.printStackTrace()
                 hideProgressDialog()
+                clevertapDefaultInstance?.pushEvent("Set Mpin failure")//added by CleverTap Assistant
                 Toast.makeText(
                     this@SetNewMpinActivity, "Please enter the valid MPIN",
                     Toast.LENGTH_SHORT
@@ -209,11 +217,11 @@ class SetNewMpinActivity : BaseActivity() {
 
             override fun onResponse(
                 call: Call<CustomerHomeTabResponse>,
-                response: Response<CustomerHomeTabResponse>
+                response: Response<CustomerHomeTabResponse>,
             ) {
                 hideProgressDialog()
                 val custData = response.body()
-
+                clevertapDefaultInstance?.pushEvent("Set Mpin success")//added by CleverTap Assistant
                 if (custData != null && custData.errCode == 200.toString()) {
                     val sharedPref: SharedPreferences =
                         getSharedPreferences("customerData", Context.MODE_PRIVATE)

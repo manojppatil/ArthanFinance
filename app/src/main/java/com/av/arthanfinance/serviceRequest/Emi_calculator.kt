@@ -43,6 +43,8 @@ class Emi_calculator : BaseActivity() {
                     progress_custom = LOANMAX
                 }
                 activityEmiCalculatorBinding.loanAmountEditText.setText(progress_custom.toString())
+
+
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {

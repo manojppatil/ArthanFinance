@@ -77,4 +77,16 @@ class CustomerHomeTabResponse : Serializable {
     @Expose
     var applicantType: String = "PA"
 
+    @SerializedName("eligibilityAmount")
+    @Expose
+    val eligibilityAmount: String? = null
+
+    @SerializedName("borrowedAmount")
+    @Expose
+    val borrowedAmount: String? = null
+
+    @SerializedName("availableAmount")
+    @Expose
+    var availableAmount: String = "PA"
+
 }

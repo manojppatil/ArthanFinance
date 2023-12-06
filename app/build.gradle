@@ -18,7 +18,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-
     }
 
     defaultConfig {
@@ -26,9 +25,8 @@ android {
         minSdkVersion 23
         targetSdkVersion 33
         multiDexEnabled = true
-        versionCode 11
-        versionName "2.1"
-
+        versionCode 17
+        versionName "2.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -55,13 +53,14 @@ android {
 }
 
 dependencies {
+    // Clevertap SDK
+	implementation 'com.google.firebase:firebase-messaging:23.1.2'   //added by CleverTap Assistant
+	implementation 'com.android.installreferrer:installreferrer:2.2'   //added by CleverTap Assistant
+	implementation 'com.clevertap.android:clevertap-android-sdk:4.7.5'   //added by CleverTap Assistant
 
-    //    implementation project(':pirimid-sdk')
     implementation project(':pirimid-sdk-release')
     implementation project(':custom')
     implementation project(':standard')
-    //custom camera for pan and aadhaar card
-//    implementation project(':kyccamera')
 
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'com.google.android.gms:play-services-location:20.0.0'
@@ -86,8 +85,10 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'com.google.android.material:material:1.6.1'
+
     //Biometric Api for authentication
     implementation "androidx.biometric:biometric:1.1.0"
+
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.github.IslamKhSh:CardSlider:1.0.1'
     implementation "androidx.viewpager2:viewpager2:1.0.0"
@@ -99,8 +100,6 @@ dependencies {
 
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    //implementation 'android.arch.lifecycle:extensions:1.1.1'
-    //implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
 
     /// Retrofit and network call dependencies
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
@@ -109,31 +108,29 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-moshi:2.6.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.6.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
-    implementation 'androidx.browser:browser:1.4.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    implementation 'androidx.browser:browser:1.5.0'
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'com.google.code.gson:gson:2.8.9'
 
     /// Text field dependencies
     implementation 'com.github.poovamraj:PinEditTextField:1.2.6'
 
-    implementation 'com.github.aabhasr1:OtpView:1.0.6'
     implementation 'com.otaliastudios:cameraview:1.6.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
-    implementation 'androidx.exifinterface:exifinterface:1.3.3'
+    implementation 'androidx.exifinterface:exifinterface:1.3.6'
 
     implementation platform('com.google.firebase:firebase-bom:29.0.0')
-    implementation 'com.google.firebase:firebase-messaging'
-    implementation 'com.google.firebase:firebase-crashlytics:18.2.13'
+    implementation 'com.google.firebase:firebase-crashlytics:18.3.6'
+    implementation 'com.google.firebase:firebase-analytics:21.2.2'
 
-    implementation 'com.google.firebase:firebase-analytics:21.1.1'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.android.volley:volley:1.2.1'
     implementation(name: 'digio-kyc-2.1.17', ext: 'aar')
 
     /// image dependency
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
 
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
     implementation 'io.github.chaosleung:pinview:1.4.4'
@@ -145,22 +142,15 @@ dependencies {
     implementation "androidx.camera:camera-view:1.3.0-alpha02"
 
     implementation 'androidx.preference:preference-ktx:1.2.0'
-    implementation 'com.google.android.gms:play-services-mlkit-face-detection:17.1.0'
-    implementation 'com.google.mlkit:object-detection:17.0.0'
     implementation 'com.razorpay:checkout:1.6.26'
 
-    implementation 'com.google.android.gms:play-services-auth:20.3.0'
-    // add these lines in your app build.gradle
-    implementation 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
+    implementation 'com.google.android.gms:play-services-auth:20.5.0'
 
-    implementation 'androidx.work:work-runtime-ktx:2.7.1'
+    implementation 'androidx.work:work-runtime-ktx:2.8.1'
 
     implementation("com.airbnb.android:lottie:5.2.0")
     // image compressor
     implementation 'id.zelory:compressor:3.0.1'
-
-    //Pie chart
-    implementation 'ir.mahozad.android:pie-chart:0.7.0'
 
     implementation 'com.github.chnouman:AwesomeDialog:1.0.5'
 
@@ -171,5 +161,14 @@ dependencies {
     implementation 'com.github.fondesa:kpermissions:2.0.2'
     implementation 'com.karumi:dexter:6.2.3'
 
+    /*InAppUpdates*/
+    implementation "com.google.android.play:core-ktx:1.8.1"
+
+    /*Google Play integrity api*/
+    implementation 'com.google.android.play:integrity:1.1.0'
+
+    implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
+
+    implementation 'androidx.browser:browser:1.5.0'
 
 }

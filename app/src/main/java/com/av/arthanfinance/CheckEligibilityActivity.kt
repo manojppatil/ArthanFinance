@@ -15,7 +15,7 @@ class CheckEligibilityActivity : AppCompatActivity() {
 
         checkEligibility.setOnClickListener {
             val intent =
-                Intent(this@CheckEligibilityActivity, UploadBankDetailsActivity::class.java)
+                Intent(this@CheckEligibilityActivity, UploadPanActivity::class.java)
             startActivity(intent)
         }
     }

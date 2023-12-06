@@ -246,12 +246,9 @@
                         android:visibility="gone" />
 
                     <com.google.android.material.button.MaterialButton
-                        app:strokeColor="@color/colorAccent"
-                        app:strokeWidth="6dp"
                         android:id="@+id/btn_sendDigioPan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:shapeAppearance="@drawable/bg_register_rect_orange"
                         android:layout_marginTop="1dp"
                         android:layout_marginBottom="8dp"
                         android:background="@drawable/bg_register_rect_orange"
@@ -268,7 +265,10 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_18"
                         android:textStyle="bold"
-                        android:visibility="visible" />
+                        android:visibility="visible"
+                        app:shapeAppearance="@drawable/bg_register_rect_orange"
+                        app:strokeColor="@color/colorAccent"
+                        app:strokeWidth="6dp" />
                 </LinearLayout>
 
 

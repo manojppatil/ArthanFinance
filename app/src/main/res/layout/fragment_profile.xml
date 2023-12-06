@@ -185,15 +185,15 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1sp"
-                    android:visibility="gone"
                     android:layout_marginTop="4dp"
-                    android:background="@color/dark_grey" />
+                    android:background="@color/dark_grey"
+                    android:visibility="visible" />
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:id="@+id/lyt_credit"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -805,6 +805,14 @@
                     android:background="@color/dark_grey"
                     android:visibility="visible" />
 
+                <TextView
+                    android:id="@+id/txt_app_version"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp" />
             </LinearLayout>
 
         </LinearLayout>

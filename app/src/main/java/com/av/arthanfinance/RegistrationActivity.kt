@@ -2,32 +2,27 @@ package com.av.arthanfinance
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender.SendIntentException
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.TextUtils
 import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.util.Patterns
 import android.widget.*
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.arthanfinance.core.base.BaseActivity
-import com.arthanfinance.core.util.FiniculeUtil
 import com.av.arthanfinance.applyLoan.model.AuthenticationResponse
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.serviceRequest.Getintouch
-import com.av.arthanfinance.user_kyc.UploadBankDetailsActivity
+import com.av.arthanfinance.user_kyc.UploadPanActivity
 import com.av.arthanfinance.util.AppLocationProvider
 import com.av.arthanfinance.util.ArthanFinConstants
+import com.clevertap.android.sdk.CleverTapAPI
 import com.example.awesomedialog.*
 import com.fondesa.kpermissions.extension.listeners
 import com.fondesa.kpermissions.extension.permissionsBuilder
@@ -36,9 +31,6 @@ import com.google.android.gms.auth.api.credentials.Credential
 import com.google.android.gms.auth.api.credentials.HintRequest
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationListener
-import com.google.android.gms.location.LocationServices
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import retrofit2.Call
@@ -60,6 +52,8 @@ class RegistrationActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
     private lateinit var apiClient: ApiClient
     private var lat: String? = null
     private var lng: String? = null
+    var clevertapDefaultInstance: CleverTapAPI? = null
+
 
     override val layoutId: Int
         get() = R.layout.layout_register
@@ -79,6 +73,9 @@ class RegistrationActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
         btnSubmit = findViewById(R.id.btn_submit)
         btnBack = findViewById(R.id.img_back)
 
+        clevertapDefaultInstance =
+            CleverTapAPI.getDefaultInstance(applicationContext)//added by CleverTap Assistant
+
         fetchLocation(1)
 
         hintMobileNo()
@@ -86,7 +83,8 @@ class RegistrationActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
         btnSubmit.setOnClickListener {
             if (mobileNoText.text.isNotEmpty()) {
 
-                if (!isValidPhoneNumber(mobileNoText.text)) {
+                if (mobileNoText.text.length != 10) {
+                    clevertapDefaultInstance?.pushEvent("Invalid register mobile no")//added by CleverTap Assistant
                     Toast.makeText(
                         this@RegistrationActivity,
                         "Please enter VALID Mobile Number.",
@@ -96,14 +94,16 @@ class RegistrationActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
                 }
 
                 if (lat == null) {
+                    clevertapDefaultInstance?.pushEvent("Location is not captured")//added by CleverTap Assistant
                     Toast.makeText(this,
                         "Location is not captured. Please wait fetching your location",
                         Toast.LENGTH_LONG).show()
-                    fetchLocation(1)
+                    fetchLocation(2)
                     return@setOnClickListener
                 }
 
                 if (!btnTC.isChecked) {
+                    clevertapDefaultInstance?.pushEvent("Accept Terms conditions")//added by CleverTap Assistant
                     Toast.makeText(
                         this@RegistrationActivity,
                         "Please accept terms and Conditions.",
@@ -113,6 +113,7 @@ class RegistrationActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
                 }
                 registerCustomerData()
             } else {
+                clevertapDefaultInstance?.pushEvent("Register Fields are missing")//added by CleverTap Assistant
                 Toast.makeText(
                     this@RegistrationActivity,
                     "Mandatory fields missing please enter all data.",
@@ -123,6 +124,7 @@ class RegistrationActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
 
         btnBack = findViewById(R.id.img_back)
         btnBack.setOnClickListener {
+            clevertapDefaultInstance?.pushEvent("Back from Register")//added by CleverTap Assistant
             this.finish()
         }
     }
@@ -140,12 +142,11 @@ class RegistrationActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
                     this,
                     object : AppLocationProvider.LocationCallBack {
                         override fun locationResult(location: Location?) {
-
                             lat = location?.latitude.toString()
                             lng = location?.longitude.toString()
                             Log.d("latlng", lng.toString())
                             AppLocationProvider().stopLocation()
-
+                            clevertapDefaultInstance?.pushEvent("Register Location fetched")//added by CleverTap Assistant
                             // use location, this might get called in a different thread if a location is a last known location. In that case, you can post location on main thread
                         }
 
@@ -160,10 +161,13 @@ class RegistrationActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
                 request.listeners {
                     onAccepted {
                         fetchLocation(from)
+                        clevertapDefaultInstance?.pushEvent("Location Permission Accepted")//added by CleverTap Assistant
                     }
                     onDenied {
+                        clevertapDefaultInstance?.pushEvent("Location Permission Denied")//added by CleverTap Assistant
                     }
                     onPermanentlyDenied {
+                        clevertapDefaultInstance?.pushEvent("Location Permission Denied Permanently")//added by CleverTap Assistant
                     }
                 }
                 request.send()
@@ -187,8 +191,12 @@ class RegistrationActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
         val intent = Auth.CredentialsApi.getHintPickerIntent(mGoogleApiClient, hintRequest)
         try {
             startIntentSenderForResult(intent.intentSender, 1008, null, 0, 0, 0, null)
+            clevertapDefaultInstance?.pushEvent("Hint mobile number")//added by CleverTap Assistant
+
         } catch (e: SendIntentException) {
             Log.e("", "Could not start hint picker Intent", e)
+            clevertapDefaultInstance?.pushEvent("Could not start hint picker")//added by CleverTap Assistant
+
         }
     }
 
@@ -226,6 +234,7 @@ class RegistrationActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
                     "Registration failure. Try after some time",
                     Toast.LENGTH_SHORT
                 ).show()
+                clevertapDefaultInstance?.pushEvent("Registration failure")//added by CleverTap Assistant
             }
 
             override fun onResponse(
@@ -248,6 +257,15 @@ class RegistrationActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
                             prefsEditor?.putString("leadId", custData.leadId!!.toString())
                             prefsEditor?.apply()
                             updateStage(ArthanFinConstants.register, custData.customerId!!)
+                            //cleverTap
+                            val ProfilePush = HashMap<String, Any>()//added by CleverTap Assistant
+                            ProfilePush["Phone"] = mobile//added by CleverTap Assistant
+                            ProfilePush["CustomerId"] = custData.customerId!!
+                            ProfilePush["Latitude"] = lat.toString()
+                            ProfilePush["Longitude"] = lng.toString()
+                            clevertapDefaultInstance?.pushProfile(ProfilePush)//added by CleverTap Assistant
+                            clevertapDefaultInstance?.pushEvent("User Registered", ProfilePush)
+
                             AwesomeDialog.build(this@RegistrationActivity)
                                 .title("Congratulations")
                                 .body("Your account has been created")
@@ -255,15 +273,22 @@ class RegistrationActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
                                 .onPositive("Let's Get Started") {
                                     val intent = Intent(
                                         this@RegistrationActivity,
-                                        UploadBankDetailsActivity::class.java
+                                        CheckEligibilityActivity::class.java
                                     )
-                                    //                                intent.putExtra("registerTime", strDate)
+//                                    intent.putExtra("registerTime", strDate)
                                     startActivity(intent)
                                     finish()
                                 }
                         }
                         "400" -> {
                             Log.e("Error", custData.message + "")
+                            val ProfilePush = HashMap<String, Any>()//added by CleverTap Assistant
+                            ProfilePush["Phone"] = mobile//added by CleverTap Assistant
+                            ProfilePush["Latitude"] = lat.toString()
+                            ProfilePush["Longitude"] = lng.toString()
+                            clevertapDefaultInstance?.pushProfile(ProfilePush)//added by CleverTap Assistant
+                            clevertapDefaultInstance?.pushEvent("Location Not Serve",
+                                ProfilePush)
                             AwesomeDialog.build(this@RegistrationActivity)
                                 .title("We’re Coming Soon")
                                 .body("Sorry, we don't serve this location yet.")
@@ -276,6 +301,7 @@ class RegistrationActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
                         }
                         "401" -> {
                             Log.e("Error", custData.message + "")
+                            clevertapDefaultInstance?.pushEvent("Invalid Reference ID")
                             AwesomeDialog.build(this@RegistrationActivity)
                                 .title("Invalid Reference ID")
                                 .body(custData.message)
@@ -283,6 +309,7 @@ class RegistrationActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
                         }
                         "402" -> {
                             Log.e("Error", custData.message + "")
+                            clevertapDefaultInstance?.pushEvent("User Already Exists")
                             AwesomeDialog.build(this@RegistrationActivity)
                                 .title("User already exists")
                                 .body(custData.message)

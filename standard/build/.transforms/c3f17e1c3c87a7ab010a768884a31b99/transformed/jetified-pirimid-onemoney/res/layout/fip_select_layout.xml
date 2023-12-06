@@ -74,12 +74,32 @@
                     android:background="@drawable/gradiant_border"
                     android:orientation="horizontal" />
             </RelativeLayout>
+            <SearchView
+                android:layout_marginTop="@dimen/dimen_10"
+                android:background="@drawable/fip_search_box"
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:queryHint="Select Bank"
+                android:iconifiedByDefault="false"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_marginTop="@dimen/dimen_20"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
                 android:id="@+id/fips_list"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_18"
+                android:gravity="center"
+                android:visibility="gone"
+                android:id="@+id/no_data_found_text"
+                android:padding="@dimen/dimen_20"
+                android:layout_gravity="center"
+                android:text="@string/no_data_found"
+                android:textColor="@color/black"/>
 
 
         </LinearLayout>

@@ -46,10 +46,6 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <ir.mahozad.android.PieChart
-            android:id="@+id/pieChart"
-            android:layout_width="250sp"
-            android:layout_height="250sp" />
 
         <TextView
             android:id="@+id/name"

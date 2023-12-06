@@ -140,11 +140,14 @@
             <Spinner
                 android:id="@+id/sp_maritalstatus"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45sp"
                 android:layout_marginLeft="25dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="6dp"
                 android:layout_marginRight="25dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:entries="@array/marital_status"
                 android:inputType="text"
+                android:paddingStart="15dp"
                 android:textSize="16sp"
                 app:hintTextColor="@color/very_light_grey" />
 

@@ -3,19 +3,21 @@ package com.av.arthanfinance.homeTabs
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.arthanfinance.core.base.BaseActivity
 import com.av.arthanfinance.R
 import com.av.arthanfinance.applyLoan.model.UserDetailsResponse
 import com.av.arthanfinance.profile.ProfileFragment
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.messaging.FirebaseMessaging
+import com.clevertap.android.sdk.CleverTapAPI
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.gson.Gson
-import com.razorpay.PaymentResultListener
 import kotlinx.android.synthetic.main.activity_no_loan_dashboard.*
 
-class HomeDashboardActivity : BaseActivity(), PaymentResultListener {
+
+class HomeDashboardActivity : BaseActivity() {
 
     private val noLoanHomeFragment = NoLoanHomeFragment()
     private val loansTabFragment = LoansTabFragment()
@@ -23,8 +25,11 @@ class HomeDashboardActivity : BaseActivity(), PaymentResultListener {
     private val profileTabFragment = ProfileFragment()
     private val fragmentManager = supportFragmentManager
     private var activeFragment: Fragment = noLoanHomeFragment
-    private var isLoansAvailable: Boolean = false
     var customerData: UserDetailsResponse? = null
+    private var appUpdate: AppUpdateManager? = null
+    private val REQUEST_CODE = 100
+    var clevertapDefaultInstance: CleverTapAPI? = null
+
 
     override val layoutId: Int
         get() = R.layout.activity_no_loan_dashboard
@@ -33,13 +38,11 @@ class HomeDashboardActivity : BaseActivity(), PaymentResultListener {
         super.onCreate(savedInstanceState)
         this.supportActionBar?.hide()
 
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                return@OnCompleteListener
-            }
-            val token = task.result
-            //Toast.makeText(baseContext, ""+token, Toast.LENGTH_SHORT).show()
-        })
+        appUpdate = AppUpdateManagerFactory.create(this@HomeDashboardActivity)
+        checkUpdate()
+        clevertapDefaultInstance =
+            CleverTapAPI.getDefaultInstance(applicationContext)//added by CleverTap Assistant
+        clevertapDefaultInstance?.pushEvent("Home dashboard visited")//added by CleverTap Assistant
 
         val mPrefs: SharedPreferences? = getSharedPreferences("customerData", Context.MODE_PRIVATE)
         val gson = Gson()
@@ -55,10 +58,10 @@ class HomeDashboardActivity : BaseActivity(), PaymentResultListener {
             businessTabFragment.customerData = customerData
 
             fragmentManager.beginTransaction().apply {
-                add(R.id.container, profileTabFragment, "profile").hide(profileTabFragment)
-                add(R.id.container, businessTabFragment, "business").hide(businessTabFragment)
-                add(R.id.container, loansTabFragment, "loans").hide(loansTabFragment)
                 add(R.id.container, noLoanHomeFragment, "Home")
+                add(R.id.container, loansTabFragment, "loans").hide(loansTabFragment)
+                add(R.id.container, businessTabFragment, "business").hide(businessTabFragment)
+                add(R.id.container, profileTabFragment, "profile").hide(profileTabFragment)
             }.commit()
 
         }
@@ -66,6 +69,7 @@ class HomeDashboardActivity : BaseActivity(), PaymentResultListener {
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.homeTab -> {
+                    clevertapDefaultInstance?.pushEvent("Home item clicked")//added by CleverTap Assistant
                     fragmentManager.beginTransaction().hide(activeFragment).show(
                         noLoanHomeFragment
                     ).commit()
@@ -73,18 +77,21 @@ class HomeDashboardActivity : BaseActivity(), PaymentResultListener {
                     true
                 }
                 R.id.loansTab -> {
+                    clevertapDefaultInstance?.pushEvent("Loans item clicked")//added by CleverTap Assistant
                     fragmentManager.beginTransaction().hide(activeFragment).show(loansTabFragment)
                         .commit()
                     activeFragment = loansTabFragment
                     true
                 }
                 R.id.businessTab -> {
+                    clevertapDefaultInstance?.pushEvent("Business item clicked")//added by CleverTap Assistant
                     fragmentManager.beginTransaction().hide(activeFragment)
                         .show(businessTabFragment).commit()
                     activeFragment = businessTabFragment
                     true
                 }
                 R.id.profileTab -> {
+                    clevertapDefaultInstance?.pushEvent("Profile item clicked")//added by CleverTap Assistant
                     fragmentManager.beginTransaction().hide(activeFragment).show(profileTabFragment)
                         .commit()
                     activeFragment = profileTabFragment
@@ -96,22 +103,38 @@ class HomeDashboardActivity : BaseActivity(), PaymentResultListener {
     }
 
     override fun onBackPressed() {
+        clevertapDefaultInstance?.pushEvent("Back from Homepage")//added by CleverTap Assistant
         finish()
     }
 
-    override fun onPaymentSuccess(p0: String?) {
-        Toast.makeText(
-            this@HomeDashboardActivity,
-            "Success-$p0",
-            Toast.LENGTH_SHORT
-        ).show()
+    fun checkUpdate() {
+        appUpdate?.appUpdateInfo?.addOnSuccessListener { updateInfo ->
+            if (updateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
+                updateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
+            ) {
+                appUpdate!!.startUpdateFlowForResult(updateInfo,
+                    AppUpdateType.IMMEDIATE,
+                    this@HomeDashboardActivity,
+                    REQUEST_CODE)
+
+            }
+        }
     }
 
-    override fun onPaymentError(p0: Int, p1: String?) {
-        Toast.makeText(
-            this@HomeDashboardActivity,
-            "Failure-$p0$p1",
-            Toast.LENGTH_SHORT
-        ).show()
+    override fun onResume() {
+        super.onResume()
+        inProgressUpdate()
+    }
+
+    fun inProgressUpdate() {
+        appUpdate?.appUpdateInfo?.addOnSuccessListener { updateInfo ->
+
+            if (updateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                appUpdate!!.startUpdateFlowForResult(updateInfo,
+                    AppUpdateType.IMMEDIATE,
+                    this@HomeDashboardActivity,
+                    REQUEST_CODE)
+            }
+        }
     }
 }

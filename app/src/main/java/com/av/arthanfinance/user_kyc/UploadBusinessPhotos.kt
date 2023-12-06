@@ -18,7 +18,9 @@ import android.provider.MediaStore
 import android.util.Base64
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.arthanfinance.core.base.BaseActivity
 import com.av.arthanfinance.R
@@ -28,13 +30,17 @@ import com.av.arthanfinance.applyLoan.model.LoanProcessResponse
 import com.av.arthanfinance.applyLoan.model.UdyamDetailsResponse
 import com.av.arthanfinance.databinding.ActivityUploadBusinessPhotosBinding
 import com.av.arthanfinance.homeTabs.HomeDashboardActivity
+import com.av.arthanfinance.models.BusinessDetails
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.util.AppLocationProvider
 import com.av.arthanfinance.util.ArthanFinConstants
+import com.bumptech.glide.Glide
+import com.clevertap.android.sdk.CleverTapAPI
 import com.fondesa.kpermissions.extension.listeners
 import com.fondesa.kpermissions.extension.permissionsBuilder
 import com.google.gson.JsonObject
 import com.theartofdev.edmodo.cropper.CropImage
+import kotlinx.android.synthetic.main.activity_upload_business_photos.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -62,6 +68,9 @@ class UploadBusinessPhotos : BaseActivity() {
     private var lng: String? = null
 
     var customerData: AuthenticationResponse? = null
+    var clevertapDefaultInstance: CleverTapAPI? = null
+
+
     override val layoutId: Int
         get() = R.layout.activity_upload_business_photos
 
@@ -72,11 +81,14 @@ class UploadBusinessPhotos : BaseActivity() {
             ActivityUploadBusinessPhotosBinding.inflate(layoutInflater)
         setContentView(activityUploadBusinessPhotosBinding.root)
 
+        clevertapDefaultInstance =
+            CleverTapAPI.getDefaultInstance(applicationContext)//added by CleverTap Assistant
         val mPrefs: SharedPreferences? = getSharedPreferences("customerData", Context.MODE_PRIVATE)
         mCustomerId = mPrefs?.getString("customerId", null)
         leadId = mPrefs?.getString("leadId", null)
 
         fetchLocation(1)
+        getBusinessData()
 
         activityUploadBusinessPhotosBinding.btnUpload.setOnClickListener {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
@@ -119,97 +131,95 @@ class UploadBusinessPhotos : BaseActivity() {
         }
 
         activityUploadBusinessPhotosBinding.btnSkipBusinessPics.setOnClickListener {
+            clevertapDefaultInstance?.pushEvent("Business photos skipped")//added by CleverTap Assistant
             updateStage(ArthanFinConstants.skip_business_photos)
         }
 
         activityUploadBusinessPhotosBinding.imgBack.setOnClickListener {
+            clevertapDefaultInstance?.pushEvent("Back from business details")//added by CleverTap Assistant
             finish()
         }
 
         activityUploadBusinessPhotosBinding.tvVerifyUdyam.setOnClickListener {
-            val jsonObject = JsonObject()
-            showProgressDialog()
-//            activityUploadBusinessPhotosBinding.lytUdyam.visibility = View.GONE
-            jsonObject.addProperty("consent", "Y")
-            jsonObject.addProperty(
-                "udyamRegistrationNo",
-                activityUploadBusinessPhotosBinding.tieUdhyogAadharNo.text.toString()
-            )
-            jsonObject.addProperty("isPDFRequired", "N")
-
-            val clientId = "QyxO5SCDPkDIX00"
-
-            ApiClient().getUdyamApiService(this).verifyUdyamAadhar(clientId, jsonObject)
-                .enqueue(object :
-                    Callback<UdyamDetailsResponse> {
-                    @SuppressLint("SetTextI18n")
-                    override fun onResponse(
-                        call: Call<UdyamDetailsResponse>,
-                        response: Response<UdyamDetailsResponse>,
-                    ) {
-                        hideProgressDialog()
-                        try {
-                            val udyamReturnResponse = response.body()
-                            val statusCode = udyamReturnResponse!!.statusCode
-                            if (statusCode == 101) {
-                                val requestId = udyamReturnResponse.requestId
-                                Log.e("UdyamRID", requestId.toString())
-                                activityUploadBusinessPhotosBinding.tvVerifyUdyam.text = "Verified"
-                                activityUploadBusinessPhotosBinding.ivUdyamVerified.visibility =
-                                    View.VISIBLE
-                                val bname = udyamReturnResponse.result!!.profile!!.name.toString()
-                                val bdoi =
-                                    udyamReturnResponse.result!!.profile!!.dateOfIncorporation.toString()
-                                val borgType =
-                                    udyamReturnResponse.result!!.profile!!.organizationType.toString()
-                                val bindustry =
-                                    udyamReturnResponse.result!!.industry[0].industry.toString()
-                                val bsector =
-                                    udyamReturnResponse.result!!.industry[0].subSector.toString()
-                                val bactivity =
-                                    udyamReturnResponse.result!!.industry[0].activity.toString()
-                                val bpan = udyamReturnResponse.result!!.profile!!.pan.toString()
-                                val bAddress =
-                                    udyamReturnResponse.result!!.officialAddress!!.flat + "," + udyamReturnResponse.result!!.officialAddress!!.premises + "," +
-                                            udyamReturnResponse.result!!.officialAddress!!.village + "," + udyamReturnResponse.result!!.officialAddress!!.block + "," +
-                                            udyamReturnResponse.result!!.officialAddress!!.road + "," + udyamReturnResponse.result!!.officialAddress!!.city + "," +
-                                            udyamReturnResponse.result!!.officialAddress!!.state + "," + udyamReturnResponse.result!!.officialAddress!!.pincode + "," + udyamReturnResponse.result!!.officialAddress!!.district
-
-                                saveCustomerBusinessData(
-                                    1,
-                                    bname,
-                                    bdoi,
-                                    borgType,
-                                    bindustry,
-                                    bsector,
-                                    bactivity,
-                                    bpan,
-                                    bAddress
-                                )
-                            } else {
-                                Toast.makeText(
-                                    this@UploadBusinessPhotos,
-                                    "Please check your UDYAM Aadhaar ID",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        } catch (ex: Exception) {
-                            ex.printStackTrace()
-                            Log.e("TAG", ex.toString())
-                        }
-                    }
-
-                    override fun onFailure(call: Call<UdyamDetailsResponse>, t: Throwable) {
-                        t.printStackTrace()
-                        hideProgressDialog()
-                        Toast.makeText(
-                            this@UploadBusinessPhotos,
-                            "Service Failure, Once Network connection is stable, will try to resend again",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                })
+            saveCustomerBusinessData(1)
         }
+//        activityUploadBusinessPhotosBinding.tvVerifyUdyam.setOnClickListener {
+//            val jsonObject = JsonObject()
+//            showProgressDialog()
+////            activityUploadBusinessPhotosBinding.lytUdyam.visibility = View.GONE
+//            jsonObject.addProperty("consent", "Y")
+//            jsonObject.addProperty(
+//                "udyamRegistrationNo",
+//                activityUploadBusinessPhotosBinding.tieUdhyogAadharNo.text.toString()
+//            )
+//            jsonObject.addProperty("isPDFRequired", "N")
+//
+//            val clientId = "QyxO5SCDPkDIX00"
+//
+//            ApiClient().getUdyamApiService(this).verifyUdyamAadhar(clientId, jsonObject)
+//                .enqueue(object :
+//                    Callback<UdyamDetailsResponse> {
+//                    @SuppressLint("SetTextI18n")
+//                    override fun onResponse(
+//                        call: Call<UdyamDetailsResponse>,
+//                        response: Response<UdyamDetailsResponse>,
+//                    ) {
+//                        hideProgressDialog()
+//                        try {
+//                            val udyamReturnResponse = response.body()
+//                            val statusCode = udyamReturnResponse!!.statusCode
+//                            if (statusCode == 101) {
+//                                clevertapDefaultInstance?.pushEvent("Udyam verification success")//added by CleverTap Assistant
+//                                val requestId = udyamReturnResponse.requestId
+//                                Log.e("UdyamRID", requestId.toString())
+//                                activityUploadBusinessPhotosBinding.tvVerifyUdyam.text = "Verified"
+//                                activityUploadBusinessPhotosBinding.ivUdyamVerified.visibility =
+//                                    View.VISIBLE
+//                                val bname = udyamReturnResponse.result!!.profile!!.name.toString()
+//                                val bdoi =
+//                                    udyamReturnResponse.result!!.profile!!.dateOfIncorporation.toString()
+//                                val borgType =
+//                                    udyamReturnResponse.result!!.profile!!.organizationType.toString()
+//                                val bindustry =
+//                                    udyamReturnResponse.result!!.industry[0].industry.toString()
+//                                val bsector =
+//                                    udyamReturnResponse.result!!.industry[0].subSector.toString()
+//                                val bactivity =
+//                                    udyamReturnResponse.result!!.industry[0].activity.toString()
+//                                val bpan = udyamReturnResponse.result!!.profile!!.pan.toString()
+//                                val bAddress =
+//                                    udyamReturnResponse.result!!.officialAddress!!.flat + "," + udyamReturnResponse.result!!.officialAddress!!.premises + "," +
+//                                            udyamReturnResponse.result!!.officialAddress!!.village + "," + udyamReturnResponse.result!!.officialAddress!!.block + "," +
+//                                            udyamReturnResponse.result!!.officialAddress!!.road + "," + udyamReturnResponse.result!!.officialAddress!!.city + "," +
+//                                            udyamReturnResponse.result!!.officialAddress!!.state + "," + udyamReturnResponse.result!!.officialAddress!!.pincode + "," + udyamReturnResponse.result!!.officialAddress!!.district
+//
+//                                saveCustomerBusinessData(1)
+//                            } else {
+//                                clevertapDefaultInstance?.pushEvent("Invalid Udyam aadhaar")//added by CleverTap Assistant
+//                                Toast.makeText(
+//                                    this@UploadBusinessPhotos,
+//                                    "Please check your UDYAM Aadhaar ID",
+//                                    Toast.LENGTH_SHORT
+//                                ).show()
+//                            }
+//                        } catch (ex: Exception) {
+//                            ex.printStackTrace()
+//                            Log.e("TAG", ex.toString())
+//                        }
+//                    }
+//
+//                    override fun onFailure(call: Call<UdyamDetailsResponse>, t: Throwable) {
+//                        t.printStackTrace()
+//                        hideProgressDialog()
+//                        clevertapDefaultInstance?.pushEvent("Udyam verification failure")//added by CleverTap Assistant
+//                        Toast.makeText(
+//                            this@UploadBusinessPhotos,
+//                            "Service Failure, Once Network connection is stable, will try to resend again",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                    }
+//                })
+//        }
     }
 
     private fun fetchLocation(from: Int) {
@@ -258,14 +268,6 @@ class UploadBusinessPhotos : BaseActivity() {
 
     private fun saveCustomerBusinessData(
         statusFrom: Int,
-        bName: String,
-        bDoi: String,
-        bOrgType: String,
-        bIndustry: String,
-        bSector: String,
-        bActivity: String,
-        bPan: String,
-        bAddress: String,
     ) {
         showProgressDialog()
         val jsonObject = JsonObject()
@@ -274,25 +276,10 @@ class UploadBusinessPhotos : BaseActivity() {
             "udhyogAadhar",
             activityUploadBusinessPhotosBinding.tieUdhyogAadharNo.text.toString()
         )
-        jsonObject.addProperty("businessName", bName)
-        jsonObject.addProperty("category", bIndustry)
-        jsonObject.addProperty("segment", bSector)
-        jsonObject.addProperty("type", bActivity)
-        jsonObject.addProperty("businessPan", bPan)
-        jsonObject.addProperty("businessAddress", bAddress)
-        jsonObject.addProperty("dateOfIncorporation", bDoi)
-        jsonObject.addProperty("constitution", bOrgType)
-        jsonObject.addProperty("gstNo", "")
-        jsonObject.addProperty("turnover", "")
-        jsonObject.addProperty("income", "")
-        jsonObject.addProperty("expenses", "")
-        jsonObject.addProperty("margin", 25)
-        jsonObject.addProperty("addressType", false)
         jsonObject.addProperty("lat", lat)
         jsonObject.addProperty("lng", lng)
 
         Log.e("TAG", jsonObject.toString())
-
         ApiClient().getAuthApiService(this).saveCustBusiness(jsonObject).enqueue(object :
             Callback<AuthenticationResponse> {
             override fun onResponse(
@@ -302,13 +289,22 @@ class UploadBusinessPhotos : BaseActivity() {
                 hideProgressDialog()
                 if (response.body()?.apiCode == "200") {
                     if (statusFrom == 1) {
+                        clevertapDefaultInstance?.pushEvent("Business data save success")//added by CleverTap Assistant
                         Toast.makeText(
                             this@UploadBusinessPhotos,
                             "UDYAM Aadhaar verified successfully",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+                } else if (response.body()?.apiCode == "102") {
+                    clevertapDefaultInstance?.pushEvent("Invalid Udyam Aadhaar")//added by CleverTap Assistant
+                    Toast.makeText(
+                        this@UploadBusinessPhotos,
+                        "Invalid UDYAM Aadhaar ID",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
+                    clevertapDefaultInstance?.pushEvent("Business data save failure")//added by CleverTap Assistant
                     Toast.makeText(
                         this@UploadBusinessPhotos,
                         "Something went wrong, Please try again later!!!",
@@ -320,6 +316,7 @@ class UploadBusinessPhotos : BaseActivity() {
             override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
                 t.printStackTrace()
                 hideProgressDialog()
+                clevertapDefaultInstance?.pushEvent("Business data service failure")//added by CleverTap Assistant
                 Toast.makeText(
                     this@UploadBusinessPhotos,
                     "Service Failure, Once Network connection is stable, will try to resend again",
@@ -350,6 +347,7 @@ class UploadBusinessPhotos : BaseActivity() {
                 response: Response<AuthenticationResponse>,
             ) {
                 hideProgressDialog()
+                clevertapDefaultInstance?.pushEvent("Business stage updated")//added by CleverTap Assistant
                 if (response.body()?.apiCode == "200") {
                     val intent =
                         Intent(
@@ -491,6 +489,7 @@ class UploadBusinessPhotos : BaseActivity() {
                     activityUploadBusinessPhotosBinding.businessImage.setImageBitmap(bitmap)
                     val encodedImageStr = encodeImageString(bitmap)
                     shopUploadStatus = 1
+                    clevertapDefaultInstance?.pushEvent("Business photo captured")//added by CleverTap Assistant
                     uploadBusinessCard(encodedImageStr, "BUSINESS", 1)
                 }
 
@@ -501,6 +500,7 @@ class UploadBusinessPhotos : BaseActivity() {
                     activityUploadBusinessPhotosBinding.businessStockImage.setImageBitmap(bitmap)
                     val encodedImageStr = encodeImageString(bitmap)
                     stockUploadStatus = 1
+                    clevertapDefaultInstance?.pushEvent("Stock photo captured")//added by CleverTap Assistant
                     uploadBusinessCard(encodedImageStr, "SHOP_STOCK_PHOTO", 1)
                 }
             }
@@ -558,6 +558,7 @@ class UploadBusinessPhotos : BaseActivity() {
             ) {
                 response.body()
                 hideProgressDialog()
+                clevertapDefaultInstance?.pushEvent("Business photo uploaded")//added by CleverTap Assistant
                 Toast.makeText(
                     this@UploadBusinessPhotos,
                     "Business Photo Uploaded successfully",
@@ -568,6 +569,7 @@ class UploadBusinessPhotos : BaseActivity() {
             override fun onFailure(call: Call<LoanProcessResponse>, t: Throwable) {
                 t.printStackTrace()
                 hideProgressDialog()
+                clevertapDefaultInstance?.pushEvent("Business photo not uploaded")//added by CleverTap Assistant
                 Toast.makeText(
                     this@UploadBusinessPhotos,
                     "Service Failure, Once Network connection is stable, will try to resend again",
@@ -597,6 +599,7 @@ class UploadBusinessPhotos : BaseActivity() {
     }
 
     override fun onBackPressed() {
+        clevertapDefaultInstance?.pushEvent("Back from Business data")//added by CleverTap Assistant
         finish()
     }
 
@@ -749,6 +752,84 @@ class UploadBusinessPhotos : BaseActivity() {
             inSampleSize++
         }
         return inSampleSize
+    }
+
+    private fun getBusinessData() {
+        showProgressDialog()
+        val customerId = mCustomerId.toString()
+
+        ApiClient().getAuthApiService(this).selectBusinessPhotos(customerId).enqueue(object :
+            Callback<BusinessDetails> {
+            override fun onResponse(
+                call: Call<BusinessDetails>,
+                response: Response<BusinessDetails>,
+            ) {
+                hideProgressDialog()
+                val userData = response.body()
+                clevertapDefaultInstance?.pushEvent("Business data fetch success")//added by CleverTap Assistant
+                findViewById<CardView>(R.id.cv_progress)?.visibility = View.GONE
+                if (userData != null) {
+                    userData.udyam_no?.let {
+                        findViewById<TextView>(R.id.tieUdhyogAadharNo)
+                            ?.setText(it)
+                    }
+
+                    if (userData.udyam_verified == "Y") {
+                        activityUploadBusinessPhotosBinding.tvVerifyUdyam.text = "Verified"
+                        activityUploadBusinessPhotosBinding.ivUdyamVerified.visibility =
+                            View.VISIBLE
+                    }
+
+                    if (response.body()?.business_photo.equals("") || response.body()?.business_photo == null) {
+                        Glide
+                            .with(this@UploadBusinessPhotos)
+                            .load(R.drawable.shop_photo).fitCenter()
+                            .placeholder(R.drawable.shop_photo)
+                            .into(businessImage)
+
+                    } else {
+                        response.body()?.business_photo?.let {
+                            Glide
+                                .with(this@UploadBusinessPhotos)
+                                .load(it).fitCenter()
+                                .placeholder(R.drawable.shop_photo)
+                                .into(businessImage)
+                        }
+                    }
+
+                    if (response.body()?.stock_photo.equals("") || response.body()?.stock_photo == null) {
+                        Glide
+                            .with(this@UploadBusinessPhotos)
+                            .load(R.drawable.shop_stock).fitCenter()
+                            .placeholder(R.drawable.shop_stock)
+                            .into(businessStockImage)
+
+                    } else {
+                        response.body()?.stock_photo?.let {
+                            Glide
+                                .with(this@UploadBusinessPhotos)
+                                .load(it).fitCenter()
+                                .placeholder(R.drawable.shop_stock)
+                                .into(businessStockImage)
+                        }
+                    }
+                } else {
+                    findViewById<CardView>(R.id.cv_progress)?.visibility = View.GONE
+                }
+            }
+
+            override fun onFailure(call: Call<BusinessDetails>, t: Throwable) {
+                hideProgressDialog()
+                t.printStackTrace()
+                clevertapDefaultInstance?.pushEvent("Business data fetch failure")//added by CleverTap Assistant
+                findViewById<CardView>(R.id.cv_progress)?.visibility = View.GONE
+                Toast.makeText(
+                    this@UploadBusinessPhotos,
+                    "A server error occurred. Please try after some time",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
     }
 
 }

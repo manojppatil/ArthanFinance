@@ -1,6 +1,5 @@
 package com.av.arthanfinance.user_kyc
 
-import android.Manifest
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.animation.ObjectAnimator
@@ -24,21 +23,19 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.arthanfinance.core.base.BaseActivity
-
 import com.av.arthanfinance.R
-import com.av.arthanfinance.applyLoan.model.AuthenticationResponse
 import com.av.arthanfinance.applyLoan.CustomerCameraActivity
-import com.av.arthanfinance.applyLoan.LoanEligibilitySubmittedActivity
+import com.av.arthanfinance.applyLoan.model.AuthenticationResponse
 import com.av.arthanfinance.applyLoan.model.LoanProcessResponse
 import com.av.arthanfinance.databinding.ActivityUploadPanBinding
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.util.AppLocationProvider
+import com.clevertap.android.sdk.CleverTapAPI
 import com.fondesa.kpermissions.extension.listeners
 import com.fondesa.kpermissions.extension.permissionsBuilder
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.theartofdev.edmodo.cropper.CropImage
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -46,7 +43,7 @@ import java.io.*
 
 class UploadPanActivity : BaseActivity() {
     private lateinit var uploadPanBinding: ActivityUploadPanBinding
-    private var kycCompleteStatus = "100"
+    private var kycCompleteStatus = "33"
     private var customerData: AuthenticationResponse? = null
     private var REQ_CODE_PHOTO_ID = 321
     private var CROP_REQUEST_CODE_CAMERA = 103
@@ -54,6 +51,8 @@ class UploadPanActivity : BaseActivity() {
     private var leadId: String? = null
     private var lat: String? = null
     private var lng: String? = null
+    var clevertapDefaultInstance: CleverTapAPI? = null
+
 
     override val layoutId: Int
         get() = R.layout.activity_upload_pan
@@ -63,7 +62,8 @@ class UploadPanActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         uploadPanBinding = ActivityUploadPanBinding.inflate(layoutInflater)
         setContentView(uploadPanBinding.root)
-
+        clevertapDefaultInstance =
+            CleverTapAPI.getDefaultInstance(applicationContext)//added by CleverTap Assistant
 //        Log.e("registerTime3", intent.getStringExtra("registerTime")!!)
 
         val mPrefs: SharedPreferences? = getSharedPreferences("customerData", Context.MODE_PRIVATE)
@@ -79,12 +79,12 @@ class UploadPanActivity : BaseActivity() {
 
         setSupportActionBar(uploadPanBinding.tbUploadPan)
         (supportActionBar)?.setDisplayHomeAsUpEnabled(false)
-        (this as AppCompatActivity).supportActionBar!!.title = "Last step to go...!"
+        (this as AppCompatActivity).supportActionBar!!.title = "Let's get you onboard faster!"
 
         fetchLocation(1)
 
         uploadPanBinding.pbKyc.max = 100
-        ObjectAnimator.ofInt(uploadPanBinding.pbKyc, "progress", 40).setDuration(1000).start()
+        ObjectAnimator.ofInt(uploadPanBinding.pbKyc, "progress", 33).setDuration(1000).start()
         uploadPanBinding.tvPercent.text = "${kycCompleteStatus}%"
 
 //        uploadPanBinding.btnCaptureDigioPan.setOnClickListener {
@@ -94,6 +94,7 @@ class UploadPanActivity : BaseActivity() {
 //        }
 
         uploadPanBinding.btnSendDigioPan.setOnClickListener {
+            clevertapDefaultInstance?.pushEvent("Pan Camera Launched")//added by CleverTap Assistant
             launchCamera()
         }
     }
@@ -116,12 +117,10 @@ class UploadPanActivity : BaseActivity() {
                             lng = location?.longitude.toString()
                             Log.d("latlng", lng.toString())
                             AppLocationProvider().stopLocation()
-
+                            clevertapDefaultInstance?.pushEvent("Pan location fetched")//added by CleverTap Assistant
                             // use location, this might get called in a different thread if a location is a last known location. In that case, you can post location on main thread
                         }
-
                     })
-
             }
             else -> {
                 val request = permissionsBuilder(
@@ -131,10 +130,13 @@ class UploadPanActivity : BaseActivity() {
                 request.listeners {
                     onAccepted {
                         fetchLocation(from)
+                        clevertapDefaultInstance?.pushEvent("Pan Location Permission Accepted")//added by CleverTap Assistant
                     }
                     onDenied {
+                        clevertapDefaultInstance?.pushEvent("Pan Location Permission Denied")//added by CleverTap Assistant
                     }
                     onPermanentlyDenied {
+                        clevertapDefaultInstance?.pushEvent("Pan Location Permission Denied Permanently")//added by CleverTap Assistant
                     }
                 }
                 request.send()
@@ -203,7 +205,7 @@ class UploadPanActivity : BaseActivity() {
         jsonObject.addProperty("idType", "PAN")
         jsonObject.addProperty("imageBase64", encodedImageStr)
         jsonObject.addProperty("applicationType", "CUSTOMER")
-
+        clevertapDefaultInstance?.pushEvent("Pan upload started")//added by CleverTap Assistant
         Log.e("TAG", jsonObject.toString())
         ApiClient().getAuthApiService(this).verifyKYCDocs(jsonObject).enqueue(object :
             Callback<LoanProcessResponse> {
@@ -217,6 +219,7 @@ class UploadPanActivity : BaseActivity() {
                     val message = docResponse.apiMessage
 
                     if (apiCode.equals("200")) {
+                        clevertapDefaultInstance?.pushEvent("Pan upload success")//added by CleverTap Assistant
                         Toast.makeText(
                             this@UploadPanActivity,
                             "PAN uploaded successfully",
@@ -226,7 +229,7 @@ class UploadPanActivity : BaseActivity() {
                         val intent1 =
                             Intent(
                                 this@UploadPanActivity,
-                                LoanEligibilitySubmittedActivity::class.java
+                                UploadAadharActivity::class.java
                             )
 //                        intent1.putExtra("registerTime", intent.getStringExtra("registerTime"))
                         startActivity(intent1)
@@ -234,6 +237,8 @@ class UploadPanActivity : BaseActivity() {
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     } else if (apiCode.equals("400")) {
                         hideProgressDialog()
+                        clevertapDefaultInstance?.pushEvent("Pan upload failed")//added by CleverTap Assistant
+
                         try {
                             Toast.makeText(
                                 this@UploadPanActivity,
@@ -245,7 +250,7 @@ class UploadPanActivity : BaseActivity() {
                         }
                     } else {
                         hideProgressDialog()
-
+                        clevertapDefaultInstance?.pushEvent("PAN Card is not visible properly")//added by CleverTap Assistant
                         Toast.makeText(
                             this@UploadPanActivity,
                             "Your PAN Card is not visible properly, Please scan again",
@@ -255,6 +260,7 @@ class UploadPanActivity : BaseActivity() {
                     }
                 } catch (ex: NullPointerException) {
                     Log.e("TAG", ex.toString())
+                    clevertapDefaultInstance?.pushEvent("PAN Card is not visible properly")//added by CleverTap Assistant
                     Toast.makeText(
                         this@UploadPanActivity,
                         "Your PAN Card is not visible properly, Please scan again",
@@ -267,6 +273,7 @@ class UploadPanActivity : BaseActivity() {
             override fun onFailure(call: Call<LoanProcessResponse>, t: Throwable) {
                 t.printStackTrace()
                 hideProgressDialog()
+                clevertapDefaultInstance?.pushEvent("PAN service failure")//added by CleverTap Assistant
                 Toast.makeText(
                     this@UploadPanActivity,
                     "Service Failure, Once Network connection is stable, will try to resend again",
@@ -542,6 +549,7 @@ class UploadPanActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
+        clevertapDefaultInstance?.pushEvent("Back from PAN upload")//added by CleverTap Assistant
         finish()
     }
 

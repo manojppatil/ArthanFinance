@@ -1,9 +1,11 @@
 package com.av.arthanfinance.profile
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import com.av.arthanfinance.*
+import com.av.arthanfinance.BuildConfig
 import com.av.arthanfinance.R
 import com.av.arthanfinance.user_kyc.UploadBusinessPhotos
 import com.av.arthanfinance.applyLoan.model.AuthenticationResponse
@@ -36,10 +39,13 @@ class ProfileFragment : Fragment() {
     private var mCustomerId: String? = null
     private lateinit var circleImg: CircleImageView
     private lateinit var iv_logout: ImageButton
+    private lateinit var txt_appVersion: TextView
     private var mpinStatus: String? = null
+
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
         val mPrefs: SharedPreferences? =
@@ -48,6 +54,7 @@ class ProfileFragment : Fragment() {
         mpinStatus = mPrefs?.getString("mpinStatus", null)
         iv_logout = view.findViewById(R.id.iv_logout)
         circleImg = view.findViewById(R.id.iv_profile_image)
+        txt_appVersion = view.findViewById(R.id.txt_app_version)
         iv_logout.setOnClickListener {
             if (mpinStatus == "Complete") {
                 logOut()
@@ -66,8 +73,12 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        getProfileData()
+        txt_appVersion.text =
+            "Version " + BuildConfig.VERSION_CODE + "(" + BuildConfig.VERSION_NAME + ")"
 
+        if (mCustomerId != null) {
+            getProfileData()
+        }
         return view
     }
 
@@ -87,7 +98,7 @@ class ProfileFragment : Fragment() {
                 Callback<ProfileResponse> {
                 override fun onResponse(
                     call: Call<ProfileResponse>,
-                    response: Response<ProfileResponse>
+                    response: Response<ProfileResponse>,
                 ) {
                     try {
                         (activity as HomeDashboardActivity).hideProgressDialog()
@@ -214,7 +225,7 @@ class ProfileFragment : Fragment() {
                 Callback<AuthenticationResponse> {
                 override fun onResponse(
                     call: Call<AuthenticationResponse>,
-                    response: Response<AuthenticationResponse>
+                    response: Response<AuthenticationResponse>,
                 ) {
                     (activity as HomeDashboardActivity).hideProgressDialog()
                     val custData = response.body()

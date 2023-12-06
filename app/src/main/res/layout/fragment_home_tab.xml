@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".homeTabs.HomeDashboardActivity">
 
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -172,269 +173,19 @@
                             android:src="@drawable/ic_baseline_refresh_24"
                             android:visibility="visible" />
                     </LinearLayout>
-
-
                 </LinearLayout>
-
-                <!--                <LinearLayout-->
-                <!--                    android:id="@+id/main_carousel"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:orientation="vertical"-->
-                <!--                    android:visibility="gone"-->
-                <!--                    app:layout_constraintTop_toBottomOf="@id/userHeaderLayout">-->
-
-                <!--                    <androidx.cardview.widget.CardView-->
-                <!--                        android:id="@+id/homecardView"-->
-                <!--                        android:layout_width="match_parent"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:layout_marginLeft="15dp"-->
-                <!--                        android:layout_marginTop="15dp"-->
-                <!--                        android:layout_marginRight="15dp"-->
-                <!--                        android:layout_marginBottom="15dp"-->
-                <!--                        app:cardCornerRadius="10dp">-->
-
-                <!--                        <RelativeLayout-->
-                <!--                            android:layout_width="match_parent"-->
-                <!--                            android:layout_height="wrap_content">-->
-
-                <!--                            <TextView-->
-                <!--                                android:id="@+id/txtLoanApplication"-->
-                <!--                                android:layout_width="wrap_content"-->
-                <!--                                android:layout_height="wrap_content"-->
-                <!--                                android:layout_alignParentStart="true"-->
-                <!--                                android:layout_alignParentTop="true"-->
-                <!--                                android:layout_marginStart="16dp"-->
-                <!--                                android:layout_marginTop="10dp"-->
-                <!--                                android:text=""-->
-                <!--                                android:textSize="13sp"-->
-                <!--                                app:fontFamily="@font/mukta_vaani" />-->
-
-                <!--                            <TextView-->
-                <!--                                android:id="@+id/loanAppNo"-->
-                <!--                                android:layout_width="wrap_content"-->
-                <!--                                android:layout_height="wrap_content"-->
-                <!--                                android:layout_alignParentStart="true"-->
-                <!--                                android:layout_alignParentTop="true"-->
-                <!--                                android:layout_marginStart="16dp"-->
-                <!--                                android:layout_marginTop="35dp"-->
-                <!--                                android:text=""-->
-                <!--                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"-->
-                <!--                                android:textColor="@android:color/black"-->
-                <!--                                android:textStyle="bold"-->
-                <!--                                app:fontFamily="@font/mukta_vaani" />-->
-
-                <!--                            <TextView-->
-                <!--                                android:id="@+id/txteligileAmonut"-->
-                <!--                                android:layout_width="wrap_content"-->
-                <!--                                android:layout_height="wrap_content"-->
-                <!--                                android:layout_alignParentTop="true"-->
-                <!--                                android:layout_alignParentEnd="true"-->
-                <!--                                android:layout_marginTop="10dp"-->
-                <!--                                android:layout_marginEnd="16dp"-->
-                <!--                                android:text=""-->
-                <!--                                android:textSize="13sp"-->
-                <!--                                app:fontFamily="@font/mukta_vaani" />-->
-
-                <!--                            <TextView-->
-                <!--                                android:id="@+id/eligilityAmount"-->
-                <!--                                android:layout_width="wrap_content"-->
-                <!--                                android:layout_height="wrap_content"-->
-                <!--                                android:layout_alignParentEnd="true"-->
-                <!--                                android:layout_marginTop="35dp"-->
-                <!--                                android:layout_marginEnd="16dp"-->
-                <!--                                android:text=""-->
-                <!--                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"-->
-                <!--                                android:textColor="@android:color/black"-->
-                <!--                                android:textStyle="bold"-->
-                <!--                                app:fontFamily="@font/mukta_vaani" />-->
-
-                <!--                            <LinearLayout-->
-                <!--                                android:id="@+id/textstatusLayout"-->
-                <!--                                android:layout_width="match_parent"-->
-                <!--                                android:layout_height="wrap_content"-->
-                <!--                                android:layout_alignParentStart="true"-->
-                <!--                                android:layout_alignParentTop="true"-->
-                <!--                                android:layout_marginStart="10dp"-->
-                <!--                                android:layout_marginTop="70dp"-->
-                <!--                                android:layout_marginEnd="10dp"-->
-                <!--                                android:orientation="horizontal"-->
-                <!--                                android:visibility="visible">-->
-
-                <!--                                <TextView-->
-                <!--                                    android:id="@+id/appStatus"-->
-                <!--                                    android:layout_width="match_parent"-->
-                <!--                                    android:layout_height="match_parent"-->
-                <!--                                    android:padding="2dp"-->
-                <!--                                    android:text=""-->
-                <!--                                    android:textAlignment="center"-->
-                <!--                                    android:textColor="@color/light_green"-->
-                <!--                                    android:textSize="18sp"-->
-                <!--                                    android:textStyle="bold" />-->
-                <!--                            </LinearLayout>-->
-
-
-                <!--                            <LinearLayout-->
-                <!--                                android:id="@+id/homestatusLayout"-->
-                <!--                                android:layout_width="match_parent"-->
-                <!--                                android:layout_height="wrap_content"-->
-                <!--                                android:layout_alignParentStart="true"-->
-                <!--                                android:layout_alignParentTop="true"-->
-                <!--                                android:layout_marginStart="10dp"-->
-                <!--                                android:layout_marginTop="70dp"-->
-                <!--                                android:layout_marginEnd="10dp"-->
-                <!--                                android:orientation="horizontal"-->
-                <!--                                android:visibility="visible">-->
-
-                <!--                                <LinearLayout-->
-                <!--                                    android:id="@+id/homeLayout1"-->
-                <!--                                    android:layout_width="match_parent"-->
-                <!--                                    android:layout_height="match_parent"-->
-                <!--                                    android:layout_weight="1"-->
-                <!--                                    android:orientation="vertical"-->
-                <!--                                    android:padding="5dp">-->
-
-                <!--                                    <TextView-->
-                <!--                                        android:id="@+id/homeStatus1"-->
-                <!--                                        android:layout_width="match_parent"-->
-                <!--                                        android:layout_height="wrap_content"-->
-                <!--                                        android:text=""-->
-                <!--                                        android:textColor="@android:color/black"-->
-                <!--                                        android:textSize="12sp" />-->
-
-                <!--                                    <TextView-->
-                <!--                                        android:id="@+id/homeStatusdate1"-->
-                <!--                                        android:layout_width="match_parent"-->
-                <!--                                        android:layout_height="match_parent"-->
-                <!--                                        android:layout_marginTop="5dp"-->
-                <!--                                        android:gravity="bottom"-->
-                <!--                                        android:text=""-->
-                <!--                                        android:textColor="@android:color/black"-->
-                <!--                                        android:textSize="13sp"-->
-                <!--                                        android:textStyle="bold"-->
-                <!--                                        app:layout_constraintStart_toStartOf="parent" />-->
-                <!--                                </LinearLayout>-->
-
-                <!--                                <LinearLayout-->
-                <!--                                    android:id="@+id/homeLayout2"-->
-                <!--                                    android:layout_width="match_parent"-->
-                <!--                                    android:layout_height="match_parent"-->
-                <!--                                    android:layout_weight="1"-->
-                <!--                                    android:orientation="vertical"-->
-                <!--                                    android:padding="5dp">-->
-
-                <!--                                    <TextView-->
-                <!--                                        android:id="@+id/homeStatus2"-->
-                <!--                                        android:layout_width="match_parent"-->
-                <!--                                        android:layout_height="wrap_content"-->
-                <!--                                        android:text=""-->
-                <!--                                        android:textAlignment="center"-->
-                <!--                                        android:textColor="@color/light_green"-->
-                <!--                                        android:textSize="12sp" />-->
-
-                <!--                                    <TextView-->
-                <!--                                        android:id="@+id/homeStatusdate2"-->
-                <!--                                        android:layout_width="match_parent"-->
-                <!--                                        android:layout_height="match_parent"-->
-                <!--                                        android:layout_marginTop="5dp"-->
-                <!--                                        android:gravity="bottom|center"-->
-                <!--                                        android:text=""-->
-                <!--                                        android:textColor="@color/black"-->
-                <!--                                        android:textSize="13sp"-->
-                <!--                                        android:textStyle="bold"-->
-                <!--                                        app:layout_constraintStart_toStartOf="parent" />-->
-
-                <!--                                </LinearLayout>-->
-
-                <!--                                <LinearLayout-->
-                <!--                                    android:id="@+id/homeLayout3"-->
-                <!--                                    android:layout_width="match_parent"-->
-                <!--                                    android:layout_height="match_parent"-->
-                <!--                                    android:layout_weight="1"-->
-                <!--                                    android:orientation="vertical"-->
-                <!--                                    android:padding="5dp">-->
-
-                <!--                                    <TextView-->
-                <!--                                        android:id="@+id/homeStatus3"-->
-                <!--                                        android:layout_width="match_parent"-->
-                <!--                                        android:layout_height="wrap_content"-->
-                <!--                                        android:text=""-->
-                <!--                                        android:textAlignment="viewEnd"-->
-                <!--                                        android:textColor="@android:color/black"-->
-                <!--                                        android:textSize="12sp" />-->
-
-                <!--                                    <TextView-->
-                <!--                                        android:id="@+id/homeStatusdate3"-->
-                <!--                                        android:layout_width="match_parent"-->
-                <!--                                        android:layout_height="match_parent"-->
-                <!--                                        android:layout_marginTop="5dp"-->
-                <!--                                        android:gravity="bottom|end"-->
-                <!--                                        android:text=""-->
-                <!--                                        android:textColor="@android:color/black"-->
-                <!--                                        android:textSize="13sp"-->
-                <!--                                        android:textStyle="bold"-->
-                <!--                                        app:layout_constraintStart_toStartOf="parent" />-->
-
-                <!--                                </LinearLayout>-->
-                <!--                            </LinearLayout>-->
-
-                <!--                            <ProgressBar-->
-                <!--                                android:id="@+id/homeStatusProgressBar"-->
-                <!--                                style="@style/Widget.AppCompat.ProgressBar.Horizontal"-->
-                <!--                                android:layout_width="match_parent"-->
-                <!--                                android:layout_height="6dp"-->
-                <!--                                android:layout_below="@id/homestatusLayout"-->
-                <!--                                android:layout_alignParentEnd="true"-->
-                <!--                                android:layout_gravity="center"-->
-                <!--                                android:layout_marginStart="13dp"-->
-                <!--                                android:layout_marginTop="6dp"-->
-                <!--                                android:layout_marginEnd="13dp"-->
-                <!--                                android:progressDrawable="@drawable/layer_layout" />-->
-
-                <!--                            <Button-->
-                <!--                                android:id="@+id/homeButton"-->
-                <!--                                android:layout_width="match_parent"-->
-                <!--                                android:layout_height="wrap_content"-->
-                <!--                                android:layout_below="@id/homeStatusProgressBar"-->
-                <!--                                android:layout_marginStart="14dp"-->
-                <!--                                android:layout_marginTop="20dp"-->
-                <!--                                android:layout_marginEnd="14dp"-->
-                <!--                                android:layout_marginBottom="14dp"-->
-                <!--                                android:background="@drawable/bg_register_rect_orange"-->
-                <!--                                android:text=""-->
-                <!--                                android:textAllCaps="false"-->
-                <!--                                android:textColor="@color/white"-->
-                <!--                                android:textSize="18sp"-->
-                <!--                                android:textStyle="bold" />-->
-
-
-                <!--                        </RelativeLayout>-->
-                <!--                    </androidx.cardview.widget.CardView>-->
-
-
-                <!--                    <Button-->
-                <!--                        android:id="@+id/rewardsButton"-->
-                <!--                        android:layout_width="match_parent"-->
-                <!--                        android:layout_height="55sp"-->
-                <!--                        android:layout_marginStart="14dp"-->
-                <!--                        android:layout_marginTop="0dp"-->
-                <!--                        android:layout_marginEnd="14dp"-->
-                <!--                        android:layout_marginBottom="0dp"-->
-                <!--                        android:background="@drawable/home_rewards"-->
-                <!--                        android:visibility="gone" />-->
-                <!--                </LinearLayout>-->
 
                 <LinearLayout
                     android:id="@+id/main_carousel"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
                     app:layout_constraintTop_toBottomOf="@id/userHeaderLayout">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/homecardView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
                         android:layout_marginRight="15dp"
@@ -514,7 +265,7 @@
                                             android:id="@+id/availableAmt"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:maxLength="5"
+                                            android:maxLength="10"
                                             android:padding="5dp"
                                             android:text="0"
                                             android:textColor="@color/white"
@@ -633,7 +384,7 @@
                                         android:id="@+id/valid_thru"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="04/24"
+                                        android:text="06/24"
                                         android:textColor="@color/white"
                                         android:textSize="15sp"
                                         android:textStyle="bold" />
@@ -664,28 +415,37 @@
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
 
-
-                    <com.ebanx.swipebtn.SwipeButton
-                        android:id="@+id/swipe_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:visibility="gone"
-                        app:button_background="@drawable/shape_button"
-                        app:button_bottom_padding="20dp"
-                        app:button_image_disabled="@drawable/ic_arrow_forward"
-                        app:button_image_enabled="@drawable/ic_check"
-                        app:button_left_padding="20dp"
-                        app:button_right_padding="20dp"
-                        app:button_top_padding="20dp"
-                        app:inner_text="Swipe to Withdraw"
-                        app:inner_text_background="@drawable/shape_background"
-                        app:inner_text_bottom_padding="16dp"
-                        app:inner_text_color="#000000"
-                        app:inner_text_size="17sp"
-                        app:inner_text_top_padding="16dp" />
                 </LinearLayout>
+
+                <com.ebanx.swipebtn.SwipeButton
+                    android:id="@+id/swipe_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:visibility="visible"
+                    app:button_background="@drawable/shape_button"
+                    app:button_bottom_padding="20dp"
+                    app:button_image_disabled="@drawable/ic_arrow_forward"
+                    app:button_image_enabled="@drawable/ic_check"
+                    app:button_left_padding="20dp"
+                    app:button_right_padding="20dp"
+                    app:button_top_padding="20dp"
+                    app:inner_text="Swipe to Withdraw"
+                    app:inner_text_background="@drawable/shape_background"
+                    app:inner_text_bottom_padding="16dp"
+                    app:inner_text_color="#000000"
+                    app:inner_text_size="17sp"
+                    app:inner_text_top_padding="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/main_carousel" />
+
+                <View
+                    android:id="@+id/vw_homes"
+                    android:layout_width="match_parent"
+                    android:layout_height="0sp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/dark_grey"
+                    app:layout_constraintTop_toBottomOf="@id/swipe_btn" />
 
                 <LinearLayout
                     android:id="@+id/lyt_account_setup"
@@ -694,7 +454,7 @@
                     android:layout_margin="15sp"
                     android:background="@drawable/bg_white_rect"
                     android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@id/main_carousel">
+                    app:layout_constraintTop_toBottomOf="@id/swipe_btn">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -744,7 +504,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Complete Your KYC"
+                                android:text="Complete Business Details"
                                 android:textColor="@color/black"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -752,7 +512,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="KYC is RBI-mandated to verify your identity. Tap to complete your KYC now!"
+                                android:text="Business details mandatory to verify your business. Tap to complete your Business KYC now!"
                                 android:textColor="@color/black"
                                 android:textSize="10sp"
                                 android:textStyle="normal" />
@@ -903,10 +663,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/white_smoke"
-                        android:orientation="horizontal"
                         android:clickable="false"
                         android:enabled="false"
                         android:focusable="false"
+                        android:orientation="horizontal"
                         android:padding="10dp">
 
                         <CheckBox
@@ -965,13 +725,22 @@
 
                 </LinearLayout>
 
+                <View
+                    android:id="@+id/vw_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="0sp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/dark_grey"
+                    app:layout_constraintTop_toBottomOf="@id/lyt_account_setup" />
+
+
                 <LinearLayout
                     android:id="@+id/lyt_home_services"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="10sp"
                     android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@id/lyt_account_setup">
+                    app:layout_constraintTop_toBottomOf="@id/vw_home">
 
                     <LinearLayout
                         android:id="@+id/lyt_genarate_stmt"

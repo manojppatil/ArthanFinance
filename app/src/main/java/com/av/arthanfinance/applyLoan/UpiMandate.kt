@@ -15,6 +15,7 @@ import com.av.arthanfinance.databinding.ActivityUpiMandateBinding
 import com.av.arthanfinance.homeTabs.HomeDashboardActivity
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.util.ArthanFinConstants
+import com.clevertap.android.sdk.CleverTapAPI
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -37,6 +38,9 @@ class UpiMandate : BaseActivity() {
     private lateinit var apiClient: ApiClient
     private var customerData: UserDetailsResponse? = null
     private var mCustomerId: String? = null
+    var clevertapDefaultInstance: CleverTapAPI? = null
+
+
     override val layoutId: Int
         get() = R.layout.activity_upi_mandate
 
@@ -47,6 +51,8 @@ class UpiMandate : BaseActivity() {
             ActivityUpiMandateBinding.inflate(layoutInflater)
         setContentView(activityUpiMandate.root)
         apiClient = ApiClient()
+        clevertapDefaultInstance =
+            CleverTapAPI.getDefaultInstance(applicationContext)//added by CleverTap Assistant
 
         val mPrefs: SharedPreferences? = getSharedPreferences("customerData", Context.MODE_PRIVATE)
         val gson = Gson()
@@ -76,6 +82,7 @@ class UpiMandate : BaseActivity() {
         ifscCode.setText(customerData!!.ifscCode)
 
         activityUpiMandate.imgBack.setOnClickListener {
+            clevertapDefaultInstance?.pushEvent("Back from Nach mandate")//added by CleverTap Assistant
             finish()
         }
 
@@ -166,12 +173,15 @@ class UpiMandate : BaseActivity() {
         jsonObject.addProperty("accountName", account_holder)
         jsonObject.addProperty("accountType", account_type)
         jsonObject.addProperty("ifscCode", ifsc_code)
-        jsonObject.addProperty("upiId", upi_Id)
+        jsonObject.addProperty("vpaId", upi_Id)
+        jsonObject.addProperty("source", "arthik")
+        clevertapDefaultInstance?.pushEvent("Nach mandate started")//added by CleverTap Assistant
         ApiClient().getAuthApiService(this).registerNach(jsonObject).enqueue(object :
             Callback<AuthenticationResponse> {
             override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
                 t.printStackTrace()
                 hideProgressDialog()
+                clevertapDefaultInstance?.pushEvent("Nach mandate failure")//added by CleverTap Assistant
                 Toast.makeText(
                     this@UpiMandate,
                     "Nach Mandate failure. Try after some time",
@@ -181,12 +191,13 @@ class UpiMandate : BaseActivity() {
 
             override fun onResponse(
                 call: Call<AuthenticationResponse>,
-                response: Response<AuthenticationResponse>
+                response: Response<AuthenticationResponse>,
             ) {
                 hideProgressDialog()
                 val custData = response.body()
                 if (custData != null) {
                     if (custData.apiCode == "200") {
+                        clevertapDefaultInstance?.pushEvent("Nach mandate success")//added by CleverTap Assistant
                         updateStage(ArthanFinConstants.enach)
                     } else {
                         Log.e("Error", custData.message + "")
@@ -214,10 +225,11 @@ class UpiMandate : BaseActivity() {
 
             override fun onResponse(
                 call: Call<AuthenticationResponse>,
-                response: Response<AuthenticationResponse>
+                response: Response<AuthenticationResponse>,
             ) {
                 hideProgressDialog()
                 if (response.body()?.apiCode == "200") {
+                    clevertapDefaultInstance?.pushEvent("Nach stage updated")//added by CleverTap Assistant
                     val intent = Intent(this@UpiMandate, UpiMandateSuccess::class.java)
                     intent.putExtra("from", "nach")
                     startActivity(intent)

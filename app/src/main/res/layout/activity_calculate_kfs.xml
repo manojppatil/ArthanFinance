@@ -374,7 +374,7 @@
                         android:layout_weight="1"
                         android:gravity="end"
                         android:maxLength="8"
-                        android:text="20.00"
+                        android:text="45.00"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
 

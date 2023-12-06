@@ -23,6 +23,7 @@ import com.av.arthanfinance.models.CustomerHomeTabResponse
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.util.ArthanFinConstants
 import com.av.arthanfinance.util.ArthanFinConstants.IS_CREATE_FLOW
+import com.clevertap.android.sdk.CleverTapAPI
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import retrofit2.Call
@@ -41,6 +42,8 @@ class InitiateApplyLoanActivity2 : BaseActivity() {
     var STEP = 1000
     private var mLoanAmount: String? = null
     private var dayDifference: String? = null
+    var clevertapDefaultInstance: CleverTapAPI? = null
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
@@ -48,7 +51,8 @@ class InitiateApplyLoanActivity2 : BaseActivity() {
         super.onCreate(savedInstanceState)
         activity2 = ActivityInitiateApplyLoan2Binding.inflate(layoutInflater)
         setContentView(activity2.root)
-
+        clevertapDefaultInstance =
+            CleverTapAPI.getDefaultInstance(applicationContext)//added by CleverTap Assistant
         val isCreateFlow = intent.getBooleanExtra(IS_CREATE_FLOW, false)
 
         if (supportActionBar != null)
@@ -168,6 +172,7 @@ class InitiateApplyLoanActivity2 : BaseActivity() {
 
         activity2.btnNext.setOnClickListener {
             if (activity2.loanAmountEditText.text.isNotEmpty()) {
+                activity2.btnNext.isFocusable = false
                 sendLoanRequest()
             } else {
                 Toast.makeText(
@@ -195,8 +200,9 @@ class InitiateApplyLoanActivity2 : BaseActivity() {
         val jsonObject = JsonObject()
         jsonObject.addProperty("customerId", customerData.customerId)
         jsonObject.addProperty("loanAmount", loanAmount)
+		clevertapDefaultInstance?.pushEvent("Withdraw fund requested")//added by CleverTap Assistant
 
-        apiClient.getAuthApiService(this).applyForLoan(jsonObject)
+        apiClient.getAuthApiService(this).confirmLoan(jsonObject)
             .enqueue(object : Callback<LoanProcessResponse> {
                 override fun onResponse(
                     call: Call<LoanProcessResponse>,
@@ -204,9 +210,10 @@ class InitiateApplyLoanActivity2 : BaseActivity() {
                 ) {
                     hideProgressDialog()
                     loanResponse = response.body()
-                    Log.e("TAGR", loanResponse.toString())
+                    Log.e("TAGR", loanResponse?.errCode.toString())
                     if (loanResponse != null) {
                         if (loanResponse!!.errCode == "400") {
+                            clevertapDefaultInstance?.pushEvent("Can't withdraw fund")//added by CleverTap Assistant
                             Toast.makeText(this@InitiateApplyLoanActivity2,
                                 loanResponse!!.errDesc,
                                 Toast.LENGTH_LONG).show()
@@ -220,6 +227,7 @@ class InitiateApplyLoanActivity2 : BaseActivity() {
                 override fun onFailure(call: Call<LoanProcessResponse>, t: Throwable) {
                     t.printStackTrace()
                     hideProgressDialog()
+                    clevertapDefaultInstance?.pushEvent("Withdraw service failure")//added by CleverTap Assistant
                     Toast.makeText(
                         this@InitiateApplyLoanActivity2,
                         "Service Failure, Once Network connection is stable, will try to resend again",
@@ -251,20 +259,13 @@ class InitiateApplyLoanActivity2 : BaseActivity() {
             ) {
                 hideProgressDialog()
                 if (response.body()?.apiCode == "200") {
+//                    val loanId = loanResponse!!.applicationId
+//                    Log.e("TAGid", loanResponse!!.applicationId.toString())
+                    clevertapDefaultInstance?.pushEvent("Apply for loan")//added by CleverTap Assistant
                     val intent = Intent(
                         this@InitiateApplyLoanActivity2,
-                        LoanSummaryActivity::class.java
+                        LoanApplicationSubmittedActivity::class.java
                     )
-                    val loanId = loanResponse!!.applicationId
-                    Log.e("TAGid", loanResponse!!.applicationId.toString())
-                    intent.putExtra("loanId", loanId)
-                    intent.putExtra("loanResponse", loanResponse)
-                    intent.putExtra("loanAmount", loanResponse!!.loanAmount)
-                    intent.putExtra("repaymentDate", loanResponse!!.repaymentDate)
-                    intent.putExtra("tenure", loanResponse!!.tenure)
-                    intent.putExtra("totalInterest", loanResponse!!.totalInterest)
-                    intent.putExtra("payableAmt", loanResponse!!.payableAmt)
-                    intent.putExtra("from", "applyLoan")
                     startActivity(intent)
                     finish()
                 }

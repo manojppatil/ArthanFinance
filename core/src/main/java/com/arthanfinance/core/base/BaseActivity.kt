@@ -68,9 +68,9 @@ abstract class BaseActivity : AppCompatActivity() {
      */
     fun hideProgressDialog() {
         progressView?.let {
-            progressView?.setVisibility(View.GONE)
+            progressView?.visibility = View.GONE
             progressView!!.findViewById<TextView>(R.id.txtMessage).text = ""
-            val vg = progressView?.getParent() as ViewGroup
+            val vg = progressView?.parent as ViewGroup
             vg.removeView(progressView)
             progressView = null
         }
@@ -118,18 +118,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     fun locationUpdateDone() {
 
-    }
-
-    override fun onStart() {
-        super.onStart()
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onStop() {
-        super.onStop()
     }
 
 

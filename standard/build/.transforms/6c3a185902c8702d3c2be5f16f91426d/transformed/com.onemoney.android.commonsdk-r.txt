@@ -2483,6 +2483,7 @@ drawable design_password_eye
 drawable design_snackbar_background
 drawable disable_link_acc_border
 drawable drawable_failure
+drawable fip_search_box
 drawable gradiant_border
 drawable ic_active_button
 drawable ic_android_bg
@@ -2946,6 +2947,7 @@ id navigation_header_container
 id never
 id noFields
 id no_accounts
+id no_data_found_text
 id none
 id normal
 id notification_background
@@ -2999,6 +3001,7 @@ id scrollIndicatorDown
 id scrollIndicatorUp
 id scrollView
 id scrollable
+id searchView
 id search_badge
 id search_bar
 id search_button
@@ -3494,6 +3497,7 @@ string mtrl_timepicker_confirm
 string multiple_fip_accounts_not_aloed
 string no
 string no_accounts_found
+string no_data_found
 string no_internet_connection
 string no_of_times
 string oh_no

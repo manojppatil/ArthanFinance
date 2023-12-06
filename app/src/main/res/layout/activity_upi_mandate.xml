@@ -209,32 +209,33 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:passwordToggleEnabled="true"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_account_no"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Account No"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:text="" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-<!--                <EditText-->
-<!--                    android:id="@+id/edt_account_no"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="25dp"-->
-<!--                    android:layout_marginTop="4dp"-->
-<!--                    android:layout_marginRight="25dp"-->
-<!--                    android:background="@drawable/bg_grey92_rect"-->
-<!--                    android:hint="e.g. 37620XXXXX0111"-->
-<!--                    android:inputType="textPassword"-->
-<!--                    android:paddingVertical="11dp"-->
-<!--                    android:paddingStart="19dp"-->
-<!--                    android:textSize="16sp"-->
-<!--                    app:hintTextColor="@color/very_light_grey" />-->
+                <!--                <EditText-->
+                <!--                    android:id="@+id/edt_account_no"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginLeft="25dp"-->
+                <!--                    android:layout_marginTop="4dp"-->
+                <!--                    android:layout_marginRight="25dp"-->
+                <!--                    android:background="@drawable/bg_grey92_rect"-->
+                <!--                    android:hint="e.g. 37620XXXXX0111"-->
+                <!--                    android:inputType="textPassword"-->
+                <!--                    android:paddingVertical="11dp"-->
+                <!--                    android:paddingStart="19dp"-->
+                <!--                    android:textSize="16sp"-->
+                <!--                    app:hintTextColor="@color/very_light_grey" />-->
 
                 <TextView
                     android:id="@+id/tv_con_acno"
@@ -263,23 +264,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Confirm Account No"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:text="" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-<!--                <EditText-->
-<!--                    android:id="@+id/edt_confirm_acno"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="25dp"-->
-<!--                    android:layout_marginTop="4dp"-->
-<!--                    android:layout_marginRight="25dp"-->
-<!--                    android:background="@drawable/bg_grey92_rect"-->
-<!--                    android:hint="e.g. 37620XXXXX0111"-->
-<!--                    android:inputType="text"-->
-<!--                    android:paddingVertical="11dp"-->
-<!--                    android:paddingStart="19dp"-->
-<!--                    android:textSize="16sp"-->
-<!--                    app:hintTextColor="@color/very_light_grey" />-->
+                <!--                <EditText-->
+                <!--                    android:id="@+id/edt_confirm_acno"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginLeft="25dp"-->
+                <!--                    android:layout_marginTop="4dp"-->
+                <!--                    android:layout_marginRight="25dp"-->
+                <!--                    android:background="@drawable/bg_grey92_rect"-->
+                <!--                    android:hint="e.g. 37620XXXXX0111"-->
+                <!--                    android:inputType="text"-->
+                <!--                    android:paddingVertical="11dp"-->
+                <!--                    android:paddingStart="19dp"-->
+                <!--                    android:textSize="16sp"-->
+                <!--                    app:hintTextColor="@color/very_light_grey" />-->
 
                 <TextView
                     android:id="@+id/tv_upiid"
@@ -311,20 +313,20 @@
                         android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-<!--                <EditText-->
-<!--                    android:id="@+id/edt_upi_id"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="25dp"-->
-<!--                    android:layout_marginTop="4dp"-->
-<!--                    android:layout_marginRight="25dp"-->
-<!--                    android:background="@drawable/bg_grey92_rect"-->
-<!--                    android:hint="7738790432@ybl"-->
-<!--                    android:inputType="text"-->
-<!--                    android:paddingVertical="11dp"-->
-<!--                    android:paddingStart="19dp"-->
-<!--                    android:textSize="16sp"-->
-<!--                    app:hintTextColor="@color/very_light_grey" />-->
+                <!--                <EditText-->
+                <!--                    android:id="@+id/edt_upi_id"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginLeft="25dp"-->
+                <!--                    android:layout_marginTop="4dp"-->
+                <!--                    android:layout_marginRight="25dp"-->
+                <!--                    android:background="@drawable/bg_grey92_rect"-->
+                <!--                    android:hint="7738790432@ybl"-->
+                <!--                    android:inputType="text"-->
+                <!--                    android:paddingVertical="11dp"-->
+                <!--                    android:paddingStart="19dp"-->
+                <!--                    android:textSize="16sp"-->
+                <!--                    app:hintTextColor="@color/very_light_grey" />-->
 
                 <View
                     android:layout_width="match_parent"

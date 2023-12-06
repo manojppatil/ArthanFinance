@@ -1,14 +1,19 @@
 package com.av.arthanfinance.adapter
 
-import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.av.arthanfinance.R
 import com.av.arthanfinance.applyLoan.model.LoanDetails
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class LoanDetailsAdapter(
     private val loansList: ArrayList<LoanDetails>,
@@ -16,32 +21,32 @@ class LoanDetailsAdapter(
 ) : RecyclerView.Adapter<LoanDetailsAdapter.LoanDetailsViewHolder>() {
 
     class LoanDetailsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val loanAmountValue: TextView? = itemView.findViewById(R.id.loanAmountValue)
-        private val loanAmountText: TextView? = itemView.findViewById(R.id.loanAmountText)
-        private val loanAccountNo: TextView? = itemView.findViewById(R.id.loanAccountNo)
-        private val loanTypeText: TextView? = itemView.findViewById(R.id.loanTypeText)
-        private val loanIconType: ImageView? = itemView.findViewById(R.id.loanIconType)
-        private val loanProgressBar: ProgressBar = itemView.findViewById(R.id.loanProgressBar)
-        private val payBtn: Button = itemView.findViewById(R.id.payBtn)
+        private val loanTypeText: TextView? = itemView.findViewById(R.id.transaction_name)
+        private val loanAmountValue: TextView? = itemView.findViewById(R.id.transaction_amount)
+        private val transactionDate: TextView? = itemView.findViewById(R.id.transaction_date)
+        private val transactionType: TextView? = itemView.findViewById(R.id.transaction_type)
         private val root: LinearLayout? = itemView.findViewById(R.id.root)
 
-        @SuppressLint("SetTextI18n")
+        @SuppressLint("SetTextI18n", "SimpleDateFormat")
         fun bind(loanDetails: LoanDetails, listener: LoanItemClickListener) {
-            loanAmountValue?.text = "-" + loanDetails.loanAmount
             val rupeeSymbol = itemView.context.resources.getString(R.string.Rs)
-            loanAmountText?.text = "Amount(${rupeeSymbol})"
-            loanTypeText?.text = "DEBIT(${rupeeSymbol})"
-            loanAccountNo?.text = loanDetails.loanAccountNum
-            if (loanDetails.loanType == "Business Loan") {
-                loanIconType?.setBackgroundResource(R.drawable.ic_business_loan)
-            } else {
-                loanIconType?.setBackgroundResource(R.drawable.ic_personal_loan)
+            val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+            val outputFormat: DateFormat = SimpleDateFormat("dd MMM yyyy")
+            val inputDateStr = loanDetails.transactionDateStr
+            val date: Date = inputFormat.parse(inputDateStr.toString())!!
+            val outputDateStr: String = outputFormat.format(date)
+            loanTypeText?.text = "" + loanDetails.transactionName
+            if (loanDetails.accountEntryType == "Debit") {
+                loanAmountValue?.setTextColor(Color.GREEN)
+                loanAmountValue?.text = "+" + loanDetails.amount
+            } else if (loanDetails.accountEntryType == "Credit") {
+                loanAmountValue?.setTextColor(Color.RED)
+                loanAmountValue?.text = "-" + loanDetails.amount
             }
-
-//            val percentCompleted = Integer.parseInt(loanDetails?.percentCompleted) //to be achieved from BE
-            loanProgressBar.max = 100
-            ObjectAnimator.ofInt(loanProgressBar, "progress", 100).setDuration(1000).start()
-            payBtn.setOnClickListener {
+            loanAmountValue?.text = "" + loanDetails.amount
+            transactionDate?.text = "" + outputDateStr
+            transactionType?.text = "" + loanDetails.accountEntryType
+            root?.setOnClickListener {
                 listener.onLoanItemClicked(loanDetails)
             }
         }

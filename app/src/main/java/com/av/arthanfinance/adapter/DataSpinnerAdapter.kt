@@ -24,7 +24,7 @@ class DataSpinnerAdapter(context: Context, val list: MutableList<Data>) :
 
     override fun getCount(): Int = list.size
 
-    public fun getListData():MutableList<Data> {
+    fun getListData():MutableList<Data> {
        return list
     }
     private fun createView(position: Int, convertView: View, parent: ViewGroup): View {
@@ -32,7 +32,7 @@ class DataSpinnerAdapter(context: Context, val list: MutableList<Data>) :
         val lp = textView?.layoutParams as? ViewGroup.MarginLayoutParams
         lp?.width = ViewGroup.MarginLayoutParams.MATCH_PARENT
         lp?.let {
-            textView?.layoutParams = it
+            textView.layoutParams = it
         }
         textView?.text = list[position].value
         return convertView
