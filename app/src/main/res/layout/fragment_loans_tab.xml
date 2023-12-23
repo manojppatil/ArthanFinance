@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     tools:context=".homeTabs.HomeDashboardActivity">
 
     <androidx.core.widget.NestedScrollView
@@ -27,7 +27,7 @@
                 <ImageView
                     android:id="@+id/imageView2"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="250dp"
                     android:src="@color/indigo"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,7 +44,8 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="20dp"
                         android:layout_marginLeft="20dp"
-                        android:src="@drawable/ic_arthan_logo" />
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/arthik_white" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -64,8 +65,8 @@
                             android:layout_gravity="center"
                             android:layout_marginEnd="25dp"
                             android:layout_marginRight="25dp"
-                            android:visibility="invisible"
-                            android:background="@drawable/ic_facebook" />
+                            android:background="@drawable/ic_facebook"
+                            android:visibility="invisible" />
 
                         <ImageButton
                             android:layout_width="32dp"
@@ -76,165 +77,292 @@
                             android:background="@drawable/ic_notification" />
 
                         <ImageButton
+                            android:id="@+id/iv_logout"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="3dp"
-                            android:onClick="logoutClicked"
                             android:background="@drawable/ic_logout" />
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="210dp"
-                    android:layout_marginTop="15dp"
                     android:id="@+id/yourloanslayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:orientation="vertical"
                     app:layout_constraintTop_toBottomOf="@id/arthanHeader">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:text="Your Loans"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="Your Transactions"
                         android:textColor="@color/white"
                         android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:gravity="center_horizontal|center_vertical"/>
+                        android:textStyle="bold" />
 
                     <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="99dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="99dp"
                         android:background="@drawable/bg_lightblue_rounded_rect"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_marginTop="4dp"
+                            android:layout_height="22dp"
                             android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_height="22dp">
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="10dp">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="30dp"
-                                android:textColor="@color/white"
-                                android:textStyle="bold"
                                 android:gravity="center_vertical"
+                                android:text="Your Credit Limit"
+                                android:textColor="@color/white"
                                 android:textSize="16sp"
-                                android:text="Your Loan Limit"/>
+                                android:textStyle="bold" />
+
                             <View
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"/>
+                                android:layout_weight="1" />
+
                             <ImageButton
                                 android:layout_width="8dp"
-                                android:layout_gravity="center_vertical"
                                 android:layout_height="12dp"
+                                android:layout_gravity="center_vertical"
                                 android:background="@drawable/ic_right_arrow" />
                         </LinearLayout>
+
                         <ProgressBar
                             android:id="@+id/totalLoanlimitProgressBar"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                             android:layout_width="match_parent"
+                            android:layout_height="15dp"
                             android:layout_gravity="center"
                             android:layout_margin="8dp"
-                            android:progressDrawable="@drawable/layer_layout"
-                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                            android:layout_height="15dp"/>
+                            android:progressDrawable="@drawable/layer_layout" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
                             android:orientation="horizontal">
+
                             <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:orientation="vertical"
-                                android:layout_height="match_parent">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:id="@+id/availedtext"
-                                    android:layout_height="16dp"
-                                    android:textColor="@color/white"
-                                    android:textStyle="normal"
-                                    android:gravity="center_vertical"
-                                    android:textSize="14sp"
-                                    android:text= "Availed"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="20dp"
-                                    android:id="@+id/totalAvailedAmount"
-                                    android:textColor="@color/white"
-                                    android:textStyle="bold"
-                                    android:gravity="center_vertical"
-                                    android:textSize="14sp"
-                                    android:text="50,000.00"/>
-                            </LinearLayout>
-                            <View
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1"/>
-                            <LinearLayout
-                                android:layout_width="0dp"
                                 android:layout_weight="1"
-                                android:gravity="right"
-                                android:orientation="vertical"
-                                android:layout_height="match_parent">
+                                android:orientation="vertical">
+
                                 <TextView
+                                    android:id="@+id/availedtext"
                                     android:layout_width="wrap_content"
                                     android:layout_height="16dp"
-                                    android:textColor="@color/white"
-                                    android:id="@+id/limitText"
-                                    android:textStyle="normal"
                                     android:gravity="center_vertical"
+                                    android:text="Availed"
+                                    android:textColor="@color/white"
                                     android:textSize="14sp"
-                                    android:text="Limit"/>
+                                    android:textStyle="normal" />
+
                                 <TextView
+                                    android:id="@+id/totalAvailedAmount"
                                     android:layout_width="wrap_content"
                                     android:layout_height="20dp"
-                                    android:textColor="@color/white"
-                                    android:id="@+id/totalLimitValue"
-                                    android:textStyle="bold"
                                     android:gravity="center_vertical"
+                                    android:text="50,000.00"
+                                    android:textColor="@color/white"
                                     android:textSize="14sp"
-                                    android:text="1,00,000.00"/>
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_available"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="16dp"
+                                    android:gravity="center"
+                                    android:text="Availed"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:textStyle="normal" />
+
+                                <TextView
+                                    android:id="@+id/totalAvailableAmount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="20dp"
+                                    android:gravity="center_vertical"
+                                    android:text="50,000.00"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/limitText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="16dp"
+                                    android:gravity="center_vertical"
+                                    android:text="Limit"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:textStyle="normal" />
+
+                                <TextView
+                                    android:id="@+id/totalLimitValue"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="20dp"
+                                    android:gravity="center_vertical"
+                                    android:text="1,00,000.00"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
 
                             </LinearLayout>
 
                         </LinearLayout>
 
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/bg_lightblue_rounded_rect"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="22dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="10dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:text="Billing Details"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <ImageButton
+                                android:layout_width="8dp"
+                                android:layout_height="12dp"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/ic_right_arrow" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="16dp"
+                                    android:gravity="center_vertical"
+                                    android:text="Total Amount Due"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:textStyle="normal" />
+
+                                <TextView
+                                    android:id="@+id/totalDueAmount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="20dp"
+                                    android:gravity="center_vertical"
+                                    android:text="0.00"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="bottom|end"
+                                android:orientation="vertical">
+
+                                <Button
+                                    android:id="@+id/payBtn"
+                                    android:layout_width="80dp"
+                                    android:layout_height="35sp"
+                                    android:background="@drawable/bg_language_rect"
+                                    android:text="PAY"
+                                    android:textColor="@color/dark_orange2"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    android:visibility="visible" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
+
                     <androidx.appcompat.widget.AppCompatButton
-                        android:layout_width="wrap_content"
                         android:id="@+id/applyforNewLoan"
-                        android:padding="10dp"
-                        android:layout_marginTop="13dp"
-                        android:text="Apply for New Loan"
-                        android:textAllCaps="false"
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
                         android:layout_gravity="center"
+                        android:layout_marginTop="13dp"
+                        android:background="@drawable/bg_orange_solid"
+                        android:padding="10dp"
+                        android:text="Withdraw Funds"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:textColor="@android:color/white"
-                        android:background="@drawable/bg_orange_solid"
-                        android:layout_height="45dp" />
+                        android:visibility="gone" />
 
                 </LinearLayout>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/activeLoansText"
-                    android:text="You have 3 active loans"
-                    android:textColor="@color/indigo"
-                    android:textSize="16sp"
-                    android:textStyle="normal"
-                    android:gravity="center"
-                    android:layout_marginTop="12dp"
-                    app:layout_constraintTop_toBottomOf="@id/yourloanslayout" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -243,13 +371,12 @@
                 android:id="@+id/loansRecyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:overScrollMode="never"
-                android:layout_margin="15dp">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_margin="15dp"
+                android:overScrollMode="never" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="80dp"/>
+                android:layout_height="80dp" />
 
         </LinearLayout>
 

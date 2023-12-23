@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
-import com.av.arthanfinance.applyLoan.UploadKycDetailsActivity
+import com.av.arthanfinance.homeTabs.HomeDashboardActivity
 import com.nttdata.mobillitysecurityframework.biometric.BiometricAuthentication
 import com.nttdata.mobillitysecurityframework.msfcomponents.MSFCallback
 
@@ -39,7 +39,7 @@ class FingerPrintLoginActivity : AppCompatActivity() {
 
                         runOnUiThread {
                             Toast.makeText(this@FingerPrintLoginActivity, message, Toast.LENGTH_LONG).show()
-                            val intent = Intent(this@FingerPrintLoginActivity, UploadKycDetailsActivity::class.java)
+                            val intent = Intent(this@FingerPrintLoginActivity, HomeDashboardActivity::class.java)
                             startActivity(intent)
                         }
                     }

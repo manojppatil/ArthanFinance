@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".serviceRequest.Emi_calculator">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/headerBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/indigo"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/img_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="38dp"
+                    android:src="@drawable/ic_back_orange" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_toRightOf="@id/img_back"
+                    android:text="EMI Calculator"
+                    android:textColor="@color/white"
+                    android:textSize="22sp" />
+
+
+                <TextView
+                    android:id="@+id/tvLoanApplication"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_name"
+                    android:layout_marginStart="13dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="@dimen/dimen_10"
+                    android:text="Withdraw Funds"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/loan_amount_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="Calculate EMI, Interest rate &amp; Tenure of your loan amount"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:textStyle="normal"
+                app:layout_constraintTop_toBottomOf="@id/headerBar" />
+
+            <TextView
+                android:id="@+id/loan_amount_text2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                android:gravity="center"
+                android:text="Tell us how much! we will instantly give it yo you"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/headerBar" />
+
+            <TextView
+                android:id="@+id/loanAmountText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                android:layout_marginTop="15dp"
+                android:text="Loan Amount"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                app:layout_constraintTop_toBottomOf="@id/loanAmountSeekbar" />
+
+            <LinearLayout
+                android:id="@+id/loanAmountLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_grey92_rect"
+                app:layout_constraintTop_toBottomOf="@id/loan_amount_text">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="15dp"
+                    android:background="@drawable/ic_rupee" />
+
+                <EditText
+                    android:id="@+id/loanAmountEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:maxLength="10"
+                    android:text="50000"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/inLakhs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="15dp"
+                    android:gravity="center_vertical"
+                    android:text="in Lakhs"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <SeekBar
+                android:id="@+id/loanAmountSeekbar"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="10dp"
+                android:theme="@style/AppThemeTwo"
+                app:layout_constraintTop_toBottomOf="@id/loanAmountLayout" />
+
+            <TextView
+                android:id="@+id/loanRateText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                android:layout_marginTop="15dp"
+                android:text="Interest Rate"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                app:layout_constraintTop_toBottomOf="@id/loanAmountSeekbar" />
+
+            <LinearLayout
+                android:id="@+id/loanRateLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_grey92_rect"
+                app:layout_constraintTop_toBottomOf="@id/loan_amount_text">
+
+
+                <EditText
+                    android:id="@+id/loanRateEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:maxLength="6"
+                    android:paddingStart="15sp"
+                    android:text="8"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="15dp"
+                    android:background="@drawable/ic_baseline_percent_24" />
+
+                <TextView
+                    android:id="@+id/inPercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="15dp"
+                    android:gravity="center_vertical"
+                    android:text="In Percent"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <SeekBar
+                android:id="@+id/loanRateSeekbar"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="10dp"
+                android:theme="@style/AppThemeTwo"
+                app:layout_constraintTop_toBottomOf="@id/loanAmountLayout" />
+
+
+            <TextView
+                android:id="@+id/tenureText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                android:layout_marginTop="15dp"
+                android:text="Select Tenure"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                app:layout_constraintTop_toBottomOf="@id/loanAmountSeekbar" />
+
+            <LinearLayout
+                android:id="@+id/loanTenureLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_grey92_rect"
+                app:layout_constraintTop_toBottomOf="@id/loan_amount_text">
+
+
+                <EditText
+                    android:id="@+id/loanTenureEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:maxLength="6"
+                    android:paddingStart="15sp"
+                    android:text="12"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="15dp"
+                    android:background="@drawable/ic_baseline_today_24" />
+
+                <TextView
+                    android:id="@+id/inMonths"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="15dp"
+                    android:gravity="center_vertical"
+                    android:text="In Months"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <SeekBar
+                android:id="@+id/loanTenureSeekbar"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="10dp"
+                android:theme="@style/AppThemeTwo"
+                app:layout_constraintTop_toBottomOf="@id/loanAmountLayout" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/purposeLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_24"
+                    android:layout_marginVertical="10dp"
+                    android:hint=""
+                    app:boxStrokeColor="@color/grey"
+                    app:endIconTint="@color/dark_orange1"
+                    app:hintTextColor="@color/black"
+                    app:layout_constraintTop_toBottomOf="@id/tenureText">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/loanPurposeDropDown"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:inputType="none"
+                        android:text="Select Loan Purpose"
+                        android:textColor="@color/indigo"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:elevation="8sp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/emiMonthly"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_24"
+                    android:layout_marginVertical="15dp"
+                    android:gravity="center"
+                    android:text="Your Monthly Loan EMI is"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/loanPurposeDropDown" />
+
+                <TextView
+                    android:id="@+id/monthlyEMI"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5sp"
+                    android:layout_marginBottom="15sp"
+                    android:drawablePadding="10sp"
+                    android:drawableTint="@color/indigo"
+                    android:gravity="center"
+                    android:text="4349"
+                    android:textColor="@color/indigo"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:drawableStartCompat="@drawable/ic_rupee"
+                    app:layout_constraintTop_toBottomOf="@id/emiMonthly" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:elevation="8sp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15sp"
+                    android:layout_marginTop="15dp"
+                    android:text="Total Interest"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="normal"
+                    app:layout_constraintTop_toBottomOf="@id/loanPurposeDropDown" />
+
+                <TextView
+                    android:id="@+id/totalInterest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="15sp"
+                    android:layout_marginLeft="10sp"
+                    android:drawablePadding="5sp"
+                    android:drawableTint="@color/colorred1"
+                    android:text="0"
+                    android:textColor="@color/colorred1"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:drawableStartCompat="@drawable/ic_rupee"
+                    app:layout_constraintTop_toBottomOf="@id/emiMonthly" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15sp"
+                    android:layout_marginTop="5dp"
+                    android:text="Total Amount Payable"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="normal"
+                    app:layout_constraintTop_toBottomOf="@id/loanPurposeDropDown" />
+
+                <TextView
+                    android:id="@+id/totalamount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="15sp"
+                    android:layout_marginLeft="10sp"
+                    android:drawablePadding="5sp"
+                    android:drawableTint="@color/colorGreen1"
+                    android:text="0"
+                    android:textColor="@color/colorGreen1"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:drawableStartCompat="@drawable/ic_rupee"
+                    app:layout_constraintTop_toBottomOf="@id/emiMonthly" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_next"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_margin="25dp"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                android:layout_marginBottom="@dimen/dimen_28"
+                android:background="@drawable/bg_orange_solid"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Withdraw Your Fund"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/monthlyEMI" />
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.appcompat.widget.LinearLayoutCompat>

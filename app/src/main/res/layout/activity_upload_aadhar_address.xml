@@ -35,8 +35,9 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/bg_image_circle"
-                    android:src="@drawable/ic_aadhar_placeholder"
-                    android:visibility="gone"
+                    android:padding="8dp"
+                    android:src="@drawable/add_user"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -45,24 +46,24 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilTitle"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dimen_24"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="18dp"
                     app:boxStrokeColor="@color/grey"
                     app:endIconTint="@color/dark_orange1"
                     app:hintTextColor="@color/black">
 
-                    <AutoCompleteTextView
+                    <TextView
                         android:id="@+id/actTitle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:enabled="true"
-                        android:fontFamily="@font/mukta_vaani"
-                        android:hint="@string/title"
                         android:inputType="none"
-                        android:textColor="@color/indigo"></AutoCompleteTextView>
+                        android:text="Hi Username"
+                        android:textColor="@color/indigo"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -71,7 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="14dp"
                     android:layout_marginEnd="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +82,6 @@
                         android:id="@+id/tieFatherName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/mukta_vaani"
                         android:hint="@string/father_spouse_name"
                         android:inputType="textCapCharacters" />
 
@@ -104,7 +104,6 @@
                         android:id="@+id/tieMotherName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/mukta_vaani"
                         android:hint="@string/mother_s_name"
                         android:inputType="textCapCharacters" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -116,6 +115,7 @@
                     android:layout_height="62dp"
                     android:layout_marginHorizontal="@dimen/dimen_24"
                     android:layout_marginTop="4dp"
+                    android:visibility="gone"
                     app:boxStrokeColor="@color/grey"
                     app:endIconTint="@color/dark_orange1"
                     app:hintTextColor="@color/black">
@@ -127,7 +127,7 @@
                         android:enabled="true"
                         android:hint="@string/gender"
                         android:inputType="none"
-                        android:textColor="@color/indigo"></AutoCompleteTextView>
+                        android:textColor="@color/indigo" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -146,10 +146,12 @@
                         android:id="@+id/actEducation"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:editable="false"
                         android:enabled="true"
+                        android:focusable="false"
                         android:hint="@string/qualification"
                         android:inputType="none"
-                        android:textColor="@color/indigo"></AutoCompleteTextView>
+                        android:textColor="@color/indigo" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -167,10 +169,12 @@
                         android:id="@+id/actMaritalStatus"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:editable="false"
                         android:enabled="true"
+                        android:focusable="false"
                         android:hint="@string/marital_status"
                         android:inputType="none"
-                        android:textColor="@color/indigo"></AutoCompleteTextView>
+                        android:textColor="@color/indigo" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -189,7 +193,6 @@
                         android:id="@+id/tieFamilyMembers"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/mukta_vaani"
                         android:hint="@string/family_members"
                         android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -201,6 +204,7 @@
                     android:layout_height="62dp"
                     android:layout_marginHorizontal="@dimen/dimen_24"
                     android:layout_marginTop="4dp"
+                    android:visibility="gone"
                     app:endIconTint="@color/dark_orange1"
                     app:hintTextColor="@color/black">
 
@@ -211,7 +215,7 @@
                         android:enabled="true"
                         android:hint="@string/religion"
                         android:inputType="none"
-                        android:textColor="@color/indigo"></AutoCompleteTextView>
+                        android:textColor="@color/indigo" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -221,6 +225,7 @@
                     android:layout_height="62dp"
                     android:layout_marginHorizontal="@dimen/dimen_24"
                     android:layout_marginTop="4dp"
+                    android:visibility="gone"
                     app:endIconTint="@color/dark_orange1"
                     app:hintTextColor="@color/black">
 
@@ -242,6 +247,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="24dp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -263,6 +269,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="24dp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -284,6 +291,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="24dp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -305,6 +313,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="24dp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -326,6 +335,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="24dp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -347,6 +357,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="24dp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -368,6 +379,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="24dp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -382,6 +394,28 @@
                         android:maxLength="6" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilState"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="24dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieState"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mukta_vaani"
+                        android:hint="@string/state_name"
+                        android:inputType="textCapCharacters" />
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_location"
                     android:layout_width="match_parent"
@@ -391,6 +425,7 @@
                     android:layout_marginEnd="24dp"
                     android:background="@drawable/bg_rect_gains_boro"
                     android:drawablePadding="8dp"
+                    android:visibility="gone"
                     app:drawableEndCompat="@drawable/ic_baseline_my_location">
 
                     <TextView
@@ -400,7 +435,6 @@
                         android:layout_marginStart="12dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
-                        android:fontFamily="@font/mukta_vaani"
                         android:text="@string/location"
                         android:textColor="@color/light_grey"
                         android:textSize="16sp"
@@ -420,47 +454,47 @@
                         app:srcCompat="@drawable/ic_baseline_my_location" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:orientation="horizontal">
+                <!--                <LinearLayout-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginTop="4dp"-->
+                <!--                    android:orientation="horizontal">-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen_24"
-                        android:layout_marginEnd="@dimen/dimen_24"
-                        android:orientation="vertical">
+                <!--                    <LinearLayout-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_marginStart="@dimen/dimen_24"-->
+                <!--                        android:layout_marginEnd="@dimen/dimen_24"-->
+                <!--                        android:orientation="vertical">-->
 
-                        <TextView
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen_10"
-                            android:fontFamily="@font/mukta_vaani"
-                            android:text="@string/state_name"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
+                <!--                        <TextView-->
+                <!--                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"-->
+                <!--                            android:layout_width="match_parent"-->
+                <!--                            android:layout_height="wrap_content"-->
+                <!--                            android:layout_marginTop="@dimen/dimen_10"-->
+                <!--                            android:fontFamily="@font/mukta_vaani"-->
+                <!--                            android:text="@string/state_name"-->
+                <!--                            android:textColor="@color/black"-->
+                <!--                            android:textSize="16sp" />-->
 
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/stateDropDown"
-                            style="@style/Widget.AppCompat.DropDownItem.Spinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen_10"
-                            android:background="@drawable/bg_spinner"
-                            android:ems="10"
+                <!--                        <androidx.appcompat.widget.AppCompatSpinner-->
+                <!--                            android:id="@+id/stateDropDown"-->
+                <!--                            style="@style/Widget.AppCompat.DropDownItem.Spinner"-->
+                <!--                            android:layout_width="match_parent"-->
+                <!--                            android:layout_height="wrap_content"-->
+                <!--                            android:layout_marginTop="@dimen/dimen_10"-->
+                <!--                            android:background="@drawable/bg_spinner"-->
+                <!--                            android:ems="10"-->
 
-                            android:fontFamily="@font/mukta_vaani"
-                            android:hint="@string/state"
-                            android:paddingEnd="30dp"
-                            android:textColor="@color/indigo"
-                            android:textSize="18sp"
-                            app:hintTextColor="@color/whisper" />
+                <!--                            android:fontFamily="@font/mukta_vaani"-->
+                <!--                            android:hint="@string/state"-->
+                <!--                            android:paddingEnd="30dp"-->
+                <!--                            android:textColor="@color/indigo"-->
+                <!--                            android:textSize="18sp"-->
+                <!--                            app:hintTextColor="@color/whisper" />-->
 
-                    </LinearLayout>
-                </LinearLayout>
+                <!--                    </LinearLayout>-->
+                <!--                </LinearLayout>-->
 
                 <CheckBox
                     android:id="@+id/checkbox"
@@ -470,7 +504,8 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="24dp"
                     android:checked="false"
-                    android:text="Is this your Current Address?" />
+                    android:text="Is this your Current Address?"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/currentAddressLayout"
@@ -681,12 +716,17 @@
                     android:textSize="20sp" />
 
                 <ImageView
-                    android:id="@+id/imageView22"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView23"
+                    android:layout_width="250dp"
+                    android:layout_height="50sp"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="16dp"
-                    app:srcCompat="@drawable/ic_arthan_blue" />
+                    android:layout_marginTop="24dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@drawable/power_by" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

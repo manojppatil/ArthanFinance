@@ -1,0 +1,1066 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".applyLoan.CalculateKfs">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/headerBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/indigo"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/img_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="24dp"
+                    android:src="@drawable/ic_back_orange" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@id/img_back"
+                    android:text="Key Fact Sheet"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_loan_proc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Digital Agreement"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:id="@+id/rl_rect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/bg_silver_rect"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="19dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="3"
+                        android:text="Particulars "
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <!--                    <View-->
+                    <!--                        android:layout_width="1sp"-->
+                    <!--                        android:layout_height="match_parent"-->
+                    <!--                        android:layout_marginEnd="5dp"-->
+                    <!--                        android:background="@color/ford_grey" />-->
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="19dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="In Rupees"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1sp"
+                    android:background="@color/ford_grey"
+                    tools:ignore="SmallSp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_loan_amnt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="19dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="3"
+                        android:text="Credit Facility/ Limit "
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <!--                    <View-->
+                    <!--                        android:layout_width="1sp"-->
+                    <!--                        android:layout_height="match_parent"-->
+                    <!--                        android:layout_marginEnd="5dp"-->
+                    <!--                        android:background="@color/ford_grey" />-->
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_loan_amnt_rs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="19dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="0.00"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1sp"
+                    android:background="@color/ford_grey"
+                    tools:ignore="SmallSp" />
+
+
+                <!--                <LinearLayout-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:orientation="horizontal">-->
+
+                <!--                    <androidx.appcompat.widget.AppCompatTextView-->
+                <!--                        android:id="@+id/tv_total_interest"-->
+                <!--                        android:layout_width="0dp"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_marginStart="19dp"-->
+                <!--                        android:layout_marginTop="5dp"-->
+                <!--                        android:layout_marginEnd="5dp"-->
+                <!--                        android:layout_marginBottom="5dp"-->
+                <!--                        android:layout_weight="3"-->
+                <!--                        android:text="Total interest charge during the entire tenor of the loan (in Rupees) "-->
+                <!--                        android:textColor="@color/black"-->
+                <!--                        android:textSize="14sp" />-->
+
+                <!--                    &lt;!&ndash;                    <View&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        android:layout_width="1sp"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        android:layout_height="match_parent"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        android:layout_marginEnd="5dp"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        android:background="@color/ford_grey" />&ndash;&gt;-->
+
+                <!--                    <androidx.appcompat.widget.AppCompatTextView-->
+                <!--                        android:id="@+id/tv_total_interest_rs"-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_marginTop="10dp"-->
+                <!--                        android:layout_marginEnd="14dp"-->
+                <!--                        android:layout_weight="1"-->
+                <!--                        android:gravity="center"-->
+                <!--                        android:text="As per the usage"-->
+                <!--                        android:textColor="@color/black"-->
+                <!--                        android:textStyle="bold" />-->
+
+                <!--                </LinearLayout>-->
+
+
+                <!--                <LinearLayout-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:orientation="horizontal">-->
+
+                <!--                    <androidx.appcompat.widget.AppCompatTextView-->
+                <!--                        android:id="@+id/tv_upfront_charges"-->
+                <!--                        android:layout_width="0dp"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_marginStart="19dp"-->
+                <!--                        android:layout_marginTop="5dp"-->
+                <!--                        android:layout_marginEnd="5dp"-->
+                <!--                        android:layout_marginBottom="5dp"-->
+                <!--                        android:layout_weight="3"-->
+                <!--                        android:text="Other up-front charges, if any (break-up of each component to be given below) (in Rupees)"-->
+                <!--                        android:textColor="@color/black"-->
+                <!--                        android:textSize="14sp" />-->
+
+                <!--                    &lt;!&ndash;                    <View&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        android:layout_width="1sp"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        android:layout_height="match_parent"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        android:layout_marginEnd="5dp"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        android:background="@color/ford_grey" />&ndash;&gt;-->
+
+                <!--                    <androidx.appcompat.widget.AppCompatTextView-->
+                <!--                        android:id="@+id/tv_upfront_charges_rs"-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_marginTop="10dp"-->
+                <!--                        android:layout_marginEnd="14dp"-->
+                <!--                        android:layout_marginBottom="5dp"-->
+                <!--                        android:layout_weight="1"-->
+                <!--                        android:gravity="center"-->
+                <!--                        android:maxLength="8"-->
+                <!--                        android:text="20.00"-->
+                <!--                        android:textColor="@color/black" />-->
+                <!--                </LinearLayout>-->
+
+                <!--                <View-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="1sp"-->
+                <!--                    android:background="@color/ford_grey"-->
+                <!--                    tools:ignore="SmallSp" />-->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_processing_fees"
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="19dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="3"
+                        android:text="Processing fees"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_processing_fees_rs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:maxLength="8"
+                        android:text="1500"
+                        android:textColor="@color/title_label_color"
+                        android:textSize="14sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_processing_fee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="19dp"
+                        android:layout_marginBottom="5dp"
+                        android:gravity="end"
+                        android:text="0"
+                        android:textStyle="bold"
+                        android:textColor="@color/light_green"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <!--                <View-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="1sp"-->
+                <!--                    android:background="@color/ford_grey"-->
+                <!--                    tools:ignore="SmallSp" />-->
+
+                <!--                <LinearLayout-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:orientation="horizontal">-->
+
+                <!--                    <androidx.appcompat.widget.AppCompatTextView-->
+                <!--                        android:id="@+id/tv_insurance_charges"-->
+                <!--                        android:layout_width="0dp"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_marginStart="19dp"-->
+                <!--                        android:layout_marginTop="5dp"-->
+                <!--                        android:layout_marginEnd="5dp"-->
+                <!--                        android:layout_marginBottom="5dp"-->
+                <!--                        android:layout_weight="3"-->
+                <!--                        android:text="Insurance charges, if any (in Rupees)"-->
+                <!--                        android:textColor="@color/black"-->
+                <!--                        android:textSize="11sp" />-->
+
+                <!--                    &lt;!&ndash;                    <View&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        android:layout_width="1sp"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        android:layout_height="match_parent"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        android:layout_marginEnd="5dp"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        android:background="@color/ford_grey" />&ndash;&gt;-->
+
+                <!--                    <androidx.appcompat.widget.AppCompatTextView-->
+                <!--                        android:id="@+id/tv_insurance_charges_rs"-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_marginTop="5dp"-->
+                <!--                        android:layout_marginEnd="14dp"-->
+                <!--                        android:layout_marginBottom="5dp"-->
+                <!--                        android:layout_weight="1"-->
+                <!--                        android:gravity="center"-->
+                <!--                        android:maxLength="8"-->
+                <!--                        android:text="0.00"-->
+                <!--                        android:textColor="@color/black" />-->
+
+
+                <!--                </LinearLayout>-->
+
+                <!--                <View-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="1sp"-->
+                <!--                    android:background="@color/ford_grey"-->
+                <!--                    tools:ignore="SmallSp" />-->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_app_fees"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="19dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="3"
+                        android:text="Others (if any)"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <!--                    <View-->
+                    <!--                        android:layout_width="1sp"-->
+                    <!--                        android:layout_height="match_parent"-->
+                    <!--                        android:layout_marginEnd="5dp"-->
+                    <!--                        android:background="@color/ford_grey" />-->
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_app_fees_rs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="19dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:maxLength="8"
+                        android:text="45.00"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_stamp_duty"
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="19dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="3"
+                        android:text="Stamp Duty:"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <!--                    <View-->
+                    <!--                        android:layout_width="1sp"-->
+                    <!--                        android:layout_height="match_parent"-->
+                    <!--                        android:layout_marginEnd="5dp"-->
+                    <!--                        android:background="@color/ford_grey" />-->
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_stamp_duty_rs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_loan_amnt"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="14dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:maxLength="8"
+                        android:text="20.00"
+                        android:textColor="@color/black" />
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1sp"
+                    android:background="@color/ford_grey"
+                    tools:ignore="SmallSp" />
+
+                <!--                <LinearLayout-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:orientation="horizontal">-->
+
+                <!--                    <androidx.appcompat.widget.AppCompatTextView-->
+                <!--                        android:id="@+id/tv_net_disbursed_amt"-->
+                <!--                        android:layout_width="0dp"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_marginStart="19dp"-->
+                <!--                        android:layout_marginTop="5dp"-->
+                <!--                        android:layout_marginEnd="5dp"-->
+                <!--                        android:layout_marginBottom="5dp"-->
+                <!--                        android:layout_weight="3"-->
+                <!--                        android:text="Net disbursed amount ((i)-(iii)) (in Rupees):"-->
+                <!--                        android:textColor="@color/black"-->
+                <!--                        android:textSize="14sp" />-->
+
+                <!--                    &lt;!&ndash;                    <View&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        android:layout_width="1sp"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        android:layout_height="match_parent"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        android:layout_marginEnd="5dp"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        android:background="@color/ford_grey" />&ndash;&gt;-->
+
+                <!--                    <androidx.appcompat.widget.AppCompatTextView-->
+                <!--                        android:id="@+id/tv_net_disbursed_amt_rs"-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_below="@+id/tv_loan_amnt"-->
+                <!--                        android:layout_alignParentRight="true"-->
+                <!--                        android:layout_centerHorizontal="true"-->
+                <!--                        android:layout_marginTop="10dp"-->
+                <!--                        android:layout_marginRight="14dp"-->
+                <!--                        android:layout_weight="1"-->
+                <!--                        android:gravity="center"-->
+                <!--                        android:maxLength="12"-->
+                <!--                        android:text="0.00"-->
+                <!--                        android:textColor="@color/black" />-->
+                <!--                </LinearLayout>-->
+
+                <!--                <View-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="1sp"-->
+                <!--                    android:background="@color/ford_grey"-->
+                <!--                    tools:ignore="SmallSp" />-->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_payable_amt"
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="19dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="3"
+                        android:text="Total amount to be paid"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <!--                    <View-->
+                    <!--                        android:layout_width="1sp"-->
+                    <!--                        android:layout_height="match_parent"-->
+                    <!--                        android:layout_marginEnd="5dp"-->
+                    <!--                        android:background="@color/ford_grey" />-->
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_payable_amt_rs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="19dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="As per the usage"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1sp"
+                    android:background="@color/ford_grey"
+                    tools:ignore="SmallSp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_net_annual_percent_rate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="19dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="3"
+                        android:text="Interest Rate"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <!--                    <View-->
+                    <!--                        android:layout_width="1sp"-->
+                    <!--                        android:layout_height="match_parent"-->
+                    <!--                        android:layout_marginEnd="5dp"-->
+                    <!--                        android:background="@color/ford_grey" />-->
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_net_annual_percent_rate_rs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="19dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="2.5% per month"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1sp"
+                    android:background="@color/ford_grey"
+                    tools:ignore="SmallSp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_loan_tenure"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="19dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="3"
+                        android:text="Validity of the Facility"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <!--                    <View-->
+                    <!--                        android:layout_width="1sp"-->
+                    <!--                        android:layout_height="match_parent"-->
+                    <!--                        android:layout_marginEnd="5dp"-->
+                    <!--                        android:background="@color/ford_grey" />-->
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_loan_tenure_rs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="19dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="12 Months"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1sp"
+                    android:background="@color/ford_grey"
+                    tools:ignore="SmallSp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_repayment_method"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="19dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="3"
+                        android:text="Repayment date"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <!--                    <View-->
+                    <!--                        android:layout_width="1sp"-->
+                    <!--                        android:layout_height="match_parent"-->
+                    <!--                        android:layout_marginEnd="5dp"-->
+                    <!--                        android:background="@color/ford_grey" />-->
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_repayment_method_rs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="19dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="1st of every month"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1sp"
+                    android:background="@color/ford_grey"
+                    android:visibility="gone"
+                    tools:ignore="SmallSp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_interest_rate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="19dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="3"
+                        android:text="Number of instalments of repayment"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <!--                    <View-->
+                    <!--                        android:layout_width="1sp"-->
+                    <!--                        android:layout_height="match_parent"-->
+                    <!--                        android:layout_marginEnd="5dp"-->
+                    <!--                        android:background="@color/ford_grey" />-->
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_interest_rate_rs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1sp"
+                    android:background="@color/ford_grey"
+                    android:visibility="gone"
+                    tools:ignore="SmallSp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_installment_amt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="19dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="3"
+                        android:text="Amount of each instalment of repayment (in Rupees)"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <!--                    <View-->
+                    <!--                        android:layout_width="1sp"-->
+                    <!--                        android:layout_height="match_parent"-->
+                    <!--                        android:layout_marginEnd="5dp"-->
+                    <!--                        android:background="@color/ford_grey" />-->
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_installment_amt_rs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1sp"
+                    android:background="@color/ford_grey"
+                    android:visibility="gone"
+                    tools:ignore="SmallSp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_repay_date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="19dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:text="Details about Contingent Charges"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1sp"
+                    android:background="@color/ford_grey"
+                    android:visibility="gone"
+                    tools:ignore="SmallSp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_penal_charges"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="19dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="3"
+                        android:text="Rate of annualized penal charges in case of delayed payments (if any)"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <!--                    <View-->
+                    <!--                        android:layout_width="1sp"-->
+                    <!--                        android:layout_height="match_parent"-->
+                    <!--                        android:layout_marginEnd="5dp"-->
+                    <!--                        android:background="@color/ford_grey" />-->
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_penal_charges_rs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="36%"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1sp"
+                    android:background="@color/ford_grey"
+                    android:visibility="gone"
+                    tools:ignore="SmallSp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_penal_other_charges"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="19dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="3"
+                        android:text="Rate of annualized other penal charges (if any); (details to be provided)"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <!--                    <View-->
+                    <!--                        android:layout_width="1sp"-->
+                    <!--                        android:layout_height="match_parent"-->
+                    <!--                        android:layout_marginEnd="5dp"-->
+                    <!--                        android:background="@color/ford_grey" />-->
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_penal_other_charges_rs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="36%"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1sp"
+                    android:background="@color/ford_grey"
+                    android:visibility="gone"
+                    tools:ignore="SmallSp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="19dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="3"
+                        android:text="Other disclosures"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1sp"
+                    android:background="@color/ford_grey"
+                    android:visibility="gone"
+                    tools:ignore="SmallSp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_lockin_period"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="19dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="3"
+                        android:text="Cooling off/look-up period during which borrower shall not be charged any penalty on repayment of loan"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <!--                    <View-->
+                    <!--                        android:layout_width="1sp"-->
+                    <!--                        android:layout_height="match_parent"-->
+                    <!--                        android:layout_marginEnd="5dp"-->
+                    <!--                        android:background="@color/ford_grey" />-->
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_lockin_period_rs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="1 Day"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1sp"
+                    android:background="@color/ford_grey"
+                    android:visibility="gone"
+                    tools:ignore="SmallSp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_lsp_details"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="19dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="3"
+                        android:text="Details of LSP acting as recovery agent and authorized to approach the borrower"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <!--                    <View-->
+                    <!--                        android:layout_width="1sp"-->
+                    <!--                        android:layout_height="match_parent"-->
+                    <!--                        android:layout_marginEnd="5dp"-->
+                    <!--                        android:background="@color/ford_grey" />-->
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_lsp_details_rs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="NA"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1sp"
+                    android:background="@color/ford_grey"
+                    android:visibility="gone"
+                    tools:ignore="SmallSp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_readmore_kfs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="14dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Read more..."
+                    android:textColor="@color/indigo"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/lyt_ngr_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_ngr_details"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="19dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="3"
+                        android:text="Name, designation, address and phone number of nodal grievance redressal officer designated specifically to deal with FinTech/ digital lending related complaints/ issues"
+                        android:textColor="@color/black"
+                        android:textSize="10sp" />
+
+                    <!--                    <View-->
+                    <!--                        android:layout_width="1sp"-->
+                    <!--                        android:layout_height="match_parent"-->
+                    <!--                        android:layout_marginEnd="5dp"-->
+                    <!--                        android:background="@color/ford_grey" />-->
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_ngr_details_rs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Rupesh Kalokhe\n No.+91 8007339339\nArthan Finance Pvt Ltd Andheri East Mumbai 59"
+                        android:textColor="@color/black"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_weight="1" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/accept_tc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:checked="true"
+                android:padding="5dp"
+                android:text="I authorize Arthan Finance to generate my digital facility agreement and sanction letter for the loan"
+                android:textSize="14sp"
+                app:buttonTint="@color/indigoBlue" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_proceed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_register_rect_orange"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                android:text="Proceed"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

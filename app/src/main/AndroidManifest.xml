@@ -9,25 +9,26 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
-        android:allowBackup="false"
-        android:fullBackupContent="true"
+        android:name="com.av.arthanfinance.MyApplication"
+        android:fullBackupOnly="false"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -35,42 +36,93 @@
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustResize"
         tools:ignore="LockedOrientationActivity"
+        tools:replace="android:theme, android:name"
         tools:targetApi="n">
         <activity
-            android:name=".applyLoan.UploadBusinessPhotos"
+            android:name=".applyLoan.WebViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".serviceRequest.ConfirmPayment"
+            android:exported="false" />
+        <activity
+            android:name=".serviceRequest.TransactionDetails"
+            android:exported="false" />
+        <activity
+            android:name=".applyLoan.CalculateKfs"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".profile.Credit_score"
+            android:exported="false"
+            android:label="@string/title_activity_credit_score"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".profile.SettingsActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".applyLoan.LoanSummaryActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".profile.MyAccount"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".applyLoan.UpiMandateSuccess"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".applyLoan.UpiMandate"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".applyLoan.LoanEligibilityFailed"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".serviceRequest.Getintouch"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".serviceRequest.LocateUs"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".serviceRequest.LatestOffers"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".serviceRequest.Emi_calculator"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".RewardsActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".user_kyc.UploadBusinessPhotos"
             android:exported="false"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".CheckEligibilityActivity"
             android:exported="false"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".applyLoan.ApplyCoupon"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-
-        <receiver
-            android:name=".util.SmsBroadcastReceiver"
-            android:enabled="true"
-            android:exported="true" />
-
         <activity
             android:name=".applyLoan.LoanEligibilitySubmittedActivity"
             android:exported="false"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".MapLocationActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".MapsActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".user_kyc.VideoKyc"
@@ -78,92 +130,83 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".UpdateProfileActivity"
+            android:name=".applyLoan.UploadReferenceActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".UploadReferenceActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".serviceRequest.LoanPreClosureActivity"
             android:exported="false"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".serviceRequest.PaymentDuesActivity"
             android:exported="false"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".serviceRequest.GenerateLoanStatementActivity"
             android:exported="false"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".serviceRequest.LoanDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".serviceRequest.ViewLoansActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme2"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".applyLoan.CustomerCameraActivity"
             android:exported="false"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".introductionPager.IntroductionPagerActivity"
             android:exported="false"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".applyLoan.InitiateApplyLoanActivity"
-            android:exported="false"
-            android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".applyLoan.LoanApplicationSubmittedActivity"
             android:exported="false"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ForgotPasswordActivity"
             android:exported="false"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".applyLoan.ApplyForLoanActivity"
-            android:exported="false"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".homeTabs.HomeDashboardActivity"
             android:exported="false"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".user_kyc.UploadAadharActivity"
             android:exported="false"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".user_kyc.UploadPanActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".user_kyc.UploadPhotoActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".PermissionsActivity"
@@ -172,26 +215,26 @@
             android:theme="@style/AppTheme2"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".InitiateApplyLoanActivity2"
+            android:name=".applyLoan.InitiateApplyLoanActivity2"
             android:exported="false"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".DemoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".GstValidationActivity"
-            android:exported="false" />
+            android:name=".applyLoan.GstValidationActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".user_kyc.UploadAadharAddressActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme2"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".user_kyc.UploadBusinessDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".SplashActivity"
@@ -207,59 +250,56 @@
         <activity
             android:name=".user_kyc.UploadBankDetailsActivity"
             android:exported="false"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppTheme2"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ChooseLanguageActivity"
             android:exported="false"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".FaceLoginActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".FingerPrintLoginActivity"
             android:exported="false"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".MPINLoginActivity"
             android:exported="false"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".OTPActivity"
-            android:exported="false"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".RegistrationActivity"
             android:exported="false"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".SetNewMpinActivity"
             android:exported="false"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".SetupFaceBiometricActivity"
-            android:exported="false"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".SetupFingerBiometricActivity"
-            android:exported="false"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".applyLoan.UploadKycDetailsActivity"
+            android:name=".biometric.SetupFaceBiometricActivity"
             android:exported="false"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.Design.NoActionBar"
-            android:windowSoftInputMode="adjustResize" />
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".biometric.SetupFingerBiometricActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:exported="true"
@@ -275,27 +315,77 @@
         <activity
             android:name="in.digio.sdk.kyc.DigioMainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name="com.razorpay.CheckoutActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@style/CheckoutTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <data
+                    android:host="rzp.io"
+                    android:scheme="io.rzp" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name="com.razorpay.RzpTokenReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="rzp.device_token.share" />
+            </intent-filter>
+        </receiver>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@mipmap/ic_launcher" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCTLJFF79u6omkn0G03TLRWZAYUZA4v6oM" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_live_06qz6CizJP1S0D" /> <!-- Added by CleverTap Assistant -->
+        <!-- Activities to be excluded from in-app notifications -->
+        <meta-data
+            android:name="CLEVERTAP_INAPP_EXCLUDE"
+            android:value="SplashActivity" />
+        <meta-data
+            android:name="CLEVERTAP_REGION"
+            android:value="eu1" /> <!-- Adding CleverTap Credentials -->
+        <meta-data
+            android:name="CLEVERTAP_ACCOUNT_ID"
+            android:value="468-655-976Z" />
+        <meta-data
+            android:name="CLEVERTAP_TOKEN"
+            android:value="556-b64" /> <!-- Added by CleverTap Assistant -->
+        <!-- Added by CleverTap Assistant -->
         <service
-            android:name=".notification.MyFirebaseMessagingService"
+            android:name=".fcm.FcmMessageListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="FCM_SENDER_ID"
+            android:value="503953818903" /> <!-- IMPORTANT: To force use Google AD ID to uniquely identify  users, use the following meta tag. GDPR mandates that if you are using this tag, there is prominent disclousure to your end customer in their application. Read more about GDPR here - https://clevertap.com/blog/in-preparation-of-gdpr-compliance/ -->
+        <meta-data
+            android:name="CLEVERTAP_USE_GOOGLE_AD_ID"
+            android:value="1" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
     </application>
 
 </manifest>

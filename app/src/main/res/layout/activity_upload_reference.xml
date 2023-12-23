@@ -4,50 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UploadReferenceActivity">
+    tools:context=".applyLoan.UploadReferenceActivity">
 
-    <RelativeLayout
-        android:id="@+id/headerBar"
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout12"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/indigo"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar">
+
+        <ProgressBar
+            android:id="@+id/pbKyc"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="22dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:progressDrawable="@drawable/layer_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvCompleted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/mukta_vaani"
+            android:text="@string/completed"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/pbKyc"
+            app:layout_constraintTop_toBottomOf="@+id/pbKyc" />
+
+        <TextView
+            android:id="@+id/tvPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/mukta_vaani"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/pbKyc"
+            app:layout_constraintTop_toBottomOf="@+id/pbKyc" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/ToolbarStyleTheme"
+        app:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/img_back"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tbUploadPan"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="38dp"
-            android:src="@drawable/ic_back_orange" />
-
-        <TextView
-            android:id="@+id/tv_name_"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="30dp"
-            android:layout_toRightOf="@id/img_back"
-            android:text="Apply for Loan"
-            android:textColor="@color/white"
-            android:textSize="22sp" />
-
-
-        <TextView
-            android:id="@+id/tvLoanApplication"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_name_"
-            android:layout_marginStart="13dp"
-            android:layout_marginTop="22dp"
-            android:layout_marginBottom="@dimen/dimen_10"
-            android:text="Upload Reference Details"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ToolbarStyleTheme"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:contentInsetStartWithNavigation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="@color/dark_orange2" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
@@ -57,23 +89,24 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerBar">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout12">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_ref_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dimen_24"
-                android:layout_marginTop="24dp"
+            <ImageView
+                android:id="@+id/img_stay"
+                android:layout_width="200sp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
                 android:gravity="center"
-                android:text="Reference Details"
-                android:textColor="@color/black"
-                android:textSize="22sp" />
+                android:src="@drawable/reference_details"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_neigh"
@@ -82,9 +115,10 @@
                 android:layout_marginHorizontal="25dp"
                 android:layout_marginTop="32dp"
                 android:gravity="center"
-                android:text="Your Neighbour"
+                android:text="Your Neighbour / Friend"
                 android:textColor="@color/indigo"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_name"
@@ -152,7 +186,8 @@
                 android:gravity="center"
                 android:text="Your Supplier / Business Neighbour"
                 android:textColor="@color/indigo"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_name_sup"
@@ -220,7 +255,9 @@
                 android:gravity="center"
                 android:text="Your Family Member"
                 android:textColor="@color/indigo"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/tv_name_family"
@@ -232,7 +269,8 @@
                 android:layout_marginRight="25dp"
                 android:text="Name"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="visible" />
 
             <EditText
                 android:id="@+id/edt_name_family"
@@ -248,7 +286,8 @@
                 android:paddingStart="15dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/dark_grey"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/tv_mob_num_family"
@@ -259,7 +298,8 @@
                 android:layout_marginTop="18dp"
                 android:text="Mobile Number"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="visible" />
 
             <EditText
                 android:id="@+id/edt_mob_num_family"
@@ -276,7 +316,29 @@
                 android:paddingStart="19dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/dark_grey"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_relation_family"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="18dp"
+                android:text="Relationship with Applicant"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:visibility="visible" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/sp_relaionShipApplicant"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="10dp"
+                android:visibility="visible" />
 
             <View
                 android:layout_width="match_parent"

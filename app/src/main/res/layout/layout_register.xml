@@ -46,26 +46,22 @@
 
                 <ImageView
                     android:id="@+id/logo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100sp"
+                    android:layout_height="100sp"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginTop="35dp"
+                    android:layout_marginTop="0dp"
                     android:layout_marginEnd="@dimen/dimen_20"
-                    android:layout_marginRight="@dimen/dimen_20"
-                    android:src="@drawable/ic_mini_arthan_logo" />
+                    android:src="@drawable/arthik_white" />
 
                 <ImageView
                     android:id="@+id/enter_details"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="300sp"
+                    android:layout_height="90sp"
                     android:layout_below="@id/tv_register"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="18dp"
-                    android:src="@drawable/ic_enter_details" />
+                    android:src="@drawable/mob_text" />
 
             </RelativeLayout>
 
@@ -83,9 +79,9 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="25dp"
                     android:text="@string/your_name"
-                    android:visibility="gone"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/edt_name"
@@ -97,12 +93,12 @@
                     android:autofillHints="name"
                     android:background="@drawable/bg_grey92_rect"
                     android:ems="10"
-                    android:visibility="gone"
                     android:hint="Your name"
                     android:inputType="textPersonName"
                     android:paddingVertical="11dp"
                     android:paddingStart="19dp"
                     android:textSize="16sp"
+                    android:visibility="gone"
                     app:hintTextColor="@color/very_light_grey" />
 
                 <TextView
@@ -117,53 +113,106 @@
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
-                <EditText
-                    android:id="@+id/edt_mob_num"
+                <LinearLayout
+                    android:id="@+id/mobNoLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginRight="25dp"
-                    android:autofillHints="phone"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="@dimen/dimen_24"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/bg_grey92_rect"
-                    android:hint="Enter mobile number"
-                    android:inputType="phone"
-                    android:maxLength="10"
-                    android:paddingVertical="11dp"
-                    android:paddingStart="19dp"
-                    android:textSize="16sp"
-                    app:hintTextColor="@color/very_light_grey" />
+                    app:layout_constraintTop_toBottomOf="@id/loan_amount_text">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="15dp"
+                        android:background="@drawable/ic_baseline_phone_iphone_24"
+                        app:tint="@color/indigoBlue" />
+
+
+                    <EditText
+                        android:id="@+id/edt_mob_num"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:editable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:hint="Enter mobile number"
+                        android:imeOptions="actionDone"
+                        android:inputType="phone"
+                        android:maxLength="10"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tv_dob"
+                    android:id="@+id/tv_refId"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="18dp"
                     android:layout_marginRight="25dp"
-                    android:text="@string/dob"
+                    android:text="Referred By"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:visibility="gone" />
+                    android:textSize="16sp" />
 
-                <EditText
-                    android:id="@+id/edt_dob"
+                <LinearLayout
+                    android:id="@+id/loanAmountLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:visibility="visible"
+                    android:layout_marginHorizontal="@dimen/dimen_24"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_grey92_rect"
+                    app:layout_constraintTop_toBottomOf="@id/loan_amount_text">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="15dp"
+                        android:background="@drawable/ic_baseline_supervisor_account_24"
+                        app:tint="@color/indigoBlue" />
+
+                    <EditText
+                        android:id="@+id/refId"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="Reference ID/ Partner ID"
+                        android:imeOptions="actionDone"
+                        android:inputType="numberDecimal"
+                        android:maxLength="4"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/inLakhs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="15dp"
+                        android:gravity="center_vertical"
+                        android:text="in Lakhs"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="25dp"
-                    android:layout_marginTop="4dp"
                     android:layout_marginRight="25dp"
-                    android:background="@drawable/bg_grey92_rect"
-                    android:editable="false"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:hint="DD/MM/YYYY"
-                    android:paddingVertical="11dp"
-                    android:paddingStart="19dp"
-                    android:textSize="16sp"
-                    android:visibility="gone"
-                    app:hintTextColor="@color/very_light_grey" />
+                    android:text=""
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/tv_email"
@@ -175,7 +224,8 @@
                     android:layout_marginRight="25dp"
                     android:text="@string/email_id"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/edt_email"
@@ -194,6 +244,7 @@
                     android:paddingVertical="11dp"
                     android:paddingStart="19dp"
                     android:textSize="16sp"
+                    android:visibility="gone"
                     app:hintTextColor="@color/very_light_grey" />
 
                 <View
@@ -202,12 +253,27 @@
                     android:layout_weight="1" />
 
                 <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/accept_wp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="29dp"
+                    android:checked="true"
+                    android:justificationMode="inter_word"
+                    android:text="Enable notifications on WhatsApp"
+                    android:textSize="16sp"
+                    android:drawableEnd="@drawable/ic_baseline_whatsapp_24"
+                    app:buttonTint="@color/indigoBlue" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
                     android:id="@+id/accept_tc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="29dp"
+                    android:checked="true"
+                    android:justificationMode="inter_word"
                     android:text="@string/accept_tos"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    app:buttonTint="@color/indigoBlue" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_submit"

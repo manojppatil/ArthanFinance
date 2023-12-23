@@ -14,7 +14,6 @@ class ChooseLanguageActivity : AppCompatActivity() {
     private lateinit var btnUrdu: Button
 
     private lateinit var btnContinue: Button
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_choose_language)

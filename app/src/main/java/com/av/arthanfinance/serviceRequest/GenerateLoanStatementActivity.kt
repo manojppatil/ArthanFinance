@@ -1,6 +1,5 @@
 package com.av.arthanfinance.serviceRequest
 
-import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
@@ -8,15 +7,12 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.av.arthanfinance.R
-import com.av.arthanfinance.applyLoan.ApplyForLoanActivity
 import com.av.arthanfinance.applyLoan.model.DigioPanResponse
 import com.av.arthanfinance.databinding.ActivityGenerateLoanStatementBinding
 import com.av.arthanfinance.networkService.ApiClient
 import com.av.arthanfinance.util.ArthanFinConstants
 import com.google.gson.JsonObject
 
-import kotlinx.android.synthetic.main.activity_loan_details.*
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

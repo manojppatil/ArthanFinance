@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
+
 abstract class BaseActivity : AppCompatActivity() {
 
     var currentLocation: Location? = null
@@ -34,13 +36,13 @@ abstract class BaseActivity : AppCompatActivity() {
         setContentView(layoutId)
     }
 
-    fun showSnackbarMessage(message: String,isSuccess:Boolean = false) {
+    fun showSnackbarMessage(message: String) {
         val rootLayout = findViewById<FrameLayout>(android.R.id.content)
-        val snackbar = Snackbar.make(rootLayout, message, Snackbar.LENGTH_LONG);
-        val view: View = snackbar.getView()
+        val snackbar = Snackbar.make(rootLayout, message, Snackbar.LENGTH_LONG)
+        val view: View = snackbar.view
         val textView = view.findViewById<TextView>(R.id.snackbar_text)
         textView.compoundDrawablePadding = 8
-        textView.setTextSize(16f)
+        textView.textSize = 16f
         textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
         snackbar.show()
     }
@@ -66,9 +68,9 @@ abstract class BaseActivity : AppCompatActivity() {
      */
     fun hideProgressDialog() {
         progressView?.let {
-            progressView?.setVisibility(View.GONE)
+            progressView?.visibility = View.GONE
             progressView!!.findViewById<TextView>(R.id.txtMessage).text = ""
-            val vg = progressView?.getParent() as ViewGroup
+            val vg = progressView?.parent as ViewGroup
             vg.removeView(progressView)
             progressView = null
         }
@@ -101,6 +103,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 super.onLocationResult(locationResult)
                 for (location in locationResult.locations) {
                     currentLocation = location
+                    Log.e("TAGLOCATION", currentLocation.toString())
                     locationUpdateDone()
                     fusedLocationProviderClient.removeLocationUpdates(this)
                 }
@@ -108,25 +111,13 @@ abstract class BaseActivity : AppCompatActivity() {
         }
 
         fusedLocationProviderClient.requestLocationUpdates(
-            locationRequest,locationCallback, Looper.myLooper()!!
+            locationRequest, locationCallback, Looper.myLooper()!!
         )
 
     }
 
-     fun locationUpdateDone(){
+    fun locationUpdateDone() {
 
-     }
-
-    override fun onStart() {
-        super.onStart()
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onStop() {
-        super.onStop()
     }
 
 

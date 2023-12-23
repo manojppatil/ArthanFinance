@@ -1,7 +1,6 @@
 package com.av.arthanfinance.networkService
 
-import com.av.arthanfinance.CustomerHomeTabResponse
-import com.av.arthanfinance.applyLoan.*
+import com.av.arthanfinance.models.CustomerHomeTabResponse
 import com.av.arthanfinance.applyLoan.model.*
 import com.av.arthanfinance.models.BusinessDetails
 import com.av.arthanfinance.models.CustomerBankDetailsResponse
@@ -19,6 +18,10 @@ interface ApiService {
     @POST("applyLoan")
     @Headers("Content-Type: application/json")
     fun applyForLoan(@Body userData: JsonObject): Call<LoanProcessResponse>
+
+    @POST("confirmLoan")
+    @Headers("Content-Type: application/json")
+    fun confirmLoan(@Body userData: JsonObject): Call<LoanProcessResponse>
 
     @POST("updateCustomerLoan")
     @Headers("Content-Type: application/json")
@@ -72,14 +75,14 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     fun request(
         @Header("Authorization") authHeader: String,
-        @Body documentsData: JsonObject
+        @Body documentsData: JsonObject,
     ): Call<DigioPanResponse>
 
     @POST("orders")
     @Headers("Content-Type: application/json")
     fun order(
         @Header("Authorization") authHeader: String,
-        @Body documentsData: JsonObject
+        @Body documentsData: JsonObject,
     ): Call<DigioPanResponse>
 
     @POST("response")
@@ -90,14 +93,14 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     fun verifyBank(
         @Header("Authorization") authHeader: String,
-        @Body documentsData: JsonObject
+        @Body documentsData: JsonObject,
     ): Call<BankDetilsResponse>
 
     @POST("kyc/v2/request")
     @Headers("Content-Type: application/json")
     fun createRequestDigilocker(
         @Header("Authorization") authHeader: String,
-        @Body documentsData: JsonObject
+        @Body documentsData: JsonObject,
     ): Call<DigilockerTokenResponse>
 
     @POST("updatePhoto")
@@ -116,7 +119,7 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     fun updateAadharAddress(@Body aadharAddressData: JsonObject): Call<LoanProcessResponse>
 
-    @POST("register")
+    @POST("saveCustomerLead")
     @Headers("Content-Type: application/json")
     fun registerCustomer(@Body customerDetails: JsonObject): Call<AuthenticationResponse>
 
@@ -148,7 +151,7 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     fun gstReturnStatus(
         @Header("x-karza-key") authHeader: String,
-        @Body documentsData: JsonObject
+        @Body documentsData: JsonObject,
     ): Call<GstReturnResponse>
 
     @POST("saveCustReference")
@@ -171,17 +174,21 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     fun verifyOTP(@Body custReferenceData: JsonObject): Call<GenericResponse>
 
-    @GET("getCategorySegment")
+    @GET("rest/GetMstr/industrySegment")
     @Headers("Content-Type: application/json")
     fun getCategorySegment(): Call<Categories>
+
+    @GET("rest/GetMstr/businessActivity/{industry_type}")
+    @Headers("Content-Type: application/json")
+    fun getBusinessActivity(): Call<Categories>?
 
     @POST("logout")
     @Headers("Content-Type: application/json")
     fun logOut(@Body userData: JsonObject): Call<AuthenticationResponse>
 
-    @POST("getLoans")
+    @POST("getCustomerApplications")
     @Headers("Content-Type: application/json")
-    fun getLoans(@Body customerId: JsonObject): Call<LoansResponse>
+    fun getCustomerApplications(@Body custReferenceData: JsonObject): Call<LoansResponse>
 
     @POST("response")
     @Headers("Content-Type: application/json")
@@ -192,7 +199,7 @@ interface ApiService {
     fun uploadFile(
         @Part file: MultipartBody.Part,
         @Part("loanId") loanId: RequestBody,
-        @Part("customerId") customerId: RequestBody
+        @Part("customerId") customerId: RequestBody,
     ): Call<FileUploadResponse>
 
     @POST("getEmiRoi")
@@ -215,32 +222,32 @@ interface ApiService {
     @GET("getPRLoanDetails")
     fun getPRLoanDetails(
         @Query("loanId") loanId: String,
-        @Query("applicantType") applicantType: String
+        @Query("applicantType") applicantType: String,
     ): Call<LoanProcessResponse>
 
 
     @GET("getPRPanDetails")
     fun getPRPanDetails(
         @Query("loanId") loanId: String,
-        @Query("applicantType") applicantType: String
+        @Query("applicantType") applicantType: String,
     ): Call<LoanKYCDetailsResponse>
 
     @GET("getPRAadharDetails")
     fun getPRAadharDetails(
         @Query("loanId") loanId: String,
-        @Query("applicantType") applicantType: String
+        @Query("applicantType") applicantType: String,
     ): Call<LoanKYCDetailsResponse>
 
     @GET("getPRAddressDetails")
     fun getPRAddressDetails(
         @Query("loanId") loanId: String,
-        @Query("applicantType") applicantType: String
+        @Query("applicantType") applicantType: String,
     ): Call<LoanProcessResponse>
 
     @GET("getPRApplicantPhoto")
     fun getPRApplicantPhoto(
         @Query("loanId") loanId: String,
-        @Query("applicantType") applicantType: String
+        @Query("applicantType") applicantType: String,
     ): Call<LoanKYCDetailsResponse>
 
     @GET("getPRBusinessDetails")
@@ -267,11 +274,12 @@ interface ApiService {
     fun updateProfile(@Body updateJson: JsonObject): Call<AuthenticationResponse>
 
     @Multipart
-    @POST("rest/file/upload")
+    @POST("rest/file/uploadV2")
     suspend fun uploadStatement(
         @Part file: MultipartBody.Part,
+        @Part("password") password: String,
         @Part("loanId") loanId: String?,
-        @Part("customerId") customerId: String?
+        @Part("customerId") customerId: String?,
     ): UploadStatementResponse?
 
     @POST("saveGstRequestId1")
@@ -286,19 +294,64 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     fun verifyUdyamAadhar(
         @Header("x-karza-key") authHeader: String,
-        @Body udyamRequestData: JsonObject
+        @Body udyamRequestData: JsonObject,
     ): Call<UdyamDetailsResponse>
 
     @POST("updateStage")
     @Headers("Content-Type: application/json")
     fun updateStage(@Body updateJson: JsonObject): Call<AuthenticationResponse>
 
-    @POST("getBank")
+    @POST("getSelectedBanks")
     @Headers("Content-Type: application/json")
     fun getBank(@Body updateJson: JsonObject): Call<Bank>
 
     @POST("getBranch")
     @Headers("Content-Type: application/json")
     fun getBranch(@Body updateJson: JsonObject): Call<Bank>
+
+    @POST("getAAReferenceId")
+    @Headers("Content-Type: application/json")
+    fun getAAReferenceId(@Body updateJson: JsonObject): Call<AggregatorConsentResponse>
+
+    @GET("getCustomerDashboard")
+    @Headers("Content-Type: application/json")
+    fun getCustomerDashboard(@Query("customerId") customerId: String): Call<UserDetailsResponse>
+
+    @POST("getCustomerAppHistory")
+    @Headers("Content-Type: application/json")
+    fun getCustomerAppHistory(@Body applicationId: JsonObject): Call<CustomerAppHistoryResponse>
+
+    @POST("rest/GetMstr/relationship")
+    @Headers("Content-Type: application/json")
+    fun getRelationship(): Call<DetailsResponseData>?
+
+    @POST("registerNach")
+    @Headers("Content-Type: application/json")
+    fun registerNach(@Body customerDetails: JsonObject): Call<AuthenticationResponse>
+
+    @POST("calculatekfs")
+    @Headers("Content-Type: application/json")
+    fun calculatekfs(@Body userData: JsonObject): Call<LoanProcessResponse>
+
+    @POST("genCustomerAgreement")
+    @Headers("Content-Type: application/json")
+    fun initiateAgreement(@Body customerDetails: JsonObject): Call<AuthenticationResponse>
+
+    @POST("applyCheck")
+    @Headers("Content-Type: application/json")
+    fun applyCheck(@Body userData: JsonObject): Call<LoanProcessResponse>
+
+    @GET("selectBusinessPhotos")
+    fun selectBusinessPhotos(@Query("customer_id") mobileNo: String): Call<BusinessDetails>
+
+    @POST("customerRepayment")
+    @Headers("Content-Type: application/json")
+    fun customerRepayment(@Body customerRepayment: JsonObject): Call<AuthenticationResponse>
+
+    @GET("getAAStatus")
+    fun getAAStatus(@Query("loanId") customerId: String): Call<AuthenticationResponse>
+
+    @GET("getCustomerEligibilityV2")
+    fun getCustomerEligibilityV2(@Query("customerId") customerId: String): Call<AuthenticationResponse>
 
 }

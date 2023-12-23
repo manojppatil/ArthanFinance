@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    tools:context=".activity.OnemoneyLoginActivity">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dimen_60">
+
+            <LinearLayout
+                android:background="@color/app_bg"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_60"
+                android:layout_gravity="left"
+                android:padding="@dimen/dimen_7"
+                android:layout_margin="@dimen/dimen_10"
+                android:gravity="left"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:scaleType="fitStart"
+                    android:id="@+id/fiu_logo"
+                    app:srcCompat="@drawable/arthan_logo" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    app:tint="@color/white"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/info_icon" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:padding="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/poppins_medium"
+                    android:padding="@dimen/dimen_5"
+                    android:text="@string/consent_reject"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_20" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="7dp"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:background="@color/grey_light">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="7dp"
+                        android:background="@drawable/gradiant_border"
+                        android:orientation="horizontal" />
+                </RelativeLayout>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:padding="@dimen/dimen_20"
+                    android:layout_margin="@dimen/dimen_10"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/consent_reject_logo"
+                    app:srcCompat="@drawable/ic_update_consent"
+                    tools:ignore="VectorDrawableCompat" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:padding="@dimen/dimen_5"
+                    android:text="@string/your_consent_is_rejected"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_18" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:id="@+id/redirect_in_seconds"
+                    android:fontFamily="@font/poppins_regular"
+                    android:padding="@dimen/dimen_5"
+                    android:text="@string/we_are_redirect_back"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_14" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:id="@+id/loading_image"
+                    android:interpolator="@anim/linear_interpolator"
+                    app:srcCompat="@drawable/ic_buffer_load"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/powerby_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen_10">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/power_by"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_16" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/dimen_80"
+            android:layout_height="@dimen/dimen_30"
+            app:srcCompat="@drawable/one_money_logo" />
+    </LinearLayout>
+
+
+</RelativeLayout>

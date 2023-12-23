@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/indigo"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <ScrollView
@@ -19,10 +18,11 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/indigo">
 
                 <ImageButton
-                    android:id="@+id/img_back_mpin"
+                    android:id="@+id/img_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -30,8 +30,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginLeft="24dp"
                     android:layout_marginTop="38dp"
-                    android:background="@drawable/ic_back"
-                    android:backgroundTint="@color/dark_orange2" />
+                    android:background="@drawable/ic_back_white" />
 
                 <TextView
                     android:id="@+id/tv_register"
@@ -40,36 +39,62 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="30dp"
-                    android:layout_toEndOf="@id/img_back_mpin"
-                    android:layout_toRightOf="@id/img_back_mpin"
-                    android:text="@string/set_new_mpin"
-                    android:textColor="@color/dark_orange2"
+                    android:layout_toEndOf="@id/img_back"
+                    android:layout_toRightOf="@id/img_back"
+                    android:text="Set Your MPIN"
+                    android:textColor="@color/white"
                     android:textSize="22sp" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_otp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="100sp"
+                    android:layout_height="100sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="@dimen/dimen_20"
+                    android:src="@drawable/arthik_white" />
+
+                <TextView
+                    android:id="@+id/enter_details"
+                    android:layout_width="300sp"
+                    android:layout_height="90sp"
                     android:layout_below="@id/tv_register"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="22dp"
-                    android:text="@string/used_to_login"
-                    android:textColor="@color/dark_orange2"
-                    android:textSize="18sp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/mpin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_otp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="27dp"
-                    android:text="@string/enter_new_mpin"
-                    android:textColor="@color/dark_orange2"
-                    android:textSize="16sp" />
-
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:text="Secure your account by setting up secure MPIN"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
 
             </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_otp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_register"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="22dp"
+                android:text="@string/used_to_login"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/mpin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_otp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="27dp"
+                android:text="@string/enter_new_mpin"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -81,13 +106,18 @@
                     android:id="@+id/pinView"
                     style="@style/PinWidget.PinView"
                     android:layout_width="wrap_content"
-                    android:inputType="number"
-                    android:textColor="@color/dark_orange2"
-                    app:lineColor="@color/dark_orange2"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/mpin" />
+                    android:layout_alignBottom="@+id/mpin"
+                    android:inputType="number"
+                    android:itemBackground="@color/grey_92"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:itemRadius="@dimen/dimen_10"
+                    app:itemSpacing="@dimen/dimen_10"
+                    app:lineColor="@color/transparent" />
 
             </LinearLayout>
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/mpin2"
                 android:layout_width="wrap_content"
@@ -96,16 +126,17 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="27dp"
                 android:text="Confirm New Pin"
-                android:textColor="@color/dark_orange2"
-                android:textSize="16sp" />
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:orientation="vertical"
                 android:layout_marginTop="@dimen/dimen_20"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <com.chaos.view.PinView
                     android:id="@+id/pinView2"
@@ -115,24 +146,28 @@
                     android:layout_alignBottom="@+id/mpin"
                     android:imeOptions="actionDone"
                     android:inputType="number"
-                    android:textColor="@color/dark_orange2"
-                    app:lineColor="@color/dark_orange2"
+                    android:itemBackground="@color/grey_92"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:itemRadius="@dimen/dimen_10"
+                    app:itemSpacing="@dimen/dimen_10"
+                    app:lineColor="@color/transparent"
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <Button
                     android:id="@+id/save_m_pin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minWidth="200dp"
-                    android:layout_marginTop="30dp"
                     android:layout_gravity="center"
-                    android:text="Save Mpin"
-                    android:textAllCaps="false"
-                    android:textSize="18sp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/bg_register_rect_orange"
+                    android:minWidth="200dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:backgroundTint="@color/dark_orange2"
-                    android:textColor="#4E342E" />
+                    android:text="Save MPIN"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

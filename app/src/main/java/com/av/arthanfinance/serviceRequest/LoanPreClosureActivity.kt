@@ -1,10 +1,10 @@
 package com.av.arthanfinance.serviceRequest
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import com.av.arthanfinance.R
+import androidx.appcompat.app.AppCompatActivity
 import com.av.arthanfinance.databinding.ActivityLoanPreClosureBinding
-import com.av.arthanfinance.databinding.ActivityPaymentDuesBinding
 
 class LoanPreClosureActivity : AppCompatActivity() {
     private lateinit var activityLoanPreClosureBinding: ActivityLoanPreClosureBinding
@@ -22,5 +22,14 @@ class LoanPreClosureActivity : AppCompatActivity() {
             onBackPressed()
             finish()
         }
+
+        activityLoanPreClosureBinding.callbutton.setOnClickListener {
+            callPhone()
+        }
+    }
+
+    private fun callPhone() {
+        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "8007339339"))
+        startActivity(intent)
     }
 }

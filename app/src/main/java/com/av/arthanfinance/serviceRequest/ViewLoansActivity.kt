@@ -8,16 +8,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.av.arthanfinance.CustomerHomeTabResponse
-import com.av.arthanfinance.R
+import com.av.arthanfinance.models.CustomerHomeTabResponse
 import com.av.arthanfinance.adapter.ViewLoansListAdapter
-import com.av.arthanfinance.applyLoan.*
+import com.av.arthanfinance.applyLoan.model.LoanDetails
+import com.av.arthanfinance.applyLoan.model.LoansResponse
 import com.av.arthanfinance.databinding.ActivityViewLoansBinding
 import com.av.arthanfinance.networkService.ApiClient
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_view_loans.*
-import kotlinx.android.synthetic.main.fragment_loans_tab.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -61,7 +60,7 @@ class ViewLoansActivity : AppCompatActivity() {
         val jsonObject = JsonObject()
         jsonObject.addProperty("customerId", customerData?.customerId)
 
-            ApiClient().getAuthApiService(this).getLoans(jsonObject).enqueue(object :
+            ApiClient().getAuthApiService(this).getCustomerApplications(jsonObject).enqueue(object :
                 Callback<LoansResponse>{
                 override fun onResponse(call: Call<LoansResponse>, response: Response<LoansResponse>) {
                     val loansResponse = response.body()

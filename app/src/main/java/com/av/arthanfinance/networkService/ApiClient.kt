@@ -1,5 +1,6 @@
 package com.av.arthanfinance.networkService
 
+import android.annotation.SuppressLint
 import android.content.Context
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -42,11 +43,14 @@ class ApiClient {
     }
 
     fun getAuthApiService(context: Context): ApiService {
+        val gson = GsonBuilder()
+            .setLenient()
+            .create()
         // Initialize ApiService if not initialized yet
         if (!::apiService.isInitialized) {
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://www.arthanfin.com/artlos/")
-                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl("https://uatapi.arthan.ai/arthikold/")
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okhttpClient(context)) // Add our Okhttp client
                 .build()
 
@@ -59,7 +63,7 @@ class ApiClient {
         // Initialize ApiService if not initialized yet
         if (!::apiService.isInitialized) {
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://testapi.karza.in/v3/udyam/")
+                .baseUrl("https://api.karza.in/v3/udyam/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okhttpClient(context)) // Add our Okhttp client
                 .build()
@@ -116,7 +120,8 @@ class ApiClient {
         // Initialize ApiService if not initialized yet
         if (!::apiService.isInitialized) {
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://ext.digio.in:444/client/kyc/v2/$requestId/")
+//                .baseUrl("https://ext.digio.in:444/client/kyc/v2/$requestId/")
+                .baseUrl("https://api.digio.in/client/kyc/v2/$requestId/")
                 .addConverterFactory(GsonConverterFactory.create())
 
                 .client(okhttpClient(context)) // Add our Okhttp client
@@ -146,8 +151,7 @@ class ApiClient {
         // Initialize ApiService if not initialized yet
         if (!::apiService.isInitialized) {
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://ext.digio.in:444/client/")
-//                .baseUrl("https://api.digio.in/client/")
+                .baseUrl("https://api.digio.in/client/")
                 .addConverterFactory(GsonConverterFactory.create())
 
                 .client(okhttpClient(context)) // Add our Okhttp client
@@ -227,13 +231,16 @@ class ApiClient {
                 // Create a trust manager that does not validate certificate chains
                 val trustAllCerts =
                     arrayOf<TrustManager>(
+                        @SuppressLint("CustomX509TrustManager")
                         object : X509TrustManager {
+                            @SuppressLint("TrustAllX509TrustManager")
                             override fun checkClientTrusted(
                                 chain: Array<X509Certificate>,
                                 authType: String
                             ) {
                             }
 
+                            @SuppressLint("TrustAllX509TrustManager")
                             override fun checkServerTrusted(
                                 chain: Array<X509Certificate>,
                                 authType: String
@@ -258,7 +265,7 @@ class ApiClient {
                     sslSocketFactory,
                     trustAllCerts[0] as X509TrustManager
                 )
-                builder.hostnameVerifier(HostnameVerifier { hostname, session -> true })
+                builder.hostnameVerifier { _, _ -> true }
                 builder.build()
             } catch (e: Exception) {
                 throw RuntimeException(e)

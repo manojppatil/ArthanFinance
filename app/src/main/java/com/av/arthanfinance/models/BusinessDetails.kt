@@ -45,5 +45,19 @@ data class BusinessDetails(
     @SerializedName("margin")
     val margin: Double?,
     @SerializedName("businessImage")
-    val businessImage: String?
+    val businessImage: String?,
+    @SerializedName("udyam_no")
+    val udyam_no: String?,
+    @SerializedName("udyam_verified")
+    val udyam_verified: String?,
+    @SerializedName("pics_verified")
+    val pics_verified: String?,
+    @SerializedName("stock_photo")
+    val stock_photo: String?,
+    @SerializedName("business_photo")
+    val business_photo: String?,
+    @SerializedName("apiCode")
+    val apiCode: String?,
+    @SerializedName("apiDesc")
+    val apiDesc: String?,
 )

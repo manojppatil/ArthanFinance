@@ -4,18 +4,27 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.arthanfinance.core.base.BaseActivity
-import com.av.arthanfinance.applyLoan.CompletedScreensResponse
+import com.av.arthanfinance.applyLoan.LoanEligibilityFailed
+import com.av.arthanfinance.applyLoan.model.CompletedScreensResponse
 import com.av.arthanfinance.applyLoan.LoanEligibilitySubmittedActivity
-import com.av.arthanfinance.applyLoan.UploadBusinessPhotos
 import com.av.arthanfinance.homeTabs.HomeDashboardActivity
+import com.av.arthanfinance.models.CustomerHomeTabResponse
 import com.av.arthanfinance.networkService.ApiClient
+import com.av.arthanfinance.serviceRequest.Emi_calculator
+import com.av.arthanfinance.serviceRequest.Getintouch
+import com.av.arthanfinance.serviceRequest.LatestOffers
+import com.av.arthanfinance.serviceRequest.LocateUs
 import com.av.arthanfinance.user_kyc.*
+import com.av.arthanfinance.util.ArthanFinConstants
+import com.clevertap.android.sdk.CleverTapAPI
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import retrofit2.Call
@@ -25,32 +34,110 @@ import retrofit2.Response
 
 class MPINLoginActivity : BaseActivity() {
     private lateinit var tvForgotMpin: TextView
+    private lateinit var tvMobErrormsg: TextView
+    private lateinit var tvMpinErrormsg: TextView
     private lateinit var btnLogin: Button
     private lateinit var tvDontHaveAccount: TextView
     private lateinit var mpintext: EditText
     private lateinit var mobileText: EditText
     private lateinit var apiClient: ApiClient
+    private lateinit var emiLayout: LinearLayout
+    private lateinit var offersLayout: LinearLayout
+    private lateinit var locateLayout: LinearLayout
+    private lateinit var touchLayout: LinearLayout
     override val layoutId: Int get() = R.layout.layout_mpin_login
-    private var contextFrom = 1
+    private var contextFrom: Int = 0
     private lateinit var mobileNum: String
+    private var customerID: String = ""
+    private var appUpdate: AppUpdateManager? = null
+    private val REQUEST_CODE = 100
+    var clevertapDefaultInstance: CleverTapAPI? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (supportActionBar != null)
             supportActionBar?.hide()
 
-        if (intent.hasExtra("context_from")) {
-            contextFrom = intent.getIntExtra("context_from", 1)
-        } else {
-            contextFrom = 1
-        }
+        appUpdate = AppUpdateManagerFactory.create(this@MPINLoginActivity)
+        checkUpdate()
+
+        clevertapDefaultInstance =
+            CleverTapAPI.getDefaultInstance(applicationContext)//added by CleverTap Assistant
+
+//        if (intent.hasExtra("context_from")) {
+//            contextFrom = intent.getIntExtra("context_from", 1)
+//            Log.e("newconetxt", contextFrom.toString())
+//        } else {
+//            contextFrom = 1
+//        }
+//        Log.e("newconetxt2", contextFrom.toString())
+//        if (contextFrom == 1) {
+//            val fingerPref: SharedPreferences =
+//                getSharedPreferences("customerData", Context.MODE_PRIVATE)
+//            if (fingerPref.getBoolean("isFingerprintSet", true)) {
+//                BiometricAuthentication.startScanning(this, "Fingerprint Login",
+//                    "",
+//                    "",
+//                    object :
+//                        MSFCallback {
+//                        override fun onSuccess(message: String) {
+//
+//                            runOnUiThread {
+//                                Toast.makeText(this@MPINLoginActivity, message, Toast.LENGTH_LONG)
+//                                    .show()
+//                                val intent =
+//                                    Intent(
+//                                        this@MPINLoginActivity,
+//                                        HomeDashboardActivity::class.java
+//                                    )
+//                                startActivity(intent)
+//                            }
+//                        }
+//
+//                        override fun onFailure(errorString: String) {
+//                            runOnUiThread {
+//                                Toast.makeText(
+//                                    this@MPINLoginActivity,
+//                                    errorString,
+//                                    Toast.LENGTH_LONG
+//                                )
+//                                    .show()
+//                            }
+//                        }
+//                    })
+//            }
+//        }
 
         apiClient = ApiClient()
         tvForgotMpin = findViewById(R.id.tv_forgot_mpin)
+        tvMobErrormsg = findViewById(R.id.tv_mob_error_msg)
+        tvMpinErrormsg = findViewById(R.id.tv_mpin_error_msg)
         btnLogin = findViewById(R.id.btn_login)
         mpintext = findViewById(R.id.edt_mpin)
         mobileText = findViewById(R.id.edt_mobile)
-
+        emiLayout = findViewById(R.id.lyt_emicalc)
+        offersLayout = findViewById(R.id.lyt_latest_offers)
+        locateLayout = findViewById(R.id.lyt_locateus)
+        touchLayout = findViewById(R.id.lyt_getintouch)
         tvDontHaveAccount = findViewById(R.id.tv_dnt_hav_account)
+
+        emiLayout.setOnClickListener {
+            val intent = Intent(this@MPINLoginActivity, Emi_calculator::class.java)
+            startActivity(intent)
+        }
+        offersLayout.setOnClickListener {
+            val intent = Intent(this@MPINLoginActivity, LatestOffers::class.java)
+            startActivity(intent)
+        }
+        locateLayout.setOnClickListener {
+            val intent = Intent(this@MPINLoginActivity, LocateUs::class.java)
+            startActivity(intent)
+        }
+        touchLayout.setOnClickListener {
+            val intent = Intent(this@MPINLoginActivity, Getintouch::class.java)
+            startActivity(intent)
+        }
 
         if (intent.hasExtra("mob")) {
             mobileNum = intent.extras?.get("mob") as String
@@ -58,13 +145,11 @@ class MPINLoginActivity : BaseActivity() {
         } else {
             val mPrefs: SharedPreferences? =
                 getSharedPreferences("customerData", Context.MODE_PRIVATE)
-            val gson = Gson()
-            val json: String? = mPrefs?.getString("customerData", null)
-            if (json != null) {
-                val customerData: CustomerHomeTabResponse =
-                    gson.fromJson(json, CustomerHomeTabResponse::class.java)
-                mobileText.setText(customerData.mobNo)
+
+            if (mPrefs != null) {
+                mobileText.setText(mPrefs.getString("mobNo", null))
             }
+
         }
 
         tvForgotMpin.setOnClickListener {
@@ -73,7 +158,12 @@ class MPINLoginActivity : BaseActivity() {
         }
 
         btnLogin.setOnClickListener {
+//            if (!validateMPIN()) {
+//                return@setOnClickListener
+//            } else {
             verifyCustomerPin()
+//            }
+
         }
 
         tvDontHaveAccount.setOnClickListener {
@@ -81,7 +171,7 @@ class MPINLoginActivity : BaseActivity() {
             startActivity(intent)
         }
 
-        mpintext.setOnEditorActionListener { v, actionId, event ->
+        mpintext.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 verifyCustomerPin()
             }
@@ -89,7 +179,28 @@ class MPINLoginActivity : BaseActivity() {
         }
     }
 
+    private fun validateMPIN(): Boolean {
+        if (mpintext.text.toString().isEmpty()) {
+            Toast.makeText(
+                this, "Please enter the valid MPIN",
+                Toast.LENGTH_SHORT
+            ).show()
+            return true
+        } else if (mobileText.text.toString()
+                .isEmpty() || mobileText.text.toString().length != 10
+        ) {
+            Toast.makeText(
+                this, "Please enter the valid Mobile number",
+                Toast.LENGTH_SHORT
+            ).show()
+            return true
+        }
+        return false
+    }
+
     private fun verifyCustomerPin() {
+        tvMpinErrormsg.visibility = View.GONE
+        tvMobErrormsg.visibility = View.GONE
         val jsonObject = JsonObject()
         jsonObject.addProperty("mobNo", mobileText.text.toString())
         jsonObject.addProperty("pin", mpintext.text.toString())
@@ -107,22 +218,42 @@ class MPINLoginActivity : BaseActivity() {
 
             override fun onResponse(
                 call: Call<CustomerHomeTabResponse>,
-                response: Response<CustomerHomeTabResponse>
+                response: Response<CustomerHomeTabResponse>,
             ) {
                 hideProgressDialog()
                 val custData = response.body()
-
+                customerID = custData?.customerId.toString()
                 if (custData != null) {
-                    val sharedPref: SharedPreferences? =
-                        getSharedPreferences("customerData", Context.MODE_PRIVATE)
-                    val prefsEditor = sharedPref?.edit()
-                    val gson = Gson()
-                    val json: String = gson.toJson(custData)
-                    prefsEditor?.putString("customerData", json)
-                    prefsEditor?.apply()
+                    when (custData.errCode) {
+                        "401" -> {
+                            tvMobErrormsg.visibility = View.VISIBLE
+                            tvMobErrormsg.text = custData.errDesc
+                            clevertapDefaultInstance?.pushEvent("Invalid Login Mob no")//added by CleverTap Assistant
 
-                    getLastCompletedScreen(custData)
+                        }
+                        "402" -> {
+                            tvMpinErrormsg.visibility = View.VISIBLE
+                            tvMpinErrormsg.text = custData.errDesc
+                            clevertapDefaultInstance?.pushEvent("Invalid Login MPIN")//added by CleverTap Assistant
 
+                        }
+                        else -> {
+                            val sharedPref: SharedPreferences? =
+                                getSharedPreferences("customerData", Context.MODE_PRIVATE)
+                            val prefsEditor = sharedPref?.edit()
+                            prefsEditor?.putString("customerId", custData.customerId)
+                            prefsEditor?.putString("mobNo", mobileText.text.toString())
+                            prefsEditor?.putBoolean(ArthanFinConstants.isMpinSet, true)
+                            val gson = Gson()
+                            val json: String = gson.toJson(custData)
+                            prefsEditor?.putString("customerData", json)
+                            prefsEditor?.apply()
+                            clevertapDefaultInstance?.pushEvent("Login success")//added by CleverTap Assistant
+
+
+                            getLastCompletedScreen(customerID)
+                        }
+                    }
                 } else {
                     custData?.let {
                         Toast.makeText(
@@ -136,10 +267,9 @@ class MPINLoginActivity : BaseActivity() {
         })
     }
 
-    private fun getLastCompletedScreen(custData: CustomerHomeTabResponse) {
+    private fun getLastCompletedScreen(customerId: String) {
         val jsonObject = JsonObject()
-        jsonObject.addProperty("customerId", custData.customerId)
-
+        jsonObject.addProperty("customerId", customerId)
         showProgressDialog()
         ApiClient().getAuthApiService(this).getCompletedScreens(jsonObject).enqueue(object :
             Callback<CompletedScreensResponse> {
@@ -147,127 +277,127 @@ class MPINLoginActivity : BaseActivity() {
                 hideProgressDialog()
                 t.printStackTrace()
                 Toast.makeText(
-                    this@MPINLoginActivity, "Login Failed. Please enter Valid MPIN",
+                    this@MPINLoginActivity, "Logging you in...",
                     Toast.LENGTH_SHORT
                 ).show()
             }
 
             override fun onResponse(
                 call: Call<CompletedScreensResponse>,
-                response: Response<CompletedScreensResponse>
+                response: Response<CompletedScreensResponse>,
             ) {
-                hideProgressDialog()
                 val screenData = response.body()
-
+                hideProgressDialog()
                 if (screenData != null) {
                     val lastScreenArray = screenData.screens
 
                     if (lastScreenArray.isNullOrEmpty()) {
                         val intent =
-                            Intent(this@MPINLoginActivity, CheckEligibilityActivity::class.java)
-                        intent.putExtra("customerData", custData)
+                            Intent(this@MPINLoginActivity, UploadPanActivity::class.java)
                         startActivity(intent)
                         finish()
                     } else {
                         for (i in 0 until lastScreenArray.size) {
                             when (screenData.screens!![i]) {
-                                "PAN_PA" -> {
+                                ArthanFinConstants.register -> {
                                     val intent = Intent(
                                         this@MPINLoginActivity,
-                                        UploadPhotoActivity::class.java
+                                        UploadPanActivity::class.java
                                     )
-                                    intent.putExtra("customerData", custData)
                                     startActivity(intent)
                                     finish()
                                 }
-                                "PIC_PA" -> {
+                                ArthanFinConstants.pan -> {
                                     val intent = Intent(
                                         this@MPINLoginActivity,
                                         UploadAadharActivity::class.java
                                     )
-                                    intent.putExtra("customerData", custData)
                                     startActivity(intent)
                                     finish()
                                 }
-                                "OFFLINE_AADHAR_PA" -> {
-                                    val intent = Intent(
-                                        this@MPINLoginActivity,
-                                        UploadAadharAddressActivity::class.java
-                                    )
-                                    intent.putExtra("customerData", custData)
-                                    startActivity(intent)
-                                    finish()
-                                }
-                                "PERSONAL_PA" -> {
+                                ArthanFinConstants.digilocker -> {
                                     val intent = Intent(
                                         this@MPINLoginActivity,
                                         UploadBankDetailsActivity::class.java
                                     )
-                                    intent.putExtra("customerData", custData)
                                     startActivity(intent)
                                     finish()
                                 }
-                                "BANK_PA" -> {
+                                ArthanFinConstants.offline_aadhar -> {
                                     val intent = Intent(
                                         this@MPINLoginActivity,
-                                        VideoKyc::class.java
+                                        UploadBankDetailsActivity::class.java
                                     )
-                                    intent.putExtra("customerData", custData)
                                     startActivity(intent)
                                     finish()
                                 }
-                                "VKYC_PA" -> {
-                                    val intent = Intent(
-                                        this@MPINLoginActivity,
-                                        UploadBusinessDetailsActivity::class.java
-                                    )
-                                    intent.putExtra("customerData", custData)
-                                    startActivity(intent)
-//                                    finish()
-                                }
-                                "BUSINESS" -> {
-                                    val intent = Intent(
-                                        this@MPINLoginActivity,
-                                        UploadBusinessPhotos::class.java
-                                    )
-                                    intent.putExtra("customerData", custData)
-                                    startActivity(intent)
-//                                    finish()
-                                }
-                                "BUSINESS_PHOTOS" -> {
-                                    val intent = Intent(
-                                        this@MPINLoginActivity,
-                                        UploadReferenceActivity::class.java
-                                    )
-                                    intent.putExtra("customerData", custData)
-                                    startActivity(intent)
-//                                    finish()
-                                }
-                                "TRADE_REF" -> {
+                                ArthanFinConstants.bank, ArthanFinConstants.bank_stmt -> {
                                     val intent = Intent(
                                         this@MPINLoginActivity,
                                         LoanEligibilitySubmittedActivity::class.java
                                     )
-                                    intent.putExtra("customerData", custData)
                                     startActivity(intent)
-//                                    finish()
+                                    finish()
                                 }
-                                "ELIGIBILITY" -> {
+                                ArthanFinConstants.bank_fail, ArthanFinConstants.consent_reject -> {
+                                    val intent = Intent(
+                                        this@MPINLoginActivity,
+                                        UploadBankDetailsActivity::class.java
+                                    )
+                                    intent.putExtra("from", "banking")
+                                    startActivity(intent)
+                                    finish()
+                                }
+                                ArthanFinConstants.eligibility, ArthanFinConstants.business, ArthanFinConstants.business_photos,
+                                ArthanFinConstants.skip_business_photos, ArthanFinConstants.enach, ArthanFinConstants.pic_pa,
+                                ArthanFinConstants.agreement, ArthanFinConstants.apply_loan, ArthanFinConstants.withdraw,
+                                -> {
                                     val intent = Intent(
                                         this@MPINLoginActivity,
                                         HomeDashboardActivity::class.java
                                     )
-                                    intent.putExtra("customerData", custData)
                                     startActivity(intent)
-//                                    finish()
+                                    finish()
                                 }
                             }
                         }
                     }
                 } else {
-                    Toast.makeText(this@MPINLoginActivity, "failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MPINLoginActivity, "Please wait...", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         })
+    }
+
+    fun checkUpdate() {
+        appUpdate?.appUpdateInfo?.addOnSuccessListener { updateInfo ->
+            if (updateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
+                updateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
+            ) {
+                appUpdate!!.startUpdateFlowForResult(updateInfo,
+                    AppUpdateType.IMMEDIATE,
+                    this@MPINLoginActivity,
+                    REQUEST_CODE)
+
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        inProgressUpdate()
+    }
+
+    fun inProgressUpdate() {
+        appUpdate?.appUpdateInfo?.addOnSuccessListener { updateInfo ->
+
+            if (updateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                appUpdate!!.startUpdateFlowForResult(updateInfo,
+                    AppUpdateType.IMMEDIATE,
+                    this@MPINLoginActivity,
+                    REQUEST_CODE)
+            }
+        }
     }
 }

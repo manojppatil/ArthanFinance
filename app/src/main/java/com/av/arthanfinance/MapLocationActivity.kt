@@ -18,6 +18,7 @@ import com.av.arthanfinance.user_kyc.UploadAadharAddressActivity
 import com.av.arthanfinance.util.GpsUtil
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -48,7 +49,6 @@ class MapLocationActivity : FragmentActivity(), OnMapReadyCallback {
     private var state: String = ""
     private var country: String = ""
     private var postalCode: String = ""
-    private lateinit var knownName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -187,7 +187,7 @@ class MapLocationActivity : FragmentActivity(), OnMapReadyCallback {
                 wayLatitude,
                 wayLongitude,
                 1
-            ) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+            ) as List<Address> // Here 1 represent max location result to returned, by documents it recommended 1 to 5
             address =
                 addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
             val subAdminArea: String = addresses[0].subAdminArea
@@ -207,7 +207,7 @@ class MapLocationActivity : FragmentActivity(), OnMapReadyCallback {
         }
     }
 
-    fun showEnableLocationSetting() {
+    private fun showEnableLocationSetting() {
         this.let {
             val locationRequest = LocationRequest.create()
             locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY

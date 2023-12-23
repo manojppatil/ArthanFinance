@@ -10,7 +10,7 @@ class BiometricAuthentication {
 
         private lateinit var biometricPrompt: BiometricPrompt
 
-        public fun startScanning(
+        fun startScanning(
             context: FragmentActivity,
             title: String,
             subtitle: String,
@@ -43,7 +43,7 @@ class BiometricAuthentication {
 
             var promptInfo = createPromptInfo(title, subtitle, description)
             if (promptInfo != null) {
-                biometricPrompt!!.authenticate(promptInfo)
+                biometricPrompt.authenticate(promptInfo)
             }
         return ""
         }

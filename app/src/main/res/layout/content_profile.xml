@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.av.arthanfinance.profile.MyAccount"
+    tools:showIn="@layout/activity_my_account">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/headerText"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="10dp"
+            android:text="Account Info" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_bankname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/name"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/edt_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:hint="e.g. Sachin Tendulkar"
+                android:inputType="text"
+                android:paddingVertical="11dp"
+                android:paddingStart="19dp"
+                android:textSize="16sp"
+                app:hintTextColor="@color/very_light_grey" />
+
+            <TextView
+                android:id="@+id/tv_account_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/your_pan_number"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/edt_pan_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:hint="e.g. DTDPPXXXX09"
+                android:inputType="text"
+                android:paddingVertical="11dp"
+                android:paddingStart="19dp"
+                android:textSize="16sp"
+                app:hintTextColor="@color/very_light_grey" />
+
+            <TextView
+                android:id="@+id/tv_dob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/dob"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/edt_dob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:hint="01/06/1990"
+                android:inputType="text"
+                android:paddingVertical="11dp"
+                android:paddingStart="19dp"
+                android:textSize="16sp"
+                app:hintTextColor="@color/very_light_grey" />
+
+            <TextView
+                android:id="@+id/tv_ifsccode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/enter_email"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/edt_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:hint="e.g. abc@gmail.com"
+                android:inputType="textEmailAddress"
+                android:paddingVertical="11dp"
+                android:paddingStart="19dp"
+                android:textAllCaps="true"
+                android:textSize="16sp"
+                app:hintTextColor="@color/very_light_grey" />
+
+            <TextView
+                android:id="@+id/tv_marital_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/marital_status"
+                android:textColor="@color/black" />
+
+            <Spinner
+                android:id="@+id/sp_maritalstatus"
+                android:layout_width="match_parent"
+                android:layout_height="45sp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:entries="@array/marital_status"
+                android:inputType="text"
+                android:paddingStart="15dp"
+                android:textSize="16sp"
+                app:hintTextColor="@color/very_light_grey" />
+
+
+            <TextView
+                android:id="@+id/tv_account_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/residence_address_label"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/edt_resi_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:hint="e.g. A-505, ABC Apartment,..."
+                android:inputType="text"
+                android:paddingVertical="11dp"
+                android:paddingStart="19dp"
+                android:textSize="16sp"
+                app:hintTextColor="@color/very_light_grey" />
+
+            <TextView
+                android:id="@+id/tv_ofc_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/business_address_as_per_udyam"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/edt_ofc_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/bg_grey92_rect"
+                android:hint="e.g. Shop no 17, Sahar Market"
+                android:inputType="text"
+                android:paddingVertical="11dp"
+                android:paddingStart="19dp"
+                android:textSize="16sp"
+                app:hintTextColor="@color/very_light_grey" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/update_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:background="@drawable/bg_register_rect_orange"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                android:text="Update Profile"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

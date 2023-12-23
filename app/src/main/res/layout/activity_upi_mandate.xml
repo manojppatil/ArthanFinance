@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".applyLoan.UpiMandate">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/indigo">
+
+                <ImageButton
+                    android:id="@+id/img_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="35dp"
+                    android:background="@drawable/ic_back_orange" />
+
+                <TextView
+                    android:id="@+id/tv_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_toEndOf="@id/img_back"
+                    android:layout_toRightOf="@id/img_back"
+                    android:text="E-NACH Mandate"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="100sp"
+                    android:layout_height="100sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="@dimen/dimen_20"
+                    android:src="@drawable/arthik_white" />
+
+                <TextView
+                    android:id="@+id/enter_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="90sp"
+                    android:layout_below="@id/tv_register"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:text="Transforming customer experience in debit On-Time payments"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_bank_details"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginRight="25dp"
+                    android:text="Verify Your Bank Details"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_bankname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="25dp"
+                    android:text="Bank Name"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/edt_bank_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/bg_grey92_rect"
+                    android:hint="e.g. Bank of XXXXXXX"
+                    android:inputType="text"
+                    android:paddingVertical="11dp"
+                    android:paddingStart="19dp"
+                    android:textSize="16sp"
+                    app:hintTextColor="@color/very_light_grey" />
+
+                <TextView
+                    android:id="@+id/tv_account_holder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="25dp"
+                    android:text="Account Holder Name"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/edt_account_holder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/bg_grey92_rect"
+                    android:hint="e.g. Rahul Shah"
+                    android:inputType="text"
+                    android:paddingVertical="11dp"
+                    android:paddingStart="19dp"
+                    android:textSize="16sp"
+                    app:hintTextColor="@color/very_light_grey" />
+
+                <TextView
+                    android:id="@+id/tv_acc_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="25dp"
+                    android:text="Account Type"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/edt_acc_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/bg_grey92_rect"
+                    android:hint="e.g. Saving/ Current"
+                    android:inputType="text"
+                    android:paddingVertical="11dp"
+                    android:paddingStart="19dp"
+                    android:textSize="16sp"
+                    app:hintTextColor="@color/very_light_grey" />
+
+                <TextView
+                    android:id="@+id/tv_ifsccode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="25dp"
+                    android:text="IFSC Code"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/edt_ifsccode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/bg_grey92_rect"
+                    android:hint="e.g. ABCD0XYZWLP"
+                    android:inputType="text"
+                    android:paddingVertical="11dp"
+                    android:paddingStart="19dp"
+                    android:textAllCaps="true"
+                    android:textSize="16sp"
+                    app:hintTextColor="@color/very_light_grey" />
+
+                <TextView
+                    android:id="@+id/tv_account_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="25dp"
+                    android:text="Account No"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilAcno"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:passwordToggleEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_account_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Account No"
+                        android:inputType="textPassword"
+                        android:text="" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!--                <EditText-->
+                <!--                    android:id="@+id/edt_account_no"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginLeft="25dp"-->
+                <!--                    android:layout_marginTop="4dp"-->
+                <!--                    android:layout_marginRight="25dp"-->
+                <!--                    android:background="@drawable/bg_grey92_rect"-->
+                <!--                    android:hint="e.g. 37620XXXXX0111"-->
+                <!--                    android:inputType="textPassword"-->
+                <!--                    android:paddingVertical="11dp"-->
+                <!--                    android:paddingStart="19dp"-->
+                <!--                    android:textSize="16sp"-->
+                <!--                    app:hintTextColor="@color/very_light_grey" />-->
+
+                <TextView
+                    android:id="@+id/tv_con_acno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="25dp"
+                    android:text="Confirm Account Number"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilConfAcno"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_confirm_acno"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Confirm Account No"
+                        android:inputType="text"
+                        android:text="" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!--                <EditText-->
+                <!--                    android:id="@+id/edt_confirm_acno"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginLeft="25dp"-->
+                <!--                    android:layout_marginTop="4dp"-->
+                <!--                    android:layout_marginRight="25dp"-->
+                <!--                    android:background="@drawable/bg_grey92_rect"-->
+                <!--                    android:hint="e.g. 37620XXXXX0111"-->
+                <!--                    android:inputType="text"-->
+                <!--                    android:paddingVertical="11dp"-->
+                <!--                    android:paddingStart="19dp"-->
+                <!--                    android:textSize="16sp"-->
+                <!--                    app:hintTextColor="@color/very_light_grey" />-->
+
+                <TextView
+                    android:id="@+id/tv_upiid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="25dp"
+                    android:text="UPI ID"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilUpiid"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_upi_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="UPI ID"
+                        android:inputType="textPassword" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!--                <EditText-->
+                <!--                    android:id="@+id/edt_upi_id"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginLeft="25dp"-->
+                <!--                    android:layout_marginTop="4dp"-->
+                <!--                    android:layout_marginRight="25dp"-->
+                <!--                    android:background="@drawable/bg_grey92_rect"-->
+                <!--                    android:hint="7738790432@ybl"-->
+                <!--                    android:inputType="text"-->
+                <!--                    android:paddingVertical="11dp"-->
+                <!--                    android:paddingStart="19dp"-->
+                <!--                    android:textSize="16sp"-->
+                <!--                    app:hintTextColor="@color/very_light_grey" />-->
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/accept_tc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="29dp"
+                    android:checked="true"
+                    android:text="This information is accurate as per best my knowledge, I agree to the Arthan Finance data privacy notice."
+                    android:textSize="12sp"
+                    app:buttonTint="@color/indigoBlue" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="25dp"
+                    android:background="@drawable/bg_register_rect_orange"
+                    android:gravity="center"
+                    android:paddingVertical="10dp"
+                    android:text="@string/submit"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

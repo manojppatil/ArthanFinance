@@ -1,14 +1,15 @@
 <resources>
-    <string name="app_name">ARTHIK</string>
+    <string name="app_name">Arthik</string>
+    <string name="facebook_app_id">807445397469281</string>
     <string name="choose_lang">Choose Your Language</string>
     <string name="choose_later">You can change this later from settings</string>
     <string name="english">English</string>
     <string name="hindi">Hindi</string>
     <string name="urdu">Urdu</string>
     <string name="continuee">Continue</string>
-    <string name="payment">Get payment reminders &amp; notifications, news, latest offers and apply for loan from your mobile phone</string>
-    <string name="login">Login</string>
-    <string name="register">Register</string>
+    <string name="payment">Now you can manage all your loans, track progress, make payments, download statement, apply for new loan and much more at your fingertips</string>
+    <string name="login">Existing Customer</string>
+    <string name="register">New Customer</string>
     <string name="fingerprint_login">Login with Fingerprint</string>
     <string name="login_mpin">Login with Mpin</string>
     <string name="not_you"><font color='#FFFFFF'>Not You?</font> Use another account</string>
@@ -16,15 +17,15 @@
     <string name="enter_pin">Enter Mpin</string>
     <string name="forgot_mpin">Forgot Mpin?</string>
     <string name="login_otp">Login with OTP</string>
-    <string name="dont_hav_account"><font color='#FFFFFF'>Don’t have account?</font> Register</string>
+    <string name="dont_hav_account"><font color='#FFFFFF'>New Customer?</font> Register Now</string>
     <string name="your_name">Your Name <font color='#FF0000'>*</font></string>
     <string name="mob_no">Mobile Number <font color='#FF0000'>*</font></string>
     <string name="enter_mob_num">Enter mobile number</string>
     <string name="dob_format">DD/MM/YYYY</string>
-    <string name="enter_email">Enter email ID</string>
+    <string name="enter_email">Enter email ID <font color='#FF0000'>*</font></string>
     <string name="dob">Date of Birth <font color='#FF0000'>*</font></string>
-    <string name="email_id">Email ID <font color='#FF0000' /></string>
-    <string name="accept_tos">I accept the <b>Terms &amp; Conditions</b></string>
+    <string name="email_id">Email ID <font color='#FF0000'>*</font></string>
+    <string name="accept_tos"><html>I accept <a href="https://arthan.finance/Termsandconditions"> Terms of Services</a> and agree with<a href="https://arthan.finance/Privacypolicy"> Privacy Policy</a> of Arthan Finance</html></string>
     <string name="submit">Submit</string>
     <string name="otp">OTP</string>
     <string name="one_time_pw">One Time Password</string>
@@ -32,7 +33,7 @@
     <string name="enter_otp">Enter One Time Password</string>
     <string name="resend_otp">Resend OTP</string>
     <string name="set_new_mpin">Set New Mpin</string>
-    <string name="used_to_login">This will be used each time login to app</string>
+    <string name="used_to_login">Please set up a 4 digit numeric code to access your application easily in future,in case you forget your MPIN, you can reset the same using OTP authentication.</string>
     <string name="enter_new_mpin">Enter New Mpin</string>
     <string name="setup_bio">Setup Biometric</string>
     <string name="finger_login">Fingerprint Login</string>
@@ -48,12 +49,12 @@
     <string name="name">Name <font color='#FF0000'>*</font></string>
     <string name="date_of_birth">Date of Birth</string>
     <string name="mob_num">Mobile Number</string>
-    <string name="upload_pan">Upload PAN</string>
+    <string name="upload_pan">Capture PAN</string>
     <string name="pan_num">PAN : BKOPY8778F</string>
     <string name="next">Next</string>
     <string name="login_face_id">Login with Face ID</string>
-    <string name="manage">Now you can manage all your loans, track progress, make payment, download statement, apply for new loan and much more right at your fingertips</string>
-    <string name="check">Now you can manage all your loans, track progress, make payment, download statement, apply for new loan and much more right at your fingertips</string>
+    <string name="manage">Arthik is powered by Arthan Finance, a RBI Registered NBFC. We value your privacy and your details are secured with us. Trusted by more than 50k+ MSMEs.</string>
+    <string name="check">Experience effortless Limit approval within 2 minutes with your PAN &amp; Aadhaar card. Complete digital journey for your utmost convenience.</string>
     <string name="swipe_left">Swipe left to continue > ></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -91,13 +92,13 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="demo_user_name">Jitesh Ramlaal Singh</string>
-    <string name="your_pan_number">Pan Number</string>
+    <string name="your_pan_number">Pan Number<font color='#FF0000'>*</font></string>
     <string name="demo_date">09/05/1991</string>
-    <string name="residence_address_label">Residence Address</string>
+    <string name="residence_address_label">Residence Address <font color='#FF0000'>*</font></string>
     <string name="demo_address">Arthan Finance , Near Ravi Talkies, Old Town, Bhubaneswar</string>
     <string name="capture">Capture</string>
     <string name="offline_kyc">Do Offline Kyc</string>
-    <string name="aadhar_kyc">Aadhar Kyc</string>
+    <string name="aadhar_kyc">Proceed to Aadhar KYC</string>
     <string name="service_request">Service Request</string>
     <string name="view_loan_details">View Loan Details</string>
     <string name="generate_loan_statement">Generate Loan Statement</string>
@@ -151,7 +152,7 @@
     <string name="completed">Completed</string>
     <string name="state">State</string>
     <string name="business_pan">Business Pan Number</string>
-    <string name="udyog_aadhar">Udyog Aadhar Number</string>
+    <string name="udyog_aadhar">Udyam Aadhaar Number<font color='#FF0000'>*</font></string>
     <string name="gst_number">Gst Number</string>
     <string name="margin">Margin (%)<font color='#FF0000'>*</font></string>
     <string name="monthly_income">Monthly Income <font color='#FF0000'>*</font></string>
@@ -162,9 +163,11 @@
     <string name="type">Type <font color='#FF0000'>*</font></string>
     <string name="monthly_turnover">Monthly Turnover <font color='#FF0000'>*</font></string>
     <string name="address_same_as_residence">Address same as residence <font color='#FF0000'>*</font></string>
-    <string name="ifsc_code">IFSC Code</string>
-    <string name="account_number">Account Number</string>
-    <string name="bank_name">Bank Name</string>
+    <string name="ifsc_code">IFSC Code <font color='#FF0000'>*</font></string>
+    <string name="account_number">Account Number <font color='#FF0000'>*</font></string>
+    <string name="confirm_account_number">Confirm Account Number <font color='#FF0000'>*</font></string>
+    <string name="bank_name">Bank Name <font color='#FF0000'>*</font></string>
+    <string name="upi_id">UPI ID (Optional)</string>
     <string name="date_format">DD/MM/YYYY</string>
     <string name="no_data_found">No Data Found</string>
     <string name="gender">Gender <font color='#FF0000'>*</font></string>
@@ -178,7 +181,6 @@
     <string name="landmark">Landmark</string>
     <string name="city">City <font color='#FF0000'>*</font></string>
     <string name="district">District <font color='#FF0000'>*</font></string>
-
 
     <string name="ACCESS_KEY">AKIAZUHCZC3Y5MJRHYXT</string>
     <string name="SECRET_KEY">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</string>
@@ -206,15 +208,35 @@
     <string name="readPhoneStatesDialogMessage">This app make and manage phone calls. You need grant to this permission to proceed.</string>
     <string name="go_for_video_kyc">Go For Video KYC</string>
     <string name="skip"><a>Skip</a></string>
-    <string name="eligibility_msg">You have Successfully submitted all details for arriving at your Eligibility</string>
-    <string name="eligibility_msg2">You will be intimated on your eligibility soon.</string>
+    <string name="eligibility_msg">We are analyzing you Eligibility, Please wait for some more time...</string>
+    <string name="eligibility_msg2">This can take upto 3 minutes...</string>
     <string name="received_message">Received Message</string>
     <string name="not_availble_register_now"><a href="https://udyamregistration.gov.in/UdyamRegistration.aspx">Not available? Register Now</a></string>
     <string name="upload_bank_statement_pdf_file_downloaded_from_bank"><b>Upload Bank Statement</b> \n(PDF File Downloaded from Bank)</string>
     <string name="verify_udyam">Verify Udyam Aadhar</string>
-    <string name="business_address_as_per_udyam">Business Address As per Udyam Aadhar</string>
-    <string name="udyam_consent">I agree to the <b>Terms and conditions</b> and authorise Arthan Finance to access my Business details from Udyam Aadhar</string>
+    <string name="business_address_as_per_udyam">Business Address <font color='#FF0000'>*</font></string>
+    <string name="udyam_consent">I agree to the <b>Terms and conditions</b> and authorize Arthan Finance to access my Business details from Udyam Aadhar</string>
     <string name="congratulations">Congratulations!</string>
     <string name="start_video_kyc">Start My Video KYC</string>
-    <string name="branch_name">Branch Name</string>
+    <string name="branch_name">Branch Name <font color='#FF0000'>*</font></string>
+    <string name="we_need_pan_detail">We need to verify your PAN details</string>
+    <string name="we_need_aadhar_detail">In order to proceed with loan application. Please complete your Aadhaar KYC.</string>
+    <string name="we_need_bank_detail">Verifying your Bank Account details</string>
+    <string name="kyc_requirement">Please take a photo of your original PAN-CARD, ensure that the lighting is good and the PAN CARD is in focus of your camera.</string>
+    <string name="aadhar_requirement">Please take a photo of your original Aadhaar Card, ensure that the lighting is good and the Aadhaar Card is in focus of your camera.</string>
+    <string name="aadhar_kyc_requirement">Your details will be verified using your Aadhaar Number and OTP will be sent on your registered mobile number to enter.</string>
+    <string name="aadhar_kyc_declaration">By Clicking<b> Continue </b>button, you declare that you are fully aware that you are submitting your aadhaar details to Arthan Finance in order to complete KYC for opening a Loan Account. </string>
+    <string name="pan_kyc_declaration">I authorise Arthan Finance to access my credit report from credit bureau and store/use it for processing my loan.</string>
+    <string name="bank_kyc_declaration">By Clicking<b> Proceed </b>button, you declare that you are fully aware that you are submitting your bank details to Arthan Finance in order to Access your bank Account Statement. </string>
+    <string name="apply_loan_note"><b>Note: </b>Arthan Finance Pvt. Ltd. will collect your data on your consent to take decision on your Loan application</string>
+    <string name="phone_number">18003133525</string>
+    <string name="title_activity_credit_score">Credit_score</string>
+
+    <string-array name="marital_status">
+        <item>Select Marital Status</item>
+        <item>Single</item>
+        <item>Married</item>
+        <item>Separated</item>
+        <item>Divorced</item>
+    </string-array>
 </resources>

@@ -1,31 +1,9 @@
-
-/*dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
-        flatDir {
-            dirs 'src/main/assets/digio_sdk'
-        }
-        maven {
-            url 'https://jitpack.io'
-        }
-        maven{
-            setUrl("s3://risk-manager-android-sdk/artifacts")
-
-            credentials(AwsCredentials) {
-                accessKey = ("AKIAZUHCZC3Y5MJRHYXT")
-                secretKey = ("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")
-
-            }
-            content {
-                includeGroup("in.finbox")
-            }
-        }
-
-    }
-}*/
+/// TODO: (Pirimid SDK Integration)
+//include ':pirimid-sdk'
+include ':pirimid-sdk-release'
+include ':standard'
+include ':custom'
 include ':core'
+//include ':kyccamera'
 include ':app', ':digio-kyc-2.1.17'
 rootProject.name = "ArthanFinance"

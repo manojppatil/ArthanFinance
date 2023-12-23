@@ -1,27 +1,44 @@
 package com.av.arthanfinance.homeTabs
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.av.arthanfinance.CustomerHomeTabResponse
-import com.av.arthanfinance.InitiateApplyLoanActivity2
+import com.av.arthanfinance.MPINLoginActivity
+import com.av.arthanfinance.applyLoan.InitiateApplyLoanActivity2
 import com.av.arthanfinance.R
+import com.av.arthanfinance.SetNewMpinActivity
+import com.av.arthanfinance.adapter.LoanDetailsAdapter
+import com.av.arthanfinance.adapter.LoanItemClickListener
 import com.av.arthanfinance.applyLoan.*
-import com.av.arthanfinance.manager.DataManager
+import com.av.arthanfinance.applyLoan.model.AuthenticationResponse
+import com.av.arthanfinance.applyLoan.model.LoanDetails
+import com.av.arthanfinance.applyLoan.model.LoansResponse
+import com.av.arthanfinance.applyLoan.model.UserDetailsResponse
+import com.av.arthanfinance.models.CustomerHomeTabResponse
 import com.av.arthanfinance.networkService.ApiClient
+import com.av.arthanfinance.serviceRequest.ConfirmPayment
+import com.av.arthanfinance.serviceRequest.TransactionDetails
 import com.av.arthanfinance.util.ArthanFinConstants
+import com.example.awesomedialog.*
+import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.minibugdev.sheetselection.SheetSelection
-import com.minibugdev.sheetselection.SheetSelectionItem
+import com.razorpay.Checkout
 import kotlinx.android.synthetic.main.fragment_loans_tab.*
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,58 +46,147 @@ import java.util.ArrayList
 
 class LoansTabFragment : Fragment() {
     private var loansList: ArrayList<LoanDetails>? = null
-    var customerData: CustomerHomeTabResponse? = null
+    var customerData: UserDetailsResponse? = null
     lateinit var adapter: LoanDetailsAdapter
+    private var mCustomerId: String? = null
+    private var mpinStatus: String? = null
+    private var usedLimit: String? = null
+    private var availableLimit: String? = null
+    private var totalLimit: String? = null
+    private lateinit var iv_logout: ImageButton
+    private lateinit var pay_btn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val mPrefs: SharedPreferences? =
+            context?.getSharedPreferences("customerData", Context.MODE_PRIVATE)
+        mCustomerId = mPrefs?.getString("customerId", null)
+        val gson = Gson()
+        val json: String? = mPrefs?.getString("customerData", null)
+        Log.e("json", json.toString())
+        if (json != null) {
+            val obj: UserDetailsResponse =
+                gson.fromJson(json, UserDetailsResponse::class.java)
+            customerData = obj
+            usedLimit = customerData?.borrowedAmount
+            availableLimit = customerData!!.availableAmount
+            totalLimit = customerData!!.eligibilityAmount
+
+        }
+        mpinStatus = mPrefs?.getString("mpinStatus", null)
         loansList = ArrayList<LoanDetails>()
-        getListOfLoans()
+        if (mCustomerId != null) {
+            getListOfLoans()
+        } else {
+            Log.e("ERROR", "Missing customer Id at Loan")
+        }
+        Checkout.preload(activity as HomeDashboardActivity)
+        val co = Checkout()
+        co.setKeyID("rzp_live_06qz6CizJP1S0D")
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val percentCompleted = 40 //to be achieved from BE
+        val percentCompleted = 10 //to be achieved from BE
         totalLoanlimitProgressBar.max = 100
-        ObjectAnimator.ofInt(totalLoanlimitProgressBar, "progress", percentCompleted).setDuration(1000).start()
+        ObjectAnimator.ofInt(totalLoanlimitProgressBar, "progress", percentCompleted)
+            .setDuration(1000).start()
 
-        availedtext.text = "Availed(${getString(R.string.Rs)})"
-        totalAvailedAmount.text = "5,00,000.00"
-        limitText.text = "Limit(${getString(R.string.Rs)})"
-        totalLimitValue.text = "10,00,000.00"
-        loansRecyclerview.layoutManager = LinearLayoutManager(activity?.applicationContext, RecyclerView.VERTICAL, false)
-        applyforNewLoan.setOnClickListener{
-            val intent = Intent(activity?.applicationContext, InitiateApplyLoanActivity2::class.java)
-            intent.putExtra(ArthanFinConstants.IS_CREATE_FLOW,true)
-            intent.putExtra("customerData", customerData)
+        loansRecyclerview.layoutManager =
+            LinearLayoutManager(activity?.applicationContext, RecyclerView.VERTICAL, false)
+        applyforNewLoan.setOnClickListener {
+            val intent =
+                Intent(activity?.applicationContext, InitiateApplyLoanActivity2::class.java)
+            intent.putExtra(ArthanFinConstants.IS_CREATE_FLOW, true)
             startActivity(intent)
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_loans_tab, container, false)
+        val view = inflater.inflate(R.layout.fragment_loans_tab, container, false)
+        val mPrefs: SharedPreferences? =
+            context?.getSharedPreferences("customerData", Context.MODE_PRIVATE)
+        mCustomerId = mPrefs?.getString("customerId", null)
+        iv_logout = view.findViewById(R.id.iv_logout)
+        pay_btn = view.findViewById(R.id.payBtn)
+        iv_logout.setOnClickListener {
+            if (mpinStatus == "Complete") {
+                logOut()
+            } else {
+                AwesomeDialog.build(activity as HomeDashboardActivity)
+                    .title("Warning")
+                    .body("Please set your MPIN before Logging out")
+                    .icon(R.drawable.ic_info_icon)
+                    .onPositive("Set MPIN now") {
+                        val intent = Intent(
+                            activity,
+                            SetNewMpinActivity::class.java
+                        )
+                        startActivity(intent)
+                    }
+            }
+        }
+        pay_btn.setOnClickListener {
+            val intent = Intent(
+                context,
+                ConfirmPayment::class.java
+            )
+            intent.putExtra("amount", totalDueAmount.text)
+            startActivity(intent)
+        }
+
+        return view
     }
 
     private fun getListOfLoans() {
         (activity as HomeDashboardActivity).showProgressDialog()
         val jsonObject = JsonObject()
-        jsonObject.addProperty("customerId", customerData?.customerId)
+        jsonObject.addProperty("customerId", mCustomerId)
         activity?.applicationContext?.let {
-            ApiClient().getAuthApiService(it).getLoans(jsonObject).enqueue(object :
+            ApiClient().getAuthApiService(it).getCustomerApplications(jsonObject).enqueue(object :
                 Callback<LoansResponse>, LoanItemClickListener {
-                override fun onResponse(call: Call<LoansResponse>, response: Response<LoansResponse>) {
-                    (activity as HomeDashboardActivity).hideProgressDialog()
-                    val loansResponse = response.body()
-                    loansList = loansResponse?.loans
-                    val adapter = LoanDetailsAdapter(loansList!!,this)
-                    adapter.notifyDataSetChanged()
-                    loansRecyclerview.adapter = adapter
+                @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
+                override fun onResponse(
+                    call: Call<LoansResponse>,
+                    response: Response<LoansResponse>,
+                ) {
+                    try {
+                        (activity as HomeDashboardActivity).hideProgressDialog()
+                        val loansResponse = response.body()
+                        loansList = loansResponse?.loans
+                        val adapter = LoanDetailsAdapter(loansList!!, this)
+                        adapter.notifyDataSetChanged()
+                        loansRecyclerview.adapter = adapter
 
-                    val loansCount = loansList?.count()
-                    activeLoansText.setText("You have ${loansCount} active loans")
+//                        val loansCount = loansList?.count()
+//                        availedtext.text = "Used (${getString(R.string.Rs)})"
+                        Log.e("Logused", usedLimit + "")
+//                        totalAvailedAmount.text = usedLimit
+//                        tv_available.text = "Available Balance (${getString(R.string.Rs)})"
+//                        totalAvailableAmount.text = availableLimit
+//                        limitText.text = "Limit (${getString(R.string.Rs)})"
+//                        totalLimitValue.text = totalLimit
+                        totalDueAmount.text = loansResponse!!.totalDebitAmount.toString()
+
+//                        val percentCompleted =
+//                            response.body()!!.limitPercent //to be achieved from BE
+//                        totalLoanlimitProgressBar.max = 100
+//                        ObjectAnimator.ofInt(
+//                            totalLoanlimitProgressBar,
+//                            "progress",
+//                            percentCompleted!!
+//                        )
+//                            .setDuration(1000).start()
+
+//                        if (response.body()!!.applyStatus == "N") {
+//                            applyforNewLoan.isEnabled = false
+//                        }
+                    } catch (ex: NullPointerException) {
+                        ex.printStackTrace()
+                    }
                 }
 
                 override fun onFailure(call: Call<LoansResponse>, t: Throwable) {
@@ -94,35 +200,59 @@ class LoansTabFragment : Fragment() {
                 }
 
                 override fun onLoanItemClicked(loanDetails: LoanDetails) {
-                    val items = listOf(
-                        SheetSelectionItem("1", "Primary Applicant"),
-                        SheetSelectionItem("2", "Co Applicant"),
-                        SheetSelectionItem("3", "Guarantor"),
+                    val intent = Intent(
+                        context,
+                        TransactionDetails::class.java
+                    )
+                    intent.putExtra("accountId", loanDetails.accountId)
+                    intent.putExtra("transactionName", loanDetails.transactionName)
+                    intent.putExtra("transactionDateStr", loanDetails.transactionDateStr)
+                    intent.putExtra("accountEntryType", loanDetails.accountEntryType)
+                    intent.putExtra("amount", loanDetails.amount)
+                    intent.putExtra("description", loanDetails.description)
+                    intent.putExtra("transactionId", loanDetails.transactionId)
+                    startActivity(intent)
+                }
+            })
+        }
+    }
 
+    private fun logOut() {
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("customerId", mCustomerId)
+        (activity as HomeDashboardActivity).showProgressDialog("Logging out...")
+        if (context != null) {
+            ApiClient().getAuthApiService(requireContext()).logOut(jsonObject).enqueue(object :
+                Callback<AuthenticationResponse> {
+                override fun onResponse(
+                    call: Call<AuthenticationResponse>,
+                    response: Response<AuthenticationResponse>,
+                ) {
+                    (activity as HomeDashboardActivity).hideProgressDialog()
+                    val custData = response.body()
+                    val sharedPref: SharedPreferences =
+                        (activity as HomeDashboardActivity).getSharedPreferences(
+                            "customerData",
+                            Context.MODE_PRIVATE
                         )
-                    context?.let { it1 ->
-                        SheetSelection.Builder(it1)
-                            .title("Applicant Type")
-                            .items(items)
-                            .selectedPosition(0)
-                            .showDraggedIndicator(true)
-                            .searchEnabled(false)
-                            .onItemClickListener { item, position ->
-                                if (position == 0){
-                                    DataManager.applicantType = "PA"
-                                }else if(position == 1){
-                                    DataManager.applicantType = "CA"
-                                }else{
-                                    DataManager.applicantType = "G"
-                                }
-                                val intent = Intent(activity?.applicationContext,
-                                    InitiateApplyLoanActivity2::class.java)
-                                intent.putExtra("customerData", customerData)
-                                intent.putExtra("loanDetails",loanDetails)
-                                startActivity(intent)
-                            }
-                            .show()
+                    val editor = sharedPref.edit()
+                    editor.clear()
+                    editor.apply()
+
+                    if (custData != null && custData.message.trim() == "Success") {
+                        val intent =
+                            Intent(activity, MPINLoginActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                        (activity as HomeDashboardActivity).finish()
                     }
+                }
+
+                override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
+                    (activity as HomeDashboardActivity).hideProgressDialog()
+                    t.printStackTrace()
+                    Toast.makeText(activity, "LogOut Failed", Toast.LENGTH_SHORT)
+                        .show()
                 }
             })
         }

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/fip_relative"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:id="@+id/fip_linear"
+        android:layout_margin="@dimen/dimen_3"
+        android:background="@drawable/account_item_border"
+        android:layout_width="match_parent"
+        android:padding="@dimen/dimen_10"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            style="@style/CheckboxStyle"
+            android:id="@+id/check_account"/>
+        <LinearLayout
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/account_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center"
+                android:gravity="left|center"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins_medium"
+                android:text="xxxxxx61535"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_14" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/account_type"
+                android:text="Savings Account"
+                android:layout_gravity="left|center"
+                android:gravity="left|center"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="@dimen/font_12"
+                app:textAllCaps="false"
+                android:textColor="@color/grey_dark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:id="@+id/linked_account_layout"
+            android:gravity="right"
+            android:visibility="gone"
+            android:layout_weight="1">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:padding="@dimen/dimen_2"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:id="@+id/linked_account"
+                app:srcCompat="@drawable/ic_link_greaan_icon"
+                tools:ignore="VectorDrawableCompat" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

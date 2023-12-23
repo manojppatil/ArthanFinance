@@ -32,7 +32,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         //  TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        db!!.execSQL("DROP TABLE IF EXISTS " + TABLE_CUSTOMERS)
+        db!!.execSQL("DROP TABLE IF EXISTS $TABLE_CUSTOMERS")
         onCreate(db)
     }
 
@@ -61,7 +61,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
         return success
     }
     //method to read data
-    @SuppressLint("Range")
+    @SuppressLint("Range", "Recycle")
     fun getCustomers():List<Customer>{
         val empList:ArrayList<Customer> = ArrayList<Customer>()
         val selectQuery = "SELECT  * FROM $TABLE_CUSTOMERS"
@@ -96,6 +96,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
         return empList
     }
 
+    @SuppressLint("Range")
     fun getCustomerByCustId(customerId: String): Customer? {
         val db = this.writableDatabase
         val cursor: Cursor =
@@ -113,6 +114,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
         return null
     }
 
+    @SuppressLint("Range")
     fun getCustomerByMobileNo(mobileNumber: String): Customer? {
         val db = this.writableDatabase
         val cursor: Cursor =

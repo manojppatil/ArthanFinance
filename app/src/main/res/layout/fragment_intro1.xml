@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:src="@drawable/person1" />
+        android:src="@drawable/intro_1" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -22,30 +22,46 @@
 
         <ImageView
             android:id="@+id/img_arthan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="220sp"
+            android:layout_height="100sp"
             android:layout_centerInParent="true"
-            android:src="@drawable/ic_arthan_logo" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/arthik_white" />
 
         <ImageView
             android:id="@+id/img_everything"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/img_arthan"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="48dp"
-            android:src="@drawable/ic_at_place" />
+            android:layout_marginLeft="46dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/ic_at_place"
+            android:visibility="gone" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_intro1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_everything"
+            android:layout_marginLeft="46dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="46dp"
+            android:text="RBI Registered NBFC"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_descr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/img_everything"
+            android:layout_below="@+id/tv_intro1"
             android:layout_marginLeft="46dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="46dp"
             android:text="@string/manage"
-            android:textColor="@color/sky_blue"
+            android:textColor="@color/white"
             android:textSize="16sp" />
 
         <Button
@@ -53,9 +69,9 @@
             android:layout_width="50dp"
             android:layout_height="5dp"
             android:layout_below="@+id/tv_descr"
-            android:layout_marginLeft="55dp"
-            android:layout_marginTop="53dp"
-            android:background="@color/grey_92" />
+            android:layout_marginLeft="46dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/dark_orange2" />
 
         <Button
             android:id="@+id/view2"
@@ -63,8 +79,18 @@
             android:layout_height="5dp"
             android:layout_below="@+id/tv_descr"
             android:layout_marginLeft="6dp"
-            android:layout_marginTop="53dp"
+            android:layout_marginTop="20dp"
             android:layout_toRightOf="@id/view1"
+            android:background="@color/white" />
+
+        <Button
+            android:id="@+id/view3"
+            android:layout_width="50dp"
+            android:layout_height="5dp"
+            android:layout_below="@+id/tv_descr"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/view2"
             android:background="@color/white" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -73,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/view2"
             android:layout_marginLeft="46dp"
-            android:layout_marginTop="27dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="46dp"
             android:text="@string/swipe_left"
             android:textColor="@color/sky_blue"

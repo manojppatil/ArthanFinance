@@ -4,264 +4,306 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".CheckEligibilityActivity">
 
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_gravity="center"-->
+        <!--                android:background="@color/indigo"-->
+        <!--                android:gravity="center"-->
+        <!--                android:orientation="vertical"-->
+        <!--                android:padding="@dimen/dimen_10"-->
+        <!--                android:visibility="gone">-->
+
+        <!--                <TextView-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:layout_marginTop="@dimen/dimen_34"-->
+        <!--                    android:fontFamily="@font/mukta_vaani"-->
+        <!--                    android:text="Need Urgent Cash?"-->
+        <!--                    android:textAlignment="center"-->
+        <!--                    android:textColor="@color/white"-->
+        <!--                    android:textSize="@dimen/dimen_18"-->
+        <!--                    android:textStyle="bold" />-->
+
+        <!--                <TextView-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:layout_marginBottom="@dimen/dimen_34"-->
+        <!--                    android:fontFamily="@font/poppins"-->
+        <!--                    android:padding="@dimen/dimen_20"-->
+        <!--                    android:text="Get Instant Business Loan within 24 hours"-->
+        <!--                    android:textAlignment="center"-->
+        <!--                    android:textColor="@color/white"-->
+        <!--                    android:textSize="25dp"-->
+        <!--                    android:textStyle="bold" />-->
+
+        <!--                &lt;!&ndash;                <Button&ndash;&gt;-->
+        <!--                &lt;!&ndash;                    android:id="@+id/checkEligibility"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                    android:layout_width="match_parent"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                    android:layout_height="match_parent"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                    android:layout_gravity="center_vertical"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                    android:layout_marginLeft="30dp"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                    android:layout_marginTop="@dimen/dimen_20"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                    android:layout_marginRight="30dp"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                    android:layout_marginBottom="30dp"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                    android:background="@drawable/bg_orange_solid"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                    android:drawablePadding="@dimen/dimen_10"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                    android:drawableTint="@color/white"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                    android:elevation="@dimen/dimen_10"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                    android:gravity="center"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                    android:text="Check Your Eligibility"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                    android:textAllCaps="false"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                    android:textColor="@android:color/white"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                    android:textSize="@dimen/dimen_18"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                    android:textStyle="bold" />&ndash;&gt;-->
+        <!--            </LinearLayout>-->
+
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:orientation="vertical"-->
+        <!--                android:visibility="gone">-->
+
+        <!--                <TextView-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:layout_marginTop="10dp"-->
+        <!--                    android:text="Introducing Arthik Loans"-->
+        <!--                    android:textAlignment="center"-->
+        <!--                    android:textColor="@color/black"-->
+        <!--                    android:textSize="@dimen/dimen_18"-->
+        <!--                    android:textStyle="bold"-->
+        <!--                    android:visibility="gone" />-->
+
+        <!--                <androidx.appcompat.widget.LinearLayoutCompat-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:layout_margin="15sp"-->
+        <!--                    android:background="@drawable/bg_register_rect_silver"-->
+        <!--                    android:orientation="vertical"-->
+        <!--                    android:padding="@dimen/dimen_10">-->
+
+        <!--                    <TextView-->
+        <!--                        android:layout_width="wrap_content"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:drawablePadding="@dimen/dimen_10"-->
+        <!--                        android:text="Know Your Eligibility for a Loan Application with Basic details"-->
+        <!--                        android:textColor="@color/black"-->
+        <!--                        android:textSize="17dp"-->
+        <!--                        android:textStyle="bold" />-->
+
+        <!--                    <TextView-->
+        <!--                        android:layout_width="match_parent"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:layout_marginTop="15sp"-->
+        <!--                        android:drawableStart="@drawable/ic_green_check"-->
+        <!--                        android:drawablePadding="@dimen/dimen_10"-->
+        <!--                        android:text="Hassle-Free Registration"-->
+        <!--                        android:textColor="@color/black" />-->
+
+        <!--                    <TextView-->
+        <!--                        android:layout_width="match_parent"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:layout_marginTop="5dp"-->
+        <!--                        android:drawableStart="@drawable/ic_green_check"-->
+        <!--                        android:drawablePadding="@dimen/dimen_10"-->
+        <!--                        android:text="Simple and Fast Document Verification"-->
+        <!--                        android:textColor="@color/black" />-->
+
+        <!--                    <TextView-->
+        <!--                        android:layout_width="match_parent"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:layout_marginTop="5dp"-->
+        <!--                        android:drawableStart="@drawable/ic_green_check"-->
+        <!--                        android:drawablePadding="@dimen/dimen_10"-->
+        <!--                        android:text="Analyze your Bureau score"-->
+        <!--                        android:textColor="@color/black" />-->
+
+        <!--                    <TextView-->
+        <!--                        android:layout_width="match_parent"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:layout_marginTop="5dp"-->
+        <!--                        android:drawableStart="@drawable/ic_green_check"-->
+        <!--                        android:drawablePadding="@dimen/dimen_10"-->
+        <!--                        android:text="Complete Video KYC"-->
+        <!--                        android:textColor="@color/black"-->
+        <!--                        android:visibility="gone" />-->
+
+        <!--                    <TextView-->
+        <!--                        android:layout_width="match_parent"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:layout_marginTop="5dp"-->
+        <!--                        android:drawableStart="@drawable/ic_green_check"-->
+        <!--                        android:drawablePadding="@dimen/dimen_10"-->
+        <!--                        android:text="Provide your Business Details"-->
+        <!--                        android:textColor="@color/black" />-->
+
+        <!--                    <TextView-->
+        <!--                        android:layout_width="match_parent"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:layout_marginTop="5dp"-->
+        <!--                        android:drawableStart="@drawable/ic_green_check"-->
+        <!--                        android:drawablePadding="@dimen/dimen_10"-->
+        <!--                        android:text="Effortless Loan Approval"-->
+        <!--                        android:textColor="@color/black" />-->
+
+        <!--                    <TextView-->
+        <!--                        android:layout_width="match_parent"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:layout_marginTop="5dp"-->
+        <!--                        android:drawablePadding="@dimen/dimen_10"-->
+        <!--                        android:text="Instant Fund Tranfer"-->
+        <!--                        android:textColor="@color/black"-->
+        <!--                        app:drawableStartCompat="@drawable/ic_green_check" />-->
+
+        <!--                </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+        <!--                <Button-->
+        <!--                    android:id="@+id/checkEligibility"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:layout_gravity="center_vertical"-->
+        <!--                    android:layout_marginLeft="30dp"-->
+        <!--                    android:layout_marginTop="@dimen/dimen_20"-->
+        <!--                    android:layout_marginRight="30dp"-->
+        <!--                    android:layout_marginBottom="30dp"-->
+        <!--                    android:background="@drawable/bg_orange_solid"-->
+        <!--                    android:drawablePadding="@dimen/dimen_10"-->
+        <!--                    android:drawableTint="@color/white"-->
+        <!--                    android:elevation="@dimen/dimen_10"-->
+        <!--                    android:gravity="center"-->
+        <!--                    android:text="Check Your Eligibility"-->
+        <!--                    android:textAllCaps="false"-->
+        <!--                    android:textColor="@android:color/white"-->
+        <!--                    android:textSize="@dimen/dimen_18"-->
+        <!--                    android:textStyle="bold" />-->
+
+        <!--                <LinearLayout-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:orientation="vertical">-->
+
+        <!--                    <TextView-->
+        <!--                        android:layout_width="match_parent"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:layout_marginTop="@dimen/dimen_20"-->
+        <!--                        android:text="Why Trust Us?"-->
+        <!--                        android:textAlignment="center"-->
+        <!--                        android:textColor="@color/black"-->
+        <!--                        android:textSize="@dimen/dimen_18"-->
+        <!--                        android:textStyle="bold" />-->
+
+        <!--                    <LinearLayout-->
+        <!--                        android:layout_width="match_parent"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:layout_margin="@dimen/dimen_10"-->
+        <!--                        android:orientation="horizontal">-->
+
+        <!--                        <LinearLayout-->
+        <!--                            android:layout_width="match_parent"-->
+        <!--                            android:layout_height="wrap_content"-->
+        <!--                            android:layout_weight="1"-->
+        <!--                            android:orientation="vertical"-->
+        <!--                            android:padding="@dimen/dimen_10">-->
+
+        <!--                            <ImageView-->
+        <!--                                android:layout_width="45dp"-->
+        <!--                                android:layout_height="45dp"-->
+        <!--                                android:layout_gravity="center"-->
+        <!--                                android:src="@drawable/thumbs_up" />-->
+
+        <!--                            <TextView-->
+        <!--                                android:layout_width="wrap_content"-->
+        <!--                                android:layout_height="wrap_content"-->
+        <!--                                android:layout_marginTop="5sp"-->
+        <!--                                android:text="Best Interest Rate"-->
+        <!--                                android:textAlignment="center"-->
+        <!--                                android:textColor="@color/black" />-->
+        <!--                        </LinearLayout>-->
+
+        <!--                        <LinearLayout-->
+        <!--                            android:layout_width="match_parent"-->
+        <!--                            android:layout_height="wrap_content"-->
+        <!--                            android:layout_weight="1"-->
+        <!--                            android:orientation="vertical"-->
+        <!--                            android:padding="@dimen/dimen_10">-->
+
+        <!--                            <ImageView-->
+        <!--                                android:layout_width="45dp"-->
+        <!--                                android:layout_height="45dp"-->
+        <!--                                android:layout_gravity="center"-->
+        <!--                                android:src="@drawable/money_flow" />-->
+
+        <!--                            <TextView-->
+        <!--                                android:layout_width="wrap_content"-->
+        <!--                                android:layout_height="wrap_content"-->
+        <!--                                android:layout_marginTop="5sp"-->
+        <!--                                android:text="Instant Disbursal"-->
+        <!--                                android:textAlignment="center"-->
+        <!--                                android:textColor="@color/black" />-->
+        <!--                        </LinearLayout>-->
+
+        <!--                        <LinearLayout-->
+        <!--                            android:layout_width="match_parent"-->
+        <!--                            android:layout_height="wrap_content"-->
+        <!--                            android:layout_weight="1"-->
+        <!--                            android:orientation="vertical"-->
+        <!--                            android:padding="@dimen/dimen_10">-->
+
+        <!--                            <ImageView-->
+        <!--                                android:layout_width="45dp"-->
+        <!--                                android:layout_height="45dp"-->
+        <!--                                android:layout_gravity="center"-->
+        <!--                                android:src="@drawable/smartphone" />-->
+
+        <!--                            <TextView-->
+        <!--                                android:layout_width="wrap_content"-->
+        <!--                                android:layout_height="wrap_content"-->
+        <!--                                android:layout_marginTop="5sp"-->
+        <!--                                android:text="Paperless Process"-->
+        <!--                                android:textAlignment="center"-->
+        <!--                                android:textColor="@color/black" />-->
+        <!--                        </LinearLayout>-->
+        <!--                    </LinearLayout>-->
+        <!--                </LinearLayout>-->
+        <!--            </LinearLayout>-->
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/kyc_info" />
+
+        <Button
+            android:id="@+id/checkEligibility"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/bg_theme_color"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@color/indigo"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="@dimen/dimen_10">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_34"
-                    android:fontFamily="@font/mukta_vaani"
-                    android:text="Need Urgent Cash?"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dimen_18"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:padding="@dimen/dimen_20"
-                    android:text="Get Instant Business Loan within 24 hours"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="25dp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/checkEligibility"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="@dimen/dimen_20"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginBottom="30dp"
-                    android:background="@drawable/bg_orange_solid"
-                    android:drawablePadding="@dimen/dimen_10"
-                    android:drawableTint="@color/white"
-                    android:elevation="@dimen/dimen_10"
-                    android:gravity="center"
-                    android:text="Check Your Eligibility"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/dimen_18"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Introducing Arthik Loans"
-                    android:textAlignment="center"
-                    android:visibility="gone"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen_18"
-                    android:textStyle="bold" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15sp"
-                    android:background="@drawable/bg_register_rect_silver"
-                    android:orientation="vertical"
-                    android:padding="@dimen/dimen_10">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:text="Know Your Eligibility for a Loan Application with Basic details"
-                        android:textColor="@color/black"
-                        android:textSize="17dp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15sp"
-                        android:drawableStart="@drawable/ic_green_check"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:text="Hassle-Free Registration"
-                        android:textColor="@color/black" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:drawableStart="@drawable/ic_green_check"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:text="Simple and Fast Document Verification"
-                        android:textColor="@color/black" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:drawableStart="@drawable/ic_green_check"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:text="Analyze your CIBIL score"
-                        android:textColor="@color/black" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:drawableStart="@drawable/ic_green_check"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:text="Complete Video KYC"
-                        android:textColor="@color/black" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:drawableStart="@drawable/ic_green_check"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:text="Provide your Business Details"
-                        android:textColor="@color/black" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:drawableStart="@drawable/ic_green_check"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:text="Effortless Loan Approval"
-                        android:textColor="@color/black" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:text="Instant Fund Tranfer"
-                        android:textColor="@color/black"
-                        app:drawableStartCompat="@drawable/ic_green_check" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_20"
-                        android:text="Why Trust Us?"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimen_18"
-                        android:textStyle="bold" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dimen_10"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:padding="@dimen/dimen_10">
-
-                            <ImageView
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/thumbs_up" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5sp"
-                                android:text="Best Interest Rate"
-                                android:textAlignment="center"
-                                android:textColor="@color/black" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:padding="@dimen/dimen_10">
-
-                            <ImageView
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/money_flow" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5sp"
-                                android:text="Instant Disbursal"
-                                android:textAlignment="center"
-                                android:textColor="@color/black" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:padding="@dimen/dimen_10">
-
-                            <ImageView
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/smartphone" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5sp"
-                                android:text="Paperless Process"
-                                android:textAlignment="center"
-                                android:textColor="@color/black" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/bg_orange_solid"
+            android:drawablePadding="@dimen/dimen_10"
+            android:drawableTint="@color/white"
+            android:elevation="@dimen/dimen_10"
+            android:gravity="center"
+            android:text="Check Your Eligibility"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/dimen_18"
+            android:textStyle="bold" />
 
 
-        </LinearLayout>
+    </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

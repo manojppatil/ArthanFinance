@@ -18,14 +18,6 @@ import java.util.*
 
 object Constant {
     const val BUFFER_SIZE = 1024 * 2
-    const val COGNITO_POOL_ID = "us-east-2:6182f6ea-79cd-4f6c-a747-beb8186cf602"
-    const val COGNITO_POOL_REGION = "us-east-2"
-    const val S3_BASE_URL = "https://s3-us-east-2.amazonaws.com/"
-    //        const val BUCKET_NAME = "test-doc-repo"
-    //        const val BUCKET_REGION = "ap-south-1"
-    const val BUCKET_NAME = "test-doc-repo"
-    const val BUCKET_REGION = "us-east-2"
-    const val GPS_REQUEST = 1001
 }
 
 fun getDPFromPixel(pixel: Float, context: Context): Float = TypedValue.applyDimension(
@@ -63,7 +55,7 @@ fun dateSelection(context: Context, editText: EditText?) {
     val c = Calendar.getInstance()
     DatePickerDialog(
         context,
-        DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+        { _, year, monthOfYear, dayOfMonth ->
             val date = dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year
             editText?.setText(date)
         },
@@ -73,50 +65,11 @@ fun dateSelection(context: Context, editText: EditText?) {
     ).show()
 }
 
-//fun loadImage(
-//    context: Context,
-//    imageView: ImageView,
-//    uri: Uri,
-//    onSuccess: ((filePath: String) -> Unit)? = null,
-//    onError: ((error: String?) -> Unit)? = null
-//) {
-//    val file = copyFile(context, uri)
-//    var path = ""
-//    if (file != null) {
-//        path = file.absolutePath
-//    }
-//    GlideApp.with(context)
-//        .load(path)
-//        .addListener(object : RequestListener<Drawable> {
-//            override fun onLoadFailed(
-//                e: GlideException?,
-//                model: Any?,
-//                target: com.bumptech.glide.request.target.Target<Drawable>?,
-//                isFirstResource: Boolean
-//            ): Boolean {
-//                onError?.invoke("Something went wrong...")
-//                return false
-//            }
-//
-//            override fun onResourceReady(
-//                resource: Drawable?,
-//                model: Any?,
-//                target: com.bumptech.glide.request.target.Target<Drawable>?,
-//                dataSource: DataSource?,
-//                isFirstResource: Boolean
-//            ): Boolean {
-//                onSuccess?.invoke(path)
-//                return false
-//            }
-//        })
-//        .into(imageView)
-//}
-
 @SuppressLint("Range")
 private fun getFileName(contentResolver: ContentResolver?, uri: Uri?): String? {
     if (uri == null) return null
     var fileName: String? = null
-    uri?.let { returnUri ->
+    uri.let { returnUri ->
         contentResolver?.query(returnUri, null, null, null, null)
     }?.use { cursor ->
         cursor.moveToFirst()
@@ -131,14 +84,14 @@ fun copyFile(context: Context, uri: Uri): File? {
         tempDirectory.mkdirs()
     }
     val fileName = getFileName(context.contentResolver, uri) ?: return null
-    val copiedFile: File = File(tempDirectory, fileName.replace(":", "")) ?: return null
+    val copiedFile: File = File(tempDirectory, fileName.replace(":", ""))
     copiedFile.createNewFile()
     try {
         val inputStream = context.contentResolver.openInputStream(uri) ?: return null
         val outPutStream: OutputStream = FileOutputStream(copiedFile)
         val buffer = ByteArray(Constant.BUFFER_SIZE)
-        val input = BufferedInputStream(inputStream, Constant.BUFFER_SIZE);
-        val out = BufferedOutputStream(outPutStream, Constant.BUFFER_SIZE);
+        val input = BufferedInputStream(inputStream, Constant.BUFFER_SIZE)
+        val out = BufferedOutputStream(outPutStream, Constant.BUFFER_SIZE)
         var count = 0
         var n = input.read(buffer, 0, Constant.BUFFER_SIZE)
         while (n != -1) {
@@ -215,7 +168,7 @@ object ArgumentKey {
 }
 
 object ConstantValue {
-    const val BCM = "bcm";
+    const val BCM = "bcm"
 
     object CardStatus {
         const val Valid = "VALID"
