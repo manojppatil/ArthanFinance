@@ -1,7 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/view1"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="50dp"
+                android:layout_height="5dp"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:background="@color/indigo" />
+
+            <Button
+                android:id="@+id/view2"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="50dp"
+                android:layout_height="5dp"
+                android:layout_marginHorizontal="6dp"
+                android:layout_weight="1"
+                android:background="@color/grey" />
+
+            <Button
+                android:id="@+id/view3"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="50dp"
+                android:layout_height="5dp"
+                android:layout_marginHorizontal="6dp"
+                android:layout_weight="1"
+                android:background="@color/grey" />
+
+            <Button
+                android:id="@+id/view4"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="50dp"
+                android:layout_height="5dp"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:background="@color/grey" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_intro1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Welcome to Arthik"
+            android:textColor="@color/dark_orange1"
+            android:textSize="25sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_descr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="@font/poppins"
+            android:text="@string/manage"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+    </LinearLayout>
 
     <ImageView
         android:layout_width="match_parent"
@@ -9,100 +85,37 @@
         android:adjustViewBounds="true"
         android:src="@drawable/intro_1" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:cropToPadding="true"
-        android:src="@drawable/ic_rectangle_4" />
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/bg_register_rect_orange"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/register"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/btn_login"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/ic_rectangle_4">
-
-        <ImageView
-            android:id="@+id/img_arthan"
-            android:layout_width="220sp"
-            android:layout_height="100sp"
-            android:layout_centerInParent="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/arthik_white" />
-
-        <ImageView
-            android:id="@+id/img_everything"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/img_arthan"
-            android:layout_marginLeft="46dp"
-            android:layout_marginTop="40dp"
-            android:src="@drawable/ic_at_place"
-            android:visibility="gone" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_50"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="@dimen/dimen_50"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/login"
+        android:textAllCaps="true"
+        android:textColor="@color/indigo"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_intro1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/img_everything"
-            android:layout_marginLeft="46dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="46dp"
-            android:text="RBI Registered NBFC"
-            android:textColor="@color/white"
-            android:textSize="28sp"
-            android:textStyle="bold" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_descr"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_intro1"
-            android:layout_marginLeft="46dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="46dp"
-            android:text="@string/manage"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-
-        <Button
-            android:id="@+id/view1"
-            android:layout_width="50dp"
-            android:layout_height="5dp"
-            android:layout_below="@+id/tv_descr"
-            android:layout_marginLeft="46dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/dark_orange2" />
-
-        <Button
-            android:id="@+id/view2"
-            android:layout_width="50dp"
-            android:layout_height="5dp"
-            android:layout_below="@+id/tv_descr"
-            android:layout_marginLeft="6dp"
-            android:layout_marginTop="20dp"
-            android:layout_toRightOf="@id/view1"
-            android:background="@color/white" />
-
-        <Button
-            android:id="@+id/view3"
-            android:layout_width="50dp"
-            android:layout_height="5dp"
-            android:layout_below="@+id/tv_descr"
-            android:layout_marginLeft="6dp"
-            android:layout_marginTop="20dp"
-            android:layout_toRightOf="@id/view2"
-            android:background="@color/white" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/swipe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/view2"
-            android:layout_marginLeft="46dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="46dp"
-            android:text="@string/swipe_left"
-            android:textColor="@color/sky_blue"
-            android:textSize="16sp" />
-    </RelativeLayout>
-</FrameLayout>
+</LinearLayout>
